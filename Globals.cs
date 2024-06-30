@@ -18,9 +18,9 @@ public static class Globals
 
     public static void Update(GameTime gameTime)
     {
-        CollisionComponent.Update(gameTime);
         for (var i = 0; i < DynamicColliders.Count; i++)
             DynamicColliders[i].Update();
+        CollisionComponent.Update(gameTime);
     }
 
     public static void DrawCollisions(SpriteBatch spriteBatch)

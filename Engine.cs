@@ -5,6 +5,8 @@ using nameless.Entity;
 using nameless.Controls;
 using MonoGame.Extended.Collisions;
 using MonoGame.Extended;
+using nameless.AbstractClasses;
+using nameless_game_branch.Entity;
 
 namespace nameless
 {
@@ -35,6 +37,7 @@ namespace nameless
         {
             var collisionComponent = new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
             Globals.CollisionComponent = collisionComponent;
+            var block = new Block();
 
             base.Initialize();
 
@@ -66,7 +69,6 @@ namespace nameless
             KeyboardState keyboardState = Keyboard.GetState();
 
             _inputController.ProcessControls(gameTime);
-
             _previousKeybardState = keyboardState;
 
             base.Update(gameTime);

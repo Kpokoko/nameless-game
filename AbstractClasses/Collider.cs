@@ -18,7 +18,7 @@ public class Collider : ICollisionActor
 
     public virtual void SetCollision(IEntity gameObject, int width, int height)
     {
-        Bounds = new RectangleF(Point2.Zero, new Size2(width, height));
+        Bounds = new RectangleF(gameObject.Position, new Size2(width, height));
         this.gameObject = gameObject;
         Globals.CollisionComponent.Insert(this);
         Globals.Colliders.Add(this);
