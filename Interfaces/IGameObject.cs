@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace nameless.Interfaces
 {
-    public interface IGameObject
+    public interface IGameObject 
     {
         int DrawOrder { get; }
 
