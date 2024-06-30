@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using nameless.Entity;
 using nameless.Controls;
+using MonoGame.Extended.Collisions;
+using MonoGame.Extended;
+using nameless.AbstractClasses;
+using nameless_game_branch.Entity;
 
 namespace nameless
 {
@@ -31,6 +35,10 @@ namespace nameless
 
         protected override void Initialize()
         {
+            var collisionComponent = new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
+            Globals.CollisionComponent = collisionComponent;
+            var block = new Block();
+
             base.Initialize();
 
             _graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
@@ -54,16 +62,16 @@ namespace nameless
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            base.Update(gameTime);
+            _player.Update(gameTime);
 
+            Globals.Update(gameTime);
 
             KeyboardState keyboardState = Keyboard.GetState();
 
             _inputController.ProcessControls(gameTime);
-
-            _player.Update(gameTime);
-
             _previousKeybardState = keyboardState;
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -74,6 +82,7 @@ namespace nameless
 
             _player.Draw(_spriteBatch, gameTime);
 
+            Globals.DrawCollisions(_spriteBatch);
 
             _spriteBatch.End();
             base.Draw(gameTime);

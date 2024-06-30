@@ -12,4 +12,11 @@ namespace nameless.Entity
         Falling,
         Still
     }
+
+    public enum MovableState
+    {
+        Left,
+        Right,
+        Free
+    }
 }

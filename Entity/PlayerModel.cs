@@ -9,13 +9,18 @@ using nameless.Interfaces;
 using nameless.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.VisualBasic;
+using nameless.AbstractClasses;
+using MonoGame.Extended.Collisions;
+using nameless_game_branch.Entity;
+using MonoGame.Extended;
+using Microsoft.Xna.Framework.Input;
 
 namespace nameless.Entity
 {
-    public class PlayerModel : IGameObject
+    public class PlayerModel : DynamicCollider, IEntity
     {
         private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
-        private const float MIN_POS_Y = 1000;
+        private const float MIN_POS_Y = 900;
 
         private const float MIN_JUMP_HEIGHT = 40f;
         private const float JUMP_START_VELOCITY = -900f;
@@ -52,12 +57,15 @@ namespace nameless.Entity
         private SpriteAnimation _runRightAnimation;
         private SpriteAnimation _runLeftAnimation;
 
-        private Vector2 _position;
+        public Vector2 Position { get; private set; }
         public PlayerState State { get; set; }
+        public MovableState Movable { get; set; }
+
+        public bool IsCollided;
 
         public PlayerModel(Texture2D spriteSheet) 
         {
-            _position = new Vector2(0, MIN_POS_Y);
+            Position = new Vector2(0, MIN_POS_Y);
             _rightSprite = new Sprite(spriteSheet,
                     RIGHT_SPRITE_POS_X,
                     RIGHT_SPRITE_POS_Y,
@@ -109,31 +117,34 @@ namespace nameless.Entity
             State = PlayerState.Still;
             _verticalVelocity = 0;
             _horizontalVelocity = 0;
+
+            SetCollision(this, _currentSprite.Width,_currentSprite.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             if (_horizontalVelocity < 0)
             {
-                _runLeftAnimation.Draw(spriteBatch, _position);
+                _runLeftAnimation.Draw(spriteBatch, Position);
                 _currentSprite = _leftSprite;
             } 
             else if (_horizontalVelocity > 0)
             {
-                _runRightAnimation.Draw(spriteBatch, _position); 
+                _runRightAnimation.Draw(spriteBatch, Position); 
                 _currentSprite = _rightSprite;
             }
             else
-                _currentSprite.Draw(spriteBatch, _position);
+                _currentSprite.Draw(spriteBatch, Position);
         }
 
         public void Update(GameTime gameTime)
         {
-            if (_position.Y > MIN_POS_Y)
-                State = PlayerState.Still;
+            if (!IsCollided && State != PlayerState.Jumping)
+                State = PlayerState.Falling;
+            IsCollided = false;
             if (State == PlayerState.Jumping || State == PlayerState.Falling)
             {
-                _position = new Vector2(_position.X, _position.Y + _verticalVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds + _dropVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                Position = new Vector2(Position.X, Position.Y + _verticalVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds + _dropVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 _verticalVelocity += GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (_verticalVelocity >= 0)
@@ -141,14 +152,15 @@ namespace nameless.Entity
                     State = PlayerState.Falling;
                 }
 
-                if (_position.Y >= MIN_POS_Y)
+
+
+                if (Position.Y >= MIN_POS_Y)
                 {
-                    _position = new Vector2(_position.X, MIN_POS_Y);
                     State = PlayerState.Still;
                     _verticalVelocity = 0;
                 }
             }
-            _position.X = _position.X + _horizontalVelocity;
+            Position = new Vector2(Position.X + _horizontalVelocity, Position.Y);
             _dropVelocity = 0;
 
             if (_horizontalVelocity < 0)
@@ -160,6 +172,49 @@ namespace nameless.Entity
             {
                 _runRightAnimation.Update(gameTime);
                 _currentSprite = _rightSprite;
+            }
+        }
+
+        public override void OnCollision(CollisionEventArgs collisionInfo)
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                Console.WriteLine("PIZDEC");
+            }
+            if (collisionInfo.Other is Block)
+            {
+                if (collisionInfo.PenetrationVector.X != 0)
+                {
+                    _horizontalVelocity = 0;
+                    if (collisionInfo.PenetrationVector.X < 0)
+                    {
+                        Movable = MovableState.Right;
+                        Position = new Vector2(collisionInfo.Other.Bounds.Position.X + ((RectangleF)collisionInfo.Other.Bounds).Width, Position.Y);
+                    }
+                    else
+                    {
+                        Movable = MovableState.Left;
+                        Position = new Vector2(collisionInfo.Other.Bounds.Position.X - ((RectangleF)Bounds).Width, Position.Y);
+                    }
+                }
+                else
+                {
+                    if (collisionInfo.PenetrationVector.Y > 0)
+                    {
+                        State = PlayerState.Still;
+                        _verticalVelocity = 0;
+                        IsCollided = true;
+                        Position = new Vector2(Position.X, 1 + collisionInfo.Other.Bounds.Position.Y - ((RectangleF)Bounds).Height);//((RectangleF)collisionInfo.Other.Bounds).Height
+                    }
+                    else
+                    if (collisionInfo.PenetrationVector.Y < 0)
+                    {
+                        CancelJump();
+                        State = PlayerState.Falling;
+                        _verticalVelocity = 0;
+                        Position = new Vector2(Position.X, collisionInfo.Other.Bounds.Position.Y + ((RectangleF)collisionInfo.Other.Bounds).Height);
+                    }
+                }
             }
         }
 
@@ -176,7 +231,7 @@ namespace nameless.Entity
 
         public bool CancelJump()
         {
-            if (State != PlayerState.Jumping || MIN_POS_Y - _position.Y < MIN_JUMP_HEIGHT)
+            if (State != PlayerState.Jumping || MIN_POS_Y - Position.Y < MIN_JUMP_HEIGHT)
             {
                 return false;
             }
@@ -187,17 +242,17 @@ namespace nameless.Entity
 
         public bool Drop()
         {
-            if (State != PlayerState.Falling && State != PlayerState.Falling)
+            if (State == PlayerState.Still)
             {
                 return false;
             }
-            State = PlayerState.Falling;
             _dropVelocity = DROP_VELOCITY;
             return true;
         }
 
         public void MoveLeft()
         {
+
             if (_horizontalVelocity > 0)
             {
                 _horizontalVelocity = 0;
