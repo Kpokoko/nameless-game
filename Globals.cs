@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using nameless.AbstractClasses;
 using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using nameless.Graphics;
+using nameless_game_branch.Tiles;
+using System;
 
 namespace nameless;
 
@@ -28,4 +27,25 @@ public static class Globals
         for (var i = 0; i < Colliders.Count; i++)
             Colliders[i].DrawCollision(spriteBatch);
     }
+
+    //public static void Draw(Vector2 position, Vector2 size, SpriteBatch spriteBatch, Sprite sprite = null, SpriteAnimation animation = null)
+    //{
+    //    if (sprite == null)
+    //        animation.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y));
+    //    else
+    //        spriteBatch.Draw(sprite.Texture, position + Offset((int)size.X, (int)size.Y), Color.White);
+    //}
+
+    public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite)
+    {
+        var size = new Vector2(sprite.Width, sprite.Height);
+        sprite.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y));
+    }
+
+    public static void Draw(Vector2 position, Vector2 size, SpriteBatch spriteBatch, SpriteAnimation animation)
+    {
+        animation.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y));
+    }
+
+    public static Vector2 Offset(int width, int height) => new Vector2(-width / 2, -height / 2);
 }
