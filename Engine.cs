@@ -37,7 +37,20 @@ namespace nameless
         {
             var collisionComponent = new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
             Globals.CollisionComponent = collisionComponent;
-            var block = new Block();
+            var block1 = new Block(0, 0);
+            var block = new Block(1, 1);
+            var a = new Block(2, 2);
+            var b = new Block(10, 10);
+            var v = new Block(12, 12);
+            var c = new Block(4, 4);
+            var x = new Block(5, 5);
+            var s1 = new Block(6, 11);
+            var s2 = new Block(6, 12);
+            var s3 = new Block(6, 13);
+            var s4 = new Block(6, 9);
+            var s5 = new Block(6, 10);
+            var bl = new Block(8, 8);
+            var b23423 = new Block(5, 13);
 
             base.Initialize();
 
