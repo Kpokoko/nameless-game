@@ -19,6 +19,8 @@ namespace nameless.Entity
 {
     public class PlayerModel : DynamicCollider, IEntity
     {
+        public Vector2 TilePosition { get; set; }
+
         private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
         private const float MIN_POS_Y = 900;
 

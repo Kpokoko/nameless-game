@@ -9,6 +9,7 @@ namespace nameless.Interfaces
 {
     public interface IEntity : IGameObject
     {
-        public Vector2 Position { get; set; } 
+        public Vector2 Position { get; } 
+        public Vector2 TilePosition { get; }
     }
 }

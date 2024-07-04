@@ -26,14 +26,14 @@ public struct Tile
         return new Vector2(posX, posY);
     }
 
-    public static void GetPosInTileCoordinats<T>(List<T> list)
-        where T : IEntity
-    {
-        foreach (var item in list)
-        {
-            var tileX = Math.Floor(item.Position.X / 64);
-            var tileY = Math.Floor(item.Position.Y / 64);
-            item.Position = new Vector2((float)tileX, (float)tileY);
-        }
-    }
+    //public static void GetPosInTileCoordinats<T>(List<T> list)
+    //    where T : IEntity
+    //{
+    //    foreach (var item in list)
+    //    {
+    //        var tileX = Math.Floor(item.Position.X / 64);
+    //        var tileY = Math.Floor(item.Position.Y / 64);
+    //        item.Position = new Vector2((float)tileX, (float)tileY);
+    //    }
+    //}
 }

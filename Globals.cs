@@ -4,8 +4,6 @@ using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using nameless.Graphics;
-using nameless_game_branch.Tiles;
-using System;
 
 namespace nameless;
 
