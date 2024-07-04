@@ -5,7 +5,7 @@ using nameless.Entity;
 using nameless.Controls;
 using MonoGame.Extended.Collisions;
 using MonoGame.Extended;
-using nameless.AbstractClasses;
+using nameless.Collisions;
 using nameless.Serialize;
 using nameless_game_branch.Entity;
 using System.Collections.Generic;
@@ -53,7 +53,11 @@ namespace nameless
             var s3 = new Block(6, 13);
             var s4 = new Block(6, 9);
             var s5 = new Block(6, 10);
-            var bl = new Block(8, 8);
+            var s6 = new Block(5, 13);
+            var s7 = new Block(4, 13);
+            var s8 = new Block(3, 13);
+            var s9 = new Block(2, 13);
+            var bl = new Block(8, 13);
             var b23423 = new Block(5, 13);
             var blocks = new List<Block>
             {
@@ -68,6 +72,10 @@ namespace nameless
                 s2,
                 s3,
                 s4,
+                s6,
+                s7,
+                s8,
+                s9,
                 bl,
                 s5,
                 b23423
@@ -99,6 +107,8 @@ namespace nameless
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (Globals.GameTime == null)
+                Globals.GameTime = gameTime;
 
             _player.Update(gameTime);
 

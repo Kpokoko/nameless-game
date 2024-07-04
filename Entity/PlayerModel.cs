@@ -9,7 +9,7 @@ using nameless.Interfaces;
 using nameless.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.VisualBasic;
-using nameless.AbstractClasses;
+using nameless.Collisions;
 using MonoGame.Extended.Collisions;
 using nameless_game_branch.Entity;
 using MonoGame.Extended;
@@ -17,7 +17,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace nameless.Entity
 {
-    public class PlayerModel : DynamicCollider, IEntity
+    public class PlayerModel : CharacterCollider, IEntity
     {
         public Vector2 TilePosition { get; set; }
 
@@ -160,8 +160,8 @@ namespace nameless.Entity
             }
             Position = new Vector2(Position.X + _horizontalVelocity, Position.Y);
             _dropVelocity = 0;
-            ((DynamicCollider)this).Update();
-            Globals.CollisionComponent.Update(gameTime);
+            //((DynamicCollider)this).Update();
+            //Globals.CollisionComponent.Update(gameTime);
             if (_horizontalVelocity < 0)
             {
                 _runLeftAnimation.Update(gameTime);
@@ -173,44 +173,48 @@ namespace nameless.Entity
                 _currentSprite = _rightSprite;
             }
         }
-
-        public override void OnCollision(CollisionEventArgs collisionInfo)
+        
+        public override void OnCollision(CollisionEventArgs[] collisionsInfo)
         {
-            IsCollidedX = collisionInfo.PenetrationVector.X != 0;
-            IsCollidedY = collisionInfo.PenetrationVector.Y != 0;
-            if (!IsCollidedX && !IsCollidedY)
+            foreach (var collisionInfo in collisionsInfo)
             {
-                return;
-            }
-            var rectBounds = (RectangleF)Bounds;
-            var otherBounds = (RectangleF)collisionInfo.Other.Bounds;
-            var otherPos = (collisionInfo.Other as Block).Position;
-            if (collisionInfo.Other is Block)
-            {
-                if (IsCollidedX)
+                if (collisionInfo.Other is not IEntity) return;
+                IsCollidedX = collisionInfo.PenetrationVector.X != 0;
+                IsCollidedY = collisionInfo.PenetrationVector.Y != 0;
+                if (!IsCollidedX && !IsCollidedY)
                 {
-                    _horizontalVelocity = 0;
-                    if (collisionInfo.PenetrationVector.X < 0)
-                    {
-                        Position = new Vector2(otherPos.X + otherBounds.Width / 2 + rectBounds.Width / 2, Position.Y);
-                    }
-                    else
-                    {
-                        Position = new Vector2(otherPos.X - otherBounds.Width / 2 - rectBounds.Width / 2, Position.Y);
-                    }
+                    return;
                 }
-                if (IsCollidedY)
+                var rectBounds = (RectangleF)Bounds;
+                var otherBounds = (RectangleF)collisionInfo.Other.Bounds;
+                var otherPos = (collisionInfo.Other as Block).Position;
+                if (collisionInfo.Other is Block)
                 {
-                    _verticalVelocity = 0;
-                    if (collisionInfo.PenetrationVector.Y > 0 && State != PlayerState.Still)
+                    if (IsCollidedX)
                     {
-                        State = PlayerState.Still;
-                        Position = new Vector2(Position.X,  otherPos.Y - otherBounds.Height / 2 - rectBounds.Height / 2);
+                        _horizontalVelocity = 0;
+                        if (collisionInfo.PenetrationVector.X < 0)
+                        {
+                            Position = new Vector2(otherPos.X + otherBounds.Width / 2 + rectBounds.Width / 2, Position.Y);
+                        }
+                        else
+                        {
+                            Position = new Vector2(otherPos.X - otherBounds.Width / 2 - rectBounds.Width / 2, Position.Y);
+                        }
                     }
-                    if (collisionInfo.PenetrationVector.Y < 0)
+                    if (IsCollidedY)
                     {
-                        State = PlayerState.Falling;
-                        Position = new Vector2(Position.X, otherPos.Y + otherBounds.Height / 2 + rectBounds.Height / 2);
+                        _verticalVelocity = 0;
+                        if (collisionInfo.PenetrationVector.Y > 0 && State != PlayerState.Still)
+                        {
+                            State = PlayerState.Still;
+                            Position = new Vector2(Position.X, otherPos.Y - otherBounds.Height / 2 - rectBounds.Height / 2);
+                        }
+                        if (collisionInfo.PenetrationVector.Y < 0)
+                        {
+                            State = PlayerState.Falling;
+                            Position = new Vector2(Position.X, otherPos.Y + otherBounds.Height / 2 + rectBounds.Height / 2);
+                        }
                     }
                 }
             }

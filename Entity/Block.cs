@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using nameless.AbstractClasses;
+using nameless.Collisions;
 using nameless.Interfaces;
 using nameless_game_branch.Tiles;
 
