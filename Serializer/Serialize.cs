@@ -21,7 +21,6 @@ namespace nameless.Serialize
             using (var writer = new StreamWriter(new FileStream(sceneName, FileMode.Create)))
             {
                 var serializer = new XmlSerializer(entities.GetType());
-                Tile.GetPosInTileCoordinats(entities);
                 serializer.Serialize(writer, entities);
             }
         }
