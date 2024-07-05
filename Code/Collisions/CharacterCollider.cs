@@ -67,8 +67,6 @@ public class CharacterCollider : DynamicCollider
         return collisionsInfo;
     }
 
-    private bool IsPairSide(Side side1, Side side2) => (int)side1 + (int)side2 == 3; //Pair is: Top-Bottom, Left-Right
-
     public virtual void OnCollision(CollisionEventArgs[] collisionsInfo) { }
 
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)

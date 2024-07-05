@@ -38,6 +38,10 @@ public class Collider : ICollisionActor
         spriteBatch.DrawRectangle((RectangleF)Bounds, Color.Red,5);
     }
 
+
+    //Static functions
+
+
     public static Side CollisionToSide(CollisionEventArgs collisionInfo)
     {
         if (collisionInfo.PenetrationVector.Y == 0)
@@ -55,4 +59,6 @@ public class Collider : ICollisionActor
                return Side.Top;
         }
     }
+
+    public static bool IsPairSide(Side side1, Side side2) => (int)side1 + (int)side2 == 3; //Pair is: Top-Bottom, Left-Right
 }
