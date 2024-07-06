@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MonoGame.Extended;
+using MonoGame.Extended.Collisions;
 using nameless.Interfaces;
 
-namespace nameless.AbstractClasses;
+namespace nameless.Collisions;
 
 public class DynamicCollider : Collider
 {
@@ -16,9 +17,9 @@ public class DynamicCollider : Collider
         base.SetCollision(gameObject, width, height);
     }
 
-    public void Update()
+    virtual public void Update()
     {
         var rectBounds = (RectangleF)Bounds;
-        Bounds.Position = gameObject.Position + Globals.Offset((int)rectBounds.Width, (int)rectBounds.Height);
+        Bounds.Position = entity.Position + Globals.Offset((int)rectBounds.Width, (int)rectBounds.Height);
     }
 }

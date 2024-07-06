@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using nameless.AbstractClasses;
+using nameless.Collisions;
 using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,30 +9,13 @@ namespace nameless;
 
 public static class Globals
 {
+    public static GameTime GameTime;
+
     public static CollisionComponent CollisionComponent;
-    public static List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
+
     public static List<Collider> Colliders = new List<Collider>();
-
-    public static void Update(GameTime gameTime)
-    {
-        for (var i = 0; i < DynamicColliders.Count; i++)
-            DynamicColliders[i].Update();
-        CollisionComponent.Update(gameTime);
-    }
-
-    public static void DrawCollisions(SpriteBatch spriteBatch)
-    {
-        for (var i = 0; i < Colliders.Count; i++)
-            Colliders[i].DrawCollision(spriteBatch);
-    }
-
-    //public static void Draw(Vector2 position, Vector2 size, SpriteBatch spriteBatch, Sprite sprite = null, SpriteAnimation animation = null)
-    //{
-    //    if (sprite == null)
-    //        animation.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y));
-    //    else
-    //        spriteBatch.Draw(sprite.Texture, position + Offset((int)size.X, (int)size.Y), Color.White);
-    //}
+    public static List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
+    public static List<CharacterCollider> CharacterColliders = new List<CharacterCollider>();
 
     public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite)
     {
