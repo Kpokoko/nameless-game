@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nameless_game_branch.Tiles;
+namespace nameless.Tiles;
 
 public struct Tile
 {

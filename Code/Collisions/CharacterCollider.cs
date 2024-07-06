@@ -12,6 +12,7 @@ public class CharacterCollider : DynamicCollider
 {
     private List<CollisionEventArgs> collisionInfoBuffer = new List<CollisionEventArgs>();
 
+
     public override void SetCollision(IEntity gameObject, int width, int height)
     {
         Globals.CharacterColliders.Add(this);
@@ -24,11 +25,17 @@ public class CharacterCollider : DynamicCollider
         {
             var info = AnalyseCollisions();
             OnCollision(info);
-            ClearCollision();
+            ClearBuffer();
         }
     }
 
-    private void ClearCollision() 
+    private void AddToBuffer(CollisionEventArgs collisionInfo)
+    {
+       collisionInfoBuffer.Add(collisionInfo);
+        var a = collisionInfo.PenetrationVector.Length;
+    }
+
+    private void ClearBuffer() 
     {
         collisionInfoBuffer.Clear();
     }
@@ -37,9 +44,16 @@ public class CharacterCollider : DynamicCollider
     {
         var collisionsInfo = collisionInfoBuffer.ToArray();
 
-        if (collisionInfoBuffer.Count == 1)
+        if (collisionsInfo.Length == 1)
             return collisionsInfo;
-        if (collisionInfoBuffer.Count == 2)
+
+        //if (collisionsInfo.Length > 2)
+        collisionsInfo = collisionsInfo
+            .OrderByDescending(info => info.PenetrationVector.Length())
+            .DistinctBy(info => CollisionToSide(info))
+            .ToArray();
+
+        if (collisionsInfo.Length == 2)
         {
             if (IsPairSide(CollisionToSide(collisionInfoBuffer[0]), CollisionToSide(collisionInfoBuffer[1])))
                 return collisionsInfo;
@@ -53,7 +67,7 @@ public class CharacterCollider : DynamicCollider
         var actualPosition = Bounds.Position;
         for (var i = 0; i < collisionsInfo.Length; i++)
         {
-            ClearCollision();
+            ClearBuffer();
             var collisionInfo = collisionsInfo[i];
             Bounds.Position = actualPosition - collisionInfo.PenetrationVector;
             Globals.CollisionComponent.Update(Globals.GameTime);
@@ -67,13 +81,20 @@ public class CharacterCollider : DynamicCollider
         return collisionsInfo;
     }
 
-    public virtual void OnCollision(CollisionEventArgs[] collisionsInfo) { }
+    public virtual void OnCollision(CollisionEventArgs[] collisionsInfo) 
+    {
+        var penetrationVector = collisionsInfo.Select(collisionInfo => collisionInfo.PenetrationVector).Aggregate((a, b) => a + b);
+        var Position = entity.GetType().GetProperty("Position");
+        Position.SetValue(entity, (Vector2)Position.GetValue(entity) - penetrationVector);
+
+        //entity.SetPosition(entity.Position - penetrationVector);
+    }
 
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)
     {
         base.OnCollision(collisionInfo);
 
         if (collisionInfo.Other is not IEntity) return;
-        collisionInfoBuffer.Add(collisionInfo);
+        AddToBuffer(collisionInfo);
     }
 }

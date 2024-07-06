@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nameless.Interfaces
+namespace nameless.Interfaces;
+
+public interface IGameObject 
 {
-    public interface IGameObject 
-    {
-        int DrawOrder { get; }
+    int DrawOrder { get; }
 
-        void Update(GameTime gameTime);
+    void Update(GameTime gameTime);
 
-        void Draw(SpriteBatch spriteBatch, GameTime gameTime);
-    }
+    void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 }

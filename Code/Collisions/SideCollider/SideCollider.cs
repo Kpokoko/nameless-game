@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using nameless.Interfaces;
-using nameless_game_branch.Entity;
+using nameless.Entity;
 
 namespace nameless.Collisions;
 

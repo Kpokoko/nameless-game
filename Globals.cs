@@ -12,32 +12,10 @@ public static class Globals
     public static GameTime GameTime;
 
     public static CollisionComponent CollisionComponent;
-    public static List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
+
     public static List<Collider> Colliders = new List<Collider>();
+    public static List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
     public static List<CharacterCollider> CharacterColliders = new List<CharacterCollider>();
-
-    public static void Update(GameTime gameTime)
-    {
-        for (var i = 0; i < DynamicColliders.Count; i++)
-            DynamicColliders[i].Update();
-        CollisionComponent.Update(gameTime);
-        for (var i = 0; i < CharacterColliders.Count; i++)
-            CharacterColliders[i].UpdateCollision();
-    }
-
-    public static void DrawCollisions(SpriteBatch spriteBatch)
-    {
-        for (var i = 0; i < Colliders.Count; i++)
-            Colliders[i].DrawCollision(spriteBatch);
-    }
-
-    //public static void Draw(Vector2 position, Vector2 size, SpriteBatch spriteBatch, Sprite sprite = null, SpriteAnimation animation = null)
-    //{
-    //    if (sprite == null)
-    //        animation.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y));
-    //    else
-    //        spriteBatch.Draw(sprite.Texture, position + Offset((int)size.X, (int)size.Y), Color.White);
-    //}
 
     public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite)
     {
