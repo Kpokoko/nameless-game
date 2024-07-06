@@ -188,12 +188,12 @@ public class PlayerModel : CharacterCollider, IEntity
                 {
                     _horizontalVelocity = 0;
                 }
-                else if (collisionSide is Side.Bottom && State != PlayerState.Still)
+                else if (collisionSide is Side.Bottom && State != PlayerState.Still && State != PlayerState.Jumping)
                 {
                     _verticalVelocity = 0;
                     State = PlayerState.Still;
                 }
-                else if (collisionSide is Side.Top)
+                else if (collisionSide is Side.Top && State != PlayerState.Falling)
                 {
                     _verticalVelocity = 0;
                     State = PlayerState.Falling;
