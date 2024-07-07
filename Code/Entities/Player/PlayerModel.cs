@@ -66,6 +66,7 @@ public class PlayerModel : ICollider, IEntity
     public bool IsCollidedX;
     public bool IsCollidedY;
 
+    public PlayerModel() { }
     public PlayerModel(Texture2D spriteSheet) 
     {
         Position = new Vector2(305, 450);
