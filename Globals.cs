@@ -13,6 +13,8 @@ public static class Globals
 
     public static CollisionComponent CollisionComponent;
 
+    public static Texture2D SpriteSheet;
+
     public static List<Collider> Colliders = new List<Collider>();
     public static List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
     public static List<CharacterCollider> CharacterColliders = new List<CharacterCollider>();
