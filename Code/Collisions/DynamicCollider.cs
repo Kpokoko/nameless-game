@@ -11,12 +11,6 @@ namespace nameless.Collisions;
 
 public class DynamicCollider : Collider
 {
-    public static void SetCollider(ICollider entity, int width, int height)
-    {
-        entity.collider = new DynamicCollider();
-        entity.collider.SetCollision(entity, width, height);
-    }
-
     public override void SetCollision(IEntity gameObject, int width, int height)
     {
         Globals.DynamicColliders.Add(this);

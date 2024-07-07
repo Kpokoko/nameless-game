@@ -16,25 +16,19 @@ public partial class Collider : ICollisionActor
 {
     [XmlIgnore]
     public IShapeF Bounds { get; protected set; }
-    protected ICollider entity;
-
-    public static void SetCollider(ICollider entity, int width, int height)
-    {
-        entity.collider = new Collider();
-        entity.collider.SetCollision(entity,width, height);
-    }
+    protected IEntity entity;
 
     public virtual void SetCollision(IEntity entity, int width, int height)
     {
         Bounds = new RectangleF(entity.Position + Globals.Offset(width, height), new Size2(width, height));
-        this.entity = (ICollider)entity;
+        this.entity = entity;
         Globals.CollisionComponent.Insert(this);
         Globals.Colliders.Add(this);
     }
 
     public virtual void OnCollision(CollisionEventArgs collisionInfo)
     {
-        entity.OnCollision(collisionInfo);
+        //Console.WriteLine(collisionInfo.Other.ToString());
     }
 
     public void DrawCollision(SpriteBatch spriteBatch)

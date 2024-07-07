@@ -14,10 +14,11 @@ using MonoGame.Extended.Collisions;
 using nameless.Entity;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Input;
+using System.Xml.Serialization;
 
 namespace nameless.Entity;
 
-public class PlayerModel : ICollider, IEntity
+public class PlayerModel : CharacterCollider, IEntity
 {
     public Vector2 TilePosition { get; set; }
 
@@ -59,16 +60,17 @@ public class PlayerModel : ICollider, IEntity
     private SpriteAnimation _runRightAnimation;
     private SpriteAnimation _runLeftAnimation;
 
+    [XmlIgnore]
     public Vector2 Position { get; set; }
     public PlayerState State { get; set; }
-    public Collider collider { get; set; }
 
     public bool IsCollidedX;
     public bool IsCollidedY;
 
+    public PlayerModel() { }
     public PlayerModel(Texture2D spriteSheet) 
     {
-        Position = new Vector2(305, 450);
+        Position = new Vector2(100, 100);
         _rightSprite = new Sprite(spriteSheet,
                 RIGHT_SPRITE_POS_X,
                 RIGHT_SPRITE_POS_Y,
@@ -121,7 +123,7 @@ public class PlayerModel : ICollider, IEntity
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        CharacterCollider.SetCollider(this, _currentSprite.Width,_currentSprite.Height);
+        SetCollision(this, _currentSprite.Width,_currentSprite.Height);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -174,17 +176,15 @@ public class PlayerModel : ICollider, IEntity
             _currentSprite = _rightSprite;
         }
     }
-    
-    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
+
+    public override void OnCollision(CollisionEventArgs[] collisionsInfo)
     {
         foreach (var collisionInfo in collisionsInfo)
         {
-            //if (collisionInfo.Other is not IEntity) return;
-
             var collisionSide = Collider.CollisionToSide(collisionInfo);
-            //Position -= collisionInfo.PenetrationVector;
-            if (collisionInfo.Other is Collider)
-            {
+            Position -= collisionInfo.PenetrationVector;
+            //if (collisionInfo.Other is Block)
+            //{
                 if (collisionSide is Side.Left || collisionSide is Side.Right)
                 {
                     _horizontalVelocity = 0;
@@ -199,7 +199,7 @@ public class PlayerModel : ICollider, IEntity
                     _verticalVelocity = 0;
                     State = PlayerState.Falling;
                 }
-            }
+            //}
         }
     }
 

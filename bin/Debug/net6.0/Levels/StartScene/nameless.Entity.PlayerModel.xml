@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPlayerModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PlayerModel>
+    <IsCollidedX>false</IsCollidedX>
+    <IsCollidedY>false</IsCollidedY>
+    <TilePosition>
+      <X>0</X>
+      <Y>0</Y>
+    </TilePosition>
+    <State>Still</State>
+  </PlayerModel>
+</ArrayOfPlayerModel>
