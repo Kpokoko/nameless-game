@@ -12,6 +12,11 @@ public class CharacterCollider : DynamicCollider
 {
     private List<CollisionEventArgs> collisionInfoBuffer = new List<CollisionEventArgs>();
 
+    public static void SetCollider(ICollider entity, int width, int height)
+    {
+        entity.collider = new CharacterCollider();
+        entity.collider.SetCollision(entity, width, height);
+    }
 
     public override void SetCollision(IEntity gameObject, int width, int height)
     {
@@ -87,14 +92,14 @@ public class CharacterCollider : DynamicCollider
         var Position = entity.GetType().GetProperty("Position");
         Position.SetValue(entity, (Vector2)Position.GetValue(entity) - penetrationVector);
 
-        //entity.SetPosition(entity.Position - penetrationVector);
+        entity.OnCollision(collisionsInfo);
     }
 
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)
     {
         base.OnCollision(collisionInfo);
 
-        if (collisionInfo.Other is not IEntity) return;
+        //if (collisionInfo.Other is not IEntity) return;
         AddToBuffer(collisionInfo);
     }
 }

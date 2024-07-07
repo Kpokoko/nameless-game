@@ -17,7 +17,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace nameless.Entity;
 
-public class PlayerModel : CharacterCollider, IEntity
+public class PlayerModel : ICollider, IEntity
 {
     public Vector2 TilePosition { get; set; }
 
@@ -61,6 +61,7 @@ public class PlayerModel : CharacterCollider, IEntity
 
     public Vector2 Position { get; set; }
     public PlayerState State { get; set; }
+    public Collider collider { get; set; }
 
     public bool IsCollidedX;
     public bool IsCollidedY;
@@ -120,7 +121,7 @@ public class PlayerModel : CharacterCollider, IEntity
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        SetCollision(this, _currentSprite.Width,_currentSprite.Height);
+        CharacterCollider.SetCollider(this, _currentSprite.Width,_currentSprite.Height);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -174,15 +175,15 @@ public class PlayerModel : CharacterCollider, IEntity
         }
     }
     
-    public override void OnCollision(CollisionEventArgs[] collisionsInfo)
+    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
     {
         foreach (var collisionInfo in collisionsInfo)
         {
-            if (collisionInfo.Other is not IEntity) return;
+            //if (collisionInfo.Other is not IEntity) return;
 
             var collisionSide = Collider.CollisionToSide(collisionInfo);
-            Position -= collisionInfo.PenetrationVector;
-            if (collisionInfo.Other is Block)
+            //Position -= collisionInfo.PenetrationVector;
+            if (collisionInfo.Other is Collider)
             {
                 if (collisionSide is Side.Left || collisionSide is Side.Right)
                 {
