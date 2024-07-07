@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Collisions;
 using nameless.Collisions;
 using nameless.Interfaces;
 using nameless.Tiles;
 
 namespace nameless.Entity;
 
-public class Block : Collider, IEntity
+public class Block : IEntity, ICollider
 {
     public Block(int x, int y)
     {
         Position = new Tile(x, y).Position;
         TilePosition = new Vector2(x, y);
-        SetCollision(this, 64, 64);
+        Collider.SetCollider(this, 64, 64);
     }
 
     public Block() { }
@@ -27,9 +28,15 @@ public class Block : Collider, IEntity
     public Vector2 TilePosition { get; set; }
     int IGameObject.DrawOrder => 1;
 
+    public Collider collider { get; set; }
+
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     { }
 
     public void Update(GameTime gameTime)
     { }
+
+    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
+    {
+    }
 }
