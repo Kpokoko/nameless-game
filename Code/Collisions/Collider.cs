@@ -34,7 +34,7 @@ public partial class Collider : ICollisionActor
 
     public virtual void OnCollision(CollisionEventArgs collisionInfo)
     {
-        entity.OnCollision(collisionInfo);
+        //entity.OnCollision(collisionInfo);
     }
 
     public void DrawCollision(SpriteBatch spriteBatch)

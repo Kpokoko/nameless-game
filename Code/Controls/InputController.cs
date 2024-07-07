@@ -43,7 +43,7 @@ namespace nameless.Controls
             {
                 _player.MoveLeft();
             }
-            else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D) || true)
             {
                 _player.MoveRight();
             }
