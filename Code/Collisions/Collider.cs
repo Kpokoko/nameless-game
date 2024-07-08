@@ -16,20 +16,36 @@ public partial class Collider : ICollisionActor
 {
     [XmlIgnore]
     public IShapeF Bounds { get; protected set; }
-    protected ICollider entity;
+    public ICollider Entity { get; protected set; }
+    public Color Color { get; set; } = Color.Red;
+    public string Id { get; protected set; }
+    protected Vector2 offset = Vector2.Zero;
 
-    public static void SetCollider(ICollider entity, int width, int height)
+    public Collider() { }
+
+    public Collider(ICollider entity, int width, int height)
     {
-        entity.collider = new Collider();
+        entity.collider = this;
         entity.collider.SetCollision(entity,width, height);
     }
 
-    public virtual void SetCollision(IEntity entity, int width, int height)
+    protected virtual void SetCollision(IEntity entity, int width, int height)
     {
         Bounds = new RectangleF(entity.Position + Globals.Offset(width, height), new Size2(width, height));
-        this.entity = (ICollider)entity;
+        this.Entity = (ICollider)entity;
         Globals.CollisionComponent.Insert(this);
         Globals.Colliders.Add(this);
+    }
+
+    public void SetOffset(Vector2 offset)
+    {
+        this.offset = offset;
+        Bounds.Position += offset;
+    }
+
+    public void SetId(string id)
+    {
+        Id = id;
     }
 
     public virtual void OnCollision(CollisionEventArgs collisionInfo)
@@ -41,6 +57,6 @@ public partial class Collider : ICollisionActor
     {
         var rectBounds = (RectangleF)Bounds;
         //spriteBatch.DrawRectangle(new RectangleF(new Point2(rectBounds.X - rectBounds.Width / 2, rectBounds.Y - rectBounds.Height / 2), rectBounds.Size), Color.Red, 5);
-        spriteBatch.DrawRectangle((RectangleF)Bounds, Color.Red,3);
+        spriteBatch.DrawRectangle((RectangleF)Bounds, Color,3);
     }
 }

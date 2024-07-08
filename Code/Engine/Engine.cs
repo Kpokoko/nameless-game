@@ -84,6 +84,11 @@ public class Engine : Game
         _currentScene = new Scene("startScene", Content.RootDirectory);
         _player = _currentScene._entities.Where(item => item is PlayerModel).First() as PlayerModel;
         _inputController = new InputController(_player);
+        var block = _currentScene._entities[39] as Block;
+        var trigger = new TriggerHitbox(block, 80, 80, ReactProperty.ReactOnEntityType);
+        trigger.SetTriggerEntityTypes(typeof(PlayerModel));
+        trigger.SetOffset(new Vector2(0,-80));
+        trigger.OnCollisionEvent += () => _player.BeginJump();
     }
 
     protected override void Update(GameTime gameTime)

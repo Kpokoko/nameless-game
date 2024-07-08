@@ -19,7 +19,7 @@ public class Block : IEntity, ICollider
     {
         Position = new Tile(x, y).Position;
         TilePosition = new Vector2(x, y);
-        Collider.SetCollider(this, 64, 64);
+        collider = new Collider(this, 64, 64);
     }
 
     public Block() { }
@@ -27,7 +27,7 @@ public class Block : IEntity, ICollider
     public Vector2 Position { get; set; }
     public Vector2 TilePosition { get; set; }
     int IGameObject.DrawOrder => 1;
-
+    [XmlIgnore]
     public Collider collider { get; set; }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

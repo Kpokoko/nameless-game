@@ -14,6 +14,7 @@ using MonoGame.Extended.Collisions;
 using nameless.Entity;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Input;
+using System.Xml.Serialization;
 
 namespace nameless.Entity;
 
@@ -61,6 +62,7 @@ public class PlayerModel : ICollider, IEntity
 
     public Vector2 Position { get; set; }
     public PlayerState State { get; set; }
+    [XmlIgnore]
     public Collider collider { get; set; }
 
     public bool IsCollidedX;
@@ -69,7 +71,7 @@ public class PlayerModel : ICollider, IEntity
     public PlayerModel() { }
     public PlayerModel(Texture2D spriteSheet) 
     {
-        Position = new Vector2(305, 450);
+        Position = new Vector2(120, 550);
         _rightSprite = new Sprite(spriteSheet,
                 RIGHT_SPRITE_POS_X,
                 RIGHT_SPRITE_POS_Y,
@@ -122,7 +124,7 @@ public class PlayerModel : ICollider, IEntity
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        CharacterCollider.SetCollider(this, _currentSprite.Width,_currentSprite.Height);
+        collider = new CharacterCollider(this, _currentSprite.Width,_currentSprite.Height);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -180,7 +182,6 @@ public class PlayerModel : ICollider, IEntity
     {
         foreach (var collisionInfo in collisionsInfo)
         {
-            //if (collisionInfo.Other is not IEntity) return;
 
             var collisionSide = Collider.CollisionToSide(collisionInfo);
             //Position -= collisionInfo.PenetrationVector;

@@ -10,15 +10,13 @@ using nameless.Interfaces;
 namespace nameless.Collisions;
 public class CharacterCollider : DynamicCollider
 {
-    private List<CollisionEventArgs> collisionInfoBuffer = new List<CollisionEventArgs>();
+    private List<CollisionEventArgs> collisionInfoBuffer = new();
 
-    public static void SetCollider(ICollider entity, int width, int height)
+    public CharacterCollider(ICollider entity, int width, int height) : base(entity, width, height)
     {
-        entity.collider = new CharacterCollider();
-        entity.collider.SetCollision(entity, width, height);
     }
 
-    public override void SetCollision(IEntity gameObject, int width, int height)
+    protected override void SetCollision(IEntity gameObject, int width, int height)
     {
         Globals.CharacterColliders.Add(this);
         base.SetCollision(gameObject, width, height);
@@ -89,17 +87,17 @@ public class CharacterCollider : DynamicCollider
     public virtual void OnCollision(CollisionEventArgs[] collisionsInfo) 
     {
         var penetrationVector = collisionsInfo.Select(collisionInfo => collisionInfo.PenetrationVector).Aggregate((a, b) => a + b);
-        var Position = entity.GetType().GetProperty("Position");
-        Position.SetValue(entity, (Vector2)Position.GetValue(entity) - penetrationVector);
+        var Position = Entity.GetType().GetProperty("Position");
+        Position.SetValue(Entity, (Vector2)Position.GetValue(Entity) - penetrationVector);
 
-        entity.OnCollision(collisionsInfo);
+        Entity.OnCollision(collisionsInfo);
     }
 
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)
     {
         base.OnCollision(collisionInfo);
 
-        //if (collisionInfo.Other is not IEntity) return;
+        if (collisionInfo.Other is TriggerHitbox) return;
         AddToBuffer(collisionInfo);
     }
 }

@@ -11,13 +11,11 @@ namespace nameless.Collisions;
 
 public class DynamicCollider : Collider
 {
-    public static void SetCollider(ICollider entity, int width, int height)
+    public DynamicCollider(ICollider entity, int width, int height) : base(entity, width, height)
     {
-        entity.collider = new DynamicCollider();
-        entity.collider.SetCollision(entity, width, height);
     }
 
-    public override void SetCollision(IEntity gameObject, int width, int height)
+    protected override void SetCollision(IEntity gameObject, int width, int height)
     {
         Globals.DynamicColliders.Add(this);
         base.SetCollision(gameObject, width, height);
@@ -26,6 +24,6 @@ public class DynamicCollider : Collider
     virtual public void Update()
     {
         var rectBounds = (RectangleF)Bounds;
-        Bounds.Position = entity.Position + Globals.Offset((int)rectBounds.Width, (int)rectBounds.Height);
+        Bounds.Position = Entity.Position + Globals.Offset((int)rectBounds.Width, (int)rectBounds.Height) + offset;
     }
 }
