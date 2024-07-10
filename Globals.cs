@@ -19,6 +19,8 @@ public static class Globals
     public static List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
     public static List<CharacterCollider> CharacterColliders = new List<CharacterCollider>();
 
+    public static List<TriggerHitbox> TriggerHitboxes = new List<TriggerHitbox>();
+
     public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite)
     {
         var size = new Vector2(sprite.Width, sprite.Height);

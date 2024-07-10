@@ -2,6 +2,7 @@
 using MonoGame.Extended.Sprites;
 using nameless.Code.Entities;
 using nameless.Collisions;
+using nameless.Entities.Blocks;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;

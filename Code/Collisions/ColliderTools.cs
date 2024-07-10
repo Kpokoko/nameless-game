@@ -27,5 +27,5 @@ public partial class Collider
         }
     }
 
-    public static bool IsPairSide(Side side1, Side side2) => (int)side1 + (int)side2 == 3; //Pair is: Top-Bottom, Left-Right
+    public static bool IsOppositeSides(Side side1, Side side2) => (int)side1 + (int)side2 == 3; //Opposite is: Top-Bottom, Left-Right
 }

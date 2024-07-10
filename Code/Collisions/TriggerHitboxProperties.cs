@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace nameless.Collisions;
 
-public enum ReactProperty
+public enum ReactOnProperty
 {
     ReactOnEntityType,
-    ReactOnColliderId,
+    ReactOnColliderId
+}
+
+public enum SignalProperty
+{
+    Once,
+    OnceOnEveryContact,
+    Continuous
+}
+
+public enum ActivateProperty
+{
+    OnEntry,
+    OnExit
 }

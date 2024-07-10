@@ -14,6 +14,7 @@ using nameless.Code.SceneManager;
 using System;
 using nameless.Code.Entities;
 using System.ComponentModel.Design;
+using nameless.Entities.Blocks;
 
 namespace nameless.Engine;
 
@@ -85,10 +86,9 @@ public class Engine : Game
         _player = _currentScene._entities.Where(item => item is PlayerModel).First() as PlayerModel;
         _inputController = new InputController(_player);
         var block = _currentScene._entities[39] as Block;
-        var trigger = new TriggerHitbox(block, 80, 80, ReactProperty.ReactOnEntityType);
+        var trigger = new TriggerHitbox(new Pivot(17,12), 80, 80, ReactOnProperty.ReactOnEntityType,SignalProperty.OnceOnEveryContact);
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
-        trigger.SetOffset(new Vector2(0,-80));
-        trigger.OnCollisionEvent += () => _player.BeginJump();
+        trigger.OnCollisionEvent += () => _player.Position = new Vector2(_player.Position.X,_player.Position.Y-60);
     }
 
     protected override void Update(GameTime gameTime)
@@ -103,6 +103,7 @@ public class Engine : Game
         //_player.Update(gameTime);
 
         CollisionManager.Update(gameTime);
+        TriggerManager.Update(gameTime);
 
         KeyboardState keyboardState = Keyboard.GetState();
 

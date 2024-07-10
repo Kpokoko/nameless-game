@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.Collisions;
+using nameless.Engine;
 using nameless.Interfaces;
 
 namespace nameless.Collisions;
@@ -58,7 +59,7 @@ public class CharacterCollider : DynamicCollider
 
         if (collisionsInfo.Length == 2)
         {
-            if (IsPairSide(CollisionToSide(collisionInfoBuffer[0]), CollisionToSide(collisionInfoBuffer[1])))
+            if (IsOppositeSides(CollisionToSide(collisionInfoBuffer[0]), CollisionToSide(collisionInfoBuffer[1])))
                 return collisionsInfo;
             return GetRealCollision(collisionsInfo);
         }
@@ -95,7 +96,7 @@ public class CharacterCollider : DynamicCollider
 
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)
     {
-        base.OnCollision(collisionInfo);
+        if (CollisionManager.OnCollisionDisabled && !this.Equals(CollisionManager.Processing)) return;
 
         if (collisionInfo.Other is TriggerHitbox) return;
         AddToBuffer(collisionInfo);
