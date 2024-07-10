@@ -99,6 +99,7 @@ public class CharacterCollider : DynamicCollider
         if (CollisionManager.OnCollisionDisabled && !this.Equals(CollisionManager.Processing)) return;
 
         if (collisionInfo.Other is TriggerHitbox) return;
+
         AddToBuffer(collisionInfo);
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
+using nameless.Engine;
 using nameless.Interfaces;
 
 namespace nameless.Collisions;
@@ -50,7 +51,7 @@ public partial class Collider : ICollisionActor
 
     public virtual void OnCollision(CollisionEventArgs collisionInfo)
     {
-        //entity.OnCollision(collisionInfo);
+        //if (CollisionManager.OnCollisionDisabled) return;
     }
 
     public void DrawCollision(SpriteBatch spriteBatch)

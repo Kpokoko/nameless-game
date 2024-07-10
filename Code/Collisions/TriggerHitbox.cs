@@ -7,7 +7,7 @@ using MonoGame.Extended.Collisions;
 using nameless.Entity;
 using nameless.Interfaces;
 using Microsoft.Xna.Framework;
-
+using nameless.Engine;
 
 namespace nameless.Collisions;
 
@@ -61,6 +61,7 @@ public class TriggerHitbox : Collider
 
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)
     {
+        if (CollisionManager.OnCollisionDisabled) return;
         if (isActivated && signalProperty is SignalProperty.Once) return;
 
         switch (reactOnProperty)
