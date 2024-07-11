@@ -1,14 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "ozBhCCQkvbR0uq4dH30v9OgDGF9T+pWYXpdi0VKViXusH/w+/fWpRNMg3D6qTz4hdHQbNCxLQXEUT7AKL7S8VQ==",
+  "dgSpecHash": "ybiGdH1pwJM=",
   "success": true,
-  "projectFilePath": "D:\\Progs\\VisualStudio\\C#\\nameless-game\\nameless.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\nameless-game-main\\nameless.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ilya1\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
-    "C:\\Users\\ilya1\\.nuget\\packages\\monogame.extended\\3.8.0\\monogame.extended.3.8.0.nupkg.sha512",
-    "C:\\Users\\ilya1\\.nuget\\packages\\monogame.extended.collisions\\3.8.0\\monogame.extended.collisions.3.8.0.nupkg.sha512",
-    "C:\\Users\\ilya1\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512",
-    "C:\\Users\\ilya1\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+    "C:\\Users\\User\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\monogame.extended\\3.8.0\\monogame.extended.3.8.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\monogame.extended.collisions\\3.8.0\\monogame.extended.collisions.3.8.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Произошла ошибка при получении данных уязвимости пакета: Не удалось загрузить индекс службы для источника https://api.nuget.org/v3/index.json."
+    }
+  ]
 }

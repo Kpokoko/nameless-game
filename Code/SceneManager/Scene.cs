@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Timers;
 using nameless.Entity;
 using nameless.Interfaces;
+using nameless.Entities.Blocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,10 @@ namespace nameless.Code.SceneManager
                 {
                     case PlayerModel:
                         entity.Update(gameTime);
-                        return;
+                        continue;
+                    case InventoryBlock:
+                        entity.Update(gameTime);
+                        continue;
                 }
                 //Обновляем тут движущиеся объекты на сцене
             }

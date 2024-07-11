@@ -62,8 +62,10 @@ public class Engine : Game
         //blocks.Add(new Block(5, 8));
         //
         //var serializer = new Serializer();
+        //serializer.Serialize("startScene", new List<InventoryBlock> { new InventoryBlock(10, 10) });
         //serializer.Serialize("startScene", blocks);
         //var openedData = serializer.Deserialize<Block>("startScene");
+
 
 
         base.Initialize();
@@ -85,7 +87,6 @@ public class Engine : Game
         _currentScene = new Scene("startScene", Content.RootDirectory);
         _player = _currentScene._entities.Where(item => item is PlayerModel).First() as PlayerModel;
         _inputController = new InputController(_player);
-        var block = _currentScene._entities[39] as Block;
         var trigger = new TriggerHitbox(new Pivot(17,12), 80, 80, ReactOnProperty.ReactOnEntityType,SignalProperty.OnceOnEveryContact);
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.OnCollisionEvent += () => _player.Position = new Vector2(_player.Position.X,_player.Position.Y-60);

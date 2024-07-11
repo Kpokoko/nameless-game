@@ -7,6 +7,10 @@
       <X>0</X>
       <Y>0</Y>
     </TilePosition>
+    <Position>
+      <X>120</X>
+      <Y>550</Y>
+    </Position>
     <State>Still</State>
   </PlayerModel>
 </ArrayOfPlayerModel>
