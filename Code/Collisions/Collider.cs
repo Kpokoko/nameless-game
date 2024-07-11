@@ -38,6 +38,12 @@ public partial class Collider : ICollisionActor
         Globals.Colliders.Add(this);
     }
 
+    public void RemoveCollision()
+    {
+        Globals.CollisionComponent.Remove(this);
+        Globals.Colliders.Remove(this);
+    }
+
     public void SetOffset(Vector2 offset)
     {
         this.offset = offset;

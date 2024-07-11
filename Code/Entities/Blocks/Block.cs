@@ -30,10 +30,10 @@ public class Block : IEntity, ICollider
     [XmlIgnore]
     public Collider collider { get; set; }
 
-    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     { }
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     { }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)

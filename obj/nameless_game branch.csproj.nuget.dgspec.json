@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\NamelessGame\\nameless_game branch.csproj": {}
+    "C:\\Users\\User\\Desktop\\nameless-game-main\\nameless_game branch.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\NamelessGame\\nameless_game branch.csproj": {
+    "C:\\Users\\User\\Desktop\\nameless-game-main\\nameless_game branch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\NamelessGame\\nameless_game branch.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\nameless-game-main\\nameless_game branch.csproj",
         "projectName": "nameless_game branch",
-        "projectPath": "C:\\Users\\User\\Desktop\\NamelessGame\\nameless_game branch.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\nameless-game-main\\nameless_game branch.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\NamelessGame\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\nameless-game-main\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

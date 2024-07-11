@@ -1,8 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Sprites;
-using nameless.Code.Entities;
-using nameless.Collisions;
-using nameless.Entities.Blocks;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;
@@ -12,8 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nameless.Code.SceneManager
 {
@@ -35,17 +29,27 @@ namespace nameless.Code.SceneManager
                 readedData.AddRange(((IEnumerable)generic.Invoke(_serialize, new object[] { file })).Cast<T>());
                 foreach (var item in readedData)
                 {
+                    if (item is InventoryBlock)
+                    {
+                        var constructor = item.GetType().GetConstructor(new Type[] { typeof(int), typeof(int) });
+                        var x = (int)item.TilePosition.X;
+                        var y = (int)item.TilePosition.Y;
+                        sceneContent.Add((T)constructor.Invoke(new object[] { x, y }));
+                        continue;
+                    }
                     if (item is Block)
                     {
                         var constructor = item.GetType().GetConstructor(new Type[] { typeof(int), typeof(int) });
                         var x = (int)item.TilePosition.X;
                         var y = (int)item.TilePosition.Y;
                         sceneContent.Add((T)constructor.Invoke(new object[] {x, y}));
+                        continue;
                     }
                     if (item is PlayerModel)
                     {
                         var constructor = item.GetType().GetConstructor(new Type[] { typeof(Texture2D) });
                         sceneContent.Add((T)constructor.Invoke(new object[] { Globals.SpriteSheet }));
+                        continue;
                     }
                 }
                 readedData = new List<T>();

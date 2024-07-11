@@ -16,24 +16,21 @@ public struct Tile
 
     public Tile(int x, int y)
     {
-        Position = GetTileCenter(x, y);
+        Position = GetTileCenter(new Vector2(x, y));
     }
 
-    private static Vector2 GetTileCenter(int x, int y)
+    public static Vector2 GetTileCenter(Vector2 absolutePos)
     {
-        var posX = x * Width + Width / 2;
-        var posY = y * Height + Height / 2;
+        var posX = absolutePos.X * Width + Width / 2;
+        var posY = absolutePos.Y * Height + Height / 2;
         return new Vector2(posX, posY);
     }
 
-    //public static void GetPosInTileCoordinats<T>(List<T> list)
-    //    where T : IEntity
-    //{
-    //    foreach (var item in list)
-    //    {
-    //        var tileX = Math.Floor(item.Position.X / 64);
-    //        var tileY = Math.Floor(item.Position.Y / 64);
-    //        item.Position = new Vector2((float)tileX, (float)tileY);
-    //    }
-    //}
+    public static Vector2 GetPosInTileCoordinats(Vector2 absolutePos)
+    {
+        var tileX = Math.Floor(absolutePos.X / 64);
+        var tileY = Math.Floor(absolutePos.Y / 64);
+        return new Vector2((float)tileX, (float)tileY);
+            //item.Position = new Vector2((float)tileX, (float)tileY);
+    }
 }

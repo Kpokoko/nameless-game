@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\nameless-game-main\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\entities\\blocks\\inventoryblock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\blocks\\inventoryblock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\scenemanager\\sceneloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\scenemanager\\sceneloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\controls\\inputcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\controls\\inputcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\engine\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\engine\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,40 +27,28 @@
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\scenemanager\\scene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\scenemanager\\sceneloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\scenemanager\\sceneloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\entities\\blocks\\block.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\blocks\\block.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\entities\\player\\playermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\player\\playermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\controls\\inputcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\controls\\inputcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\entities\\entitycollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\entitycollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\collisions\\collidertools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\collidertools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\entities\\blocks\\block.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\blocks\\block.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\engine\\collisionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\engine\\collisionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\entities\\entitycollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\entitycollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\users\\user\\desktop\\nameless-game-main\\code\\collisions\\sidecollider\\sidecollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -78,37 +82,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "InventoryBlock.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\Blocks\\InventoryBlock.cs",
+              "RelativeDocumentMoniker": "Code\\Entities\\Blocks\\InventoryBlock.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\Blocks\\InventoryBlock.cs",
+              "RelativeToolTip": "Code\\Entities\\Blocks\\InventoryBlock.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAB8AAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T18:17:37.171Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "InputController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Controls\\InputController.cs",
               "RelativeDocumentMoniker": "Code\\Controls\\InputController.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Controls\\InputController.cs",
               "RelativeToolTip": "Code\\Controls\\InputController.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAIwBMAAAAIAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-07T12:03:33.124Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "EntityCollider.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\EntityCollider.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\EntityCollider.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\EntityCollider.cs",
               "RelativeToolTip": "Code\\Entities\\EntityCollider.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAA8AAAAiAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA8AAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T09:04:18.467Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-07T09:04:18.467Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "MainSideCollider.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Collisions\\SideCollider\\MainSideCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\SideCollider\\MainSideCollider.cs",
@@ -116,12 +132,11 @@
               "RelativeToolTip": "Code\\Collisions\\SideCollider\\MainSideCollider.cs",
               "ViewState": "AQIAABsAAAAAAAAAAAASwCkAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T08:57:03.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-07T08:57:03.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "SideCollider.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Collisions\\SideCollider\\SideCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\SideCollider\\SideCollider.cs",
@@ -129,12 +144,11 @@
               "RelativeToolTip": "Code\\Collisions\\SideCollider\\SideCollider.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAlwBoAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T08:52:53.597Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-07T08:52:53.597Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "DynamicCollider.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Collisions\\DynamicCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\DynamicCollider.cs",
@@ -142,31 +156,30 @@
               "RelativeToolTip": "Code\\Collisions\\DynamicCollider.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAuwA0AAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T08:52:40.804Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-07T08:52:40.804Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "Block.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\Blocks\\Block.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Blocks\\Block.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\Blocks\\Block.cs",
               "RelativeToolTip": "Code\\Entities\\Blocks\\Block.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABUAAAAWAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABgAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:36:49.192Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Scene.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\SceneManager\\Scene.cs",
               "RelativeDocumentMoniker": "Code\\SceneManager\\Scene.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\SceneManager\\Scene.cs",
               "RelativeToolTip": "Code\\SceneManager\\Scene.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAAACoAAAAYAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAxwBkAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:33:46.201Z",
               "EditorCaption": ""
@@ -179,27 +192,27 @@
               "RelativeDocumentMoniker": "Code\\Serializer\\Serialize.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Serializer\\Serialize.cs",
               "RelativeToolTip": "Code\\Serializer\\Serialize.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAiwB8AAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:29:41.613Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "SceneLoader.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\SceneManager\\SceneLoader.cs",
               "RelativeDocumentMoniker": "Code\\SceneManager\\SceneLoader.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\SceneManager\\SceneLoader.cs",
               "RelativeToolTip": "Code\\SceneManager\\SceneLoader.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAtwC8AAAAUAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAgAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:26:43.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "ColliderTools.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Collisions\\ColliderTools.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\ColliderTools.cs",
@@ -207,25 +220,24 @@
               "RelativeToolTip": "Code\\Collisions\\ColliderTools.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAgwBsAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.525Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:16:39.525Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Engine.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Engine\\Engine.cs",
               "RelativeDocumentMoniker": "Code\\Engine\\Engine.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Engine\\Engine.cs",
               "RelativeToolTip": "Code\\Engine\\Engine.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAAAhwFAAAAAKAAAA",
+              "ViewState": "AQIAACoAAAAAAAAAAAAhwD8AAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.537Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "CharacterCollider.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Collisions\\CharacterCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\CharacterCollider.cs",
@@ -233,12 +245,11 @@
               "RelativeToolTip": "Code\\Collisions\\CharacterCollider.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAlwBsAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.528Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:16:39.528Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Collider.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Collisions\\Collider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\Collider.cs",
@@ -246,25 +257,24 @@
               "RelativeToolTip": "Code\\Collisions\\Collider.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAmwBQAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.53Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:16:39.53Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "PlayerModel.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\Player\\PlayerModel.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Player\\PlayerModel.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Entities\\Player\\PlayerModel.cs",
               "RelativeToolTip": "Code\\Entities\\Player\\PlayerModel.cs",
-              "ViewState": "AQIAAHMAAAAAAAAAAAApwI4AAAAEAAAA",
+              "ViewState": "AQIAADoAAAAAAAAAAAAhwEYAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.531Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -272,12 +282,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:16:39.533Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "CollisionManager.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Code\\Engine\\CollisionManager.cs",
               "RelativeDocumentMoniker": "Code\\Engine\\CollisionManager.cs",
@@ -285,18 +294,17 @@
               "RelativeToolTip": "Code\\Engine\\CollisionManager.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAABAAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.535Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:16:39.535Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Globals.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\nameless-game-main\\Globals.cs",
               "RelativeDocumentMoniker": "Globals.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\nameless-game-main\\Globals.cs",
               "RelativeToolTip": "Globals.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAhwBcAAAAIAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAhwAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.538Z",
               "EditorCaption": ""
