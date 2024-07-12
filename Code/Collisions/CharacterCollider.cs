@@ -17,10 +17,16 @@ public class CharacterCollider : DynamicCollider
     {
     }
 
-    protected override void SetCollision(IEntity gameObject, int width, int height)
+    protected override void SetCollider(IEntity gameObject, int width, int height)
     {
-        Globals.CharacterColliders.Add(this);
-        base.SetCollision(gameObject, width, height);
+        Globals.CollisionManager.CharacterColliders.Add(this);
+        base.SetCollider(gameObject, width, height);
+    }
+
+    public override void RemoveCollider()
+    {
+        base.RemoveCollider();
+        Globals.CollisionManager.CharacterColliders.Remove(this);
     }
 
     public void UpdateCollision()
@@ -74,7 +80,7 @@ public class CharacterCollider : DynamicCollider
             ClearBuffer();
             var collisionInfo = collisionsInfo[i];
             Bounds.Position = actualPosition - collisionInfo.PenetrationVector;
-            Globals.CollisionComponent.Update(Globals.GameTime);
+            Globals.CollisionManager.CollisionComponent.Update(Globals.GameTime);
             if (collisionInfoBuffer.Count == 0)
             {
                 Bounds.Position = actualPosition;
@@ -98,7 +104,7 @@ public class CharacterCollider : DynamicCollider
     {
         if (CollisionManager.OnCollisionDisabled && !this.Equals(CollisionManager.Processing)) return;
 
-        if (collisionInfo.Other is TriggerHitbox) return;
+        if (collisionInfo.Other is HitboxTrigger) return;
 
         AddToBuffer(collisionInfo);
     }

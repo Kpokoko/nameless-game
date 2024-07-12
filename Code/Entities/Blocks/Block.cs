@@ -13,7 +13,7 @@ using nameless.Tiles;
 
 namespace nameless.Entity;
 
-public class Block : IEntity, ICollider
+public partial class Block : IEntity, ICollider
 {
     public Block(int x, int y)
     {
@@ -34,7 +34,7 @@ public class Block : IEntity, ICollider
     { }
 
     public virtual void Update(GameTime gameTime)
-    { }
+    { UpdateConstructor(gameTime); }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)
     {

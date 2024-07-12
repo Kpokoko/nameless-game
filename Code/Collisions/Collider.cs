@@ -26,22 +26,22 @@ public partial class Collider : ICollisionActor
 
     public Collider(ICollider entity, int width, int height)
     {
-        entity.collider = this;
-        entity.collider.SetCollision(entity,width, height);
+        //entity.collider = this;
+        SetCollider(entity,width, height);
     }
 
-    protected virtual void SetCollision(IEntity entity, int width, int height)
+    protected virtual void SetCollider(IEntity entity, int width, int height)
     {
         Bounds = new RectangleF(entity.Position + Globals.Offset(width, height), new Size2(width, height));
         this.Entity = (ICollider)entity;
-        Globals.CollisionComponent.Insert(this);
-        Globals.Colliders.Add(this);
+        Globals.CollisionManager.CollisionComponent.Insert(this);
+        Globals.CollisionManager.Colliders.Add(this);
     }
 
-    public void RemoveCollision()
+    public virtual void RemoveCollider()
     {
-        Globals.CollisionComponent.Remove(this);
-        Globals.Colliders.Remove(this);
+        Globals.CollisionManager.CollisionComponent.Remove(this);
+        Globals.CollisionManager.Colliders.Remove(this);
     }
 
     public void SetOffset(Vector2 offset)

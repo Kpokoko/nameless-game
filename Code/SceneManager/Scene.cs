@@ -15,6 +15,7 @@ namespace nameless.Code.SceneManager
     public class Scene
     {
         public List<IEntity> _entities;
+        public bool ConstructorMode {  get; set; } = true;
 
         public Scene(string sceneName, string dir)
         {
@@ -32,6 +33,10 @@ namespace nameless.Code.SceneManager
                         continue;
                     case InventoryBlock:
                         entity.Update(gameTime);
+                        continue;
+                    case Block:
+                        if (ConstructorMode)
+                            entity.Update(gameTime);
                         continue;
                 }
                 //Обновляем тут движущиеся объекты на сцене

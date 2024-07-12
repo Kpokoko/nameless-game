@@ -15,6 +15,8 @@ using System;
 using nameless.Code.Entities;
 using System.ComponentModel.Design;
 using nameless.Entities.Blocks;
+using nameless.GameObjects;
+using MonoGame.Extended.Collections;
 
 namespace nameless.Engine;
 
@@ -29,7 +31,7 @@ public class Engine : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private PlayerModel _player;
-    private InputController _inputController;
+    private PlayerInputController _inputController;
     private KeyboardState _previousKeybardState;
 
     private Texture2D _spriteSheet;
@@ -44,7 +46,9 @@ public class Engine : Game
     protected override void Initialize()
     {
         var collisionComponent = new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
-        Globals.CollisionComponent = collisionComponent;
+        Globals.CollisionManager = new CollisionManager(collisionComponent);
+        Globals.TriggerManager = new TriggerManager();
+
         var blocks = new List<Block>();
         //for (var i = 0; i < 14; i++)
         //{
@@ -86,10 +90,26 @@ public class Engine : Game
         //serializer.Serialize("startScene", new List<PlayerModel> { _player });
         _currentScene = new Scene("startScene", Content.RootDirectory);
         _player = _currentScene._entities.Where(item => item is PlayerModel).First() as PlayerModel;
-        _inputController = new InputController(_player);
-        var trigger = new TriggerHitbox(new Pivot(17,12), 80, 80, ReactOnProperty.ReactOnEntityType,SignalProperty.OnceOnEveryContact);
+        _inputController = new PlayerInputController(_player);
+        var trigger = new HitboxTrigger(new Pivot(17,12), 80, 80, ReactOnProperty.ReactOnEntityType,Collisions.SignalProperty.OnceOnEveryContact);
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
+        trigger.Color = Color.SkyBlue;
         trigger.OnCollisionEvent += () => _player.Position = new Vector2(_player.Position.X,_player.Position.Y-60);
+    
+        foreach (var block in _currentScene._entities.Where(item=>item is Block))
+        {
+            var colliderBlock = block as ICollider; 
+            var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
+            trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
+            trigger2.OnCollisionEvent += () =>
+            {
+                colliderBlock.collider.Color = Color.Blue;
+            };
+            trigger2.OnCollisionExitEvent += () =>
+            {
+                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.collider.Color = Color.Red; });
+            };
+        }
     }
 
     protected override void Update(GameTime gameTime)
@@ -99,12 +119,13 @@ public class Engine : Game
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
 
+        MouseInputController.ProcessControls();
         _currentScene.Update(gameTime);
 
         //_player.Update(gameTime);
 
-        CollisionManager.Update(gameTime);
-        TriggerManager.Update(gameTime);
+        Globals.CollisionManager.Update(gameTime);
+        Globals.TriggerManager.Update(gameTime);
 
         KeyboardState keyboardState = Keyboard.GetState();
 
@@ -124,7 +145,7 @@ public class Engine : Game
 
         //_player.Draw(_spriteBatch, gameTime);
 
-        CollisionManager.DrawCollisions(_spriteBatch);
+        Globals.CollisionManager.DrawCollisions(_spriteBatch);
 
         _spriteBatch.End();
         base.Draw(gameTime);

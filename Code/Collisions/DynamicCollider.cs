@@ -15,10 +15,16 @@ public class DynamicCollider : Collider
     {
     }
 
-    protected override void SetCollision(IEntity gameObject, int width, int height)
+    protected override void SetCollider(IEntity gameObject, int width, int height)
     {
-        Globals.DynamicColliders.Add(this);
-        base.SetCollision(gameObject, width, height);
+        Globals.CollisionManager.DynamicColliders.Add(this);
+        base.SetCollider(gameObject, width, height);
+    }
+
+    public override void RemoveCollider()
+    {
+        base.RemoveCollider();
+        Globals.CollisionManager.DynamicColliders.Remove(this);
     }
 
     virtual public void Update()
