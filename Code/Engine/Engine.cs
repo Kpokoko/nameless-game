@@ -44,8 +44,9 @@ public class Engine : Game
 
     protected override void Initialize()
     {
-        var collisionComponent = new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
-        Globals.CollisionManager = new CollisionManager(collisionComponent);
+        var collisionComponent = () => new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
+        Globals.CollisionManager = new CollisionManager(collisionComponent());
+        CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
 
         var blocks = new List<Block>();

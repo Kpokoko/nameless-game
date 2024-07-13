@@ -15,13 +15,14 @@ public class CollisionManager
     public CollisionManager(CollisionComponent collisionComponent) {CollisionComponent = collisionComponent;}
 
     public CollisionComponent CollisionComponent;
+    public static CollisionComponent TestCollisionComponent;
 
     public static bool OnCollisionDisabled;
     public static Collider Processing;
 
     public List<Collider> Colliders = new List<Collider>();
     public List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
-    public List<CharacterCollider> CharacterColliders = new List<CharacterCollider>();
+    public List<KinematicCollider> KinematicColliders = new List<KinematicCollider>();
 
     public void Update(GameTime gameTime)
     {
@@ -30,10 +31,10 @@ public class CollisionManager
         OnCollisionDisabled = false;
         CollisionComponent.Update(gameTime);
         OnCollisionDisabled = true;
-        for (var i = 0; i < CharacterColliders.Count; i++)
+        for (var i = 0; i < KinematicColliders.Count; i++)
         {
-            Processing = CharacterColliders[i];
-            CharacterColliders[i].UpdateCollision();
+            Processing = KinematicColliders[i];
+            KinematicColliders[i].UpdateCollision();
         }
     }
 

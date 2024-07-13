@@ -18,7 +18,7 @@ using System.Xml.Serialization;
 
 namespace nameless.Entity;
 
-public class PlayerModel : ICollider, IEntity
+public class PlayerModel : ICollider, IEntity, IKinematic
 {
     public Vector2 TilePosition { get; set; }
 
@@ -64,6 +64,7 @@ public class PlayerModel : ICollider, IEntity
     public PlayerState State { get; set; }
     [XmlIgnore]
     public Collider collider { get; set; }
+    public Vector2 Velocity { get { return new Vector2(_horizontalVelocity, _verticalVelocity); } }
 
     public bool IsCollidedX;
     public bool IsCollidedY;
@@ -124,7 +125,7 @@ public class PlayerModel : ICollider, IEntity
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        collider = new CharacterCollider(this, _currentSprite.Width,_currentSprite.Height);
+        collider = new KinematicCollider(this, _currentSprite.Width,_currentSprite.Height);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
