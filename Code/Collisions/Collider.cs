@@ -17,6 +17,14 @@ public partial class Collider : ICollisionActor
 {
     [XmlIgnore]
     public IShapeF Bounds { get; protected set; }
+    public Vector2 Position {
+        get { return _position;}
+        set { 
+            _position = value;
+            var rect = (RectangleF)Bounds;
+            Bounds.Position = _position + Globals.Offset((int)rect.Width,(int)rect.Height) + offset;
+        } }
+    private Vector2 _position;
     public ICollider Entity { get; protected set; }
     public Color Color { get; set; } = Color.Red;
     public string Id { get; protected set; }
@@ -32,7 +40,8 @@ public partial class Collider : ICollisionActor
 
     protected virtual void SetCollider(IEntity entity, int width, int height)
     {
-        Bounds = new RectangleF(entity.Position + Globals.Offset(width, height), new Size2(width, height));
+        Bounds = new RectangleF(Vector2.Zero, new Size2(width, height));
+        Position = entity.Position;
         this.Entity = (ICollider)entity;
         Globals.CollisionManager.CollisionComponent.Insert(this);
         Globals.CollisionManager.Colliders.Add(this);
@@ -47,7 +56,7 @@ public partial class Collider : ICollisionActor
     public void SetOffset(Vector2 offset)
     {
         this.offset = offset;
-        Bounds.Position += offset;
+        Position = Position;
     }
 
     public void SetId(string id)

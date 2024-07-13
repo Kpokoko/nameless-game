@@ -33,4 +33,9 @@ public struct Tile
         return new Vector2((float)tileX, (float)tileY);
             //item.Position = new Vector2((float)tileX, (float)tileY);
     }
+
+    public static void SetPosition()
+    {
+
+    }
 }

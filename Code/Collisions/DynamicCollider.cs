@@ -29,7 +29,6 @@ public class DynamicCollider : Collider
 
     virtual public void Update()
     {
-        var rectBounds = (RectangleF)Bounds;
-        Bounds.Position = Entity.Position + Globals.Offset((int)rectBounds.Width, (int)rectBounds.Height) + offset;
+        Position = Entity.Position;
     }
 }

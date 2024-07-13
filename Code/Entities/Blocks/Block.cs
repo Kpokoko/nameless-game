@@ -13,28 +13,33 @@ using nameless.Tiles;
 
 namespace nameless.Entity;
 
-public partial class Block : IEntity, ICollider
+public partial class Block : TileGridEntity, IEntity, ICollider
 {
     public Block(int x, int y)
     {
-        Position = new Tile(x, y).Position;
+        //Position = new Tile(x, y).Position;
         TilePosition = new Vector2(x, y);
         collider = new Collider(this, 64, 64);
     }
 
     public Block() { }
     [XmlIgnore]
-    public Vector2 Position { get; set; }
-    public Vector2 TilePosition { get; set; }
+
     int IGameObject.DrawOrder => 1;
     [XmlIgnore]
     public Collider collider { get; set; }
+
+    public override void OnPositionChange(Vector2 position)
+    {
+        if (collider != null)
+            collider.Position = position;
+    }
 
     public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     { }
 
     public virtual void Update(GameTime gameTime)
-    { UpdateConstructor(gameTime); }
+    { }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)
     {

@@ -26,6 +26,10 @@ namespace nameless.Code.SceneManager
         {
             foreach (var entity in _entities)
             {
+                //Constructor mode update
+                if (ConstructorMode && entity is IConstructable)
+                    (entity as IConstructable).UpdateConstructor(gameTime);
+
                 switch (entity)
                 {
                     case PlayerModel:
@@ -33,10 +37,6 @@ namespace nameless.Code.SceneManager
                         continue;
                     case InventoryBlock:
                         entity.Update(gameTime);
-                        continue;
-                    case Block:
-                        if (ConstructorMode)
-                            entity.Update(gameTime);
                         continue;
                 }
                 //Обновляем тут движущиеся объекты на сцене

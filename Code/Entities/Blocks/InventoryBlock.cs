@@ -22,22 +22,12 @@ namespace nameless.Entity
         {
             var mouseState = MouseInputController.MouseState;
             var mousePos = MouseInputController.MousePos;
-            if (this.TilePosition == Tile.GetPosInTileCoordinats(_oldMousePos) && mouseState.LeftButton is ButtonState.Pressed)
+            if (this.TilePosition == MouseInputController.PreviousMouseTilePos && mouseState.LeftButton is ButtonState.Pressed)
             {
                 var mouseTilePos = Tile.GetPosInTileCoordinats(mousePos);
                 if (this.TilePosition != mouseTilePos)
-                    MoveToTile(mouseTilePos);
+                    TilePosition = mouseTilePos;
             }
-            _oldMousePos = mousePos;
-            base.Update(gameTime);
-        }
-
-        private void MoveToTile(Vector2 mouseTilePos)
-        {
-            collider.RemoveCollider();
-            this.Position = Tile.GetTileCenter(mouseTilePos);
-            this.TilePosition = mouseTilePos;
-            collider = new Collider(this, 64, 64);
         }
     }
 }

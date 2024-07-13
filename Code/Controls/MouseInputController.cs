@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using nameless.Tiles;
 
 namespace nameless.Controls;
 
@@ -13,8 +14,11 @@ public static class MouseInputController
 {
     public static MouseState MouseState { get; private set; }
     public static Vector2 MousePos { get; private set; } = new Vector2(0, 0);
-    public static MouseState PreviousMouseState { get; private set; }
+    public static Vector2 MouseTilePos { get { return Tile.GetPosInTileCoordinats(MousePos); } }
     public static Vector2 PreviousMousePos { get; private set; }
+    public static Vector2 PreviousMouseTilePos { get { return Tile.GetPosInTileCoordinats(PreviousMousePos); } }
+
+    public static MouseState PreviousMouseState { get; private set; }
 
     private static PlayerModel _player;
 

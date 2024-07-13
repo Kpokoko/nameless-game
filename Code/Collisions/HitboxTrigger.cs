@@ -29,8 +29,7 @@ public class HitboxTrigger : Collider
         Color = Color.Transparent;//Color.DarkGoldenrod;
         reactOnProperty = reactOn;
         signalProperty = signal;
-        //if (signalProperty is SignalProperty.OnceOnEveryContact) 
-            Globals.TriggerManager.TriggerHitboxes.Add(this);
+        Globals.TriggerManager.TriggerHitboxes.Add(this);
     }
 
     public event Action OnCollisionEvent;
