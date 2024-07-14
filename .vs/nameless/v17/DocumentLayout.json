@@ -3,40 +3,56 @@
   "WorkspaceRootPath": "C:\\C#\\Games\\Repos\\nameless-game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\kinematiccollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\kinematiccollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\mycollisioneventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\mycollisioneventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\side.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\side.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\engine\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\engine\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\kinematicaccuratecollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\kinematicaccuratecollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\collidertools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\collidertools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\collider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\collider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\entities\\player\\playermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\player\\playermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\interfaces\\ikinematic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\interfaces\\ikinematic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\interfaces\\iplayercollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\interfaces\\iplayercollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\mycollisioneventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\mycollisioneventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\interfaces\\icollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\interfaces\\icollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\engine\\collisionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\engine\\collisionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\entities\\player\\playermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\entities\\player\\playermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\kinematiccollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\kinematiccollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\engine\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\engine\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\collider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\collider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\collisions\\side.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\collisions\\side.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\interfaces\\ikinematic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\interfaces\\ikinematic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\interfaces\\ientity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -83,10 +99,6 @@
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\scenemanager\\sceneloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\serializer\\serialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|c:\\c#\\games\\repos\\nameless-game\\code\\controls\\inputcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F2C445-F0F9-4AA5-8EDC-9BB115843ACF}|nameless.csproj|solutionrelative:code\\controls\\inputcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -114,24 +126,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
+              "Title": "ICollider.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\ICollider.cs",
+              "RelativeDocumentMoniker": "Code\\Interfaces\\ICollider.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\ICollider.cs",
+              "RelativeToolTip": "Code\\Interfaces\\ICollider.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-14T08:30:53.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "KinematicAccurateCollider.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\KinematicAccurateCollider.cs",
+              "RelativeDocumentMoniker": "Code\\Collisions\\KinematicAccurateCollider.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\KinematicAccurateCollider.cs*",
+              "RelativeToolTip": "Code\\Collisions\\KinematicAccurateCollider.cs*",
+              "ViewState": "AQIAAHAAAAAAAAAAAAAAwIUAAACAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-14T08:23:03.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "MyCollisionEventArgs.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\MyCollisionEventArgs.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\MyCollisionEventArgs.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\MyCollisionEventArgs.cs*",
-              "RelativeToolTip": "Code\\Collisions\\MyCollisionEventArgs.cs*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwBMAAAAWAAAA",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\MyCollisionEventArgs.cs",
+              "RelativeToolTip": "Code\\Collisions\\MyCollisionEventArgs.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAoAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-13T08:48:07.663Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "Side.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\Side.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\Side.cs",
@@ -144,54 +182,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IKinematic.cs",
-              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IKinematic.cs",
-              "RelativeDocumentMoniker": "Code\\Interfaces\\IKinematic.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IKinematic.cs",
-              "RelativeToolTip": "Code\\Interfaces\\IKinematic.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:43:02.45Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IEntity.cs",
-              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IEntity.cs",
-              "RelativeDocumentMoniker": "Code\\Interfaces\\IEntity.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IEntity.cs",
-              "RelativeToolTip": "Code\\Interfaces\\IEntity.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:42:38.085Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
               "Title": "KinematicCollider.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\KinematicCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\KinematicCollider.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\KinematicCollider.cs*",
-              "RelativeToolTip": "Code\\Collisions\\KinematicCollider.cs*",
-              "ViewState": "AQIAAGAAAAAAAAAAAAAIwGwAAAAKAAAA",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\KinematicCollider.cs",
+              "RelativeToolTip": "Code\\Collisions\\KinematicCollider.cs",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAgwGwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "PlayerModel.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\Player\\PlayerModel.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Player\\PlayerModel.cs",
               "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\Player\\PlayerModel.cs",
               "RelativeToolTip": "Code\\Entities\\Player\\PlayerModel.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAawEcAAAAcAAAA",
+              "ViewState": "AQIAALIAAAAAAAAAAAAQwL8AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Serialize.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Serializer\\Serialize.cs",
+              "RelativeDocumentMoniker": "Code\\Serializer\\Serialize.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Serializer\\Serialize.cs",
+              "RelativeToolTip": "Code\\Serializer\\Serialize.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAjwBgAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T12:29:41.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ColliderTools.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\ColliderTools.cs",
+              "RelativeDocumentMoniker": "Code\\Collisions\\ColliderTools.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\ColliderTools.cs",
+              "RelativeToolTip": "Code\\Collisions\\ColliderTools.cs",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAcwEgAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T12:16:39.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPlayerCollider.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IPlayerCollider.cs",
+              "RelativeDocumentMoniker": "Code\\Interfaces\\IPlayerCollider.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IPlayerCollider.cs",
+              "RelativeToolTip": "Code\\Interfaces\\IPlayerCollider.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-14T08:31:31.944Z",
               "EditorCaption": ""
             },
             {
@@ -202,53 +253,64 @@
               "RelativeDocumentMoniker": "Code\\Engine\\CollisionManager.cs",
               "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Engine\\CollisionManager.cs",
               "RelativeToolTip": "Code\\Engine\\CollisionManager.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABEAAAA7AAAA",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAwCEAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.535Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "Collider.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\Collider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\Collider.cs",
               "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\Collider.cs",
               "RelativeToolTip": "Code\\Collisions\\Collider.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAAABQAAAAYAAAA",
+              "ViewState": "AQIAABwAAAAAAAAAAAAIwCsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.53Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ColliderTools.cs",
-              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\ColliderTools.cs",
-              "RelativeDocumentMoniker": "Code\\Collisions\\ColliderTools.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\ColliderTools.cs",
-              "RelativeToolTip": "Code\\Collisions\\ColliderTools.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAWwCsAAAA9AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.525Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "Engine.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Engine\\Engine.cs",
               "RelativeDocumentMoniker": "Code\\Engine\\Engine.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Engine\\Engine.cs*",
-              "RelativeToolTip": "Code\\Engine\\Engine.cs*",
-              "ViewState": "AQIAACcAAAAAAAAAAAAhwDIAAAAAAAAA",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Engine\\Engine.cs",
+              "RelativeToolTip": "Code\\Engine\\Engine.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAawDIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T12:16:39.537Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
+              "Title": "IEntity.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IEntity.cs",
+              "RelativeDocumentMoniker": "Code\\Interfaces\\IEntity.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IEntity.cs",
+              "RelativeToolTip": "Code\\Interfaces\\IEntity.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-13T07:42:38.085Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IKinematic.cs",
+              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IKinematic.cs",
+              "RelativeDocumentMoniker": "Code\\Interfaces\\IKinematic.cs",
+              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IKinematic.cs",
+              "RelativeToolTip": "Code\\Interfaces\\IKinematic.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-13T07:43:02.45Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -256,12 +318,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:16:39.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:16:39.533Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "Scene.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\SceneManager\\Scene.cs",
               "RelativeDocumentMoniker": "Code\\SceneManager\\Scene.cs",
@@ -269,12 +330,11 @@
               "RelativeToolTip": "Code\\SceneManager\\Scene.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAA1wBkAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:33:46.201Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:33:46.201Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "IConstructable.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Interfaces\\IConstructable.cs",
               "RelativeDocumentMoniker": "Code\\Interfaces\\IConstructable.cs",
@@ -282,12 +342,11 @@
               "RelativeToolTip": "Code\\Interfaces\\IConstructable.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:27:56.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T07:27:56.27Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "DynamicCollider.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\DynamicCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\DynamicCollider.cs",
@@ -299,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "SideCollider.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\SideCollider\\SideCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\SideCollider\\SideCollider.cs",
@@ -311,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "MainSideCollider.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\SideCollider\\MainSideCollider.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\SideCollider\\MainSideCollider.cs",
@@ -323,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "InventoryBlock.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\Blocks\\InventoryBlock.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Blocks\\InventoryBlock.cs",
@@ -331,12 +390,11 @@
               "RelativeToolTip": "Code\\Entities\\Blocks\\InventoryBlock.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T18:17:37.171Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T18:17:37.171Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "BlockConstructor.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\Blocks\\BlockConstructor.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Blocks\\BlockConstructor.cs",
@@ -344,12 +402,11 @@
               "RelativeToolTip": "Code\\Entities\\Blocks\\BlockConstructor.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:18:39.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T07:18:39.935Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "Pivot.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\Blocks\\Pivot.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Blocks\\Pivot.cs",
@@ -357,12 +414,11 @@
               "RelativeToolTip": "Code\\Entities\\Blocks\\Pivot.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:26:57.478Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T07:26:57.478Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "HitboxTrigger.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\HitboxTrigger.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\HitboxTrigger.cs",
@@ -370,12 +426,11 @@
               "RelativeToolTip": "Code\\Collisions\\HitboxTrigger.cs",
               "ViewState": "AQIAADYAAAAAAAAAAAAowAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:17:46.293Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T07:17:46.293Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "Block.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\Blocks\\Block.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\Blocks\\Block.cs",
@@ -383,12 +438,11 @@
               "RelativeToolTip": "Code\\Entities\\Blocks\\Block.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAABgAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:36:49.192Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T12:36:49.192Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "HitboxTriggerProperties.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Collisions\\HitboxTriggerProperties.cs",
               "RelativeDocumentMoniker": "Code\\Collisions\\HitboxTriggerProperties.cs",
@@ -396,12 +450,11 @@
               "RelativeToolTip": "Code\\Collisions\\HitboxTriggerProperties.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T07:17:42.734Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T07:17:42.734Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "EntityCollider.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Entities\\EntityCollider.cs",
               "RelativeDocumentMoniker": "Code\\Entities\\EntityCollider.cs",
@@ -413,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "InputController.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Controls\\InputController.cs",
               "RelativeDocumentMoniker": "Code\\Controls\\InputController.cs",
@@ -425,19 +478,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Serialize.cs",
-              "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Serializer\\Serialize.cs",
-              "RelativeDocumentMoniker": "Code\\Serializer\\Serialize.cs",
-              "ToolTip": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\Serializer\\Serialize.cs",
-              "RelativeToolTip": "Code\\Serializer\\Serialize.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T12:29:41.613Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "SceneLoader.cs",
               "DocumentMoniker": "C:\\C#\\Games\\Repos\\nameless-game\\Code\\SceneManager\\SceneLoader.cs",
               "RelativeDocumentMoniker": "Code\\SceneManager\\SceneLoader.cs",

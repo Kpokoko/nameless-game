@@ -49,6 +49,7 @@ public class Engine : Game
         CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
 
+
         var blocks = new List<Block>();
         //for (var i = 0; i < 14; i++)
         //{
