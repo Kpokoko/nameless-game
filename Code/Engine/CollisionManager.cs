@@ -23,6 +23,7 @@ public class CollisionManager
     public List<Collider> Colliders = new List<Collider>();
     public List<DynamicCollider> DynamicColliders = new List<DynamicCollider>();
     public List<KinematicCollider> KinematicColliders = new List<KinematicCollider>();
+    public List<KinematicAccurateCollider> KinematicAccurateColliders = new List<KinematicAccurateCollider>();
 
     public void Update(GameTime gameTime)
     {
@@ -35,6 +36,11 @@ public class CollisionManager
         {
             Processing = KinematicColliders[i];
             KinematicColliders[i].UpdateCollision();
+        }
+        for (var i = 0; i < KinematicAccurateColliders.Count; i++)
+        {
+            Processing = KinematicAccurateColliders[i];
+            KinematicAccurateColliders[i].UpdateCollision();
         }
     }
 

@@ -48,6 +48,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic
     public const int SPRITE_HEIGHT = 52;
 
     private float _verticalVelocity;
+    private float _realVerticalVelocity;
     private float _horizontalVelocity;
     private float _dropVelocity;
 
@@ -64,7 +65,8 @@ public class PlayerModel : ICollider, IEntity, IKinematic
     public PlayerState State { get; set; }
     [XmlIgnore]
     public Collider collider { get; set; }
-    public Vector2 Velocity { get { return new Vector2(_horizontalVelocity, _verticalVelocity); } }
+    [XmlIgnore]
+    public Vector2 Velocity { get; private set; }
 
     public bool IsCollidedX;
     public bool IsCollidedY;
@@ -72,7 +74,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic
     public PlayerModel() { }
     public PlayerModel(Texture2D spriteSheet) 
     {
-        Position = new Vector2(120, 550);
+        Position = new Vector2(176, 450);//new Vector2(96, 550);
         _rightSprite = new Sprite(spriteSheet,
                 RIGHT_SPRITE_POS_X,
                 RIGHT_SPRITE_POS_Y,
@@ -125,7 +127,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        collider = new KinematicCollider(this, _currentSprite.Width,_currentSprite.Height);
+        collider = new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -146,6 +148,8 @@ public class PlayerModel : ICollider, IEntity, IKinematic
 
     public void Update(GameTime gameTime)
     {
+        var oldPos = Position;
+
         IsCollidedX = false;
         IsCollidedY = false;
         if (State != PlayerState.Still || !IsCollidedY)
@@ -177,14 +181,20 @@ public class PlayerModel : ICollider, IEntity, IKinematic
             _runRightAnimation.Update(gameTime);
             _currentSprite = _rightSprite;
         }
+
+        Velocity = Position - oldPos;
     }
+
+    public void OnCollision(params CollisionEventArgs[] collisionsInfo) { }
     
-    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
+    public void OnCollision(params MyCollisionEventArgs[] collisionsInfo)
     {
         foreach (var collisionInfo in collisionsInfo)
         {
 
-            var collisionSide = Collider.CollisionToSide(collisionInfo);
+            //var collisionSide = Collider.CollisionToSide(collisionInfo);
+            var collisionSide = collisionInfo.CollisionSide;
+
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)
             {

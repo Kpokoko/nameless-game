@@ -8,15 +8,18 @@ using MonoGame.Extended.Collisions;
 
 namespace nameless.Collisions;
 
-partial class MyCollisionEventArgs
+public class MyCollisionEventArgs
 {
     public ICollisionActor Other { get; internal set; }
 
     public Vector2 PenetrationVector { get; internal set; }
+
+    public Side CollisionSide { get; internal set; }
     
-    public MyCollisionEventArgs(ICollisionActor other, Vector2 penetrationVector)
+    public MyCollisionEventArgs(ICollisionActor other, Vector2 penetrationVector, Side side)
     {
         PenetrationVector = penetrationVector;
         Other = other;
+        CollisionSide = side;
     }
 }

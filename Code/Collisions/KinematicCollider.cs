@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using nameless.Engine;
 using nameless.Interfaces;
@@ -106,15 +107,6 @@ public class KinematicCollider : DynamicCollider
 
         if (collisionInfo.Other is HitboxTrigger) return;
 
-        //var a = TraceKinematicVelocity(collisionInfo);
-
         AddToBuffer(collisionInfo);
-    }
-
-    private object TraceKinematicVelocity(CollisionEventArgs collisionInfo)
-    {
-        var vel = ((IKinematic)Entity).Velocity;
-        var possibleSides = VelocityToPossibleCollisionSides(vel);
-        return null;
     }
 }
