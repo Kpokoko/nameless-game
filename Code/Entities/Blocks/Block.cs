@@ -24,7 +24,7 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerialization
         TilePosition = new Vector2(x, y);
         Info.TilePos = TilePosition;
         Info.TypeOfElement = this.GetType().Name;
-        collider = new Collider(this, 64, 64);
+        colliders.Add( new Collider(this, 64, 64));
     }
 
     public Block() { }
@@ -32,13 +32,13 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerialization
 
     int IGameObject.DrawOrder => 1;
     [XmlIgnore]
-    public Collider collider { get; set; }
+    public Colliders colliders { get; set; } = new();
     public SerializationInfo Info { get; set; } = new();
 
     public override void OnPositionChange(Vector2 position)
     {
-        if (collider != null)
-            collider.Position = position;
+        if (colliders != null)
+            colliders.Position = position;
         Info.TilePos = TilePosition;
     }
 

@@ -58,7 +58,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerialization
     public Vector2 Position { get; set; }
     public PlayerState State { get; set; }
     [XmlIgnore]
-    public Collider collider { get; set; }
+    public Colliders colliders { get; set; } = new();
     [XmlIgnore]
     public Vector2 Velocity { get; private set; }
 
@@ -123,7 +123,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerialization
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        collider = new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height);
+        colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
 
         Info.TilePos = TilePosition;
         Info.TypeOfElement = this.GetType().Name;
