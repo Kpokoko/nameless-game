@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfInventoryBlock xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <InventoryBlock>
-    <TilePosition>
-      <X>10</X>
-      <Y>10</Y>
-    </TilePosition>
-  </InventoryBlock>
-</ArrayOfInventoryBlock>
