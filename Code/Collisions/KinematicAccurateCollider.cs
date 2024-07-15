@@ -115,6 +115,8 @@ public class KinematicAccurateCollider : DynamicCollider
     private MyCollisionEventArgs TraceCollisionBasedOnKinematicVelocity(CollisionEventArgs collisionInfo)
     {
         var vel = ((IKinematic)Entity).Velocity;
+        if (vel == Vector2.Zero) 
+            vel = new Vector2(0, 1);
         var possibleSides = VelocityToPossibleCollisionSides(vel);
         var collidingBorderPositions = possibleSides.Select(s => GetBoundsBorderPosition((RectangleF)Bounds, s)).ToArray();
         var otherCollidingBorderPositions = possibleSides.Select(s => GetBoundsBorderPosition((RectangleF)collisionInfo.Other.Bounds, GetOppositeSide(s))).ToArray();
