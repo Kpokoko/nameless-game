@@ -30,6 +30,8 @@ public struct Tile
     {
         var tileX = Math.Floor(absolutePos.X / 64);
         var tileY = Math.Floor(absolutePos.Y / 64);
+        tileX = tileX >= 0 ? tileX : 0;
+        tileY = tileY >= 0 ? tileY : 0;
         return new Vector2((float)tileX, (float)tileY);
             //item.Position = new Vector2((float)tileX, (float)tileY);
     }

@@ -27,6 +27,8 @@ public class CollisionManager
 
     public void Update(GameTime gameTime)
     {
+        if (Globals.IsConstructorModeEnabled)
+            return;
         for (var i = 0; i < DynamicColliders.Count; i++)
             DynamicColliders[i].Update();
         OnCollisionDisabled = false;

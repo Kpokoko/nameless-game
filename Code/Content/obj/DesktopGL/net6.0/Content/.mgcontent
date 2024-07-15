@@ -4,7 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/C#/Games/Repos/nameless-game/Code/Content/TrexSpritesheet.png</File>
+    <File>C:/Users/User/Desktop/programming/nameless-game-main/Code/Content/TrexSpritesheet.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

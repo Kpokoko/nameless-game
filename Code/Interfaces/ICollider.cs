@@ -10,7 +10,7 @@ namespace nameless.Interfaces;
 
 public interface ICollider : IEntity
 {
-    Colliders colliders { get; set; }
+    Collider collider { get; set; }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo);
 }
