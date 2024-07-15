@@ -367,15 +367,15 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>6</X>
-      <Y>12</Y>
+      <X>2</X>
+      <Y>7</Y>
     </TilePos>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>InventoryBlock</TypeOfElement>
     <TilePos>
-      <X>24</X>
-      <Y>11</Y>
+      <X>7</X>
+      <Y>8</Y>
     </TilePos>
   </SerializationInfo>
 </ArrayOfSerializationInfo>
