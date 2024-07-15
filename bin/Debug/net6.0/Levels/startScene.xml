@@ -374,7 +374,7 @@
   <SerializationInfo>
     <TypeOfElement>InventoryBlock</TypeOfElement>
     <TilePos>
-      <X>8</X>
+      <X>9</X>
       <Y>8</Y>
     </TilePos>
   </SerializationInfo>

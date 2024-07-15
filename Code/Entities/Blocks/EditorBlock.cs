@@ -1,4 +1,5 @@
-﻿using MonoGame.Extended.Collisions;
+﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended.Collisions;
 using nameless.Collisions;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,6 @@ namespace nameless.Entity
     public class EditorBlock : Block
     {
         public EditorBlock(int x, int y) : base(x, y)
-        { }
-
-        public EditorBlock() { }
+        { colliders[0].Color = Color.Violet; }
     }
 }
