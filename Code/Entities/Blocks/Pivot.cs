@@ -21,7 +21,7 @@ internal class Pivot :  TileGridEntity, IEntity, ICollider
 {
     int IGameObject.DrawOrder => 1;
     [XmlIgnore]
-    public Colliders colliders { get; set; }
+    public Collider collider { get; set; }
 
     public Pivot(int x, int y)
     {

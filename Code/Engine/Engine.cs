@@ -48,9 +48,24 @@ public class Engine : Game
         Globals.CollisionManager = new CollisionManager(collisionComponent());
         CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
+        //var openedData = serializer.Deserialize<Block>("startScene");
 
 
-        var blocks = new List<Block>();
+
+        base.Initialize();
+        //_graphics.IsFullScreen = true;
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.ApplyChanges();
+    }
+
+    protected override void LoadContent()
+    {
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+
+        //var blocks = new List<IEntity>();
         //for (var i = 0; i < 14; i++)
         //{
         //    for (var j = 0; j < 21; j++)
@@ -65,30 +80,13 @@ public class Engine : Game
         //}
         //blocks.Add(new Block(3, 11));
         //blocks.Add(new Block(5, 8));
-        //
-        //var serializer = new Serializer();
-        //serializer.Serialize("startScene", new List<InventoryBlock> { new InventoryBlock(10, 10) });
-        //serializer.Serialize("startScene", blocks);
-        //var openedData = serializer.Deserialize<Block>("startScene");
-
-
-
-        base.Initialize();
-
-        _graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
-        _graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
-        _graphics.ApplyChanges();
-    }
-
-    protected override void LoadContent()
-    {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+        //blocks.Add(new EditorBlock(5, 5));
+        //blocks.Add(new PlayerModel(_spriteSheet));
+        //blocks.Add(new InventoryBlock(10, 10));
 
         //var serializer = new Serializer();
+        //serializer.Serialize("startScene", blocks.Select(x => x as ISerialization).ToList());
         //_player = new PlayerModel(_spriteSheet);
-        //serializer.Serialize("startScene", new List<PlayerModel> { _player });
         _currentScene = new Scene("startScene", Content.RootDirectory);
         _player = _currentScene._entities.Where(item => item is PlayerModel).First() as PlayerModel;
         _inputController = new PlayerInputController(_player);
@@ -101,15 +99,14 @@ public class Engine : Game
         {
             var colliderBlock = block as ICollider; 
             var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
-            colliderBlock.colliders.Add(trigger2);
             trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
             trigger2.OnCollisionEvent += () =>
             {
-                colliderBlock.colliders[0].Color = Color.Blue;
+                colliderBlock.collider.Color = Color.Blue;
             };
             trigger2.OnCollisionExitEvent += () =>
             {
-                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.colliders[0].Color = Color.Red; });
+                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.collider.Color = Color.Red; });
             };
         }
     }
@@ -120,6 +117,12 @@ public class Engine : Game
             Exit();
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
+
+        if (Keyboard.GetState().IsKeyDown(Keys.Q))
+        {
+            var serializer = new Serializer();
+            serializer.Serialize("startScene", _currentScene._entities.Select(x => x as ISerialization).ToList());
+        }
 
         MouseInputController.ProcessControls();
         _currentScene.Update(gameTime);

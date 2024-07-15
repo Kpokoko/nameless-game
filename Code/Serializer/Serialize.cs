@@ -1,6 +1,7 @@
 ﻿using nameless.Interfaces;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace nameless.Serialize;
@@ -8,22 +9,22 @@ namespace nameless.Serialize;
 public struct Serializer
 {
     public Serializer() { }
-    public void Serialize<T>(string sceneName, List<T> entities)
-        where T : IEntity
+    public void Serialize(string sceneName, List<ISerialization> entities)
     {
-        using (var writer = new StreamWriter(new FileStream("Levels/" + sceneName + '/' + typeof(T).ToString() + ".xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream("Levels/" + sceneName /*+ '/' + typeof(T).ToString()*/ + ".xml", FileMode.Create)))
         {
-            var serializer = new XmlSerializer(entities.GetType());
-            serializer.Serialize(writer, entities);
+            //var a = typeof(List<T>);
+            var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
+            var a = entities.Select(x => x.Info).ToList();
+            serializer.Serialize(writer, a);
         }
     }
-    public List<T> Deserialize<T>(string sceneName)
-        where T : IEntity
+    public List<SerializationInfo> Deserialize(string sceneName)
     {
         using (var reader = new StreamReader(new FileStream(sceneName, FileMode.Open)))
         {
-            var serializer = new XmlSerializer(typeof(List<T>));
-            var scores = (List<T>)serializer.Deserialize(reader);
+            var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
+            var scores = (List<SerializationInfo>)serializer.Deserialize(reader);
             return scores;
         }
     }

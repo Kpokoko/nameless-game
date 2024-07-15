@@ -12,6 +12,7 @@ namespace nameless;
 public static class Globals
 {
     public static GameTime GameTime;
+    public static bool IsConstructorModeEnabled = false;
 
     public static Texture2D SpriteSheet;
 

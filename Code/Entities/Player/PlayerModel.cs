@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using nameless.Interfaces;
 using nameless.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.VisualBasic;
 using nameless.Collisions;
 using MonoGame.Extended.Collisions;
-using nameless.Entity;
-using MonoGame.Extended;
 using Microsoft.Xna.Framework.Input;
 using System.Xml.Serialization;
+using nameless.Serialize;
+using nameless.Tiles;
 
 namespace nameless.Entity;
 
-public class PlayerModel : ICollider, IEntity, IKinematic
+public class PlayerModel : ICollider, IEntity, IKinematic, ISerialization
 {
-    public Vector2 TilePosition { get; set; }
+    public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
     private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
     private const float MIN_POS_Y = 900;
@@ -64,7 +58,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic
     public Vector2 Position { get; set; }
     public PlayerState State { get; set; }
     [XmlIgnore]
-    public Colliders colliders { get; set; } = new();
+    public Collider collider { get; set; }
     [XmlIgnore]
     public Vector2 Velocity { get; private set; }
 
@@ -72,6 +66,8 @@ public class PlayerModel : ICollider, IEntity, IKinematic
     public bool IsCollidedY;
 
     public PlayerModel() { }
+    public SerializationInfo Info { get; set; } = new();
+
     public PlayerModel(Texture2D spriteSheet) 
     {
         Position = new Vector2(176, 450);//new Vector2(96, 550);
@@ -127,7 +123,10 @@ public class PlayerModel : ICollider, IEntity, IKinematic
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        colliders.Add( new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
+        collider = new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height);
+
+        Info.TilePos = TilePosition;
+        Info.TypeOfElement = this.GetType().Name;
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -187,13 +186,21 @@ public class PlayerModel : ICollider, IEntity, IKinematic
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo) { }
     
+
+    private bool _prevKeyboardState;
     public void OnCollision(params MyCollisionEventArgs[] collisionsInfo)
     {
         foreach (var collisionInfo in collisionsInfo)
         {
-
             //var collisionSide = Collider.CollisionToSide(collisionInfo);
             var collisionSide = collisionInfo.CollisionSide;
+            if (((Collider)collisionInfo.Other).Entity is EditorBlock && collisionSide is Side.Bottom
+                && !_prevKeyboardState && Keyboard.GetState().IsKeyDown(Keys.E))
+            {
+                Globals.IsConstructorModeEnabled = Globals.IsConstructorModeEnabled ? false : true;
+                Console.WriteLine(Globals.IsConstructorModeEnabled);
+            }
+            _prevKeyboardState = Keyboard.GetState().IsKeyDown(Keys.E);
 
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)

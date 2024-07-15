@@ -7,19 +7,24 @@ using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Collisions;
+using nameless.Serialize;
 using nameless.Collisions;
 using nameless.Interfaces;
 using nameless.Tiles;
+using System.Runtime.CompilerServices;
 
 namespace nameless.Entity;
 
-public partial class Block : TileGridEntity, IEntity, ICollider
+public class Block : TileGridEntity, IEntity, ICollider, ISerialization
 {
     public Block(int x, int y)
     {
         //Position = new Tile(x, y).Position;
+        Info = new SerializationInfo();
         TilePosition = new Vector2(x, y);
-        colliders.Add(new Collider(this, 64, 64));
+        Info.TilePos = TilePosition;
+        Info.TypeOfElement = this.GetType().Name;
+        collider = new Collider(this, 64, 64);
     }
 
     public Block() { }
@@ -27,12 +32,14 @@ public partial class Block : TileGridEntity, IEntity, ICollider
 
     int IGameObject.DrawOrder => 1;
     [XmlIgnore]
-    public Colliders colliders { get; set; } = new();
+    public Collider collider { get; set; }
+    public SerializationInfo Info { get; set; } = new();
 
     public override void OnPositionChange(Vector2 position)
     {
-        if (colliders != null)
-            colliders.Position = position;
+        if (collider != null)
+            collider.Position = position;
+        Info.TilePos = TilePosition;
     }
 
     public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -42,6 +49,5 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     { }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)
-    {
-    }
+    { }
 }
