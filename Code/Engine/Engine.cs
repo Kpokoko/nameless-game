@@ -101,14 +101,15 @@ public class Engine : Game
         {
             var colliderBlock = block as ICollider; 
             var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
+            colliderBlock.colliders.Add(trigger2);
             trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
             trigger2.OnCollisionEvent += () =>
             {
-                colliderBlock.collider.Color = Color.Blue;
+                colliderBlock.colliders[0].Color = Color.Blue;
             };
             trigger2.OnCollisionExitEvent += () =>
             {
-                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.collider.Color = Color.Red; });
+                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.colliders[0].Color = Color.Red; });
             };
         }
     }

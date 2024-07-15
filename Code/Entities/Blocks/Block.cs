@@ -19,7 +19,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     {
         //Position = new Tile(x, y).Position;
         TilePosition = new Vector2(x, y);
-        collider = new Collider(this, 64, 64);
+        colliders.Add(new Collider(this, 64, 64));
     }
 
     public Block() { }
@@ -27,12 +27,12 @@ public partial class Block : TileGridEntity, IEntity, ICollider
 
     int IGameObject.DrawOrder => 1;
     [XmlIgnore]
-    public Collider collider { get; set; }
+    public Colliders colliders { get; set; } = new();
 
     public override void OnPositionChange(Vector2 position)
     {
-        if (collider != null)
-            collider.Position = position;
+        if (colliders != null)
+            colliders.Position = position;
     }
 
     public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
