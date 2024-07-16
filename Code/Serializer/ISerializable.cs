@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace nameless.Serialize
 {
-    public interface ISerialization
+    public interface ISerializable
     {
         public SerializationInfo Info { get; set; }
+
+        void PrepareSerializationInfo();
     }
 }

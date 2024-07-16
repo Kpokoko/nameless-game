@@ -10,6 +10,7 @@ using MonoGame.Extended.Collisions;
 using nameless.Collisions;
 using nameless.Entity;
 using nameless.Interfaces;
+using nameless.Serialize;
 using nameless.Tiles;
 
 namespace nameless.Entities.Blocks;
@@ -41,4 +42,9 @@ internal class Pivot :  TileGridEntity, IEntity, ICollider
 
     public override void OnPositionChange(Vector2 position)
     { }
+
+    public SerializationInfo PrepareSerializationInfo()
+    {
+        throw new NotImplementedException();
+    }
 }

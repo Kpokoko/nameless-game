@@ -12,7 +12,7 @@ using nameless.Tiles;
 
 namespace nameless.Entity;
 
-public class PlayerModel : ICollider, IEntity, IKinematic, ISerialization
+public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 {
     public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
@@ -125,8 +125,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerialization
 
         colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
 
-        Info.TilePos = TilePosition;
-        Info.TypeOfElement = this.GetType().Name;
+        PrepareSerializationInfo();
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -295,5 +294,11 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerialization
         }
         else
             _horizontalVelocity = 0;
+    }
+
+    public void PrepareSerializationInfo()
+    {
+        Info.TilePos = TilePosition;
+        Info.TypeOfElement = this.GetType().Name;
     }
 }

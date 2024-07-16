@@ -9,7 +9,7 @@ namespace nameless.Serialize;
 public struct Serializer
 {
     public Serializer() { }
-    public void Serialize(string sceneName, List<ISerialization> entities)
+    public void Serialize(string sceneName, List<ISerializable> entities)
     {
         using (var writer = new StreamWriter(new FileStream("Levels/" + sceneName /*+ '/' + typeof(T).ToString()*/ + ".xml", FileMode.Create)))
         {

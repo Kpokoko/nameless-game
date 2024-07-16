@@ -10,7 +10,7 @@ namespace nameless.Code.SceneManager
 {
     public class Storage
     {
-        public static IEntity[,] Entities = new IEntity[40, 23];
+        public IEntity[,] Entities = new IEntity[40, 23];
 
         public Storage(List<IEntity> entities)
         {

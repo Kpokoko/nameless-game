@@ -97,6 +97,7 @@ public class Engine : Game
     
         foreach (var block in _currentScene._entities.Where(item=>item is Block))
         {
+            if (block is EditorBlock) continue;
             var colliderBlock = block as ICollider; 
             var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
             trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
@@ -122,7 +123,7 @@ public class Engine : Game
         if (Keyboard.GetState().IsKeyDown(Keys.Q))
         {
             var serializer = new Serializer();
-            serializer.Serialize("startScene", _currentScene._entities.Select(x => x as ISerialization).ToList());
+            serializer.Serialize("startScene", _currentScene._entities.Select(x => x as ISerializable).ToList());
         }
 
         MouseInputController.ProcessControls();

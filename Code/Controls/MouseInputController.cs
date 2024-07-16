@@ -20,6 +20,13 @@ public static class MouseInputController
 
     public static MouseState PreviousMouseState { get; private set; }
 
+    public static bool IsJustClickedLeft 
+    { get { return (PreviousMouseState.LeftButton is ButtonState.Released && MouseState.LeftButton is ButtonState.Pressed); } }
+
+    public static bool IsJustClickedRight
+    { get { return (PreviousMouseState.RightButton is ButtonState.Released && MouseState.RightButton is ButtonState.Pressed); } }
+
+
     private static PlayerModel _player;
 
     public static void ProcessControls()

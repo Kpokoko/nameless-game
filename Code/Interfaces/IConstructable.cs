@@ -10,4 +10,6 @@ namespace nameless.Interfaces;
 public interface IConstructable
 {
     public void UpdateConstructor(GameTime gameTime);
+    public bool IsHolding { get; set; }
+
 }

@@ -26,6 +26,13 @@ public class Colliders
         collider.RemoveCollider();
     }
 
+    public void RemoveAll()
+    {
+        for (int i = 0;i < colliders.Count;i++) 
+        { colliders[i].RemoveCollider(); }
+        colliders.Clear();
+    }
+
     public void RemoveTriggerHitboxes()
     {
 
