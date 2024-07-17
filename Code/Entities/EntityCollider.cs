@@ -20,7 +20,7 @@ namespace nameless.Code.Entities
         public Type Type { get => this.GetType(); }
         int IGameObject.DrawOrder => 1;
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }

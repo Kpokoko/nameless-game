@@ -38,7 +38,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
         PrepareSerializationInfo();
     }
 
-    public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    public virtual void Draw(SpriteBatch spriteBatch)
     { }
 
     public virtual void Update(GameTime gameTime)

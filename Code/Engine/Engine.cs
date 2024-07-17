@@ -16,6 +16,7 @@ using System.ComponentModel.Design;
 using nameless.Entities.Blocks;
 using nameless.GameObjects;
 using MonoGame.Extended.Collections;
+using nameless.UI;
 
 namespace nameless.Engine;
 
@@ -48,6 +49,7 @@ public class Engine : Game
         Globals.CollisionManager = new CollisionManager(collisionComponent());
         CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
+        Globals.UIManager = new UIManager();
         //var openedData = serializer.Deserialize<Block>("startScene");
 
 
@@ -88,14 +90,14 @@ public class Engine : Game
         //serializer.Serialize("startScene", blocks.Select(x => x as ISerialization).ToList());
         //_player = new PlayerModel(_spriteSheet);
         _currentScene = new Scene("startScene", Content.RootDirectory);
-        _player = _currentScene._entities.Where(item => item is PlayerModel).First() as PlayerModel;
+        _player = _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel;
         _inputController = new PlayerInputController(_player);
         var trigger = new HitboxTrigger(new Pivot(17,12), 80, 80, ReactOnProperty.ReactOnEntityType,Collisions.SignalProperty.OnceOnEveryContact);
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
         trigger.OnCollisionEvent += () => _player.Position = new Vector2(_player.Position.X,_player.Position.Y-60);
     
-        foreach (var block in _currentScene._entities.Where(item=>item is Block))
+        foreach (var block in _currentScene.Entities.Where(item=>item is Block))
         {
             if (block is EditorBlock) continue;
             var colliderBlock = block as ICollider; 
@@ -111,6 +113,10 @@ public class Engine : Game
                 TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.colliders[0].Color = Color.Red; });
             };
         }
+
+        var button1 = new Button(new Vector2(1700, 150), 150, 50);
+        var button2 = new Button(new Vector2(1700, 250), 150, 50);
+        var button3 = new Button(new Vector2(1700, 350), 150, 50);
     }
 
     protected override void Update(GameTime gameTime)
@@ -123,10 +129,11 @@ public class Engine : Game
         if (Keyboard.GetState().IsKeyDown(Keys.Q))
         {
             var serializer = new Serializer();
-            serializer.Serialize("startScene", _currentScene._entities.Select(x => x as ISerializable).ToList());
+            serializer.Serialize("startScene", _currentScene.Entities.Select(x => x as ISerializable).ToList());
         }
 
         MouseInputController.ProcessControls();
+
         _currentScene.Update(gameTime);
 
         //_player.Update(gameTime);
@@ -139,20 +146,24 @@ public class Engine : Game
         _inputController.ProcessControls(gameTime);
         _previousKeybardState = keyboardState;
 
+        Globals.UIManager.Update(gameTime);
+
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.White);
+        GraphicsDevice.Clear(Globals.BackgroungColor);
 
         _spriteBatch.Begin();
 
-        _currentScene.Draw(_spriteBatch, gameTime);
+        _currentScene.Draw(_spriteBatch);
 
         //_player.Draw(_spriteBatch, gameTime);
 
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
+
+        Globals.UIManager.Draw(_spriteBatch);
 
         _spriteBatch.End();
         base.Draw(gameTime);

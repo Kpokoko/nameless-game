@@ -6,19 +6,31 @@ using Microsoft.Xna.Framework.Graphics;
 using nameless.Graphics;
 using nameless.GameObjects;
 using nameless.Engine;
+using nameless.Code.SceneManager;
 
 namespace nameless;
 
 public static class Globals
 {
     public static GameTime GameTime;
+
     public static bool IsConstructorModeEnabled = false;
+
+    public static Scene CurrentScene;
+
+    public static Constructor Constructor = new();
 
     public static Texture2D SpriteSheet;
 
     public static CollisionManager CollisionManager;
 
     public static TriggerManager TriggerManager;
+
+    public static UIManager UIManager;
+
+    public static Color BackgroungColor { get { return IsConstructorModeEnabled ? SecondaryColor : PrimaryColor; } }
+    public static Color PrimaryColor = Color.White;
+    public static Color SecondaryColor = Color.LightGray;
 
     public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite)
     {

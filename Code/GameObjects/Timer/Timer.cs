@@ -12,7 +12,7 @@ public class Timer
 {
     private double _delayTime;
     private double _timeLeft;
-    public event Action OnTimeout;
+    public event Action OnTimeoutEvent;
     private SignalProperty signalProperty;
     public string TimeLeftSeconds { get { return (_timeLeft / 1000).ToString(); } }
 
@@ -26,7 +26,7 @@ public class Timer
     public static void DelayEvent(double delayTimeMilliseconds, Action action)
     {
         var timer = new Timer(delayTimeMilliseconds,SignalProperty.Once);
-        timer.OnTimeout += action;
+        timer.OnTimeoutEvent += action;
     }
 
     public void Reset()
@@ -38,7 +38,7 @@ public class Timer
     {
         if (_timeLeft <= 0)
         {
-            OnTimeout.Invoke();
+            OnTimeoutEvent.Invoke();
 
             if (signalProperty is SignalProperty.Continuous)
                 Reset();

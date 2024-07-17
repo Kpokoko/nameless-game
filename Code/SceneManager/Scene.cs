@@ -16,48 +16,27 @@ namespace nameless.Code.SceneManager
 {
     public class Scene
     {
-        public List<IEntity> _entities;
+        public List<IEntity> Entities;
         public Storage Storage;
         //public bool ConstructorMode { get; private set; } = true;
 
         public Scene(string sceneName, string dir)
         {
-            _entities = SceneLoader.LoadScene(sceneName, dir);
-            Storage = new Storage(_entities);
+            Entities = SceneLoader.LoadScene(sceneName, dir);
+            Storage = new Storage(Entities);
+            Globals.CurrentScene = this;
         }
 
         private bool _prevKeyPressed;
 
         public void Update(GameTime gameTime)
         {
-            var pos = MouseInputController.MouseTilePos;
-            if (Globals.IsConstructorModeEnabled) 
-            { 
-                if (MouseInputController.IsJustClickedLeft && Storage.Entities[(int)pos.X, (int)pos.Y] is IConstructable)
-                {
-                    (Storage.Entities[(int)pos.X, (int)pos.Y] as IConstructable).IsHolding = true;
-                }
+            if (Globals.IsConstructorModeEnabled)
+                Globals.Constructor.Update(gameTime);
 
-                if (MouseInputController.IsJustClickedLeft && Storage.Entities[(int)pos.X, (int)pos.Y] == null)
-                {
-                    _entities.Add(new InventoryBlock((int)pos.X, (int)pos.Y));
-                }
-
-                if (MouseInputController.IsJustClickedRight && Storage.Entities[(int)pos.X, (int)pos.Y] is IConstructable)
-                {
-                    _entities.Remove(Storage.Entities[(int)pos.X, (int)pos.Y]);
-                    (Storage.Entities[(int)pos.X, (int)pos.Y] as Block).colliders.RemoveAll();
-                }
-            }
-
-            foreach (var entity in _entities)
+            for (var i = 0; i < Entities.Count;i++)
             {
-                //Constructor mode update
-                if (Globals.IsConstructorModeEnabled && entity is IConstructable)
-                {
-                    if (Storage.Entities[(int)pos.X, (int)pos.Y] == null)
-                        (entity as IConstructable).UpdateConstructor(gameTime);
-                }
+                var entity = Entities[i];
 
                 switch (entity)
                 {
@@ -68,25 +47,20 @@ namespace nameless.Code.SceneManager
                             Globals.IsConstructorModeEnabled = false;
                         _prevKeyPressed = Keyboard.GetState().IsKeyDown(Keys.E);
                         continue;
-                    //case InventoryBlock:
-                    //    if (Globals.IsConstructorModeEnabled)
-                    //        entity.Update(gameTime);
-                    //    continue;
                 }
-                //_prevKeyPressed = Keyboard.GetState().IsKeyDown(Keys.E);
                 //Обновляем тут движущиеся объекты на сцене
             }
 
-            Storage = new Storage(_entities);
+            Storage = new Storage(Entities);
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var entity in _entities)
+            foreach (var entity in Entities)
                 switch (entity)
                 {
                     case PlayerModel:
-                        entity.Draw(spriteBatch, gameTime);
+                        entity.Draw(spriteBatch);
                         return;
                 }
         }

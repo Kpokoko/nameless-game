@@ -18,21 +18,10 @@ namespace nameless.Entity
 
         public bool IsHolding { get; set; }
 
-        public InventoryBlock() { }
-
         public void UpdateConstructor(GameTime gameTime)
         {
-            if (!(MouseInputController.MouseState.LeftButton is ButtonState.Pressed))
-                IsHolding = false;
-
-            var mouseState = MouseInputController.MouseState;
-            var mousePos = MouseInputController.MousePos;
-            if (IsHolding && mouseState.LeftButton is ButtonState.Pressed)
-            {
-                var mouseTilePos = Tile.GetPosInTileCoordinats(mousePos);
-                if (this.TilePosition != mouseTilePos)
-                    TilePosition = mouseTilePos;
-            }
+            if (this.TilePosition != MouseInputController.MouseTilePos)
+                TilePosition = MouseInputController.MouseTilePos;
         }
     }
 }

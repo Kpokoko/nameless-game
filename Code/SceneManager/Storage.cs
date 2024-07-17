@@ -22,5 +22,11 @@ namespace nameless.Code.SceneManager
                     Entities[(int)pos.X, (int)pos.Y - 1] = entity;
             }
         }
+
+        public IEntity this[int index, int index2]
+        {
+            get { return Entities[index, index2]; }
+            set { Entities[index, index2] = value; }
+        }
     }
 }

@@ -128,7 +128,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         PrepareSerializationInfo();
     }
 
-    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    public void Draw(SpriteBatch spriteBatch)
     {
         if (_horizontalVelocity < 0)
         {

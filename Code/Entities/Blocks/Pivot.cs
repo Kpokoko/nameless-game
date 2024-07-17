@@ -29,7 +29,7 @@ internal class Pivot :  TileGridEntity, IEntity, ICollider
         TilePosition = new Vector2(x, y);
     }
 
-    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    public void Draw(SpriteBatch spriteBatch)
     { }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)
