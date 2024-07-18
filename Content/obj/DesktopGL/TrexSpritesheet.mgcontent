@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/nameless/Content/TrexSpritesheet.png</SourceFile>
-  <SourceTime>2024-06-30T16:39:57.6006087+05:00</SourceTime>
-  <DestFile>D:/nameless/Content/bin/DesktopGL/TrexSpritesheet.xnb</DestFile>
-  <DestTime>2024-06-30T16:40:18.7905943+05:00</DestTime>
+  <SourceFile>C:/C#/Games/Repos/nameless-game/Content/TrexSpritesheet.png</SourceFile>
+  <SourceTime>2024-07-15T17:23:28.530054+05:00</SourceTime>
+  <DestFile>C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/TrexSpritesheet.xnb</DestFile>
+  <DestTime>2024-07-18T10:21:10.1824813+05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T16:44:56+05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

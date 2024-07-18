@@ -66,6 +66,7 @@ public class Engine : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+        Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
 
         //var blocks = new List<IEntity>();
         //for (var i = 0; i < 14; i++)
@@ -113,10 +114,6 @@ public class Engine : Game
                 TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.colliders[0].Color = Color.Red; });
             };
         }
-
-        var button1 = new Button(new Vector2(1700, 150), 150, 50);
-        var button2 = new Button(new Vector2(1700, 250), 150, 50);
-        var button3 = new Button(new Vector2(1700, 350), 150, 50);
     }
 
     protected override void Update(GameTime gameTime)

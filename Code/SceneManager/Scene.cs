@@ -43,9 +43,6 @@ namespace nameless.Code.SceneManager
                     case PlayerModel:
                         if (!Globals.IsConstructorModeEnabled)
                             entity.Update(gameTime);
-                        else if (!_prevKeyPressed && Keyboard.GetState().IsKeyDown(Keys.E))
-                            Globals.IsConstructorModeEnabled = false;
-                        _prevKeyPressed = Keyboard.GetState().IsKeyDown(Keys.E);
                         continue;
                 }
                 //Обновляем тут движущиеся объекты на сцене

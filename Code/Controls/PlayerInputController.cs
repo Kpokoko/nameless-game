@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nameless.Entity;
+using MonoGame.Extended.Collisions;
+using nameless.Collisions;
+using nameless.UI.Scenes;
 
 namespace nameless.Controls
 {
@@ -49,6 +52,13 @@ namespace nameless.Controls
             }
             else
                 _player.Stop();
+
+
+            if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled) 
+                && !_previousKeyboardState.IsKeyDown(Keys.E) && keyboardState.IsKeyDown(Keys.E))
+            {
+                Globals.Constructor.SwitchMode();
+            }
             _previousKeyboardState = keyboardState;
         }
     }

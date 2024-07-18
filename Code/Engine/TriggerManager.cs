@@ -18,9 +18,11 @@ public class TriggerManager
 
     public void Update(GameTime gameTime)
     {
-        for (var i = 0; i < TriggerHitboxes.Count; i++)
-            TriggerHitboxes[i].UpdateActivation();
+        //if (Globals.IsConstructorModeEnabled) return;
+
         for (var i = 0; i < Timers.Count; i++)
             Timers[i].Update(gameTime);
+        for (var i = 0; i < TriggerHitboxes.Count; i++)
+            TriggerHitboxes[i].UpdateActivation();
     }
 }

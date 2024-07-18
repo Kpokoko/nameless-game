@@ -29,6 +29,7 @@ public class CollisionManager
     {
         if (Globals.IsConstructorModeEnabled)
             return;
+
         for (var i = 0; i < DynamicColliders.Count; i++)
             DynamicColliders[i].Update();
         OnCollisionDisabled = false;

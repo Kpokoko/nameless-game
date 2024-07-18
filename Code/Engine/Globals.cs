@@ -16,6 +16,8 @@ public static class Globals
 
     public static bool IsConstructorModeEnabled = false;
 
+    public static bool OnEditorBlock = false;
+
     public static Scene CurrentScene;
 
     public static Constructor Constructor = new();

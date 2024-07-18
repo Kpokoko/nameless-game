@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Xml.Serialization;
 using nameless.Serialize;
 using nameless.Tiles;
+using nameless.UI.Scenes;
 
 namespace nameless.Entity;
 
@@ -193,14 +194,6 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         {
             //var collisionSide = Collider.CollisionToSide(collisionInfo);
             var collisionSide = collisionInfo.CollisionSide;
-            if (((Collider)collisionInfo.Other).Entity is EditorBlock && collisionSide is Side.Bottom
-                && !_prevKeyboardState && Keyboard.GetState().IsKeyDown(Keys.E))
-            {
-                Globals.IsConstructorModeEnabled = Globals.IsConstructorModeEnabled ? false : true;
-                Console.WriteLine(Globals.IsConstructorModeEnabled);
-            }
-            _prevKeyboardState = Keyboard.GetState().IsKeyDown(Keys.E);
-
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)
             {

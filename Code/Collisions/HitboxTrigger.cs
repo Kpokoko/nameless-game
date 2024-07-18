@@ -13,7 +13,7 @@ namespace nameless.Collisions;
 
 public class HitboxTrigger : Collider
 {
-    private List<Type> triggerByEntityTypes = new();
+    private List<Type> triggerByEntityTypes = new() { typeof(PlayerModel) };
     private List<Type> EntityBuffer = new();
     private List<string> triggerByCollidersId = new();
     private List<string> idBiffer = new();

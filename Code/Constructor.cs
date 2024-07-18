@@ -5,6 +5,7 @@ using nameless.Code.SceneManager;
 using nameless.Controls;
 using nameless.Entity;
 using nameless.Interfaces;
+using nameless.UI.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,27 @@ namespace nameless;
 public class Constructor : IGameObject
 {
     public int DrawOrder => 1;
-
+    private ConstructorScene UIScene;
     private Storage _storage { get { return Globals.CurrentScene.Storage; } }
     private List<IEntity> _entities { get {  return Globals.CurrentScene.Entities; } }
     private IConstructable _holdingEntity { get; set; }
+    public string SelectedEntity {  get; set; }
 
     public void Draw(SpriteBatch spriteBatch)
     {}
+
+    public void SwitchMode()
+    {
+        Globals.IsConstructorModeEnabled = Globals.IsConstructorModeEnabled ? false : true;
+        if (Globals.IsConstructorModeEnabled)
+        {
+            UIScene = new ConstructorScene();
+        }
+        else
+        {
+            UIScene.Clear();
+        }
+    }
 
     public void Update(GameTime gameTime)
     {
@@ -59,7 +74,16 @@ public class Constructor : IGameObject
 
     private void SpawnBlock(Vector2 mouseTilePos)
     {
-        _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+        if (SelectedEntity == null) return;
+        switch (SelectedEntity)
+        {
+            case "InventoryBlock":
+                _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                break;
+            default:
+                Console.WriteLine("Not in a developer tool mode");
+                break;
+        }
     }
 
     private void DeleteBlock(IEntity entity)
