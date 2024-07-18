@@ -18,8 +18,8 @@ public class Constructor : IGameObject
 {
     public int DrawOrder => 1;
     private ConstructorScene UIScene;
-    private Storage _storage { get { return Globals.CurrentScene.Storage; } }
-    private List<IEntity> _entities { get {  return Globals.CurrentScene.Entities; } }
+    private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
+    private List<IEntity> _entities { get {  return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
     public string SelectedEntity {  get; set; }
 

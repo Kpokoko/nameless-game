@@ -15,8 +15,8 @@ namespace nameless.Entity
         { 
             colliders[0].Color = Color.Violet;
 
-            var trigger = new HitboxTrigger(this, 10, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
-            trigger.SetOffset(new Vector2(0, -42));
+            var trigger = new HitboxTrigger(this, 45, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+            trigger.SetOffset(new Vector2(0, -32));
             trigger.Color = Color.SkyBlue;
             trigger.SetTriggerEntityTypes(typeof(PlayerModel));
             trigger.OnCollisionEvent += () => Globals.OnEditorBlock = true;

@@ -7,18 +7,21 @@ using nameless.Graphics;
 using nameless.GameObjects;
 using nameless.Engine;
 using nameless.Code.SceneManager;
+using nameless.Code.Engine;
+using Microsoft.Xna.Framework.Content;
 
 namespace nameless;
 
 public static class Globals
 {
+
     public static GameTime GameTime;
 
     public static bool IsConstructorModeEnabled = false;
 
     public static bool OnEditorBlock = false;
 
-    public static Scene CurrentScene;
+    public static SceneManager SceneManager;
 
     public static Constructor Constructor = new();
 
