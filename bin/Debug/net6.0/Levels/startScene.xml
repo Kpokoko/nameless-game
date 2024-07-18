@@ -178,13 +178,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>12</Y>
-    </TilePos>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
       <Y>13</Y>
     </TilePos>
@@ -423,13 +416,6 @@
   <SerializationInfo>
     <TypeOfElement>InventoryBlock</TypeOfElement>
     <TilePos>
-      <X>11</X>
-      <Y>2</Y>
-    </TilePos>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>InventoryBlock</TypeOfElement>
-    <TilePos>
       <X>13</X>
       <Y>2</Y>
     </TilePos>
@@ -481,6 +467,13 @@
     <TilePos>
       <X>15</X>
       <Y>1</Y>
+    </TilePos>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>InventoryBlock</TypeOfElement>
+    <TilePos>
+      <X>11</X>
+      <Y>2</Y>
     </TilePos>
   </SerializationInfo>
 </ArrayOfSerializationInfo>

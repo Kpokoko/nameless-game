@@ -15,6 +15,6 @@ public partial class Block : ISerializable
     public void PrepareSerializationInfo()
     {
         Info.TilePos = TilePosition;
-        Info.TypeOfElement = this.GetType().Name;     
+        Info.TypeOfElement = this.GetType().Name;
     }
 }

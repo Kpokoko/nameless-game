@@ -14,7 +14,7 @@ namespace nameless.Code.SceneManager
     public static class SceneLoader
     {
         private static Serializer _serialize = new Serializer();
-        public static List<IEntity> LoadScene(string sceneName, string dir)
+        public static List<IEntity> LoadScene(string sceneName)
         {
             var readedData = new List<IEntity>();
             var sceneContent = new List<IEntity>();

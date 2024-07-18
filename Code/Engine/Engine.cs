@@ -17,6 +17,7 @@ using nameless.Entities.Blocks;
 using nameless.GameObjects;
 using MonoGame.Extended.Collections;
 using nameless.UI;
+using nameless.Code.Engine;
 
 namespace nameless.Engine;
 
@@ -24,7 +25,6 @@ public class Engine : Game
 {
     private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
 
-    private Scene _currentScene;
     public const int WINDOW_WIDTH = 1920;
     public const int WINDOW_HEIGHT = 1200;
 
@@ -45,20 +45,21 @@ public class Engine : Game
 
     protected override void Initialize()
     {
+        LoadCollisions();
+        Globals.UIManager = new UIManager();
+        Globals.SceneManager = new SceneManager();
+        base.Initialize();
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.ApplyChanges();
+    }
+
+    private void LoadCollisions()
+    {
         var collisionComponent = () => new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
         Globals.CollisionManager = new CollisionManager(collisionComponent());
         CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
-        Globals.UIManager = new UIManager();
-        //var openedData = serializer.Deserialize<Block>("startScene");
-
-
-
-        base.Initialize();
-        //_graphics.IsFullScreen = true;
-        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-        _graphics.ApplyChanges();
     }
 
     protected override void LoadContent()
@@ -67,53 +68,32 @@ public class Engine : Game
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
+        LoadScene();
+    }
 
-        //var blocks = new List<IEntity>();
-        //for (var i = 0; i < 14; i++)
-        //{
-        //    for (var j = 0; j < 21; j++)
-        //    {
-        //        if (i == 13)
-        //            blocks.Add(new Block(j, i));
-        //        if (j == 0)
-        //            blocks.Add(new Block(j, i));
-        //        if (j == 20)
-        //            blocks.Add(new Block(j, i));
-        //    }
-        //}
-        //blocks.Add(new Block(3, 11));
-        //blocks.Add(new Block(5, 8));
-        //blocks.Add(new EditorBlock(5, 5));
-        //blocks.Add(new PlayerModel(_spriteSheet));
-        //blocks.Add(new InventoryBlock(10, 10));
-
-        //var serializer = new Serializer();
-        //serializer.Serialize("startScene", blocks.Select(x => x as ISerialization).ToList());
-        //_player = new PlayerModel(_spriteSheet);
-        _currentScene = new Scene("startScene", Content.RootDirectory);
-        _player = _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel;
+    private void LoadScene()
+    {
+        Globals.SceneManager.LoadScene("startScene");
+        _player = Globals.SceneManager.GetPlayer();
         _inputController = new PlayerInputController(_player);
-        var trigger = new HitboxTrigger(new Pivot(17,12), 80, 80, ReactOnProperty.ReactOnEntityType,Collisions.SignalProperty.OnceOnEveryContact);
-        trigger.SetTriggerEntityTypes(typeof(PlayerModel));
-        trigger.Color = Color.SkyBlue;
-        trigger.OnCollisionEvent += () => _player.Position = new Vector2(_player.Position.X,_player.Position.Y-60);
-    
-        foreach (var block in _currentScene.Entities.Where(item=>item is Block))
+
+        var levelChanger = new HitboxTrigger(new Pivot(20, 12), 10, 64, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
+        levelChanger.SetTriggerEntityTypes(typeof(PlayerModel));
+        levelChanger.Color = Color.SkyBlue;
+        levelChanger.SetOffset(new Vector2(30, 0));
+        levelChanger.OnCollisionEvent += () =>
         {
-            if (block is EditorBlock) continue;
-            var colliderBlock = block as ICollider; 
-            var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
-            trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
-            colliderBlock.colliders.Add(trigger2);
-            trigger2.OnCollisionEvent += () =>
-            {
-                colliderBlock.colliders[0].Color = Color.Blue;
-            };
-            trigger2.OnCollisionExitEvent += () =>
-            {
-                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.colliders[0].Color = Color.Red; });
-            };
-        }
+            var serializer = new Serializer();
+            var entities = Globals.SceneManager.GetEntities();
+            serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
+            Restart();
+        };
+    }
+
+    private void Restart()
+    {
+        LoadCollisions();
+        LoadScene();
     }
 
     protected override void Update(GameTime gameTime)
@@ -126,12 +106,21 @@ public class Engine : Game
         if (Keyboard.GetState().IsKeyDown(Keys.Q))
         {
             var serializer = new Serializer();
-            serializer.Serialize("startScene", _currentScene.Entities.Select(x => x as ISerializable).ToList());
+            serializer.Serialize("startScene", Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
+        }
+
+        if (Keyboard.GetState().IsKeyDown(Keys.R))
+        {
+            Restart();
+            //Globals.SceneManager.ReloadScene();
+            //_player = Globals.SceneManager.GetPlayer();
+            //_inputController = new PlayerInputController(_player);
+            return;
         }
 
         MouseInputController.ProcessControls();
 
-        _currentScene.Update(gameTime);
+        Globals.SceneManager.Update(gameTime);
 
         //_player.Update(gameTime);
 
@@ -154,7 +143,7 @@ public class Engine : Game
 
         _spriteBatch.Begin();
 
-        _currentScene.Draw(_spriteBatch);
+        Globals.SceneManager.Draw(_spriteBatch);
 
         //_player.Draw(_spriteBatch, gameTime);
 
