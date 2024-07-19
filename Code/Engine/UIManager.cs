@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Timers;
 using nameless.UI;
-using nameless.UI.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,6 @@ public class UIManager
     public List<Button> Buttons = new List<Button>();
     public List<Label> Labels = new List<Label>();
     public Dictionary<Keys, Button> KeyboardButtons = new();
-    public Dictionary<UIScenes, UIScene> CurrentUIScenes = new();
     public SpriteFont Font;
     public void Update(GameTime gameTime)
     {
@@ -37,23 +35,6 @@ public class UIManager
             Buttons[i].Draw(spriteBatch);
         for (var i = 0; i < Labels.Count; i++)
             Labels[i].Draw(spriteBatch);
-    }
-
-    public void SetScene(UIScenes scene)
-    {
-        switch (scene)
-        {
-            case UIScenes.ConstructorScene:
-                CurrentUIScenes[scene] = new ConstructorScene();
-                break;
-            default:
-                throw new ArgumentException("Scene not implemented");
-        }
-    }
-    public void RemoveScene(UIScenes scene)
-    {
-        CurrentUIScenes[scene].Clear();
-        CurrentUIScenes.Remove(scene);
     }
 
     public void Clear()

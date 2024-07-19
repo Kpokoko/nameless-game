@@ -8,6 +8,7 @@ using nameless.GameObjects;
 using nameless.Engine;
 using nameless.Code.SceneManager;
 using Microsoft.Xna.Framework.Content;
+using nameless.Code.Constructors;
 
 namespace nameless;
 
@@ -18,11 +19,18 @@ public static class Globals
 
     public static bool IsConstructorModeEnabled = false;
 
+    //THIS BOOL SWITCHES DEV MODE
+    public static bool IsDeveloperModeEnabled = true;
+
     public static bool OnEditorBlock = false;
 
     public static SceneManager SceneManager;
 
+    //Invokes when devmode is disabled
     public static Constructor Constructor = new();
+
+    //This is DeveloperConstructor, invokes when devmode is enabled
+    public static DeveloperConstructor DevMode = new();
 
     public static Texture2D SpriteSheet;
 
