@@ -11,5 +11,6 @@ public interface IConstructable
 {
     public void UpdateConstructor(GameTime gameTime);
     public bool IsHolding { get; set; }
+    public bool IsPrivate { get; set; }
 
 }

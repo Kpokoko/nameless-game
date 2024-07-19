@@ -23,9 +23,18 @@ public class ConstructorScene
         button2.OnClickEvent += () => { button1.Deactivate(); button3.Deactivate(); };
         button3.OnClickEvent += () => { button2.Deactivate(); button1.Deactivate(); };
 
-        button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = "InventoryBlock";
-        button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = "EditorBlock";
-        button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = "Block";
+        if (!Globals.IsDeveloperModeEnabled)
+        {
+            button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = "InventoryBlock";
+            button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = "EditorBlock";
+            button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = "Block";
+        }
+        if (Globals.IsDeveloperModeEnabled)
+        {
+            button1.OnClickEvent += () => Globals.DevMode.SelectedEntity = "InventoryBlock";
+            button2.OnClickEvent += () => Globals.DevMode.SelectedEntity = "EditorBlock";
+            button3.OnClickEvent += () => Globals.DevMode.SelectedEntity = "Block";
+        }
 
         button1.SetKeyboardKey(Keys.D1);
         button2.SetKeyboardKey(Keys.D2);

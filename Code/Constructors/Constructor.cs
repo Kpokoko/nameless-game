@@ -12,19 +12,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nameless;
+namespace nameless.Code.Constructors;
 
 public class Constructor : IGameObject
 {
     public int DrawOrder => 1;
     private ConstructorScene UIScene;
     private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
-    private List<IEntity> _entities { get {  return Globals.SceneManager.GetEntities(); } }
+    private List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
-    public string SelectedEntity {  get; set; }
+    public string SelectedEntity { get; set; }
 
     public void Draw(SpriteBatch spriteBatch)
-    {}
+    { }
 
     public void SwitchMode()
     {
@@ -47,13 +47,13 @@ public class Constructor : IGameObject
         if (MouseInputController.LeftButton.IsJustPressed && entityUnderMouse is IConstructable)
             HoldBlock(entityUnderMouse as IConstructable);
 
-        if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null)
+        if ((!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) || (_holdingEntity is not null && _holdingEntity.IsPrivate)) 
             ReleaseBlock();
 
-        if ((MouseInputController.LeftButton.IsJustReleased || (MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space))) && entityUnderMouse == null)
+        if ((MouseInputController.LeftButton.IsJustReleased || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
             SpawnBlock(mouseTilePos);
 
-        if ((MouseInputController.RightButton.IsJustReleased || (MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space))) && entityUnderMouse is IConstructable)
+        if ((MouseInputController.RightButton.IsJustReleased || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse is IConstructable)
             DeleteBlock(entityUnderMouse);
 
         if (entityUnderMouse is null && _holdingEntity is not null)

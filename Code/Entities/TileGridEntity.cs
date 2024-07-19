@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using nameless.Collisions;
+using nameless.Controls;
+using nameless.Interfaces;
 using nameless.Tiles;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace nameless.Entity;
 
-public abstract class TileGridEntity
+public abstract class TileGridEntity : IConstructable
 {
     public Vector2 Position
     {
@@ -29,8 +31,18 @@ public abstract class TileGridEntity
             Position = Tile.GetTileCenter(_tilePos);
         }
     }
+
+    public bool IsHolding { get; set; }
+    public bool IsPrivate { get; set; }
+
     private Vector2 _position;
     private Vector2 _tilePos;
 
     public abstract void OnPositionChange(Vector2 position);
+
+    public void UpdateConstructor(GameTime gameTime)
+    {
+        if (this.TilePosition != MouseInputController.MouseTilePos)
+            TilePosition = MouseInputController.MouseTilePos;
+    }
 }
