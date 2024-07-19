@@ -34,8 +34,10 @@ namespace nameless.Code.SceneManager
 
         public void Update(GameTime gameTime)
         {
-            if (Globals.IsConstructorModeEnabled)
+            if (Globals.IsConstructorModeEnabled && !Globals.IsDeveloperModeEnabled)
                 Globals.Constructor.Update(gameTime);
+            else if (Globals.IsConstructorModeEnabled && Globals.IsDeveloperModeEnabled)
+                Globals.DevMode.Update(gameTime);
 
             for (var i = 0; i < Entities.Count;i++)
             {

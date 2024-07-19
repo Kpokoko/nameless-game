@@ -220,13 +220,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>5</X>
-      <Y>13</Y>
-    </TilePos>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>6</X>
       <Y>13</Y>
     </TilePos>
@@ -351,13 +344,6 @@
     </TilePos>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>EditorBlock</TypeOfElement>
-    <TilePos>
-      <X>5</X>
-      <Y>5</Y>
-    </TilePos>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
       <X>2</X>
@@ -474,6 +460,20 @@
     <TilePos>
       <X>11</X>
       <Y>2</Y>
+    </TilePos>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>EditorBlock</TypeOfElement>
+    <TilePos>
+      <X>5</X>
+      <Y>13</Y>
+    </TilePos>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>13</X>
+      <Y>10</Y>
     </TilePos>
   </SerializationInfo>
 </ArrayOfSerializationInfo>

@@ -14,14 +14,14 @@ namespace nameless.Entity
     public class InventoryBlock : Block, IConstructable
     {
         public InventoryBlock(int x, int y) : base(x, y)
-        { colliders[0].Color = Color.Red; }
+        { colliders[0].Color = Color.Red; IsPrivate = false; }
 
-        public bool IsHolding { get; set; }
+        //public bool IsHolding { get; set; }
 
-        public void UpdateConstructor(GameTime gameTime)
-        {
-            if (this.TilePosition != MouseInputController.MouseTilePos)
-                TilePosition = MouseInputController.MouseTilePos;
-        }
+        //public void UpdateConstructor(GameTime gameTime)
+        //{
+        //    if (this.TilePosition != MouseInputController.MouseTilePos)
+        //        TilePosition = MouseInputController.MouseTilePos;
+        //}
     }
 }

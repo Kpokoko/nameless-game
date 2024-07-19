@@ -15,6 +15,8 @@ namespace nameless.UI;
 public class Button : UIElement, IEntity, IUI
 {
     public event Action OnClickEvent;
+    //private Rectangle Bounds { get; set; }
+
     public Label Label { get; set; }
     public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
     public bool Pressed { get; set; }
