@@ -3,7 +3,11 @@
   <SourceFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/TrexSpritesheet.png</SourceFile>
   <SourceTime>2024-07-15T17:14:15+05:00</SourceTime>
   <DestFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Content/TrexSpritesheet.xnb</DestFile>
+<<<<<<< Updated upstream
   <DestTime>2024-07-18T13:14:36.370942+05:00</DestTime>
+=======
+  <DestTime>2024-07-19T13:22:03.349344+05:00</DestTime>
+>>>>>>> Stashed changes
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T16:44:56+05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
