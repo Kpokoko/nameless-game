@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using nameless.Code.SceneManager;
 using nameless.Controls;
+using nameless.Engine;
 using nameless.Entity;
 using nameless.Interfaces;
+using nameless.UI;
 using nameless.UI.Scenes;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,6 @@ namespace nameless;
 public class Constructor : IGameObject
 {
     public int DrawOrder => 1;
-    private ConstructorScene UIScene;
     private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
     private List<IEntity> _entities { get {  return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
@@ -31,11 +32,11 @@ public class Constructor : IGameObject
         Globals.IsConstructorModeEnabled = Globals.IsConstructorModeEnabled ? false : true;
         if (Globals.IsConstructorModeEnabled)
         {
-            UIScene = new ConstructorScene();
+            Globals.UIManager.SetScene(UIScenes.ConstructorScene);
         }
         else
         {
-            UIScene.Clear();
+            Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
         }
     }
 
