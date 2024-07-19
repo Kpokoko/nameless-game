@@ -1,1 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/User/Desktop/nameless-game/nameless-game/Content/BasicFont.spritefont","C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Content/BasicFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,70687,0,1691946
+"C:/Users/User/Desktop/nameless-game/nameless-game/Content/TrexSpritesheet.png","C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Content/TrexSpritesheet.xnb","TextureProcessor","Texture2DContent",6662,739885,0,0203206
