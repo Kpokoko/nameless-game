@@ -20,7 +20,7 @@ public static class Globals
     public static bool IsConstructorModeEnabled = false;
 
     //THIS BOOL SWITCHES DEV MODE
-    public static bool IsDeveloperModeEnabled = true;
+    public static bool IsDeveloperModeEnabled = false;
 
     public static bool OnEditorBlock = false;
 
