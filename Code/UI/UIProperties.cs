@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public enum ActivatedProperty
+public enum Alignment
 {
-    WhilePressing,
-    Forever
+    Center,
+    Left
+}
+
+public enum ButtonActivationProperty
+{
+    Switch,
+    Click
 }

@@ -9,27 +9,14 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public class Label : IEntity, IUI
+public class Label : UIElement, IEntity, IUI
 {
-    public Vector2 Position 
-    { 
-        get { return _position; } 
-        set { _position = value; _drawPos = value + Globals.Offset((int)Size.X, (int)Size.Y); } 
-    }
-    private Vector2 _position;
-
-    private Vector2 _drawPos;
-    public Vector2 TilePosition { get; set; }
-    public int DrawOrder => -1;
     public string Text { get; set; }
     public SpriteFont Font { get; set; } = Globals.UIManager.Font;
-    public Vector2 Size { get; set; }
 
-    public Label(Vector2 position, string text) 
+    public Label(Vector2 position, string text, Alignment align = Alignment.Center) : base(position, Globals.UIManager.Font.MeasureString(text), align)
     {
         Text = text;
-        Size = Font.MeasureString(Text);
-        Position = position;
         Globals.UIManager.Labels.Add(this);
     }
 
@@ -45,6 +32,6 @@ public class Label : IEntity, IUI
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.DrawString(Font, Text, _drawPos, Color.Black);
+        spriteBatch.DrawString(Font, Text, (Bounds.Location).ToVector2(), Color.Black,0,Vector2.Zero,1,SpriteEffects.None,0.91f);
     }
 }

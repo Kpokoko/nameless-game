@@ -17,7 +17,6 @@ using nameless.Entities.Blocks;
 using nameless.GameObjects;
 using MonoGame.Extended.Collections;
 using nameless.UI;
-using nameless.Code.Engine;
 
 namespace nameless.Engine;
 
@@ -141,7 +140,7 @@ public class Engine : Game
     {
         GraphicsDevice.Clear(Globals.BackgroungColor);
 
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
         Globals.SceneManager.Draw(_spriteBatch);
 

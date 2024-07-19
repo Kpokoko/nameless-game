@@ -12,39 +12,38 @@ using Microsoft.Xna.Framework.Input;
 
 namespace nameless.UI;
 
-public class Button : IEntity, IUI
+public class Button : UIElement, IEntity, IUI
 {
-    public Vector2 Position { get; set; }
-
-    public Vector2 TilePosition { get; set; }
-
-    public int DrawOrder => 0;
-
     public event Action OnClickEvent;
-    private Rectangle Bounds { get; set; }
+    //private Rectangle Bounds { get; set; }
 
     public Label Label { get; set; }
     public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
     public bool Pressed { get; set; }
     public bool Activated { get; set; } = false;
-    public ActivatedProperty ActivatedProperty { get; set; }
+    public ButtonActivationProperty ActivatedProperty { get; set; }
     private Keys Key { get; set; }
 
-    public Button(Vector2 position, int width, int height, string text = null, ActivatedProperty property = ActivatedProperty.WhilePressing) 
+    public Button
+        (Vector2 position, int width, int height, string text = null, 
+        ButtonActivationProperty property = ButtonActivationProperty.Click, Alignment align = Alignment.Center) 
+        : base(position, width, height, align)
     {
-        Position = position;
-        Bounds = new Rectangle((Globals.Offset(width,height) + position).ToPoint(), new Size(width,height));
-
         Globals.UIManager.Buttons.Add(this);
 
         if (text != null)
-            SetText(text);
+            SetText(new Label(Vector2.Zero,text));
         ActivatedProperty = property;
     }
 
-    public void SetText(string text)
+    /// <summary>
+    /// Set Text label with relative position
+    /// </summary>
+    /// <param name="label"></param>
+    public void SetText(Label label)
     {
-        Label = new Label(Position,text);
+        label.Position = label.Position + Position;
+        Label = label;
     }
 
     public void SetKeyboardKey(Keys key)
@@ -75,12 +74,11 @@ public class Button : IEntity, IUI
             Globals.UIManager.KeyboardButtons.Remove(Key);
         if (Label != null)
             Label.Remove();
-            //Globals.UIManager.KeyboardButtons = Globals.UIManager.KeyboardButtons.Where(p => p.Value != this).ToDictionary(p=>p.Key,p=>p.Value);
     }
 
     public void Update(GameTime gameTime)
     {
-        if (ActivatedProperty is ActivatedProperty.WhilePressing)
+        if (ActivatedProperty is ButtonActivationProperty.Click)
             Pressed = false;
         if ((Hovered && MouseInputController.LeftButton.IsJustPressed) || (Activated && MouseInputController.LeftButton.IsPressed))
         {
@@ -88,7 +86,7 @@ public class Button : IEntity, IUI
         }
         else
         {
-            if (ActivatedProperty is ActivatedProperty.WhilePressing) Activated = false;
+            if (ActivatedProperty is ButtonActivationProperty.Click) Activated = false;
         }
     }
 
@@ -98,7 +96,7 @@ public class Button : IEntity, IUI
         var boundsSize = 6;
         var fillRect = new Rectangle(Bounds.Location + offset,Bounds.Size);
         var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint() + offset, Bounds.Size + new Point(boundsSize*2, boundsSize*2));
-        spriteBatch.DrawRectangle(boundsRect, !Pressed ? Color.Black : Color.Gray,boundsSize,DrawOrder);
-        spriteBatch.FillRectangle(fillRect, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor,DrawOrder);
+        spriteBatch.DrawRectangle(boundsRect, !Pressed ? Color.Black : Color.Gray,boundsSize,0.9f);
+        spriteBatch.FillRectangle(fillRect, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor,0.9f);
     }
 }

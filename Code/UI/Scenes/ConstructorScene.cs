@@ -15,9 +15,9 @@ public class ConstructorScene
     private List<IUI> _elements = new();
     public ConstructorScene()
     {
-        var button1 = new Button(new Vector2(1700, 150), 280, 50, "Inventory Block",ActivatedProperty.Forever);
-        var button2 = new Button(new Vector2(1700, 250), 280, 50, "EditorBlock", ActivatedProperty.Forever);
-        var button3 = new Button(new Vector2(1700, 350), 280, 50, "Block", ActivatedProperty.Forever);
+        var button1 = new Button(new Vector2(1700, 150), 280, 50, "Inventory Block",ButtonActivationProperty.Click);
+        var button2 = new Button(new Vector2(1700, 250), 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
+        var button3 = new Button(new Vector2(1700, 350), 280, 50, "Block", ButtonActivationProperty.Switch);
         _elements = _elements.Concat(new[] { button1, button2, button3 }).ToList();
         button1.OnClickEvent += () => { button2.Deactivate(); button3.Deactivate(); };
         button2.OnClickEvent += () => { button1.Deactivate(); button3.Deactivate(); };

@@ -7,7 +7,6 @@ using nameless.Graphics;
 using nameless.GameObjects;
 using nameless.Engine;
 using nameless.Code.SceneManager;
-using nameless.Code.Engine;
 using Microsoft.Xna.Framework.Content;
 
 namespace nameless;
