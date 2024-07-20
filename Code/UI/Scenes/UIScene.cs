@@ -10,7 +10,7 @@ namespace nameless.UI;
 
 public class UIScene
 {
-    private List<IUI> _elements { get; set; } = new();
+    private List<UIElement> _elements { get; set; } = new();
     public UIScenes Name { get; protected set; }
 
     public void Clear()
@@ -22,7 +22,7 @@ public class UIScene
         _elements.Clear();
     }
 
-    protected void AddElements(params IUI[] elements)
+    protected void AddElements(params UIElement[] elements)
     {
         _elements = _elements.Concat(elements).ToList();
     }

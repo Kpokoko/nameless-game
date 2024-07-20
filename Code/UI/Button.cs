@@ -9,10 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using nameless.Controls;
 using Microsoft.Xna.Framework.Input;
+using System.Reflection.Emit;
 
 namespace nameless.UI;
 
-public class Button : UIElement, IEntity, IUI
+public class Button : UIElement, IEntity
 {
     public event Action OnClickEvent;
     //private Rectangle Bounds { get; set; }
@@ -39,10 +40,10 @@ public class Button : UIElement, IEntity, IUI
     /// <summary>
     /// Set Text label with relative position
     /// </summary>
-    /// <param name="label"></param>
     public void SetText(Label label)
     {
-        label.Position = label.Position + Position;
+        label.ParentPosition = Position;
+        label.UpdatePosition();
         Label = label;
     }
 
@@ -67,13 +68,20 @@ public class Button : UIElement, IEntity, IUI
         Activated = true;
     }
 
-    public void Remove()
+    override public void Remove()
     {
         Globals.UIManager.Buttons.Remove(this);
         if (Globals.UIManager.KeyboardButtons.ContainsKey(Key))
             Globals.UIManager.KeyboardButtons.Remove(Key);
         if (Label != null)
             Label.Remove();
+    }
+
+    public override void UpdatePosition()
+    {
+        base.UpdatePosition();
+        Label.ParentPosition = AbsolutePosition;
+        Label.UpdatePosition();
     }
 
     public void Update(GameTime gameTime)

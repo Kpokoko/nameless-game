@@ -54,7 +54,7 @@ namespace nameless.Controls
                 _player.Stop();
 
 
-            if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled) 
+            if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled || Globals.IsDeveloperModeEnabled) 
                 && !_previousKeyboardState.IsKeyDown(Keys.E) && keyboardState.IsKeyDown(Keys.E))
             {
                 Globals.Constructor.SwitchMode();

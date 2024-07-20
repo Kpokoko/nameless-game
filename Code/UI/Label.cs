@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public class Label : UIElement, IEntity, IUI
+public class Label : UIElement, IEntity
 {
     public string Text { get; set; }
     public SpriteFont Font { get; set; } = Globals.UIManager.Font;
@@ -20,7 +20,7 @@ public class Label : UIElement, IEntity, IUI
         Globals.UIManager.Labels.Add(this);
     }
 
-    public void Remove()
+    override public void Remove()
     {
         Globals.UIManager.Labels.Remove(this);
     }

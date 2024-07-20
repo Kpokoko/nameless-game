@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
+/// <summary>
+/// center -- position indicates element center
+/// left -- position indicates center of element left border 
+/// </summary>
 public enum Alignment
 {
     Center,
-    Left
+    CenterLeft
 }
 
 public enum ButtonActivationProperty
 {
     Switch,
     Click
+}
+
+public enum FlexDirection
+{
+    Vertical,
+    Horizontal
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public class UIElement
+public abstract class UIElement
 {
     protected UIElement(Vector2 position, int width, int height, Alignment align)
     {
@@ -26,10 +26,12 @@ public class UIElement
         get { return _position; }
         set { _position = value;
             if (Size == null) throw new ArgumentNullException(nameof(Size));
-            Bounds = new Rectangle((_position + _offset + Globals.Offset((int)Size.X, (int)Size.Y)).ToPoint(),new Point((int)Size.X,(int)Size.Y));
+            Bounds = new Rectangle((_position + _offset + ParentPosition + Globals.Offset((int)Size.X, (int)Size.Y)).ToPoint(),new Point((int)Size.X,(int)Size.Y));
         }
     }
     private Vector2 _position;
+    public Vector2 ParentPosition { get; set; }
+    public Vector2 AbsolutePosition { get { return Position + ParentPosition; } }
     private Vector2 Size { get; set; }
     public Vector2 TilePosition { get; set; }
     public int DrawOrder => 1;
@@ -37,7 +39,14 @@ public class UIElement
     protected Alignment Alignment { 
         set {
             if (value == Alignment.Center) _offset = Vector2.Zero;
-            if (value == Alignment.Left) _offset = -Globals.Offset((int)Size.X, (int)Size.Y).SetY(0);
+            if (value == Alignment.CenterLeft) _offset = -Globals.Offset((int)Size.X, (int)Size.Y).SetY(0);
         } }
-    private Vector2 _offset { get; set; }
+    public Vector2 _offset { get; set; }
+
+    public virtual void UpdatePosition()
+    {
+        Position = Position;
+    }
+
+    public abstract void Remove();
 }
