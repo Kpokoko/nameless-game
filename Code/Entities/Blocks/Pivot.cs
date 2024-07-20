@@ -13,7 +13,7 @@ using nameless.Interfaces;
 using nameless.Serialize;
 using nameless.Tiles;
 
-namespace nameless.Entities.Blocks;
+namespace nameless.Entity;
 
 /// <summary>
 /// Invisible entity.

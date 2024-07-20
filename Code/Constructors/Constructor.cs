@@ -5,6 +5,7 @@ using nameless.Code.SceneManager;
 using nameless.Controls;
 using nameless.Entity;
 using nameless.Interfaces;
+using nameless.UI;
 using nameless.UI.Scenes;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,10 @@ namespace nameless.Code.Constructors;
 public class Constructor : IGameObject
 {
     public int DrawOrder => 1;
-    private ConstructorScene UIScene;
     private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
-    private List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
+    protected List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
-    public string SelectedEntity { get; set; }
+    public EntityType SelectedEntity { get; set; }
 
     public void Draw(SpriteBatch spriteBatch)
     { }
@@ -31,11 +31,11 @@ public class Constructor : IGameObject
         Globals.IsConstructorModeEnabled = Globals.IsConstructorModeEnabled ? false : true;
         if (Globals.IsConstructorModeEnabled)
         {
-            UIScene = new ConstructorScene();
+            Globals.UIManager.SetScene(UIScenes.ConstructorScene);
         }
         else
         {
-            UIScene.Clear();
+            Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
         }
     }
 
@@ -44,20 +44,20 @@ public class Constructor : IGameObject
         var mouseTilePos = MouseInputController.MouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y];
 
-        if (MouseInputController.LeftButton.IsJustPressed && entityUnderMouse is IConstructable)
+        if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
             HoldBlock(entityUnderMouse as IConstructable);
 
-        if ((!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) || (_holdingEntity is not null && _holdingEntity.IsPrivate)) 
+        if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) 
             ReleaseBlock();
 
         if ((MouseInputController.LeftButton.IsJustReleased || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
             SpawnBlock(mouseTilePos);
 
-        if ((MouseInputController.RightButton.IsJustReleased || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse is IConstructable)
+        if ((MouseInputController.RightButton.IsJustReleased || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
             DeleteBlock(entityUnderMouse);
 
         if (entityUnderMouse is null && _holdingEntity is not null)
-            _holdingEntity.UpdateConstructor(gameTime);
+           MoveBlock(mouseTilePos);
     }
 
     private void HoldBlock(IConstructable entity)
@@ -72,16 +72,15 @@ public class Constructor : IGameObject
         _holdingEntity = null;
     }
 
-    private void SpawnBlock(Vector2 mouseTilePos)
+    protected virtual void SpawnBlock(Vector2 mouseTilePos)
     {
-        if (SelectedEntity == null) return;
+        if (SelectedEntity is EntityType.None) return;
         switch (SelectedEntity)
         {
-            case "InventoryBlock":
+            case EntityType.InventoryBlock:
                 _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
             default:
-                Console.WriteLine("Not in a developer tool mode");
                 break;
         }
     }
@@ -90,5 +89,21 @@ public class Constructor : IGameObject
     {
         _entities.Remove(entity);
         (entity as Block).colliders.RemoveAll();
+    }
+
+    private void MoveBlock(Vector2 mouseTilePos)
+    {
+        _holdingEntity.UpdateConstructor();
+        var tileEntity = _holdingEntity as TileGridEntity;
+        if (tileEntity.TilePosition != mouseTilePos)
+            tileEntity.TilePosition = mouseTilePos;
+    }
+
+
+
+    private bool PossibleToInteract(IEntity entity)
+    {
+        return entity is IConstructable && 
+            (Globals.IsDeveloperModeEnabled || ((IConstructable)entity).IsEnableToPlayer);
     }
 }

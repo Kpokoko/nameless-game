@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using nameless.Code.SceneManager;
 using nameless.Collisions;
 using nameless.Engine;
-using nameless.Entities.Blocks;
 using nameless.Entity;
 using nameless.GameObjects;
 using nameless.Interfaces;

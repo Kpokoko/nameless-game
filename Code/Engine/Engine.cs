@@ -13,10 +13,10 @@ using System.Linq;
 using nameless.Code.SceneManager;
 using System;
 using System.ComponentModel.Design;
-using nameless.Entities.Blocks;
 using nameless.GameObjects;
 using MonoGame.Extended.Collections;
 using nameless.UI;
+using nameless.Code.Constructors;
 
 namespace nameless.Engine;
 
@@ -47,6 +47,14 @@ public class Engine : Game
         LoadCollisions();
         Globals.UIManager = new UIManager();
         Globals.SceneManager = new SceneManager();
+        if (Globals.IsDeveloperModeEnabled)
+        {
+            Globals.Constructor = new DeveloperConstructor();
+        }
+        else
+        {
+            Globals.Constructor = new Constructor();
+        }
         base.Initialize();
         _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;

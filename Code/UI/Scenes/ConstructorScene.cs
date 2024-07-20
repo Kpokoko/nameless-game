@@ -28,15 +28,15 @@ public class ConstructorScene : UIScene
 
         if (!Globals.IsDeveloperModeEnabled)
         {
-            button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = "InventoryBlock";
-            button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = "EditorBlock";
-            button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = "Block";
+            button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.InventoryBlock;
+            button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.EditorBlock;
+            button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.Block;
         }
         if (Globals.IsDeveloperModeEnabled)
         {
-            button1.OnClickEvent += () => Globals.DevMode.SelectedEntity = "InventoryBlock";
-            button2.OnClickEvent += () => Globals.DevMode.SelectedEntity = "EditorBlock";
-            button3.OnClickEvent += () => Globals.DevMode.SelectedEntity = "Block";
+            button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.InventoryBlock;
+            button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.EditorBlock;
+            button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.Block;
         }
 
         button1.SetKeyboardKey(Keys.D1);

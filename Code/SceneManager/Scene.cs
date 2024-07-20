@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Timers;
 using nameless.Entity;
 using nameless.Interfaces;
-using nameless.Entities.Blocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +33,8 @@ namespace nameless.Code.SceneManager
 
         public void Update(GameTime gameTime)
         {
-            if (Globals.IsConstructorModeEnabled && !Globals.IsDeveloperModeEnabled)
+            if (Globals.IsConstructorModeEnabled)
                 Globals.Constructor.Update(gameTime);
-            else if (Globals.IsConstructorModeEnabled && Globals.IsDeveloperModeEnabled)
-                Globals.DevMode.Update(gameTime);
 
             for (var i = 0; i < Entities.Count;i++)
             {

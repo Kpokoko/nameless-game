@@ -33,16 +33,13 @@ public abstract class TileGridEntity : IConstructable
     }
 
     public bool IsHolding { get; set; }
-    public bool IsPrivate { get; set; }
+    public bool IsEnableToPlayer { get; set; } = false;
 
     private Vector2 _position;
     private Vector2 _tilePos;
 
     public abstract void OnPositionChange(Vector2 position);
 
-    public void UpdateConstructor(GameTime gameTime)
-    {
-        if (this.TilePosition != MouseInputController.MouseTilePos)
-            TilePosition = MouseInputController.MouseTilePos;
-    }
+    public virtual void UpdateConstructor()
+    {   }
 }

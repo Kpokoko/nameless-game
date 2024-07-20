@@ -57,10 +57,7 @@ namespace nameless.Controls
             if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled) 
                 && !_previousKeyboardState.IsKeyDown(Keys.E) && keyboardState.IsKeyDown(Keys.E))
             {
-                if (!Globals.IsDeveloperModeEnabled)
-                    Globals.Constructor.SwitchMode();
-                else
-                    Globals.DevMode.SwitchMode();
+                Globals.Constructor.SwitchMode();
             }
             _previousKeyboardState = keyboardState;
         }
