@@ -14,6 +14,7 @@ namespace nameless;
 
 public static class Globals
 {
+    public static Engine.Engine Engine;
 
     public static GameTime GameTime;
 

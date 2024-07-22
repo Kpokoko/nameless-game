@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using nameless.Collisions;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;
@@ -35,6 +36,12 @@ namespace nameless.Code.SceneManager
                         continue;
                     case "EditorBlock":
                         sceneContent.Add(new EditorBlock((int)data.TilePos.X, (int)data.TilePos.Y));
+                        continue;
+                    case "Pivot":
+                        var pivot = new Pivot((int)data.TilePos.X, (int)data.TilePos.Y);
+                        HitboxTrigger.CreateHitboxTrigger(data.TriggerType, pivot);
+                        sceneContent.Add(pivot);
+
                         continue;
                 }
             }

@@ -21,11 +21,14 @@ namespace nameless.Code.Constructors
             base.SpawnBlock(mouseTilePos);
             switch (SelectedEntity)
             {
-                case EntityType.EditorBlock:
+                case EntityTypeEnum.EditorBlock:
                     _entities.Add(new EditorBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                     break;
-                case EntityType.Block:
+                case EntityTypeEnum.Block:
                     _entities.Add(new Block((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                    break;
+                case EntityTypeEnum.HitboxTrigger:
+                    //...
                     break;
                 default:
                     break;

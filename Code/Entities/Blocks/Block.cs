@@ -21,8 +21,8 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     {
         //Position = new Tile(x, y).Position;
         TilePosition = new Vector2(x, y);
-        colliders.Add( new Collider(this, 64, 64));
-        colliders[0].Color = Color.Brown;
+        Colliders.Add( new Collider(this, 64, 64));
+        Colliders[0].Color = Color.Brown;
     }
 
     public Block() { }
@@ -30,12 +30,12 @@ public partial class Block : TileGridEntity, IEntity, ICollider
 
     int IGameObject.DrawOrder => 1;
     [XmlIgnore]
-    public Colliders colliders { get; set; } = new();
+    public Colliders Colliders { get; set; } = new();
 
     public override void OnPositionChange(Vector2 position)
     {
-        if (colliders != null)
-            colliders.Position = position;
+        if (Colliders != null)
+            Colliders.Position = position;
         PrepareSerializationInfo();
     }
 

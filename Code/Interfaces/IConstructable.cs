@@ -12,5 +12,6 @@ public interface IConstructable
     public void UpdateConstructor();
     public bool IsHolding { get; set; }
     public bool IsEnableToPlayer { get; set; }
+    public int Layer { get; set; }
 
 }

@@ -13,7 +13,7 @@ namespace nameless.Entity
     {
         public EditorBlock(int x, int y) : base(x, y)
         { 
-            colliders[0].Color = Color.Violet;
+            Colliders[0].Color = Color.Violet;
 
             var trigger = new HitboxTrigger(this, 45, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
             trigger.SetOffset(new Vector2(0, -32));
@@ -21,7 +21,7 @@ namespace nameless.Entity
             trigger.SetTriggerEntityTypes(typeof(PlayerModel));
             trigger.OnCollisionEvent += () => Globals.OnEditorBlock = true;
             trigger.OnCollisionExitEvent += () => Globals.OnEditorBlock = false;
-            colliders.Add(trigger);
+            Colliders.Add(trigger);
         }
     }
 }

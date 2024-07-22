@@ -21,7 +21,9 @@ public class Constructor : IGameObject
     private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
     protected List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
-    public EntityType SelectedEntity { get; set; }
+    public EntityTypeEnum SelectedEntity { get; set; }
+    public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
+    public int Layer { get { return (SelectedEntity is EntityTypeEnum.HitboxTrigger) ? 1 : 0; } }
 
     public void Draw(SpriteBatch spriteBatch)
     { }
@@ -41,8 +43,10 @@ public class Constructor : IGameObject
 
     public void Update(GameTime gameTime)
     {
+        if (Keyboard.GetState().IsKeyDown(Keys.Tab) && MouseInputController.LeftButton.IsJustPressed)
+            Console.WriteLine("");
         var mouseTilePos = MouseInputController.MouseTilePos;
-        var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y];
+        var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
         if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
             HoldBlock(entityUnderMouse as IConstructable);
@@ -74,10 +78,10 @@ public class Constructor : IGameObject
 
     protected virtual void SpawnBlock(Vector2 mouseTilePos)
     {
-        if (SelectedEntity is EntityType.None) return;
+        if (SelectedEntity is EntityTypeEnum.None) return;
         switch (SelectedEntity)
         {
-            case EntityType.InventoryBlock:
+            case EntityTypeEnum.InventoryBlock:
                 _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
             default:
@@ -85,10 +89,10 @@ public class Constructor : IGameObject
         }
     }
 
-    private void DeleteBlock(IEntity entity)
+    private void DeleteBlock(TileGridEntity entity)
     {
-        _entities.Remove(entity);
-        (entity as Block).colliders.RemoveAll();
+        _entities.Remove(entity as IEntity);
+        (entity as Block).Colliders.RemoveAll();
     }
 
     private void MoveBlock(Vector2 mouseTilePos)
@@ -101,9 +105,9 @@ public class Constructor : IGameObject
 
 
 
-    private bool PossibleToInteract(IEntity entity)
+    private bool PossibleToInteract(TileGridEntity entity)
     {
         return entity is IConstructable && 
-            (Globals.IsDeveloperModeEnabled || ((IConstructable)entity).IsEnableToPlayer);
+            ((Globals.IsDeveloperModeEnabled) || ((IConstructable)entity).IsEnableToPlayer);
     }
 }

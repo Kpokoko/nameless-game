@@ -18,33 +18,20 @@ namespace nameless.Entity;
 /// <summary>
 /// Invisible entity.
 /// </summary>
-internal class Pivot :  TileGridEntity, IEntity, ICollider
+public class Pivot :  Block, IEntity, ICollider
 {
-    int IGameObject.DrawOrder => 1;
-    [XmlIgnore]
-    public Colliders colliders { get; set; } = new();
-
     public Pivot(int x, int y)
     {
         TilePosition = new Vector2(x, y);
+        Layer = 1;
+        Colliders.Add(new Collider(this, 64, 64));
+        Globals.CollisionManager.CollisionComponent.Remove(Colliders[0]);
+        Colliders[0].Color = Color.LightSteelBlue;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
-    { }
-
-    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
+    public override void PrepareSerializationInfo()
     {
-        throw new InvalidOperationException();
-    }
-
-    public void Update(GameTime gameTime)
-    { }
-
-    public override void OnPositionChange(Vector2 position)
-    { }
-
-    public SerializationInfo PrepareSerializationInfo()
-    {
-        throw new NotImplementedException();
+        base.PrepareSerializationInfo();
+        Info.TriggerType = Colliders.GetTriggerType();
     }
 }

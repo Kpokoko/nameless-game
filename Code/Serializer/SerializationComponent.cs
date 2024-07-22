@@ -12,7 +12,7 @@ public partial class Block : ISerializable
 {
     public SerializationInfo Info { get; set; } = new();
 
-    public void PrepareSerializationInfo()
+    public virtual void PrepareSerializationInfo()
     {
         Info.TilePos = TilePosition;
         Info.TypeOfElement = this.GetType().Name;

@@ -17,6 +17,7 @@ using nameless.GameObjects;
 using MonoGame.Extended.Collections;
 using nameless.UI;
 using nameless.Code.Constructors;
+using nameless.Entitiy;
 
 namespace nameless.Engine;
 
@@ -45,6 +46,7 @@ public class Engine : Game
     protected override void Initialize()
     {
         LoadCollisions();
+        Globals.Engine = this;
         Globals.UIManager = new UIManager();
         Globals.SceneManager = new SceneManager();
         if (Globals.IsDeveloperModeEnabled)
@@ -84,20 +86,12 @@ public class Engine : Game
         _player = Globals.SceneManager.GetPlayer();
         _inputController = new PlayerInputController(_player);
 
-        var levelChanger = new HitboxTrigger(new Pivot(20, 12), 10, 64, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
-        levelChanger.SetTriggerEntityTypes(typeof(PlayerModel));
-        levelChanger.Color = Color.SkyBlue;
-        levelChanger.SetOffset(new Vector2(30, 0));
-        levelChanger.OnCollisionEvent += () =>
-        {
-            var serializer = new Serializer();
-            var entities = Globals.SceneManager.GetEntities();
-            serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
-            Restart();
-        };
+        //var levelChanger = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, new Pivot(20, 12));
+
+        //Globals.SceneManager.GetEntities().Add(levelChanger.Entity);
     }
 
-    private void Restart()
+    public  void Restart()
     {
         LoadCollisions();
         LoadScene();

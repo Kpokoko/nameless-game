@@ -28,19 +28,19 @@ public class SceneManager
         var entities = _currentScene.Entities;
         foreach (var block in entities.Where(item => item is Block))
         {
-            //if (block is EditorBlock) continue;
+            if (block is Pivot) continue;
             var colliderBlock = block as ICollider;
             var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
             trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
-            colliderBlock.colliders.Add(trigger2);
-            var trueColor = colliderBlock.colliders[0].Color;
+            colliderBlock.Colliders.Add(trigger2);
+            var trueColor = colliderBlock.Colliders[0].Color;
             trigger2.OnCollisionEvent += () =>
             {
-                colliderBlock.colliders[0].Color = Color.Blue;
+                colliderBlock.Colliders[0].Color = Color.Blue;
             };
             trigger2.OnCollisionExitEvent += () =>
             {
-                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.colliders[0].Color = trueColor; });
+                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.Colliders[0].Color = trueColor; });
             };
         }
     }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using nameless.Controls;
 using Microsoft.Xna.Framework.Content;
+using nameless.Collisions;
 
 namespace nameless.Code.SceneManager
 {
@@ -18,6 +19,7 @@ namespace nameless.Code.SceneManager
     {
         public List<IEntity> Entities;
         public Storage Storage;
+
         public string Name { get; }
         private ContentManager _content;
         //public bool ConstructorMode { get; private set; } = true;
@@ -25,7 +27,7 @@ namespace nameless.Code.SceneManager
         public Scene(string sceneName)
         {
             Entities = SceneLoader.LoadScene(sceneName);
-            Storage = new Storage(Entities);
+            Storage = new(Entities);
             Name = sceneName;
         }
 

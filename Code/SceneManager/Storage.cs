@@ -1,4 +1,5 @@
-﻿using nameless.Entity;
+﻿using Microsoft.Xna.Framework.Input;
+using nameless.Entity;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,23 +11,26 @@ namespace nameless.Code.SceneManager
 {
     public class Storage
     {
-        private IEntity[,] Entities = new IEntity[40, 23];
+        private TileGridEntity[][,] Entities = new[] { new TileGridEntity[40, 23] , new TileGridEntity[40, 23] };
 
         public Storage(List<IEntity> entities)
         {
-            foreach (var entity in entities)
+            for (var i = 0; i < entities.Count; i++)
             {
+                var entity = entities[i] as TileGridEntity;
+                if (entity is null) continue;
+                var layer = entity.Layer;
                 var pos = entity.TilePosition;
-                Entities[(int)pos.X, (int)pos.Y] = entity;
+                Entities[layer][(int)pos.X, (int)pos.Y] = entity;
                 if (entity is EditorBlock)
-                    Entities[(int)pos.X, (int)pos.Y - 1] = entity;
+                    Entities[layer][(int)pos.X, (int)pos.Y - 1] = entity;
             }
         }
 
-        public IEntity this[int index, int index2]
+        public TileGridEntity this[int index, int index2, int layer = 0]
         {
-            get { return Entities[index, index2]; }
-            set { Entities[index, index2] = value; }
+            get { return Entities[layer][index, index2]; }
+            set { Entities[layer][index, index2] = value; }
         }
     }
 }

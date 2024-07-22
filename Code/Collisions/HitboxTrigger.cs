@@ -8,17 +8,19 @@ using nameless.Entity;
 using nameless.Interfaces;
 using Microsoft.Xna.Framework;
 using nameless.Engine;
+using nameless.Entitiy;
 
 namespace nameless.Collisions;
 
-public class HitboxTrigger : Collider
+public partial class HitboxTrigger : Collider
 {
+    public TriggerType TriggerType {  get; set; }
     private List<Type> triggerByEntityTypes = new() { typeof(PlayerModel) };
     private List<Type> EntityBuffer = new();
     private List<string> triggerByCollidersId = new();
     private List<string> idBiffer = new();
     private ReactOnProperty reactOnProperty;
-    private ActivateProperty activateProperty;
+    //private ActivateProperty activateProperty;
     private SignalProperty signalProperty;
     public bool isActivated { get; private set; } = false;
     private bool triggerInside = false;

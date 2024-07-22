@@ -34,6 +34,7 @@ public abstract class TileGridEntity : IConstructable
 
     public bool IsHolding { get; set; }
     public bool IsEnableToPlayer { get; set; } = false;
+    public int Layer { get; set; } = 0;
 
     private Vector2 _position;
     private Vector2 _tilePos;

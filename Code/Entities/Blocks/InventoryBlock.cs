@@ -14,7 +14,7 @@ namespace nameless.Entity
     public class InventoryBlock : Block, IConstructable
     {
         public InventoryBlock(int x, int y) : base(x, y)
-        { colliders[0].Color = Color.Red; IsEnableToPlayer = true; }
+        { Colliders[0].Color = Color.Red; IsEnableToPlayer = true; }
 
         //public bool IsHolding { get; set; }
 

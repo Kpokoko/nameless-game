@@ -21,24 +21,28 @@ public class ConstructorScene : UIScene
         var button1 = new Button(Vector2.Zero, 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
         var button2 = new Button(Vector2.Zero, 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
         var button3 = new Button(Vector2.Zero, 280, 50, "Block", ButtonActivationProperty.Switch);
+        var button4 = new Button(Vector2.Zero, 280, 50, "Hitbox", ButtonActivationProperty.Switch);
 
-        container.AddElements(button1,button2,button3);
+        container.AddElements(button1,button2,button3,button4);
         AddElements(container);
 
         //var button1 = new Button(new Vector2(1700, 150), 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
         //var button2 = new Button(new Vector2(1700, 250), 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
         //var button3 = new Button(new Vector2(1700, 350), 280, 50, "Block", ButtonActivationProperty.Switch);
 
-        button1.OnClickEvent += () => { button2.Deactivate(); button3.Deactivate(); };
-        button2.OnClickEvent += () => { button1.Deactivate(); button3.Deactivate(); };
-        button3.OnClickEvent += () => { button2.Deactivate(); button1.Deactivate(); };
+        button1.OnClickEvent += () => { button2.Deactivate(); button3.Deactivate(); button4.Deactivate(); };
+        button2.OnClickEvent += () => { button1.Deactivate(); button3.Deactivate(); button4.Deactivate(); };
+        button3.OnClickEvent += () => { button2.Deactivate(); button1.Deactivate(); button4.Deactivate(); };
+        button4.OnClickEvent += () => { button2.Deactivate(); button3.Deactivate(); button1.Deactivate(); };
 
-        button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.InventoryBlock;
-        button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.EditorBlock;
-        button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityType.Block;
+        button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.InventoryBlock;
+        button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.EditorBlock;
+        button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.Block;
+        button4.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.HitboxTrigger;
 
         button1.SetKeyboardKey(Keys.D1);
         button2.SetKeyboardKey(Keys.D2);
         button3.SetKeyboardKey(Keys.D3);
+        button4.SetKeyboardKey(Keys.D4);
     }
 }

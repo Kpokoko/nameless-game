@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using nameless.Entitiy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,14 @@ public class Colliders
     {
         colliders.Remove(collider);
         collider.RemoveCollider();
+    }
+
+    public TriggerType GetTriggerType()
+    {
+        var trigger = (colliders.FirstOrDefault(c => c is HitboxTrigger));
+        if (trigger != null) 
+            return (trigger as HitboxTrigger).TriggerType;
+        return TriggerType.None;
     }
 
     public void RemoveAll()

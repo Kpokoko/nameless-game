@@ -59,7 +59,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public Vector2 Position { get; set; }
     public PlayerState State { get; set; }
     [XmlIgnore]
-    public Colliders colliders { get; set; } = new();
+    public Colliders Colliders { get; set; } = new();
     [XmlIgnore]
     public Vector2 Velocity { get; private set; }
 
@@ -124,7 +124,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
+        Colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
 
         PrepareSerializationInfo();
     }
