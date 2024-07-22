@@ -36,10 +36,24 @@ public partial class HitboxTrigger
     public static HitboxTrigger SwitchScene(Block pivot)
     {
         var trigger = new HitboxTrigger(pivot, 10, 64, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+        var location = pivot.GetBlockPlace();
+        if (location is SceneChangerLocation.top)
+        {
+            trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+            trigger.SetOffset(new Vector2(0, -30));
+        }
+        if (location is SceneChangerLocation.bottom)
+        {
+            trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+            trigger.SetOffset(new Vector2(0, 30));
+        }
+        if (location is SceneChangerLocation.left)
+            trigger.SetOffset(new Vector2(-30, 0));
+        if (location is SceneChangerLocation.right)
+            trigger.SetOffset(new Vector2(30, 0));
         trigger.TriggerType = TriggerType.SwitchScene;
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
-        trigger.SetOffset(new Vector2(30, 0));
         trigger.OnCollisionEvent += () =>
         {
             var serializer = new Serializer();

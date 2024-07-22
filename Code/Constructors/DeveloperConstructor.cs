@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using nameless.Collisions;
+using nameless.Entitiy;
 
 namespace nameless.Code.Constructors
 {
@@ -28,7 +30,9 @@ namespace nameless.Code.Constructors
                     _entities.Add(new Block((int)mouseTilePos.X, (int)mouseTilePos.Y));
                     break;
                 case EntityTypeEnum.HitboxTrigger:
-                    //...
+                    var pivot = new Pivot((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    var b = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, pivot);
+                    _entities.Add(pivot);
                     break;
                 default:
                     break;
