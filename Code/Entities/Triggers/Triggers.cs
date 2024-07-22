@@ -35,18 +35,20 @@ public partial class HitboxTrigger
 
     public static HitboxTrigger SwitchScene(Block pivot)
     {
-        var trigger = new HitboxTrigger(pivot, 10, 64, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+        HitboxTrigger trigger = null;
         var location = pivot.GetBlockPlace();
         if (location is SceneChangerLocation.top)
         {
             trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
             trigger.SetOffset(new Vector2(0, -30));
         }
-        if (location is SceneChangerLocation.bottom)
+        else if (location is SceneChangerLocation.bottom)
         {
             trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
             trigger.SetOffset(new Vector2(0, 30));
         }
+        else
+            trigger = new HitboxTrigger(pivot, 10, 64, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
         if (location is SceneChangerLocation.left)
             trigger.SetOffset(new Vector2(-30, 0));
         if (location is SceneChangerLocation.right)
