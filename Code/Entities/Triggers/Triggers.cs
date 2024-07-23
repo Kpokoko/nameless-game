@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using nameless.Collisions;
+using nameless.Engine;
 using nameless.Entitiy;
 using nameless.Entity;
 using nameless.Serialize;
@@ -13,6 +14,7 @@ namespace nameless.Collisions;
 
 public partial class HitboxTrigger
 {
+    public Vector2 DestinationScene;
     public static HitboxTrigger CreateHitboxTrigger(TriggerType type, Block pivot)
     {
         HitboxTrigger trigger = null;
@@ -40,19 +42,28 @@ public partial class HitboxTrigger
         if (location is SceneChangerLocation.top)
         {
             trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+            trigger.DestinationScene = new Vector2(0, -1);
             trigger.SetOffset(new Vector2(0, -30));
         }
         else if (location is SceneChangerLocation.bottom)
         {
             trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
+            trigger.DestinationScene = new Vector2(0, 1);
             trigger.SetOffset(new Vector2(0, 30));
         }
         else
             trigger = new HitboxTrigger(pivot, 10, 64, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
         if (location is SceneChangerLocation.left)
+        {
             trigger.SetOffset(new Vector2(-30, 0));
+            trigger.DestinationScene = new Vector2(-1, 0);
+        }
         if (location is SceneChangerLocation.right)
+        {
             trigger.SetOffset(new Vector2(30, 0));
+            trigger.DestinationScene = new Vector2(1, 0);
+        }
+        //if (Globals.SceneManager.GetName() != "center") trigger.DestinationScene = "center";
         trigger.TriggerType = TriggerType.SwitchScene;
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
@@ -61,7 +72,10 @@ public partial class HitboxTrigger
             var serializer = new Serializer();
             var entities = Globals.SceneManager.GetEntities();
             serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
-            Globals.Engine.Restart();
+            var currLoc = Globals.SceneManager.CurrentLocation;
+            var newLoc = new Vector2(trigger.DestinationScene.Y + currLoc.X, trigger.DestinationScene.X + currLoc.Y);
+            Globals.SceneManager.LoadScene(Globals.Map[(int)newLoc.X][(int)newLoc.Y], newLoc);
+            //Globals.Engine.Restart();
         };
         return trigger;
     }

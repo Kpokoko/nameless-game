@@ -41,7 +41,6 @@ namespace nameless.Code.SceneManager
                         var pivot = new Pivot((int)data.TilePos.X, (int)data.TilePos.Y);
                         HitboxTrigger.CreateHitboxTrigger(data.TriggerType, pivot);
                         sceneContent.Add(pivot);
-
                         continue;
                 }
             }

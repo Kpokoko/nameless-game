@@ -9,12 +9,15 @@ using nameless.Engine;
 using nameless.Code.SceneManager;
 using Microsoft.Xna.Framework.Content;
 using nameless.Code.Constructors;
+using nameless.Interfaces;
 
 namespace nameless;
 
 public static class Globals
 {
     public static Engine.Engine Engine;
+
+    public static string[][] Map;
 
     public static GameTime GameTime;
 

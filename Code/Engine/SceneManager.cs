@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
+using MonoGame.Extended.Collisions;
 using nameless.Code.SceneManager;
 using nameless.Collisions;
 using nameless.Engine;
@@ -17,9 +19,12 @@ namespace nameless.Engine;
 public class SceneManager
 {
     private Scene _currentScene;
+    public Vector2 CurrentLocation;
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, Vector2 currentLocation)
     {
+        CurrentLocation = currentLocation;
+        Globals.Engine.LoadCollisions();
         _currentScene = new Scene(sceneName);
         var trigger = new HitboxTrigger(new Pivot(17, 12), 80, 80, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
@@ -43,13 +48,14 @@ public class SceneManager
                 TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.Colliders[0].Color = trueColor; });
             };
         }
+        Globals.Engine.LoadUtilities();
     }
 
     public void ReloadScene()
     {
         var sceneName = _currentScene.Name;
         _currentScene = null;
-        LoadScene(sceneName);
+        LoadScene(sceneName, CurrentLocation);
     }
 
     public PlayerModel GetPlayer() => _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel;
