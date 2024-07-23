@@ -18,6 +18,8 @@ using MonoGame.Extended.Collections;
 using nameless.UI;
 using nameless.Code.Constructors;
 using nameless.Entitiy;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace nameless.Engine;
 
@@ -63,7 +65,7 @@ public class Engine : Game
         _graphics.ApplyChanges();
     }
 
-    private void LoadCollisions()
+    public void LoadCollisions()
     {
         var collisionComponent = () => new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
         Globals.CollisionManager = new CollisionManager(collisionComponent());
@@ -77,21 +79,54 @@ public class Engine : Game
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
+        LoadMap();
         LoadScene();
+        //Globals.Map = new string[3][]
+        //{
+        //    new string[3],
+        //    new string[3],
+        //    new string[3],
+        //};
+        //Globals.Map[1][1] = "center";
+        //Globals.Map[1][0] = "left";
+        //Globals.Map[1][2] = "right";
+        //Globals.Map[0][1] = "up";
+        //Globals.Map[2][1] = "down";
+        //using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        //{
+        //    //var a = typeof(List<T>);
+        //    var serializer = new XmlSerializer(typeof(string[][]));
+        //    var a = Globals.Map;
+        //    serializer.Serialize(writer, a);
+        //}
+    }
+
+    private void LoadMap()
+    {
+        using (var reader = new StreamReader(new FileStream(Path.Combine("..", "net6.0", "Map.xml"), FileMode.Open)))
+        {
+            var serializer = new XmlSerializer(typeof(string[][]));
+            var scores = (string[][])serializer.Deserialize(reader);
+            Globals.Map = scores;
+        }
     }
 
     private void LoadScene()
     {
-        Globals.SceneManager.LoadScene("startScene");
-        _player = Globals.SceneManager.GetPlayer();
-        _inputController = new PlayerInputController(_player);
-
+        Globals.SceneManager.LoadScene(Globals.Map[1][1], new Vector2(1, 1));
+        LoadUtilities();
         //var levelChanger = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, new Pivot(20, 12));
 
         //Globals.SceneManager.GetEntities().Add(levelChanger.Entity);
     }
 
-    public  void Restart()
+    public void LoadUtilities()
+    {
+        _player = Globals.SceneManager.GetPlayer();
+        _inputController = new PlayerInputController(_player);
+    }
+
+    public void Restart()
     {
         LoadCollisions();
         LoadScene();
@@ -107,7 +142,7 @@ public class Engine : Game
         if (Keyboard.GetState().IsKeyDown(Keys.Q))
         {
             var serializer = new Serializer();
-            serializer.Serialize("startScene", Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
+            serializer.Serialize(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
         }
 
         if (Keyboard.GetState().IsKeyDown(Keys.R))

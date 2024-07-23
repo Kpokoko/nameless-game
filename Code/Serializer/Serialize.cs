@@ -1,4 +1,6 @@
-﻿using nameless.Interfaces;
+﻿using nameless.Entity;
+using nameless.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,11 +23,26 @@ public struct Serializer
     }
     public List<SerializationInfo> Deserialize(string sceneName)
     {
-        using (var reader = new StreamReader(new FileStream(sceneName, FileMode.Open)))
+        var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
+        try
         {
-            var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
-            var scores = (List<SerializationInfo>)serializer.Deserialize(reader);
-            return scores;
+            using (var reader = new StreamReader(new FileStream(sceneName, FileMode.Open)))
+            {
+                var scores = (List<SerializationInfo>)serializer.Deserialize(reader);
+                return scores;
+            }
+        }
+        catch (FileNotFoundException)
+        {
+            using (StreamWriter writer = new StreamWriter(sceneName))
+            {
+                serializer.Serialize(writer, new List<SerializationInfo> { new PlayerModel(Globals.SpriteSheet).Info });
+            }
+            using (var reader = new StreamReader(new FileStream(sceneName, FileMode.Open)))
+            {
+                var scores = (List<SerializationInfo>)serializer.Deserialize(reader);
+                return scores;
+            }
         }
     }
 }
