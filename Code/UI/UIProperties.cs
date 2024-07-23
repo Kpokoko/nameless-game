@@ -27,3 +27,9 @@ public enum FlexDirection
     Vertical,
     Horizontal
 }
+
+public enum JustifySpaceBetween
+{
+    Bounds,
+    Positions,
+}

@@ -22,6 +22,10 @@ public static class MouseInputController
 
     public static Rectangle MouseBounds { get { return new Rectangle((int)MousePos.X, (int)MousePos.Y, 1, 1); } }
 
+    public static bool OnUIElement {  get; private set; }
+
+    private static bool OnUIBuffer { get; set; }
+
 
     public static LeftButton LeftButton = new();
 
@@ -36,5 +40,17 @@ public static class MouseInputController
         PreviousMouseState = MouseState;
         MouseState = Mouse.GetState();
         MousePos = new Vector2(MouseState.X, MouseState.Y);
+
+        OnUIElement = false;
+        if (OnUIBuffer)
+        {
+            OnUIElement = true;
+            OnUIBuffer = false;
+        }
+    }
+
+    public static void SetOnUIState()
+    {
+        OnUIBuffer = true;
     }
 }

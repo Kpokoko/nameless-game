@@ -22,6 +22,7 @@ public class Constructor : IGameObject
     protected List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
     public EntityTypeEnum SelectedEntity { get; set; }
+    public object SelectedEntityProperty { get; set; }
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
     public int Layer { get { return (SelectedEntity is EntityTypeEnum.HitboxTrigger) ? 1 : 0; } }
 
@@ -54,10 +55,10 @@ public class Constructor : IGameObject
         if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) 
             ReleaseBlock();
 
-        if ((MouseInputController.LeftButton.IsJustReleased || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
+        if (((MouseInputController.LeftButton.IsJustReleased && !MouseInputController.OnUIElement) || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
             SpawnBlock(mouseTilePos);
 
-        if ((MouseInputController.RightButton.IsJustReleased || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
+        if (((MouseInputController.RightButton.IsJustReleased && !MouseInputController.OnUIElement) || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
             DeleteBlock(entityUnderMouse);
 
         if (entityUnderMouse is null && _holdingEntity is not null)

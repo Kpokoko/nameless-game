@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using nameless.Controls;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ public abstract class UIElement
             if (value == Alignment.CenterLeft) _offset = -Globals.Offset((int)Size.X, (int)Size.Y).SetY(0);
         } }
     public Vector2 _offset { get; set; }
+    public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
 
     public virtual void UpdatePosition()
     {

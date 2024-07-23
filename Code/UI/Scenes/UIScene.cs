@@ -26,4 +26,14 @@ public class UIScene
     {
         _elements = _elements.Concat(elements).ToList();
     }
+
+    protected void RemoveElements(params UIElement[] elements)
+    {
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i] == null) continue;
+            _elements.Remove(elements[i]);
+            elements[i].Remove();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using nameless.Controls;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -42,13 +43,57 @@ public class Container : UIElement, IEntity
             return;
         }
 
-        var y = Bounds.Top + _padding.Y;
-        var x = Bounds.Left + Bounds.Width / 2;
-        var spaceBetween = (Bounds.Height - _padding.Y * 2) / (Elements.Count + 1);
-        for (int i = 0; i < Elements.Count; i++)
+        float x; float y;
+        float justifiedSpaceBetween; float spaceBetween;
+        if (_flexDirection == FlexDirection.Vertical)
         {
-            Elements[i].ParentPosition = new Vector2(x ,y + spaceBetween * (i+1));
-            Elements[i].UpdatePosition();
+            y = Bounds.Top + _padding.Y;
+            x = Bounds.Left + Bounds.Width / 2;
+            justifiedSpaceBetween = (Bounds.Height - _padding.Y * 2 - Elements[0].Bounds.Height * Elements.Count) / (Elements.Count + 1);
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                Elements[i].ParentPosition = new Vector2(x, y + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Height / 2);
+                Elements[i].UpdatePosition();
+            }
+        }
+        else if (_flexDirection == FlexDirection.Horizontal)
+        {
+            y = Bounds.Top + Bounds.Height / 2;
+            x = Bounds.Left + _padding.X;
+            justifiedSpaceBetween = (Bounds.Width - _padding.X * 2 - Elements[0].Bounds.Width * Elements.Count) / (Elements.Count + 1);
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                Elements[i].ParentPosition = new Vector2(x + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Width / 2, y);
+                Elements[i].UpdatePosition();
+            }
+        }
+        //var spaceBetween = (Bounds.Height - _padding.Y * 2) / (Elements.Count + 1);
+
+        //for (int i = 0; i < Elements.Count; i++)
+        //{
+        //    Elements[i].ParentPosition = new Vector2(x ,y + spaceBetween * (i+1));
+        //    Elements[i].UpdatePosition();
+        //}
+    }
+
+    public void SwitchButtons(Button clickedButton)
+    {
+        var switchButtons = Elements
+            .Where(e => e is Button)
+            .Select(e => (Button)e)
+            .Where(e =>e.ActivatedProperty is ButtonActivationProperty.Switch)
+            .ToArray();
+        for (int i = 0; i < switchButtons.Length; i++)
+        {
+            var button = switchButtons[i];
+            if (button == clickedButton)
+            {
+
+            }
+            else
+            {
+                button.Deactivate();
+            }
         }
     }
 
@@ -61,7 +106,10 @@ public class Container : UIElement, IEntity
 
     public void Update(GameTime gameTime)
     {
-        throw new NotImplementedException();
+        if (Hovered)
+        {
+            MouseInputController.SetOnUIState();
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch)

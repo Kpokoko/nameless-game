@@ -27,6 +27,8 @@ public class UIManager
             if (Keyboard.GetState().IsKeyDown(KeyboardButtons.Keys.ToArray()[i]))
                 KeyboardButtons.Values.ToArray()[i].Activate();
         }
+        for (var i = 0; i < Containers.Count; i++)
+            Containers[i].Update(gameTime);
     }
     public void Draw(SpriteBatch spriteBatch)
     {

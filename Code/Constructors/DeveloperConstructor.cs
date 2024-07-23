@@ -30,8 +30,12 @@ namespace nameless.Code.Constructors
                     _entities.Add(new Block((int)mouseTilePos.X, (int)mouseTilePos.Y));
                     break;
                 case EntityTypeEnum.HitboxTrigger:
+                    if (SelectedEntityProperty is not TriggerType) return;
+                    var type = (TriggerType)SelectedEntityProperty;
+                    if (type is TriggerType.None) return;
+
                     var pivot = new Pivot((int)mouseTilePos.X, (int)mouseTilePos.Y);
-                    var b = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, pivot);
+                    var b = HitboxTrigger.CreateHitboxTrigger(type, pivot);
                     _entities.Add(pivot);
                     break;
                 default:

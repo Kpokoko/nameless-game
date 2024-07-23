@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using nameless.Entitiy;
 using nameless.Entity;
 using nameless.Interfaces;
 using System;
@@ -12,28 +13,29 @@ namespace nameless.UI.Scenes;
 
 public class ConstructorScene : UIScene
 {
+    private Container hitboxContainer = null;
     public ConstructorScene()
     {
         Name = UIScenes.ConstructorScene;
 
-        var container = new Container(new Vector2(1700, 300), 300, 300, Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(new Vector2(1700, 300), 300, 400, Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
 
         var button1 = new Button(Vector2.Zero, 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
         var button2 = new Button(Vector2.Zero, 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
         var button3 = new Button(Vector2.Zero, 280, 50, "Block", ButtonActivationProperty.Switch);
         var button4 = new Button(Vector2.Zero, 280, 50, "Hitbox", ButtonActivationProperty.Switch);
 
-        container.AddElements(button1,button2,button3,button4);
-        AddElements(container);
+        spawnContainer.AddElements(button1,button2,button3,button4);
+        AddElements(spawnContainer);
 
         //var button1 = new Button(new Vector2(1700, 150), 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
         //var button2 = new Button(new Vector2(1700, 250), 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
         //var button3 = new Button(new Vector2(1700, 350), 280, 50, "Block", ButtonActivationProperty.Switch);
 
-        button1.OnClickEvent += () => { button2.Deactivate(); button3.Deactivate(); button4.Deactivate(); };
-        button2.OnClickEvent += () => { button1.Deactivate(); button3.Deactivate(); button4.Deactivate(); };
-        button3.OnClickEvent += () => { button2.Deactivate(); button1.Deactivate(); button4.Deactivate(); };
-        button4.OnClickEvent += () => { button2.Deactivate(); button3.Deactivate(); button1.Deactivate(); };
+        button1.OnClickEvent += () => { spawnContainer.SwitchButtons(button1); DespawnHitboxContainer(); };
+        button2.OnClickEvent += () => { spawnContainer.SwitchButtons(button2); DespawnHitboxContainer(); };
+        button3.OnClickEvent += () => { spawnContainer.SwitchButtons(button3); DespawnHitboxContainer(); };
+        button4.OnClickEvent += () => { spawnContainer.SwitchButtons(button4); SpawnHitboxContainer(); };
 
         button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.InventoryBlock;
         button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.EditorBlock;
@@ -44,5 +46,31 @@ public class ConstructorScene : UIScene
         button2.SetKeyboardKey(Keys.D2);
         button3.SetKeyboardKey(Keys.D3);
         button4.SetKeyboardKey(Keys.D4);
+    }
+
+    private void SpawnHitboxContainer()
+    {
+        hitboxContainer = new Container(new Vector2(1600, 800), 300, 240, Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+
+        var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
+        var button6 = new Button(Vector2.Zero, 240, 40, "None", ButtonActivationProperty.Switch);
+        var button7 = new Button(Vector2.Zero, 240, 40, "None", ButtonActivationProperty.Switch);
+
+        hitboxContainer.AddElements(button5, button6, button7);
+
+        AddElements(hitboxContainer);
+
+        button5.OnClickEvent += () => { hitboxContainer.SwitchButtons(button5); };
+        button6.OnClickEvent += () => { hitboxContainer.SwitchButtons(button6); };
+        button7.OnClickEvent += () => { hitboxContainer.SwitchButtons(button7); };
+
+        button5.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.SwitchScene;
+        button6.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.None;
+        button7.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.None;
+    }
+
+    private void DespawnHitboxContainer()
+    {
+        RemoveElements(hitboxContainer);
     }
 }

@@ -19,7 +19,6 @@ public class Button : UIElement, IEntity
     //private Rectangle Bounds { get; set; }
 
     public Label Label { get; set; }
-    public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
     public bool Pressed { get; set; }
     public bool Activated { get; set; } = false;
     public ButtonActivationProperty ActivatedProperty { get; set; }
@@ -80,6 +79,7 @@ public class Button : UIElement, IEntity
     public override void UpdatePosition()
     {
         base.UpdatePosition();
+        if (Label == null) return;
         Label.ParentPosition = AbsolutePosition;
         Label.UpdatePosition();
     }
