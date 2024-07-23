@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfString>
+    <string xsi:nil="true" />
+    <string>up</string>
+    <string xsi:nil="true" />
+  </ArrayOfString>
+  <ArrayOfString>
+    <string>left</string>
+    <string>center</string>
+    <string>right</string>
+  </ArrayOfString>
+  <ArrayOfString>
+    <string xsi:nil="true" />
+    <string>down</string>
+    <string xsi:nil="true" />
+  </ArrayOfString>
+</ArrayOfArrayOfString>
