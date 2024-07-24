@@ -114,7 +114,7 @@ public class Engine : Game
 
     private void LoadScene()
     {
-        Globals.Map[0, 2] = "down2";
+        //Globals.Map[0, 2] = "down2";
         Globals.SceneManager.LoadScene(Globals.Map[0,0], new Vector2(0,0));
         LoadUtilities();
         //var levelChanger = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, new Pivot(20, 12));
