@@ -27,14 +27,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>1</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
       <Y>2</Y>
     </TilePos>
@@ -43,31 +35,7 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>2</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>20</X>
-      <Y>3</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
-      <Y>4</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>20</X>
       <Y>4</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -83,14 +51,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>5</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
       <Y>6</Y>
     </TilePos>
@@ -99,23 +59,7 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>6</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
-      <Y>7</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>20</X>
       <Y>7</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -139,14 +83,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
       <Y>10</Y>
     </TilePos>
@@ -155,23 +91,7 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>10</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
-      <Y>11</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>20</X>
       <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -349,14 +269,6 @@
     <TilePos>
       <X>3</X>
       <Y>11</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>5</X>
-      <Y>8</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -507,14 +419,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>13</X>
-      <Y>10</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>0</X>
       <Y>3</Y>
     </TilePos>
@@ -635,14 +539,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>20</X>
-      <Y>8</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>6</X>
       <Y>0</Y>
     </TilePos>
@@ -701,22 +597,6 @@
     <TilePos>
       <X>5</X>
       <Y>6</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>7</X>
-      <Y>8</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>6</X>
-      <Y>8</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -804,7 +684,87 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>8</X>
+      <Y>4</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>9</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
       <Y>8</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>7</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>6</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>5</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>4</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>3</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>2</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>1</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>10</X>
+      <Y>10</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -812,7 +772,7 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>9</X>
-      <Y>8</Y>
+      <Y>10</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -820,8 +780,24 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>8</X>
-      <Y>4</Y>
+      <Y>10</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>10</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>11</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
   </SerializationInfo>
 </ArrayOfSerializationInfo>

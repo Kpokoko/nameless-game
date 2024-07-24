@@ -73,7 +73,7 @@ public partial class HitboxTrigger
             var entities = Globals.SceneManager.GetEntities();
             serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
             var currLoc = Globals.SceneManager.CurrentLocation;
-            var newLoc = new Vector2(trigger.DestinationScene.Y + currLoc.X, trigger.DestinationScene.X + currLoc.Y);
+            var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
             Globals.SceneManager.LoadScene(Globals.Map[(int)newLoc.X][(int)newLoc.Y], newLoc);
             //Globals.Engine.Restart();
         };

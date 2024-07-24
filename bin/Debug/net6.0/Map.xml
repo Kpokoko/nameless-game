@@ -2,17 +2,17 @@
 <ArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfString>
     <string xsi:nil="true" />
-    <string>up</string>
-    <string xsi:nil="true" />
-  </ArrayOfString>
-  <ArrayOfString>
     <string>left</string>
+    <string xsi:nil="true" />
+  </ArrayOfString>
+  <ArrayOfString>
+    <string>up</string>
     <string>center</string>
-    <string>right</string>
+    <string>down</string>
   </ArrayOfString>
   <ArrayOfString>
     <string xsi:nil="true" />
-    <string>down</string>
+    <string>right</string>
     <string xsi:nil="true" />
   </ArrayOfString>
 </ArrayOfArrayOfString>
