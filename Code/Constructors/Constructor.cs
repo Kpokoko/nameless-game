@@ -5,6 +5,7 @@ using nameless.Code.SceneManager;
 using nameless.Controls;
 using nameless.Entity;
 using nameless.Interfaces;
+using nameless.Serialize;
 using nameless.UI;
 using nameless.UI.Scenes;
 using System;
@@ -39,6 +40,8 @@ public class Constructor : IGameObject
         else
         {
             Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
+            var serializer = new Serializer();
+            serializer.Serialize(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
         }
     }
 
