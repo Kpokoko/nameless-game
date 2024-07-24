@@ -38,7 +38,7 @@ public partial class HitboxTrigger
     public static HitboxTrigger SwitchScene(Block pivot)
     {
         HitboxTrigger trigger = null;
-        var location = pivot.GetBlockPlace();
+        var location = pivot.GetBlockDirection();
         if (location is SceneChangerLocation.top)
         {
             trigger = new HitboxTrigger(pivot, 64, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact);
@@ -74,7 +74,7 @@ public partial class HitboxTrigger
             serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
-            Globals.SceneManager.LoadScene(Globals.Map[(int)newLoc.X][(int)newLoc.Y], newLoc);
+            Globals.SceneManager.LoadScene(Globals.Map[(int)newLoc.X,(int)newLoc.Y], newLoc);
             //Globals.Engine.Restart();
         };
         return trigger;

@@ -291,14 +291,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>15</X>
-      <Y>13</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>16</X>
       <Y>13</Y>
     </TilePos>
@@ -941,6 +933,22 @@
     <TilePos>
       <X>9</X>
       <Y>10</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>0</X>
+      <Y>4</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>15</X>
+      <Y>13</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>

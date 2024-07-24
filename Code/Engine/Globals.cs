@@ -17,7 +17,7 @@ public static class Globals
 {
     public static Engine.Engine Engine;
 
-    public static string[][] Map;
+    public static Map Map;
 
     public static GameTime GameTime;
 

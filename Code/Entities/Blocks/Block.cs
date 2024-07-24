@@ -48,7 +48,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)
     { }
 
-    public SceneChangerLocation GetBlockPlace()
+    public SceneChangerLocation GetBlockDirection()
     {
         //var width = Globals.Engine.Window.ClientBounds.Width;
         //var height = Globals.Engine.Window.ClientBounds.Height;
@@ -56,7 +56,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
         var b = this.TilePosition.Y;
         if (a == 0) return SceneChangerLocation.left;
         if (b == 0) return SceneChangerLocation.top;
-        if (a > b) return SceneChangerLocation.right;
-        return SceneChangerLocation.bottom;
+        if (b == 13) return SceneChangerLocation.bottom;
+        return SceneChangerLocation.right;
     }
 }
