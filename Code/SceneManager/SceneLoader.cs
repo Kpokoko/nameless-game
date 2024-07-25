@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using nameless.Collisions;
+using nameless.Engine;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;
+using nameless.Tiles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ namespace nameless.Code.SceneManager
                         sceneContent.Add(new Block((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
                     case "PlayerModel":
-                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet));
+                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos)));
                         continue;
                     case "InventoryBlock":
                         sceneContent.Add(new InventoryBlock((int)data.TilePos.X, (int)data.TilePos.Y));
@@ -37,12 +39,15 @@ namespace nameless.Code.SceneManager
                     case "EditorBlock":
                         sceneContent.Add(new EditorBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
-                    case "Pivot":
-                        var pivot = new Pivot((int)data.TilePos.X, (int)data.TilePos.Y);
-                        HitboxTrigger.CreateHitboxTrigger(data.TriggerType, pivot);
-                        sceneContent.Add(pivot);
-                        continue;
+                    default: break;
                 }
+            }
+            foreach (var data in rawData.Where(d=>d.TypeOfElement == "Pivot"))
+            {
+                var pivot = new Pivot((int)data.TilePos.X, (int)data.TilePos.Y);
+                HitboxTrigger.CreateHitboxTrigger(data.TriggerType, pivot, sceneContent);
+                sceneContent.Add(pivot);
+                continue;
             }
             //var file = File.OpenRead(path);
 

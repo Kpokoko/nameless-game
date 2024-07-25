@@ -48,15 +48,16 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     public void OnCollision(params CollisionEventArgs[] collisionsInfo)
     { }
 
-    public SceneChangerLocation GetBlockDirection()
+    public SceneChangerDirection GetBlockDirection(List<IEntity> sceneContent)
     {
-        //var width = Globals.Engine.Window.ClientBounds.Width;
-        //var height = Globals.Engine.Window.ClientBounds.Height;
-        var a = this.TilePosition.X;
-        var b = this.TilePosition.Y;
-        if (a == 0) return SceneChangerLocation.left;
-        if (b == 0) return SceneChangerLocation.top;
-        if (b == 13) return SceneChangerLocation.bottom;
-        return SceneChangerLocation.right;
+        var entities = sceneContent.Select(e=>e.TilePosition);
+        var leftBorder = entities.Select(v=>v.X).Min();
+        var rightBorder = entities.Select(v => v.X).Max();
+        var topBorder = entities.Select(v => v.Y).Min();
+        var bottomBorder = entities.Select(v => v.Y).Max();
+        if (TilePosition.X == leftBorder) return SceneChangerDirection.left;
+        if (TilePosition.Y == topBorder) return SceneChangerDirection.top;
+        if (TilePosition.Y == bottomBorder) return SceneChangerDirection.bottom;
+        return SceneChangerDirection.right;
     }
 }

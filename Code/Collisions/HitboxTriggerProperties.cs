@@ -24,3 +24,9 @@ public enum ActivateProperty
     OnEntry,
     OnExit
 }
+
+public enum QuantityProperty
+{
+    OneAtATime,
+    ManyAtATime
+}

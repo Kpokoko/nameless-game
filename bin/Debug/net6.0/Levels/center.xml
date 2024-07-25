@@ -275,8 +275,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>2</X>
-      <Y>7</Y>
+      <X>7</X>
+      <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -423,22 +423,6 @@
       <Y>3</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>0</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>20</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -617,22 +601,6 @@
     <TriggerType>None</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>7</X>
-      <Y>0</Y>
-    </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>7</X>
-      <Y>13</Y>
-    </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>5</X>
@@ -783,6 +751,38 @@
       <Y>10</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>0</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>7</X>
+      <Y>0</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>7</X>
+      <Y>13</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>

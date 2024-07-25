@@ -22,15 +22,20 @@ public partial class HitboxTrigger : Collider
     private ReactOnProperty reactOnProperty;
     //private ActivateProperty activateProperty;
     private SignalProperty signalProperty;
+    private QuantityProperty quantityProperty;
     public bool isActivated { get; private set; } = false;
     private bool triggerInside = false;
 
+    private bool InvokeBuffered = false;
+
     public HitboxTrigger(ICollider entity, int width, int height, 
-        ReactOnProperty reactOn, SignalProperty signal) : base(entity, width, height)
+        ReactOnProperty reactOn, SignalProperty signal, QuantityProperty quantity = QuantityProperty.ManyAtATime) 
+        : base(entity, width, height)
     {
         Color = Color.Transparent;//Color.DarkGoldenrod;
         reactOnProperty = reactOn;
         signalProperty = signal;
+        quantityProperty = quantity;
         Globals.TriggerManager.TriggerHitboxes.Add(this);
     }
 
@@ -63,6 +68,12 @@ public partial class HitboxTrigger : Collider
 
     public void UpdateActivation()
     {
+        if (InvokeBuffered)
+        {
+            InvokeBuffered = false;
+            TryInvoke();
+        }
+
         if (triggerInside) triggerInside = false;
         else if (isActivated)
         {
@@ -83,7 +94,7 @@ public partial class HitboxTrigger : Collider
                 if (collisionInfo.Other is HitboxTrigger) return;
                 if (triggerByEntityTypes.Contains(((Collider)collisionInfo.Other).Entity.GetType()))
                 {
-                    TryInvoke();
+                    InvokeBuffered = true;
                 }
                 break;
 
@@ -91,7 +102,7 @@ public partial class HitboxTrigger : Collider
                 if (collisionInfo.Other is not HitboxTrigger) return;
                 if (triggerByCollidersId.Contains(((HitboxTrigger)collisionInfo.Other).Id))
                 {
-                    TryInvoke();
+                    InvokeBuffered = true;
                 }
                 break;
 
@@ -102,10 +113,17 @@ public partial class HitboxTrigger : Collider
     {
         triggerInside = true;
 
-        if (isActivated && signalProperty is SignalProperty.OnceOnEveryContact) return;
+        if (quantityProperty is QuantityProperty.OneAtATime && Globals.TriggerManager.ActivatedTriggers.Contains(TriggerType))
+            return;
+
+        if (isActivated && signalProperty is SignalProperty.OnceOnEveryContact) 
+            return;
 
         if (OnCollisionEvent != null)
             OnCollisionEvent.Invoke();
         isActivated = true;
+
+        if (quantityProperty is QuantityProperty.OneAtATime)
+            Globals.TriggerManager.ActivatedTriggers.Add(TriggerType);
     }
 }

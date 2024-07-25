@@ -363,8 +363,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>2</X>
-      <Y>7</Y>
+      <X>7</X>
+      <Y>13</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -697,14 +697,6 @@
     <TriggerType>None</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>7</X>
-      <Y>13</Y>
-    </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>6</X>
@@ -783,5 +775,13 @@
       <Y>7</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>7</X>
+      <Y>13</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
   </SerializationInfo>
 </ArrayOfSerializationInfo>

@@ -55,6 +55,10 @@ public class KinematicAccurateCollider : DynamicCollider
     {
         var collisionsInfo = collisionInfoBuffer.ToArray();
 
+        var m = collisionsInfo.MaxBy(c=>c.PenetrationVector.X);
+        if (Math.Abs(m.PenetrationVector.X) > 50)
+            Console.WriteLine();
+
         if (collisionsInfo.Length == 1)
             return collisionsInfo;
 
@@ -135,6 +139,8 @@ public class KinematicAccurateCollider : DynamicCollider
         {
             tracedCollisionInfo = new MyCollisionEventArgs(tracedCollisionInfo.Other, tracedCollisionInfo.PenetrationVector.SetY(0), tracedCollisionInfo.CollisionSide);
         }
+        if (Math.Abs(tracedCollisionInfo.PenetrationVector.X) > 50)
+            Console.WriteLine();
         return tracedCollisionInfo;
     }
 }

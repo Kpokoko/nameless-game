@@ -56,7 +56,12 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private SpriteAnimation _runRightAnimation;
     private SpriteAnimation _runLeftAnimation;
 
-    public Vector2 Position { get; set; }
+    public Vector2 Position { get { return _position; } 
+        set 
+        { 
+            _position = value;
+        } }
+    private Vector2 _position;
     public PlayerState State { get; set; }
     [XmlIgnore]
     public Colliders Colliders { get; set; } = new();
@@ -69,9 +74,13 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public PlayerModel() { }
     public SerializationInfo Info { get; set; } = new();
 
-    public PlayerModel(Texture2D spriteSheet) 
+    public PlayerModel(Texture2D spriteSheet, Vector2? position = null) 
     {
-        Position = new Vector2(176, 450);//new Vector2(96, 550);
+        if (position == null)
+            Position = new Vector2(176, 450);
+        else
+            Position = (Vector2)position;
+
         _rightSprite = new Sprite(spriteSheet,
                 RIGHT_SPRITE_POS_X,
                 RIGHT_SPRITE_POS_Y,

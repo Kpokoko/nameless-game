@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace nameless.Entity
 {
-    public enum SceneChangerLocation
+    public enum SceneChangerDirection
     {
         top,
         bottom,

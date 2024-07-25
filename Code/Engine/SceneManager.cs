@@ -21,11 +21,18 @@ public class SceneManager
     private Scene _currentScene;
     public Vector2 CurrentLocation;
 
-    public void LoadScene(string sceneName, Vector2 currentLocation)
+    public void LoadScene(string sceneName, Vector2 currentLocation, EntryData entryData = null)
     {
         CurrentLocation = currentLocation;
         Globals.Engine.LoadCollisions();
         _currentScene = new Scene(sceneName);
+
+        if (entryData != null)
+        {
+            GetPlayer().Position = GetEntryPosition(entryData);
+            GetPlayer().PrepareSerializationInfo();
+        }
+
         var trigger = new HitboxTrigger(new Pivot(17, 12), 80, 80, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
@@ -58,6 +65,34 @@ public class SceneManager
         LoadScene(sceneName, CurrentLocation);
     }
 
+    private Vector2 GetEntryPosition(EntryData entryData)
+    {
+        var enters = GetEntities()
+            .Where(e => e is Pivot)
+            .SelectMany(e => ((Pivot)e).Colliders.colliders)
+            .Where(e => e is HitboxTrigger && ((HitboxTrigger)e).TriggerType is Entitiy.TriggerType.SwitchScene)
+            .Select(e => e.Entity.Position)
+            .Distinct();
+        var entryPosition = entryData.PlayerPosition;
+
+        switch (entryData.Direction)
+        {
+            case SceneChangerDirection.top:
+                entryPosition.Y = enters.Select(e => e.Y).Max() - 5;
+                break;
+            case SceneChangerDirection.bottom:
+                entryPosition.Y = enters.Select(e => e.Y).Min() + 5;
+                break;
+            case SceneChangerDirection.left:
+                entryPosition.X = enters.Select(e => e.X).Max() ;
+                break;
+            case SceneChangerDirection.right:
+                entryPosition.X = enters.Select(e => e.X).Min() ;
+                break;
+        }
+        return entryPosition;
+    }
+
     public PlayerModel GetPlayer() => _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel;
 
     public Storage GetStorage() => _currentScene.Storage;
@@ -69,4 +104,18 @@ public class SceneManager
     public void Update(GameTime gameTime) => _currentScene.Update(gameTime);
 
     public void Draw(SpriteBatch spriteBatch) => _currentScene.Draw(spriteBatch);
+}
+
+public class EntryData
+{
+    public readonly SceneChangerDirection Direction;
+    public readonly Vector2 PlayerPosition;
+
+    //public static Vector2 EntryPosition;
+
+    public EntryData(SceneChangerDirection direction, Vector2 playerPosition)
+    {
+        this.Direction = direction;
+        this.PlayerPosition = playerPosition;
+    }
 }

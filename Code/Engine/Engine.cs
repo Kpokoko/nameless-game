@@ -156,6 +156,7 @@ public class Engine : Game
             return;
         }
 
+
         MouseInputController.ProcessControls();
 
         Globals.SceneManager.Update(gameTime);

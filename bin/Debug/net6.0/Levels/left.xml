@@ -3,8 +3,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>2</X>
-      <Y>7</Y>
+      <X>22</X>
+      <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
@@ -559,14 +559,6 @@
       <Y>6</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>22</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>EditorBlock</TypeOfElement>
@@ -631,5 +623,13 @@
       <Y>7</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>22</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
   </SerializationInfo>
 </ArrayOfSerializationInfo>
