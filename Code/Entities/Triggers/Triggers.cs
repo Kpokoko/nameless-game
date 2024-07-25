@@ -28,6 +28,9 @@ public partial class HitboxTrigger
             case TriggerType.SwitchScene:
                 trigger = CreateSwitchSceneTrigger(pivot,sceneContent);
                 break;
+            case TriggerType.DamagePlayer:
+                trigger = CreateDamagePlayerTrigger(pivot);
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -79,9 +82,21 @@ public partial class HitboxTrigger
             serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
-            Globals.SceneManager.LoadScene(Globals.Map[(int)newLoc.X,(int)newLoc.Y], newLoc, new EntryData(direction, playerPosition()));
+            Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
             //Globals.Engine.Restart();
         };
         return trigger;
     }
+
+    public static HitboxTrigger CreateDamagePlayerTrigger(Block pivot)
+    {
+        HitboxTrigger trigger = new HitboxTrigger(pivot, 60, 60, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact,QuantityProperty.OneAtATime);
+        var player = () => Globals.SceneManager.GetPlayer();
+        trigger.TriggerType = TriggerType.DamagePlayer;
+
+        trigger.Color = Color.IndianRed;
+        trigger.OnCollisionEvent += () => { Globals.SceneManager.ReloadScene(); };
+        return trigger;
+    }
+
 }

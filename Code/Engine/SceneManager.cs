@@ -10,6 +10,7 @@ using nameless.GameObjects;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,16 @@ public class SceneManager
     private Scene _currentScene;
     public Vector2 CurrentLocation;
 
-    public void LoadScene(string sceneName, Vector2 currentLocation, EntryData entryData = null)
+    public void LoadScene(Vector2 currentLocation, EntryData entryData = null)
     {
+        var sceneName = Globals.Map[(int)currentLocation.X, (int)currentLocation.Y];
+        if (sceneName == null)
+        {
+            sceneName = currentLocation.ToSimpleString();
+            Globals.Map[(int)currentLocation.X, (int)currentLocation.Y] = sceneName;
+            Map.SaveMap();
+            File.Copy(Path.Combine("..", "net6.0", "Levels", ".xml"), Path.Combine("..", "net6.0", "Levels", sceneName + ".xml"));
+        }
         CurrentLocation = currentLocation;
         Globals.Engine.LoadCollisions();
         _currentScene = new Scene(sceneName);
@@ -62,7 +71,7 @@ public class SceneManager
     {
         var sceneName = _currentScene.Name;
         _currentScene = null;
-        LoadScene(sceneName, CurrentLocation);
+        LoadScene(CurrentLocation);
     }
 
     private Vector2 GetEntryPosition(EntryData entryData)

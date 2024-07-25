@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfString>
-    <string xsi:nil="true" />
-    <string>left</string>
+    <string>-1 -1</string>
+    <string>-1 0</string>
     <string xsi:nil="true" />
   </ArrayOfString>
   <ArrayOfString>
-    <string>up</string>
-    <string>center</string>
-    <string>down</string>
+    <string>0 -1</string>
+    <string>0 0</string>
+    <string>0 1</string>
+  </ArrayOfString>
+  <ArrayOfString>
+    <string>1 -1</string>
+    <string>1 0</string>
+    <string>1 1</string>
   </ArrayOfString>
   <ArrayOfString>
     <string xsi:nil="true" />
-    <string>right</string>
+    <string>2 0</string>
     <string xsi:nil="true" />
   </ArrayOfString>
 </ArrayOfArrayOfString>

@@ -79,7 +79,7 @@ public class Engine : Game
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
-        LoadMap();
+        Map.LoadMap();
         LoadScene();
         //Globals.Map = new string[3][]
         //{
@@ -101,21 +101,11 @@ public class Engine : Game
         //}
     }
 
-    private void LoadMap()
-    {
-
-        using (var reader = new StreamReader(new FileStream(Path.Combine("..", "net6.0", "Map.xml"), FileMode.Open)))
-        {
-            var serializer = new XmlSerializer(typeof(string[][]));
-            var scores = (string[][])serializer.Deserialize(reader);
-            Globals.Map = new Map(scores);
-        }
-    }
 
     private void LoadScene()
     {
         //Globals.Map[0, 2] = "down2";
-        Globals.SceneManager.LoadScene(Globals.Map[0,0], new Vector2(0,0));
+        Globals.SceneManager.LoadScene(new Vector2(0,0));
         LoadUtilities();
         //var levelChanger = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, new Pivot(20, 12));
 

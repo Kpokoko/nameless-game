@@ -53,7 +53,7 @@ public class ConstructorScene : UIScene
         hitboxContainer = new Container(new Vector2(1600, 800), 300, 240, Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
-        var button6 = new Button(Vector2.Zero, 240, 40, "None", ButtonActivationProperty.Switch);
+        var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);
         var button7 = new Button(Vector2.Zero, 240, 40, "None", ButtonActivationProperty.Switch);
 
         hitboxContainer.AddElements(button5, button6, button7);
@@ -65,7 +65,7 @@ public class ConstructorScene : UIScene
         button7.OnClickEvent += () => { hitboxContainer.SwitchButtons(button7); };
 
         button5.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.SwitchScene;
-        button6.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.None;
+        button6.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.DamagePlayer;
         button7.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.None;
     }
 

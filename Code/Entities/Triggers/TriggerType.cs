@@ -14,4 +14,5 @@ public enum TriggerType
 {
     None,
     SwitchScene,
+    DamagePlayer
 }
