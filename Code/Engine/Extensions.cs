@@ -15,4 +15,9 @@ public static class Extensions
     {
         return (vector.X.ToString() + ' ' + vector.Y.ToString());
     }
+
+    public static string ToSimpleString(this Point point)
+    {
+        return (point.X.ToString() + ' ' + point.Y.ToString());
+    }
 }

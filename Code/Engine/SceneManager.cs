@@ -24,12 +24,17 @@ public class SceneManager
 
     public void LoadScene(Vector2 currentLocation, EntryData entryData = null)
     {
-        var sceneName = Globals.Map[(int)currentLocation.X, (int)currentLocation.Y];
-        if (sceneName == null)
+        var scene = Globals.Map[(int)currentLocation.X, (int)currentLocation.Y];
+        string sceneName;
+        if (scene != null)
+        {
+            sceneName = scene.FullName;
+        }
+        else
         {
             sceneName = currentLocation.ToSimpleString();
-            Globals.Map[(int)currentLocation.X, (int)currentLocation.Y] = sceneName;
-            Map.SaveMap();
+            Globals.Map[(int)currentLocation.X, (int)currentLocation.Y] = new SceneInfo(sceneName,currentLocation.ToPoint());
+            //Map.SaveMap();
             File.Copy(Path.Combine("..", "net6.0", "Levels", ".xml"), Path.Combine("..", "net6.0", "Levels", sceneName + ".xml"));
         }
         CurrentLocation = currentLocation;
