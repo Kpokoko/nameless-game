@@ -23,9 +23,10 @@ public class ConstructorScene : UIScene
         var button1 = new Button(Vector2.Zero, 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
         var button2 = new Button(Vector2.Zero, 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
         var button3 = new Button(Vector2.Zero, 280, 50, "Block", ButtonActivationProperty.Switch);
-        var button4 = new Button(Vector2.Zero, 280, 50, "Hitbox", ButtonActivationProperty.Switch);
+        var button4 = new Button(Vector2.Zero, 280, 50, "Platform", ButtonActivationProperty.Switch);
+        var button5 = new Button(Vector2.Zero, 280, 50, "Hitbox", ButtonActivationProperty.Switch);
 
-        spawnContainer.AddElements(button1,button2,button3,button4);
+        spawnContainer.AddElements(button1,button2,button3,button4,button5);
         AddElements(spawnContainer);
 
         //var button1 = new Button(new Vector2(1700, 150), 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
@@ -35,17 +36,20 @@ public class ConstructorScene : UIScene
         button1.OnClickEvent += () => { spawnContainer.SwitchButtons(button1); DespawnHitboxContainer(); };
         button2.OnClickEvent += () => { spawnContainer.SwitchButtons(button2); DespawnHitboxContainer(); };
         button3.OnClickEvent += () => { spawnContainer.SwitchButtons(button3); DespawnHitboxContainer(); };
-        button4.OnClickEvent += () => { spawnContainer.SwitchButtons(button4); SpawnHitboxContainer(); };
+        button4.OnClickEvent += () => { spawnContainer.SwitchButtons(button4); DespawnHitboxContainer(); };
+        button5.OnClickEvent += () => { spawnContainer.SwitchButtons(button5); SpawnHitboxContainer(); };
 
         button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.InventoryBlock;
         button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.EditorBlock;
         button3.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.Block;
-        button4.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.HitboxTrigger;
+        button4.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.Platform;
+        button5.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.HitboxTrigger;
 
         button1.SetKeyboardKey(Keys.D1);
         button2.SetKeyboardKey(Keys.D2);
         button3.SetKeyboardKey(Keys.D3);
         button4.SetKeyboardKey(Keys.D4);
+        button5.SetKeyboardKey(Keys.D5);
     }
 
     private void SpawnHitboxContainer()

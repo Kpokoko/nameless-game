@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using nameless.Collisions;
 using nameless.Entitiy;
+using nameless.Code.Entities;
 
 namespace nameless.Code.Constructors
 {
@@ -28,6 +29,9 @@ namespace nameless.Code.Constructors
                     break;
                 case EntityTypeEnum.Block:
                     _entities.Add(new Block((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                    break;
+                case EntityTypeEnum.Platform:
+                    _entities.Add(new Platform((int)mouseTilePos.X, (int)mouseTilePos.Y));
                     break;
                 case EntityTypeEnum.HitboxTrigger:
                     if (SelectedEntityProperty is not TriggerType) return;
