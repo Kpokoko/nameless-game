@@ -10,6 +10,8 @@ using System.Xml.Serialization;
 using nameless.Serialize;
 using nameless.Tiles;
 using nameless.UI.Scenes;
+using System.Collections.Generic;
+using System.Timers;
 
 namespace nameless.Entity;
 
@@ -17,18 +19,22 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 {
     public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
+    private const float _time_effect = 1 / 60f;
+
     private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
     private const float MIN_POS_Y = 900;
 
-    private const float MIN_JUMP_HEIGHT = 40f;
-    private const float JUMP_START_VELOCITY = -900f;
-    private const float GRAVITY = 1600f;
-    private const float CANCEL_JUMP_VELOCITY = -100f;
-    private const float DROP_VELOCITY = 1000f;
+    private const float MIN_JUMP_HEIGHT = 4f / _time_effect;
+    private const float JUMP_START_VELOCITY = -13f / _time_effect;
+    private const float GRAVITY = 25f;
+    private const float JUMP_GRAVITY = 70f;
+    private const float CANCEL_JUMP_VELOCITY = -10f;
+    private const float DROP_VELOCITY = 100f;
 
-    private const float BOOST_HOR_VELOCITY = 1f;
-    private const float MOVE_START_VELOCITY = 2f;
-    private const float MAX_HOR_VELOCITY = 8f;
+    private const float BOOST_HOR_VELOCITY = 0.6f / _time_effect;
+    private const float MOVE_START_VELOCITY = 0.1f / _time_effect;
+    private const float MAX_HOR_VELOCITY = 5f / _time_effect;
+    private const float HOR_STOP = 0.7f / _time_effect;
 
     public const int RIGHT_SPRITE_POS_X = 848;
     public const int RIGHT_SPRITE_POS_Y = 0;
@@ -43,9 +49,9 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public const int SPRITE_HEIGHT = 52;
 
     private float _verticalVelocity;
-    private float _realVerticalVelocity;
+    //private float _realVerticalVelocity;
     private float _horizontalVelocity;
-    private float _dropVelocity;
+    //private float _dropVelocity;
 
     public int DrawOrder => 10;
 
@@ -63,13 +69,10 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         } }
     private Vector2 _position;
     public PlayerState State { get; set; }
-    [XmlIgnore]
     public Colliders Colliders { get; set; } = new();
-    [XmlIgnore]
     public Vector2 Velocity { get; private set; }
+    public Stack<Action> Actions { get; set; } = new Stack<Action>();
 
-    public bool IsCollidedX;
-    public bool IsCollidedY;
 
     public PlayerModel() { }
     public SerializationInfo Info { get; set; } = new();
@@ -157,28 +160,21 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public void Update(GameTime gameTime)
     {
         var oldPos = Position;
+        while (Actions.TryPop(out var action))
+            action();
+        
+        ApplyGravity();
 
-        IsCollidedX = false;
-        IsCollidedY = false;
-        if (State != PlayerState.Still || !IsCollidedY)
+        if (_verticalVelocity >= 0)
         {
-            Position = new Vector2(Position.X, Position.Y + _verticalVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds + _dropVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            _verticalVelocity += GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (_verticalVelocity >= 0)
-            {
-                State = PlayerState.Falling;
-            }
-            if (Position.Y >= MIN_POS_Y)
-            {
-                State = PlayerState.Still;
-                _verticalVelocity = 0;
-            }
+            State = PlayerState.Falling;
         }
-        Position = new Vector2(Position.X + _horizontalVelocity, Position.Y);
-        _dropVelocity = 0;
-        //((DynamicCollider)this).Update();
-        //Globals.CollisionComponent.Update(gameTime);
+        if (Position.Y >= MIN_POS_Y)
+        {
+            Globals.SceneManager.ReloadScene();
+        }
+
+
         if (_horizontalVelocity < 0)
         {
             _runLeftAnimation.Update(gameTime);
@@ -189,8 +185,15 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             _runRightAnimation.Update(gameTime);
             _currentSprite = _rightSprite;
         }
+        Velocity = new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Position = Position + Velocity;
 
-        Velocity = Position - oldPos;
+        //Velocity = Position - oldPos;
+    }
+
+    private void ApplyGravity()
+    {
+        _verticalVelocity += GRAVITY;
     }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo) { }
@@ -224,33 +227,36 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         }
     }
 
-    public bool BeginJump()
+    public void TryJump()
+    {
+        if (State is PlayerState.Still)
+        {
+            Jump();
+        }
+    }
+
+    private bool Jump()
     {
         State = PlayerState.Jumping;
         _verticalVelocity = JUMP_START_VELOCITY;
         return true;
     }
 
-    public bool CancelJump()
+    public void CancelJump()
     {
-        if (MIN_POS_Y - Position.Y < MIN_JUMP_HEIGHT)
-        {
-            return false;
-        }
-        _verticalVelocity = _verticalVelocity < CANCEL_JUMP_VELOCITY ? CANCEL_JUMP_VELOCITY : 0;
-
-        return true;
+        if (State is PlayerState.Jumping && _verticalVelocity < CANCEL_JUMP_VELOCITY)
+            _verticalVelocity += JUMP_GRAVITY;
     }
 
-    public bool Drop()
-    {
-        if (IsCollidedY)
-        {
-            return false;
-        }
-        _dropVelocity = DROP_VELOCITY;
-        return true;
-    }
+    //public bool Drop()
+    //{
+    //    if (IsCollidedY)
+    //    {
+    //        return false;
+    //    }
+    //    _dropVelocity = DROP_VELOCITY;
+    //    return true;
+    //}
 
     public void MoveLeft()
     {
@@ -287,15 +293,30 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Stop()
     {
-        if (Math.Abs(_horizontalVelocity) > 1)
+        if (State is PlayerState.Still)
         {
-            if (_horizontalVelocity < 0)
-                _horizontalVelocity += 1;
+            if (Math.Abs(_horizontalVelocity) > HOR_STOP)
+            {
+                if (_horizontalVelocity < 0)
+                    _horizontalVelocity += HOR_STOP;
+                else
+                    _horizontalVelocity -= HOR_STOP;
+            }
             else
-                _horizontalVelocity -= 1;
+                _horizontalVelocity = 0;
         }
         else
-            _horizontalVelocity = 0;
+        {
+            if (Math.Abs(_horizontalVelocity) > HOR_STOP)
+            {
+                if (_horizontalVelocity < 0)
+                    _horizontalVelocity += HOR_STOP * 0.2f;
+                else
+                    _horizontalVelocity -= HOR_STOP * 0.2f;
+            }
+            else
+                _horizontalVelocity = 0;
+        }
     }
 
     public void PrepareSerializationInfo()
