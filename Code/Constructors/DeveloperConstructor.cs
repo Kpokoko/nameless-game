@@ -19,7 +19,7 @@ namespace nameless.Code.Constructors
 {
     public class DeveloperConstructor : Constructor
     {
-        protected override void SpawnBlock(Vector2 mouseTilePos)
+        public override void SpawnBlock(Vector2 mouseTilePos)
         {
             base.SpawnBlock(mouseTilePos);
             switch (SelectedEntity)

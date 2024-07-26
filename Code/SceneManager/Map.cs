@@ -93,7 +93,7 @@ public class Map
         if (scenePath == null) 
             return null;
         var parts = scenePath.Split(Path.DirectorySeparatorChar);
-        if (parts[^1] == ".xml") 
+        if (parts[^1].Length <= 5) 
             return null;
         var words = parts[^1].Split(new[] { ' ', '.' }).SkipLast(1).ToArray();
 
