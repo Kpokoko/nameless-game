@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using nameless.Collisions;
 using nameless.Engine;
-using nameless.Entitiy;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;

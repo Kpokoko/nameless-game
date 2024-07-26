@@ -12,9 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nameless.Collisions;
-using nameless.Entitiy;
-using nameless.Code.Entities;
-
 namespace nameless.Code.Constructors
 {
     public class DeveloperConstructor : Constructor

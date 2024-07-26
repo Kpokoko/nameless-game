@@ -18,7 +18,7 @@ namespace nameless.Code.Collisions
         }
 
 
-        public void Update()
+        virtual public void Update()
         {
             var player = Globals.SceneManager.GetPlayer();
             var characterBottom = ((RectangleF)player.Colliders[0].Bounds).Bottom;

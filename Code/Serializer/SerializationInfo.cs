@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using nameless.Entitiy;
+using nameless.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +13,7 @@ namespace nameless.Serialize
         public string TypeOfElement { get; set; }
         public Vector2 TilePos { get; set; }
         public TriggerType TriggerType { get; set; }
+        public Vector2 Direction { get; set; }
+        public float Speed { get; set; }
     }
 }

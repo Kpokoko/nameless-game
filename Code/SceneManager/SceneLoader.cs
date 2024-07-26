@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using nameless.Code.Entities;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using nameless.Collisions;
 using nameless.Engine;
 using nameless.Entity;
@@ -39,6 +39,9 @@ namespace nameless.Code.SceneManager
                         continue;
                     case "EditorBlock":
                         sceneContent.Add(new EditorBlock((int)data.TilePos.X, (int)data.TilePos.Y));
+                        continue;
+                    case "MovingPlatform":
+                        sceneContent.Add(new MovingPlatform((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction, data.Speed));
                         continue;
                     case "Platform":
                         sceneContent.Add(new Platform((int)data.TilePos.X, (int)data.TilePos.Y));
