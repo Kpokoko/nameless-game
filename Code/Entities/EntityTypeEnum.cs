@@ -13,7 +13,8 @@ public enum EntityTypeEnum
     Block,
     InventoryBlock,
     EditorBlock,
-    HitboxTrigger
+    HitboxTrigger,
+    Platform
 }
 
 public static class EntityType

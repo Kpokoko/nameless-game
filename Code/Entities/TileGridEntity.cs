@@ -22,7 +22,7 @@ public abstract class TileGridEntity : IConstructable
             OnPositionChange(_position);
         }
     }
-    public Vector2 TilePosition
+    public virtual Vector2 TilePosition
     {
         get { return _tilePos; }
         set
