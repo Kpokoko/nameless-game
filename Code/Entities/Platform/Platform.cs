@@ -22,7 +22,10 @@ namespace nameless.Code.Entities
             Colliders[0].Color = Color.Green;
         }
 
-        public override Vector2 TilePosition { get => base.TilePosition;
-            set { base.TilePosition = value;  Position = new Vector2(Position.X, Position.Y - 27); }  }
+        public override Vector2 TilePosition
+        {
+            get => base.TilePosition;
+            set { base.TilePosition = value; Position = new Vector2(Position.X, Position.Y - 27); }
+        }
     }
 }
