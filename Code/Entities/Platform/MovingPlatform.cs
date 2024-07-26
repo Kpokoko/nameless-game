@@ -11,12 +11,11 @@ namespace nameless.Entity
 {
     public class MovingPlatform : Block
     {
-        public Vector2 CurrentPosition { get; set; }
         public Vector2 Direction;
         public float Speed;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
-            CurrentPosition = Position;
+            Position = new Vector2(Position.X, Position.Y - 27);
             Direction = dir;
             Speed = speed;
             Colliders.Remove(this.Colliders[0]);
