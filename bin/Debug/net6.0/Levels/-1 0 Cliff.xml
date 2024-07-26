@@ -673,6 +673,14 @@
     <TriggerType>None</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>19</X>
+      <Y>10</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+  </SerializationInfo>
+  <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
       <X>22</X>

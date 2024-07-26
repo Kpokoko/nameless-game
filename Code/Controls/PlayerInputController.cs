@@ -30,28 +30,27 @@ namespace nameless.Controls
 
             if (isJumpKeyPressed)
             {
-                if (_player.State == PlayerState.Still)
-                    _player.BeginJump();
+                _player.Actions.Push(_player.TryJump);
             }
             else if (_player.State == PlayerState.Jumping && !isJumpKeyPressed)
             {
-                _player.CancelJump();
+                _player.Actions.Push(_player.CancelJump);
             }
             else if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
             {
-                if (_player.State != PlayerState.Still)
-                    _player.Drop();
+                //if (_player.State != PlayerState.Still)
+                //    _player.Drop();
             }
             if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
             {
-                _player.MoveLeft();
+                _player.Actions.Push(_player.MoveLeft);
             }
             else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
             {
-                _player.MoveRight();
+                _player.Actions.Push(_player.MoveRight);
             }
             else
-                _player.Stop();
+                _player.Actions.Push(_player.Stop);
 
 
             if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled || Globals.IsDeveloperModeEnabled) 
