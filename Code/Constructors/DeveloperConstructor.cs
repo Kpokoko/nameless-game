@@ -12,8 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nameless.Collisions;
-using nameless.Entitiy;
-
 namespace nameless.Code.Constructors
 {
     public class DeveloperConstructor : Constructor
@@ -28,6 +26,9 @@ namespace nameless.Code.Constructors
                     break;
                 case EntityTypeEnum.Block:
                     _entities.Add(new Block((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                    break;
+                case EntityTypeEnum.Platform:
+                    _entities.Add(new Platform((int)mouseTilePos.X, (int)mouseTilePos.Y));
                     break;
                 case EntityTypeEnum.HitboxTrigger:
                     if (SelectedEntityProperty is not TriggerType) return;

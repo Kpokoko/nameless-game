@@ -48,6 +48,10 @@ namespace nameless.Code.SceneManager
                         if (!Globals.IsConstructorModeEnabled)
                             entity.Update(gameTime);
                         continue;
+                    case MovingPlatform:
+                        if (!Globals.IsConstructorModeEnabled)
+                            entity.Update(gameTime);
+                        continue;
                 }
                 //Обновляем тут движущиеся объекты на сцене
             }

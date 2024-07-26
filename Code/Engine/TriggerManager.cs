@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using nameless.Collisions;
-using nameless.Entitiy;
+using nameless.Entity;
 using nameless.GameObjects;
 using nameless.UI;
 

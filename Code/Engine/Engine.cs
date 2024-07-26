@@ -17,7 +17,6 @@ using nameless.GameObjects;
 using MonoGame.Extended.Collections;
 using nameless.UI;
 using nameless.Code.Constructors;
-using nameless.Entitiy;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -130,6 +129,14 @@ public class Engine : Game
             Exit();
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
+
+        //if (Keyboard.GetState().IsKeyDown(Keys.X))
+        //{
+        //    var mov = new MovingPlatform(2, 5, new Vector2(1, 0), 1.0f);
+        //    var a = new List<ISerializable> { mov };
+        //    var serializer = new Serializer();
+        //    serializer.Serialize("afasfafsafsafsafsafsafsafsafsafsafsafsafsa", a);
+        //}
 
         if (Keyboard.GetState().IsKeyDown(Keys.Q))
         {
