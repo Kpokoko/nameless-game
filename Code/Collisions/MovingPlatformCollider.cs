@@ -10,15 +10,10 @@ using System.Threading.Tasks;
 
 namespace nameless.Code.Collisions
 {
-    public class MovingPlatformCollider : Collider
+    public class MovingPlatformCollider : DynamicCollider
     {
         public MovingPlatformCollider(ICollider entity, int width, int height) : base(entity, width, height)
         {
-        }
-
-        public void Update()
-        {
-            Position = Entity.Position;
         }
 
         public override void OnCollision(CollisionEventArgs collisionInfo)
