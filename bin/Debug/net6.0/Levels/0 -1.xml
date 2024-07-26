@@ -331,8 +331,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>6</X>
-      <Y>13</Y>
+      <X>20</X>
+      <Y>4</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
