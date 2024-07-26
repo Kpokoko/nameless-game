@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nameless.Code.Entities
+namespace nameless.Entity
 {
     public class Platform : Block, ICollider
     {

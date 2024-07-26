@@ -5,7 +5,6 @@ using MonoGame.Extended.Collisions;
 using nameless.Code.SceneManager;
 using nameless.Collisions;
 using nameless.Engine;
-using nameless.Entitiy;
 using nameless.Entity;
 using nameless.GameObjects;
 using nameless.Interfaces;
@@ -136,7 +135,7 @@ public class SceneManager
     private IEnumerable<Vector2> _getEnters() => GetEntities()
             .Where(e => e is Pivot)
             .SelectMany(e => ((Pivot)e).Colliders.colliders)
-            .Where(e => e is HitboxTrigger && ((HitboxTrigger)e).TriggerType is Entitiy.TriggerType.SwitchScene)
+            .Where(e => e is HitboxTrigger && ((HitboxTrigger)e).TriggerType is Entity.TriggerType.SwitchScene)
             .Select(e => e.Entity.Position)
             .Distinct();
 

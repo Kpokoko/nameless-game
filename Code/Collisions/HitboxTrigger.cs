@@ -8,13 +8,12 @@ using nameless.Entity;
 using nameless.Interfaces;
 using Microsoft.Xna.Framework;
 using nameless.Engine;
-using nameless.Entitiy;
 
 namespace nameless.Collisions;
 
 public partial class HitboxTrigger : Collider
 {
-    public TriggerType TriggerType {  get; set; }
+    public TriggerType TriggerType { get; set; }
     private List<Type> triggerByEntityTypes = new() { typeof(PlayerModel) };
     private List<Type> EntityBuffer = new();
     private List<string> triggerByCollidersId = new();

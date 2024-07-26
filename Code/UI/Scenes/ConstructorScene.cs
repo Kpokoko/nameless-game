@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using nameless.Entitiy;
 using nameless.Entity;
 using nameless.Interfaces;
 using System;
