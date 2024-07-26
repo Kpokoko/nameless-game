@@ -5,9 +5,11 @@ using MonoGame.Extended.Collisions;
 using nameless.Code.SceneManager;
 using nameless.Collisions;
 using nameless.Engine;
+using nameless.Entitiy;
 using nameless.Entity;
 using nameless.GameObjects;
 using nameless.Interfaces;
+using nameless.Tiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +35,7 @@ public class SceneManager
         else
         {
             sceneName = currentLocation.ToSimpleString();
-            Globals.Map[(int)currentLocation.X, (int)currentLocation.Y] = new SceneInfo(sceneName,currentLocation.ToPoint());
+            Globals.Map[(int)currentLocation.X, (int)currentLocation.Y] = new SceneInfo(null,currentLocation.ToPoint());
             //Map.SaveMap();
             File.Copy(Path.Combine("..", "net6.0", "Levels", ".xml"), Path.Combine("..", "net6.0", "Levels", sceneName + ".xml"));
         }
@@ -47,10 +49,6 @@ public class SceneManager
             GetPlayer().PrepareSerializationInfo();
         }
 
-        var trigger = new HitboxTrigger(new Pivot(17, 12), 80, 80, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
-        trigger.SetTriggerEntityTypes(typeof(PlayerModel));
-        trigger.Color = Color.SkyBlue;
-        trigger.OnCollisionEvent += () => GetPlayer().Position = new Vector2(GetPlayer().Position.X, GetPlayer().Position.Y - 60);
         var entities = _currentScene.Entities;
         foreach (var block in entities.Where(item => item is Block))
         {
@@ -81,13 +79,13 @@ public class SceneManager
 
     private Vector2 GetEntryPosition(EntryData entryData)
     {
-        var enters = GetEntities()
-            .Where(e => e is Pivot)
-            .SelectMany(e => ((Pivot)e).Colliders.colliders)
-            .Where(e => e is HitboxTrigger && ((HitboxTrigger)e).TriggerType is Entitiy.TriggerType.SwitchScene)
-            .Select(e => e.Entity.Position)
-            .Distinct();
+        var enters = _getEnters();
         var entryPosition = entryData.PlayerPosition;
+
+        if (!enters.Any())
+        {
+            enters = CreateEnterOnScene(entryData, entryPosition);
+        }
 
         switch (entryData.Direction)
         {
@@ -98,14 +96,49 @@ public class SceneManager
                 entryPosition.Y = enters.Select(e => e.Y).Min() + 5;
                 break;
             case SceneChangerDirection.left:
-                entryPosition.X = enters.Select(e => e.X).Max() ;
+                entryPosition.X = enters.Select(e => e.X).Max() - 5;
                 break;
             case SceneChangerDirection.right:
-                entryPosition.X = enters.Select(e => e.X).Min() ;
+                entryPosition.X = enters.Select(e => e.X).Min() + 5;
                 break;
         }
         return entryPosition;
     }
+
+    private IEnumerable<Vector2> CreateEnterOnScene(EntryData entryData, Vector2 entryPosition)
+    {
+        IEnumerable<Vector2> enters;
+        var newEnterPos = Tile.GetPosInTileCoordinats(entryPosition);
+        enters = GetEntities()
+        .Where(e => e is Block)
+        .Select(e => ((Block)e).TilePosition);
+        Globals.Constructor.SelectedEntity = EntityTypeEnum.HitboxTrigger;
+        Globals.Constructor.SelectedEntityProperty = TriggerType.SwitchScene;
+        switch (entryData.Direction)
+        {
+            case SceneChangerDirection.top:
+                newEnterPos.Y = enters.Select(e => e.Y).Max();
+                break;
+            case SceneChangerDirection.bottom:
+                newEnterPos.Y = enters.Select(e => e.Y).Min();
+                break;
+            case SceneChangerDirection.left:
+                newEnterPos.X = enters.Select(e => e.X).Max();
+                break;
+            case SceneChangerDirection.right:
+                newEnterPos.X = enters.Select(e => e.X).Min();
+                break;
+        }
+        Globals.Constructor.SpawnBlock(newEnterPos);
+        return enters.Select(e => Tile.GetTileCenter(e));
+    }
+
+    private IEnumerable<Vector2> _getEnters() => GetEntities()
+            .Where(e => e is Pivot)
+            .SelectMany(e => ((Pivot)e).Colliders.colliders)
+            .Where(e => e is HitboxTrigger && ((HitboxTrigger)e).TriggerType is Entitiy.TriggerType.SwitchScene)
+            .Select(e => e.Entity.Position)
+            .Distinct();
 
     public PlayerModel GetPlayer() => _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel;
 

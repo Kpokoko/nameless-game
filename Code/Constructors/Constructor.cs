@@ -80,7 +80,7 @@ public class Constructor : IGameObject
         _holdingEntity = null;
     }
 
-    protected virtual void SpawnBlock(Vector2 mouseTilePos)
+    public virtual void SpawnBlock(Vector2 mouseTilePos)
     {
         if (SelectedEntity is EntityTypeEnum.None) return;
         switch (SelectedEntity)
