@@ -104,7 +104,12 @@ public class Engine : Game
     private void LoadScene()
     {
         //Globals.Map[0, 2] = "down2";
-        Globals.SceneManager.LoadScene(new Vector2(0,0));
+        var serializer = new XmlSerializer(typeof(Vector2));
+        using (var reader = new StreamReader(new FileStream("CurrentLoc.xml", FileMode.Open)))
+        {
+            var location = (Vector2)serializer.Deserialize(reader);
+            Globals.SceneManager.LoadScene(location);
+        }
         LoadUtilities();
         //var levelChanger = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, new Pivot(20, 12));
 
@@ -189,5 +194,11 @@ public class Engine : Game
 
         _spriteBatch.End();
         base.Draw(gameTime);
+    }
+
+    protected override void OnExiting(object sender, EventArgs args)
+    {
+        Globals.SceneManager.SaveScene();
+        base.OnExiting(sender, args);
     }
 }

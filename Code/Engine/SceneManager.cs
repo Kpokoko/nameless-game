@@ -23,6 +23,11 @@ public class SceneManager
     private Scene _currentScene;
     public Vector2 CurrentLocation;
 
+    public void SaveScene()
+    {
+        SceneLoader.SaveScene();
+    }
+
     public void LoadScene(Vector2 currentLocation, EntryData entryData = null)
     {
         var scene = Globals.Map[(int)currentLocation.X, (int)currentLocation.Y];

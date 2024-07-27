@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using nameless.Code.SceneManager;
 using nameless.Collisions;
 using nameless.Engine;
 using nameless.Entity;
@@ -76,11 +77,7 @@ public partial class HitboxTrigger
         trigger.Color = Color.SkyBlue;
         trigger.OnCollisionEvent += () =>
         {
-            var serializer = new Serializer();
-            var entities = Globals.SceneManager.GetEntities();
-            serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
-            var currLoc = Globals.SceneManager.CurrentLocation;
-            var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
+            var newLoc = SceneLoader.SwitchScene(trigger);
             Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
             //Globals.Engine.Restart();
         };
