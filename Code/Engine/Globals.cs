@@ -25,6 +25,7 @@ public static class Globals
 
     //THIS BOOL SWITCHES DEV MODE
     public static bool IsDeveloperModeEnabled = true;
+    public static bool IsNoclipEnabled = false;
 
     public static bool OnEditorBlock = false;
 

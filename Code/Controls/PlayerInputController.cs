@@ -28,7 +28,19 @@ namespace nameless.Controls
 
             bool isJumpKeyPressed = keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W);
 
-            if (isJumpKeyPressed)
+            if (isJumpKeyPressed && Globals.IsNoclipEnabled)
+            {
+                _player.Actions.Push(_player.Up);
+            }
+            else if (keyboardState.IsKeyDown(Keys.S) && Globals.IsNoclipEnabled)
+            {
+                _player.Actions.Push(_player.Down);
+            }
+            else if (Globals.IsNoclipEnabled && !isJumpKeyPressed && !keyboardState.IsKeyDown(Keys.S))
+            {
+                _player.Actions.Push(_player.StopVertical);
+            }
+            else if (isJumpKeyPressed)
             {
                 _player.Actions.Push(_player.TryJump);
             }
@@ -52,6 +64,9 @@ namespace nameless.Controls
             else
                 _player.Actions.Push(_player.Stop);
 
+
+            if (Keyboard.GetState().IsKeyDown(Keys.N) && !_previousKeyboardState.IsKeyDown(Keys.N) && Globals.IsDeveloperModeEnabled)
+                Globals.IsNoclipEnabled = Globals.IsNoclipEnabled ? false : true;
 
             if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled || Globals.IsDeveloperModeEnabled) 
                 && !_previousKeyboardState.IsKeyDown(Keys.E) && keyboardState.IsKeyDown(Keys.E))

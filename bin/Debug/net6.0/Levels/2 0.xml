@@ -4,7 +4,7 @@
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
       <X>0</X>
-      <Y>8</Y>
+      <Y>9</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -135,6 +135,19 @@
     <TilePos>
       <X>1</X>
       <Y>11</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>2</X>
+      <Y>16</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
