@@ -20,7 +20,7 @@ namespace nameless.Entity
             Colliders.Add(new Collider(this, 64, 10));
             Colliders[0].Color = Color.Green;
             Globals.CollisionManager.PlatformColliders.Add(Colliders[0]);
-            Globals.CollisionManager.PlatformColliders.Sort((p,p2) => p.Position.Y.CompareTo(p2.Position.Y));
+            Globals.CollisionManager.PlatformColliders.Sort((p2,p) => p.Position.Y.CompareTo(p2.Position.Y));
         }
 
         public override Vector2 TilePosition
