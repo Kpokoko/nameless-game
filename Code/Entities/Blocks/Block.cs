@@ -60,4 +60,9 @@ public partial class Block : TileGridEntity, IEntity, ICollider
         if (TilePosition.Y == bottomBorder) return SceneChangerDirection.bottom;
         return SceneChangerDirection.right;
     }
+
+    public virtual void Remove()
+    {
+        Colliders.RemoveAll();
+    }
 }

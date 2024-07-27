@@ -28,5 +28,12 @@ namespace nameless.Entity
             get => base.TilePosition;
             set { base.TilePosition = value; Position = new Vector2(Position.X, Position.Y - 27); }
         }
+
+        public override void Remove()
+        {
+            Globals.CollisionManager.PlatformColliders.Remove(Colliders[0]);
+            Globals.CollisionManager.InactivePlatformColliders.Remove(Colliders[0]);
+            base.Remove();
+        }
     }
 }

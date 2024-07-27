@@ -96,7 +96,7 @@ public class Constructor : IGameObject
     private void DeleteBlock(TileGridEntity entity)
     {
         _entities.Remove(entity as IEntity);
-        (entity as Block).Colliders.RemoveAll();
+        (entity as IEntity).Remove();
     }
 
     private void MoveBlock(Vector2 mouseTilePos)

@@ -25,16 +25,21 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private const float MIN_POS_Y = 900;
 
     private const float MIN_JUMP_HEIGHT = 4f / _time_effect;
-    private const float JUMP_START_VELOCITY = -13f / _time_effect;
-    private const float GRAVITY = 25f;
-    private const float JUMP_GRAVITY = 70f;
+    private const float JUMP_VELOCITY = -13f / _time_effect;
+    private const float GRAVITY = 0.4f / _time_effect;
+    private const float JUMP_GRAVITY = 1.1f / _time_effect;
     private const float CANCEL_JUMP_VELOCITY = -10f;
     private const float DROP_VELOCITY = 100f;
 
-    private const float BOOST_HOR_VELOCITY = 0.6f / _time_effect;
-    private const float MOVE_START_VELOCITY = 0.1f / _time_effect;
+    private const float HOR_ACCELERATION = 0.6f / _time_effect;
     private const float MAX_HOR_VELOCITY = 5f / _time_effect;
-    private const float HOR_STOP = 0.7f / _time_effect;
+    private const float HOR_STOP_ACCELERATION = 0.7f / _time_effect;
+
+    private const float AIR_HOR_ACCELERATION = 0.6f;
+    private const float AIR_HOR_STOP_ACCELERATION = 0.15f;
+    private const float AIR_HOR_TURN_ACCELERATION = 1.5f;
+
+
 
     public const int RIGHT_SPRITE_POS_X = 848;
     public const int RIGHT_SPRITE_POS_Y = 0;
@@ -69,6 +74,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         } }
     private Vector2 _position;
     public PlayerState State { get; set; }
+    public bool CanJump { get; set; }
+    public GameObjects.TimerTrigger Coyote { get; private set; }
     public Colliders Colliders { get; set; } = new();
     public Vector2 Velocity { get; private set; }
     public Stack<Action> Actions { get; set; } = new Stack<Action>();
@@ -159,20 +166,19 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
-        //PrepareSerializationInfo();
-        if (Globals.IsNoclipEnabled)
-            Globals.CollisionManager.KinematicAccurateColliders.Remove(this.Colliders.colliders[0] as KinematicAccurateCollider);
-        else if (!Globals.IsNoclipEnabled && !Globals.CollisionManager.KinematicAccurateColliders.Contains(this.Colliders.colliders[0] as KinematicAccurateCollider))
-            Globals.CollisionManager.KinematicAccurateColliders.Add(this.Colliders.colliders[0] as KinematicAccurateCollider);
-        var oldPos = Position;
+        //var oldPos = Position;
+        if (State is PlayerState.Still)
+            CanJump = true;
+
         while (Actions.TryPop(out var action))
             action();
 
-        if (!Globals.IsNoclipEnabled)
-            ApplyGravity();
+        ApplyGravity();
 
-        if (_verticalVelocity >= 0)
+        if (_verticalVelocity > 0)
         {
+            if (State is PlayerState.Falling)
+                StartCoyoteTimer();
             State = PlayerState.Falling;
         }
         if (Position.Y >= MIN_POS_Y && !Globals.IsNoclipEnabled)
@@ -191,26 +197,38 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             _runRightAnimation.Update(gameTime);
             _currentSprite = _rightSprite;
         }
+
         Velocity = new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
         Position = Position + Velocity;
 
         //Velocity = Position - oldPos;
     }
 
-    private void ApplyGravity()
+    private void StartCoyoteTimer()
+    {
+        if (Coyote == null)
+        {
+            Coyote = new GameObjects.TimerTrigger(100, GameObjects.SignalProperty.Once);
+            Coyote.OnTimeoutEvent += () => CanJump = false;
+        }
+        if (CanJump && !Coyote.IsRunning)
+        {
+            Coyote.Reset();
+            Coyote.Start();
+        }
+    }
+
+    public void ApplyGravity()
     {
         _verticalVelocity += GRAVITY;
     }
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo) { }
     
-
-    private bool _prevKeyboardState;
     public void OnCollision(params MyCollisionEventArgs[] collisionsInfo)
     {
         foreach (var collisionInfo in collisionsInfo)
         {
-            //var collisionSide = Collider.CollisionToSide(collisionInfo);
             var collisionSide = collisionInfo.CollisionSide;
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)
@@ -235,7 +253,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void TryJump()
     {
-        if (State is PlayerState.Still)
+        if (State is PlayerState.Still || (State is PlayerState.Falling && Coyote != null && Coyote.IsRunning && CanJump))
         {
             Jump();
         }
@@ -243,8 +261,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     private bool Jump()
     {
+        CanJump = false;
         State = PlayerState.Jumping;
-        _verticalVelocity = JUMP_START_VELOCITY;
+        _verticalVelocity = JUMP_VELOCITY;
         return true;
     }
 
@@ -266,80 +285,64 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void MoveLeft()
     {
-        if (Globals.IsNoclipEnabled)
+        var multiplier = 1f;
+        if (State is not PlayerState.Still)
+            multiplier = AIR_HOR_ACCELERATION;
+
+        if (_horizontalVelocity > 0)
         {
-            _horizontalVelocity = -1000;
-        }
-        else if (_horizontalVelocity > 0)
-        {
-            _horizontalVelocity = 0;
-        }
-        else if (_horizontalVelocity == 0)
-        {
-            _horizontalVelocity -= MOVE_START_VELOCITY;
+            _horizontalVelocity = State is PlayerState.Still ? 0 : _horizontalVelocity - HOR_ACCELERATION * multiplier * AIR_HOR_TURN_ACCELERATION;
+            //_horizontalVelocity -= HOR_ACCELERATION * multiplier * 2;
         }
         else if (Math.Abs(_horizontalVelocity) < MAX_HOR_VELOCITY)
         {
-            _horizontalVelocity -= BOOST_HOR_VELOCITY;
+            _horizontalVelocity -= HOR_ACCELERATION * multiplier;
         }
     }
 
     public void MoveRight()
     {
-        if (Globals.IsNoclipEnabled)
+        var multiplier = 1f;
+        if (State is not PlayerState.Still)
+            multiplier = AIR_HOR_ACCELERATION;
+
+        if (_horizontalVelocity < 0)
         {
-            _horizontalVelocity = 1000;
-        }
-        else if (_horizontalVelocity < 0)
-        {
-            _horizontalVelocity = 0;
-        }
-        else if (_horizontalVelocity == 0)
-        {
-            _horizontalVelocity += MOVE_START_VELOCITY;
+            //_horizontalVelocity = 0;
+            _horizontalVelocity = State is PlayerState.Still ? 0 : _horizontalVelocity + HOR_ACCELERATION * multiplier * AIR_HOR_TURN_ACCELERATION;
         }
         else if (Math.Abs(_horizontalVelocity) < MAX_HOR_VELOCITY)
         {
-            _horizontalVelocity += BOOST_HOR_VELOCITY;
+            _horizontalVelocity += HOR_ACCELERATION * multiplier;
         }
     }
 
     public void Stop()
     {
-        if (Globals.IsNoclipEnabled)
+        var multiplier = 1f;
+        if (State is not PlayerState.Still)
+            multiplier = AIR_HOR_STOP_ACCELERATION;
+
+        if (Math.Abs(_horizontalVelocity) > HOR_STOP_ACCELERATION)
         {
-            _horizontalVelocity = 0;
-            _verticalVelocity = 0;
-        }
-        else if (State is PlayerState.Still)
-        {
-            if (Math.Abs(_horizontalVelocity) > HOR_STOP)
-            {
-                if (_horizontalVelocity < 0)
-                    _horizontalVelocity += HOR_STOP;
-                else
-                    _horizontalVelocity -= HOR_STOP;
-            }
+            if (_horizontalVelocity < 0)
+                _horizontalVelocity += HOR_STOP_ACCELERATION * multiplier;
             else
-                _horizontalVelocity = 0;
+                _horizontalVelocity -= HOR_STOP_ACCELERATION * multiplier;
         }
         else
-        {
-            if (Math.Abs(_horizontalVelocity) > HOR_STOP)
-            {
-                if (_horizontalVelocity < 0)
-                    _horizontalVelocity += HOR_STOP * 0.2f;
-                else
-                    _horizontalVelocity -= HOR_STOP * 0.2f;
-            }
-            else
-                _horizontalVelocity = 0;
-        }
+            _horizontalVelocity = 0;
+
     }
 
     public void PrepareSerializationInfo()
     {
         Info.TilePos = TilePosition;
         Info.TypeOfElement = this.GetType().Name;
+    }
+
+    public void Remove()
+    {
+        throw new NotImplementedException();
     }
 }

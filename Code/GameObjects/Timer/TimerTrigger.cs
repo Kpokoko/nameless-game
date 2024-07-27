@@ -55,16 +55,21 @@ public class TimerTrigger
 
     public void Update(GameTime gameTime)
     {
+        if (!IsRunning) return;
+
         if (_timeLeft <= 0)
         {
-            OnTimeoutEvent.Invoke();
+            if (OnTimeoutEvent != null)
+                OnTimeoutEvent.Invoke();
 
             if (signalProperty is SignalProperty.Continuous)
                 Reset();
             else
-                RemoveTimer();
+            {
+                IsRunning = false;
+            }
+                //RemoveTimer();
         }
-        if (!IsRunning) return;
         _timeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
     }
 

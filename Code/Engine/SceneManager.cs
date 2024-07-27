@@ -53,24 +53,24 @@ public class SceneManager
             GetPlayer().PrepareSerializationInfo();
         }
 
-        var entities = _currentScene.Entities;
-        foreach (var block in entities.Where(item => item is Block))
-        {
-            if (block is Pivot) continue;
-            var colliderBlock = block as ICollider;
-            var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
-            trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
-            colliderBlock.Colliders.Add(trigger2);
-            var trueColor = colliderBlock.Colliders[0].Color;
-            trigger2.OnCollisionEvent += () =>
-            {
-                colliderBlock.Colliders[0].Color = Color.Blue;
-            };
-            trigger2.OnCollisionExitEvent += () =>
-            {
-                TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.Colliders[0].Color = trueColor; });
-            };
-        }
+        //var entities = _currentScene.Entities;
+        //foreach (var block in entities.Where(item => item is Block))
+        //{
+        //    if (block is Pivot) continue;
+        //    var colliderBlock = block as ICollider;
+        //    var trigger2 = new HitboxTrigger(colliderBlock, 70, 70, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
+        //    trigger2.SetTriggerEntityTypes(typeof(PlayerModel));
+        //    colliderBlock.Colliders.Add(trigger2);
+        //    var trueColor = colliderBlock.Colliders[0].Color;
+        //    trigger2.OnCollisionEvent += () =>
+        //    {
+        //        colliderBlock.Colliders[0].Color = Color.Blue;
+        //    };
+        //    trigger2.OnCollisionExitEvent += () =>
+        //    {
+        //        TimerTrigger.DelayEvent(500, () => { if (!trigger2.isActivated) colliderBlock.Colliders[0].Color = trueColor; });
+        //    };
+        //}
         Globals.Engine.LoadUtilities();
     }
 
