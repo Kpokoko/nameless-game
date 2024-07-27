@@ -4,7 +4,7 @@
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
       <X>0</X>
-      <Y>9</Y>
+      <Y>8</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>

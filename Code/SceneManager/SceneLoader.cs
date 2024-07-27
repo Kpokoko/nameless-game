@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Serialization;
 
 namespace nameless.Code.SceneManager
 {
@@ -94,6 +95,26 @@ namespace nameless.Code.SceneManager
                 //readedData = new List<T>();
             
             return sceneContent;
+        }
+
+        public static void SaveScene()
+        {
+            var serializer = new Serializer();
+            var entities = Globals.SceneManager.GetEntities();
+            serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
+        }
+
+        public static Vector2 SwitchScene(HitboxTrigger trigger)
+        {
+            SaveScene();
+            var currLoc = Globals.SceneManager.CurrentLocation;
+            var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
+            using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
+            {
+                var serialize = new XmlSerializer(typeof(Vector2));
+                serialize.Serialize(writer, newLoc);
+            }
+            return newLoc;
         }
     }
 }

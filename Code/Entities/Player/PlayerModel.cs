@@ -159,6 +159,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
+        //PrepareSerializationInfo();
         if (Globals.IsNoclipEnabled)
             Globals.CollisionManager.KinematicAccurateColliders.Remove(this.Colliders.colliders[0] as KinematicAccurateCollider);
         else if (!Globals.IsNoclipEnabled && !Globals.CollisionManager.KinematicAccurateColliders.Contains(this.Colliders.colliders[0] as KinematicAccurateCollider))
