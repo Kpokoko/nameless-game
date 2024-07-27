@@ -159,17 +159,22 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
+        if (Globals.IsNoclipEnabled)
+            Globals.CollisionManager.KinematicAccurateColliders.Remove(this.Colliders.colliders[0] as KinematicAccurateCollider);
+        else if (!Globals.IsNoclipEnabled)
+            Globals.CollisionManager.KinematicAccurateColliders.Add(this.Colliders.colliders[0] as KinematicAccurateCollider);
         var oldPos = Position;
         while (Actions.TryPop(out var action))
             action();
-        
-        ApplyGravity();
+
+        if (!Globals.IsNoclipEnabled)
+            ApplyGravity();
 
         if (_verticalVelocity >= 0)
         {
             State = PlayerState.Falling;
         }
-        if (Position.Y >= MIN_POS_Y)
+        if (Position.Y >= MIN_POS_Y && !Globals.IsNoclipEnabled)
         {
             Globals.SceneManager.ReloadScene();
         }
@@ -195,6 +200,10 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     {
         _verticalVelocity += GRAVITY;
     }
+
+    public void Up() => _verticalVelocity = -1000;
+    public void StopVertical() => _verticalVelocity = 0;
+    public void Down() => _verticalVelocity = 1000;
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo) { }
     
@@ -260,8 +269,11 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void MoveLeft()
     {
-
-        if (_horizontalVelocity > 0)
+        if (Globals.IsNoclipEnabled)
+        {
+            _horizontalVelocity = -1000;
+        }
+        else if (_horizontalVelocity > 0)
         {
             _horizontalVelocity = 0;
         }
@@ -277,7 +289,11 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void MoveRight()
     {
-        if (_horizontalVelocity < 0)
+        if (Globals.IsNoclipEnabled)
+        {
+            _horizontalVelocity = 1000;
+        }
+        else if (_horizontalVelocity < 0)
         {
             _horizontalVelocity = 0;
         }
@@ -293,7 +309,12 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Stop()
     {
-        if (State is PlayerState.Still)
+        if (Globals.IsNoclipEnabled)
+        {
+            _horizontalVelocity = 0;
+            _verticalVelocity = 0;
+        }
+        else if (State is PlayerState.Still)
         {
             if (Math.Abs(_horizontalVelocity) > HOR_STOP)
             {

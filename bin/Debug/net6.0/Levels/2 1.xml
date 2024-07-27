@@ -7,6 +7,11 @@
       <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -15,6 +20,11 @@
       <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -23,6 +33,11 @@
       <Y>13</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -31,6 +46,11 @@
       <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -39,6 +59,11 @@
       <Y>13</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
@@ -47,5 +72,10 @@
       <Y>12</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
   </SerializationInfo>
 </ArrayOfSerializationInfo>
