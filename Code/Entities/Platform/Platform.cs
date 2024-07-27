@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Collisions;
-using nameless.Code.Collisions;
 using nameless.Collisions;
 using nameless.Entity;
 using nameless.Interfaces;
@@ -18,8 +17,10 @@ namespace nameless.Entity
         public Platform(int x, int y)
         {
             TilePosition = new Vector2(x, y);
-            Colliders.Add(new PlatformCollider(this, 64, 10));
+            Colliders.Add(new Collider(this, 64, 10));
             Colliders[0].Color = Color.Green;
+            Globals.CollisionManager.PlatformColliders.Add(Colliders[0]);
+            Globals.CollisionManager.PlatformColliders.Sort((p,p2) => p.Position.Y.CompareTo(p2.Position.Y));
         }
 
         public override Vector2 TilePosition

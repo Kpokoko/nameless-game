@@ -45,7 +45,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     public virtual void Update(GameTime gameTime)
     { }
 
-    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
+    public virtual void OnCollision(params CollisionEventArgs[] collisionsInfo)
     { }
 
     public SceneChangerDirection GetBlockDirection(List<IEntity> sceneContent)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using nameless.Code.Collisions;
+using MonoGame.Extended.Collisions;
+using nameless.Collisions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace nameless.Entity
             Direction = dir;
             Speed = speed;
             Colliders.Remove(this.Colliders[0]);
-            Colliders.Add(new MovingPlatformCollider(this, 64, 10));
+            Colliders.Add(new DynamicCollider(this, 64, 10));
             Colliders[0].Color = Color.Yellow;
             PrepareSerializationInfo();
         }
@@ -27,6 +28,14 @@ namespace nameless.Entity
         public override void Update(GameTime gameTime)
         {
             Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+        }
+
+        public override void OnCollision(params CollisionEventArgs[] collisionsInfo)
+        {
+            base.OnCollision(collisionsInfo);
+            if (collisionsInfo.Select(i => i.Other).Any(o => o is HitboxTrigger || o is KinematicAccurateCollider))
+                return;
+            TurnAround();
         }
 
         public override void PrepareSerializationInfo()

@@ -27,6 +27,12 @@ public class DynamicCollider : Collider
         Globals.CollisionManager.DynamicColliders.Remove(this);
     }
 
+    public override void OnCollision(CollisionEventArgs collisionInfo)
+    {
+        base.OnCollision(collisionInfo);
+        Entity.OnCollision(collisionInfo);
+    }
+
     virtual public void Update()
     {
         Position = Entity.Position;
