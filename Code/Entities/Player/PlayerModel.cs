@@ -15,7 +15,7 @@ using System.Timers;
 
 namespace nameless.Entity;
 
-public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
+public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 {
     public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
@@ -200,10 +200,6 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     {
         _verticalVelocity += GRAVITY;
     }
-
-    public void Up() => _verticalVelocity = -1000;
-    public void StopVertical() => _verticalVelocity = 0;
-    public void Down() => _verticalVelocity = 1000;
 
     public void OnCollision(params CollisionEventArgs[] collisionsInfo) { }
     
