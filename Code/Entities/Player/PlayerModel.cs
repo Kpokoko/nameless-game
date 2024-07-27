@@ -161,7 +161,7 @@ public class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     {
         if (Globals.IsNoclipEnabled)
             Globals.CollisionManager.KinematicAccurateColliders.Remove(this.Colliders.colliders[0] as KinematicAccurateCollider);
-        else if (!Globals.IsNoclipEnabled)
+        else if (!Globals.IsNoclipEnabled && !Globals.CollisionManager.KinematicAccurateColliders.Contains(this.Colliders.colliders[0] as KinematicAccurateCollider))
             Globals.CollisionManager.KinematicAccurateColliders.Add(this.Colliders.colliders[0] as KinematicAccurateCollider);
         var oldPos = Position;
         while (Actions.TryPop(out var action))
