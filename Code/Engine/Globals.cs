@@ -41,6 +41,8 @@ public static class Globals
 
     public static UIManager UIManager;
 
+    public static AnimationManager AnimationManager;
+
     public static Color BackgroungColor { get { return IsConstructorModeEnabled ? SecondaryColor : PrimaryColor; } }
     public static Color PrimaryColor = Color.White;
     public static Color SecondaryColor = Color.LightGray;

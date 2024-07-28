@@ -49,6 +49,7 @@ public class Engine : Game
         LoadCollisions();
         Globals.Engine = this;
         Globals.UIManager = new UIManager();
+        Globals.AnimationManager = new AnimationManager();
         Globals.SceneManager = new SceneManager();
         if (Globals.IsDeveloperModeEnabled)
         {

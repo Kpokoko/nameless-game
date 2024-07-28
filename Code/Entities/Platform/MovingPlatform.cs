@@ -21,13 +21,13 @@ namespace nameless.Entity
             Speed = speed;
             Colliders.Remove(this.Colliders[0]);
             Colliders.Add(new DynamicCollider(this, 64, 10));
-            Colliders[0].Color = Color.Yellow;
+            Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
         }
 
         public override void Update(GameTime gameTime)
         {
-            Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position += Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public override void OnCollision(params CollisionEventArgs[] collisionsInfo)

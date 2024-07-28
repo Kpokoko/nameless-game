@@ -328,7 +328,7 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>15</X>
+      <X>16</X>
       <Y>13</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -836,19 +836,6 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>3</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>3</X>
       <Y>8</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -1032,6 +1019,19 @@
     <TilePos>
       <X>19</X>
       <Y>11</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>3</X>
+      <Y>9</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>

@@ -78,4 +78,17 @@
     </Direction>
     <Speed>0</Speed>
   </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>25</X>
+      <Y>11</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
 </ArrayOfSerializationInfo>

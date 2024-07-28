@@ -15,6 +15,7 @@ public class UIManager
     public List<Button> Buttons = new List<Button>();
     public List<Label> Labels = new List<Label>();
     public List<Container> Containers = new List<Container>();
+    public List<Minimap> Minimaps = new List<Minimap>();
     public Dictionary<Keys, Button> KeyboardButtons = new();
     public Dictionary<UIScenes, UIScene> CurrentUIScenes = new();
     public SpriteFont Font;
@@ -34,6 +35,8 @@ public class UIManager
     {
         for (var i = 0; i < Containers.Count; i++)
             Containers[i].Draw(spriteBatch);
+        for (var i = 0; i < Minimaps.Count; i++)
+            Minimaps[i].Draw(spriteBatch);
         for (var i = 0; i < Buttons.Count; i++)
             Buttons[i].Draw(spriteBatch);
         for (var i = 0; i < Labels.Count; i++)

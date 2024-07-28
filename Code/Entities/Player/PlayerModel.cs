@@ -78,6 +78,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public GameObjects.TimerTrigger Coyote { get; private set; }
     public Colliders Colliders { get; set; } = new();
     public Vector2 Velocity { get; private set; }
+    public Vector2 OuterForce { get; private set; }
     public Stack<Action> Actions { get; set; } = new Stack<Action>();
 
 
@@ -146,6 +147,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         Colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
 
         PrepareSerializationInfo();
+
+        Coyote = new GameObjects.TimerTrigger(100, GameObjects.SignalProperty.Once);
+        Coyote.OnTimeoutEvent += () => CanJump = false;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -153,12 +157,10 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         if (_horizontalVelocity < 0)
         {
             Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runLeftAnimation);
-            _currentSprite = _leftSprite;
         } 
         else if (_horizontalVelocity > 0)
         {
             Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runRightAnimation);
-            _currentSprite = _rightSprite;
         }
         else
             Globals.Draw(Position, spriteBatch, _currentSprite);
@@ -166,9 +168,14 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
+        if (State is PlayerState.Falling)
+            StartCoyoteTimer();
+
         //var oldPos = Position;
         if (State is PlayerState.Still)
             CanJump = true;
+
+        OuterForce = Vector2.Zero;
 
         while (Actions.TryPop(out var action))
             action();
@@ -177,8 +184,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
         if (_verticalVelocity > 0)
         {
-            if (State is PlayerState.Falling)
-                StartCoyoteTimer();
             State = PlayerState.Falling;
         }
         if (Position.Y >= MIN_POS_Y && !Globals.IsNoclipEnabled)
@@ -198,7 +203,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             _currentSprite = _rightSprite;
         }
 
-        Velocity = new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Velocity = OuterForce + new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
         Position = Position + Velocity;
 
         //Velocity = Position - oldPos;
@@ -206,11 +211,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     private void StartCoyoteTimer()
     {
-        if (Coyote == null)
-        {
-            Coyote = new GameObjects.TimerTrigger(100, GameObjects.SignalProperty.Once);
-            Coyote.OnTimeoutEvent += () => CanJump = false;
-        }
         if (CanJump && !Coyote.IsRunning)
         {
             Coyote.Reset();
@@ -247,8 +247,20 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
                     _verticalVelocity = 0;
                     State = PlayerState.Falling;
                 }
+
+                if (((Collider)collisionInfo.Other).Entity is MovingPlatform)
+                {
+                    var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
+                    var vel = platform.Direction * platform.Speed;
+                    Actions.Push(() => Pull(vel));
+                }
             }
         }
+    }
+
+    public void Pull(Vector2 force)
+    {
+        OuterForce = force;
     }
 
     public void TryJump()
@@ -264,6 +276,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         CanJump = false;
         State = PlayerState.Jumping;
         _verticalVelocity = JUMP_VELOCITY;
+
         return true;
     }
 

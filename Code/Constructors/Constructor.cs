@@ -36,6 +36,8 @@ public class Constructor : IGameObject
         if (Globals.IsConstructorModeEnabled)
         {
             Globals.UIManager.SetScene(UIScenes.ConstructorScene);
+            Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]
+                .AddElements(new Minimap(new Vector2(1600, 300 + 220), 0, 0, _storage.GetArray()[0], Alignment.Center));
         }
         else
         {

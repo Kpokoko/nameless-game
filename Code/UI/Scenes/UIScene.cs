@@ -22,12 +22,12 @@ public class UIScene
         _elements.Clear();
     }
 
-    protected void AddElements(params UIElement[] elements)
+    public void AddElements(params UIElement[] elements)
     {
         _elements = _elements.Concat(elements).ToList();
     }
 
-    protected void RemoveElements(params UIElement[] elements)
+    public void RemoveElements(params UIElement[] elements)
     {
         for (int i = 0; i < elements.Length; i++)
         {

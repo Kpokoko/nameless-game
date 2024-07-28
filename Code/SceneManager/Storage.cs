@@ -32,5 +32,10 @@ namespace nameless.Code.SceneManager
             get { return Entities[layer][index, index2]; }
             set { Entities[layer][index, index2] = value; }
         }
+
+        public TileGridEntity[][,] GetArray()
+        {
+            return Entities;
+        }
     }
 }
