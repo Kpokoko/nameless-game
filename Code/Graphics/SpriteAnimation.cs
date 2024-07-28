@@ -44,7 +44,7 @@ public class SpriteAnimation
         } 
     }
 
-    public bool ShouldLoop { get; set; } = true;
+    public bool ShouldLoop { get; set; } = false;
 
     public bool IsPlaying { get; private set; }
 
@@ -83,11 +83,15 @@ public class SpriteAnimation
 
     public void Play()
     {
+        if (!Globals.AnimationManager.SpriteAnimations.Contains(this))
+            Globals.AnimationManager.SpriteAnimations.Add(this);
         IsPlaying = true;
     }
 
     public void Stop()
     {
+        if (Globals.AnimationManager.SpriteAnimations.Contains(this))
+            Globals.AnimationManager.SpriteAnimations.Remove(this);
         IsPlaying = false;
         PlaybackProgress = 0;
     }

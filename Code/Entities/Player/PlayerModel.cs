@@ -12,6 +12,7 @@ using nameless.Tiles;
 using nameless.UI.Scenes;
 using System.Collections.Generic;
 using System.Timers;
+using nameless.Entity.Player;
 
 namespace nameless.Entity;
 
@@ -19,10 +20,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 {
     public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
-    private const float _time_effect = 1 / 60f;
-
-    private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
     private const float MIN_POS_Y = 900;
+
+    private const float _time_effect = 1 / 60f;
 
     private const float MIN_JUMP_HEIGHT = 4f / _time_effect;
     private const float JUMP_VELOCITY = -13f / _time_effect;
@@ -39,19 +39,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private const float AIR_HOR_STOP_ACCELERATION = 0.15f;
     private const float AIR_HOR_TURN_ACCELERATION = 1.5f;
 
-
-
-    public const int RIGHT_SPRITE_POS_X = 848;
-    public const int RIGHT_SPRITE_POS_Y = 0;
-    public const int LEFT_SPRITE_POS_X = 980;
-    public const int LEFT_SPRITE_POS_Y = 68;
-
-    private const int RIGHT_RUN_FRAME_X = RIGHT_SPRITE_POS_X + SPRITE_WIDTH * 2;
-    private const int LEFT_RUN_FRAME_X = LEFT_SPRITE_POS_X - SPRITE_WIDTH * 2;
-
-
-    public const int SPRITE_WIDTH = 44;
-    public const int SPRITE_HEIGHT = 52;
 
     private float _verticalVelocity;
     //private float _realVerticalVelocity;
@@ -78,9 +65,11 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public GameObjects.TimerTrigger Coyote { get; private set; }
     public Colliders Colliders { get; set; } = new();
     public Vector2 Velocity { get; private set; }
+    public Vector2 InnerForce { get; private set; }
     public Vector2 OuterForce { get; private set; }
     public Stack<Action> Actions { get; set; } = new Stack<Action>();
 
+    private PlayerAnimationHandler _animationHandler;
 
     public PlayerModel() { }
     public SerializationInfo Info { get; set; } = new();
@@ -92,78 +81,35 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         else
             Position = (Vector2)position;
 
-        _rightSprite = new Sprite(spriteSheet,
-                RIGHT_SPRITE_POS_X,
-                RIGHT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT);
-        _leftSprite = new Sprite(spriteSheet,
-                LEFT_SPRITE_POS_X,
-                LEFT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT);
-        _currentSprite = _rightSprite;
 
-        _runRightAnimation = new SpriteAnimation();
-        _runRightAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                RIGHT_RUN_FRAME_X,
-                RIGHT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), 0);
-        _runRightAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                RIGHT_RUN_FRAME_X + SPRITE_WIDTH,
-                RIGHT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
-        _runRightAnimation.AddFrame(_runRightAnimation[0].Sprite, 2 * RUN_ANIMATION_FRAME_LENGTH);
-        _runRightAnimation.Play();
-
-        _runLeftAnimation = new SpriteAnimation();
-        _runLeftAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                LEFT_RUN_FRAME_X,
-                LEFT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), 0);
-        _runLeftAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                LEFT_RUN_FRAME_X - SPRITE_WIDTH,
-                LEFT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
-        _runLeftAnimation.AddFrame(_runLeftAnimation[0].Sprite, 2 * RUN_ANIMATION_FRAME_LENGTH);
-        _runLeftAnimation.Play();
 
         State = PlayerState.Still;
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        Colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
+        Colliders.Add(new KinematicAccurateCollider(this, 44,52));
 
         PrepareSerializationInfo();
 
         Coyote = new GameObjects.TimerTrigger(100, GameObjects.SignalProperty.Once);
         Coyote.OnTimeoutEvent += () => CanJump = false;
+
+        _animationHandler = new PlayerAnimationHandler(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (_horizontalVelocity < 0)
-        {
-            Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runLeftAnimation);
-        } 
-        else if (_horizontalVelocity > 0)
-        {
-            Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runRightAnimation);
-        }
-        else
-            Globals.Draw(Position, spriteBatch, _currentSprite);
+        _animationHandler.Draw(spriteBatch);
+        //if (_horizontalVelocity < 0)
+        //{
+        //    Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runLeftAnimation);
+        //} 
+        //else if (_horizontalVelocity > 0)
+        //{
+        //    Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runRightAnimation);
+        //}
+        //else
+        //    Globals.Draw(Position, spriteBatch, _currentSprite);
     }
 
     public void Update(GameTime gameTime)
@@ -191,19 +137,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             Globals.SceneManager.ReloadScene();
         }
 
-
-        if (_horizontalVelocity < 0)
-        {
-            _runLeftAnimation.Update(gameTime);
-            _currentSprite = _leftSprite;
-        }
-        else if (_horizontalVelocity > 0)
-        {
-            _runRightAnimation.Update(gameTime);
-            _currentSprite = _rightSprite;
-        }
-
-        Velocity = OuterForce + new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        InnerForce = new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Velocity = OuterForce + InnerForce;
         Position = Position + Velocity;
 
         //Velocity = Position - oldPos;

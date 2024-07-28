@@ -165,6 +165,7 @@ public class Engine : Game
         Globals.SceneManager.Update(gameTime);
 
         //_player.Update(gameTime);
+        Globals.AnimationManager.Update(gameTime);
 
         Globals.CollisionManager.Update(gameTime);
         Globals.TriggerManager.Update(gameTime);
@@ -190,6 +191,7 @@ public class Engine : Game
         //_player.Draw(_spriteBatch, gameTime);
 
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
+
 
         Globals.UIManager.Draw(_spriteBatch);
 
