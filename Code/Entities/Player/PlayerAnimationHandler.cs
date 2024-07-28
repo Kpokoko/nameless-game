@@ -31,6 +31,7 @@ public class PlayerAnimationHandler : AnimationHandler
     public const int SPRITE_HEIGHT = 52;
 
     private Vector2 lastNonZeroVelocity;
+    private PlayerState previousState = PlayerState.Still;
 
     public PlayerAnimationHandler(PlayerModel entity) : base(entity)
     {
@@ -94,19 +95,34 @@ public class PlayerAnimationHandler : AnimationHandler
         var jumpAnimation = new SpriteAnimation();
         jumpAnimation.AddFrame(new Sprite(spriteSheet,
         RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y+20,
+        RIGHT_SPRITE_POS_Y + 10,
         SPRITE_WIDTH,
         SPRITE_HEIGHT),0);
         jumpAnimation.AddFrame(new Sprite(spriteSheet,
         RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 40,
+        RIGHT_SPRITE_POS_Y + 20,
         SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.33f);
+        SPRITE_HEIGHT), 0.08f);
         jumpAnimation.AddFrame(new Sprite(spriteSheet,
         RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 60,
+        RIGHT_SPRITE_POS_Y + 30,
         SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.66f);
+        SPRITE_HEIGHT), 0.16f);
+        jumpAnimation.AddFrame(new Sprite(spriteSheet,
+        RIGHT_SPRITE_POS_X,
+        RIGHT_SPRITE_POS_Y + 40,
+        SPRITE_WIDTH,
+        SPRITE_HEIGHT), 0.24f);
+        jumpAnimation.AddFrame(new Sprite(spriteSheet,
+        RIGHT_SPRITE_POS_X,
+        RIGHT_SPRITE_POS_Y + 50,
+        SPRITE_WIDTH,
+        SPRITE_HEIGHT), 0.32f);
+        jumpAnimation.AddFrame(new Sprite(spriteSheet,
+        RIGHT_SPRITE_POS_X,
+        RIGHT_SPRITE_POS_Y + 50,
+        SPRITE_WIDTH,
+        SPRITE_HEIGHT), 0.4f);
 
         AddAnimation(AnimationType.MoveRight, _runRightAnimation);
         AddAnimation(AnimationType.MoveLeft, _runLeftAnimation);
@@ -118,7 +134,8 @@ public class PlayerAnimationHandler : AnimationHandler
 
     protected override void GetAnimation()
     {
-        var vel = ((PlayerModel)_entity).InnerForce;
+        var player = (PlayerModel)_entity;
+        var vel = player.InnerForce;
         if (vel.X != 0)
             lastNonZeroVelocity = vel;
 
@@ -132,14 +149,16 @@ public class PlayerAnimationHandler : AnimationHandler
         }
         else
         {
-            if (!CurrentAnimation.IsPlaying || lastNonZeroVelocity.X < 0)
+            if (!CurrentAnimation.IsPlaying && lastNonZeroVelocity.X < 0)
                 AnimationBuffer.Enqueue(AnimationType.IdleLeft);
-            else if (!CurrentAnimation.IsPlaying || lastNonZeroVelocity.X > 0)
+            else if (!CurrentAnimation.IsPlaying && lastNonZeroVelocity.X > 0)
                 AnimationBuffer.Enqueue(AnimationType.IdleRight);
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+        if (player.State is PlayerState.Jumping && previousState is not PlayerState.Jumping)
         {
             AnimationBuffer.Enqueue(AnimationType.Jump);
         }
+
+        previousState = player.State;
     }
 }

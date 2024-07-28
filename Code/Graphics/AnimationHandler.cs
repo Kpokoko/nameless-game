@@ -42,7 +42,7 @@ public abstract class AnimationHandler
     {
         GetAnimation();
 
-        if (AnimationBuffer.Count > 0)
+        while (AnimationBuffer.Count > 0)
         {
             var anim = AnimationBuffer.Dequeue();
             if (AnimationPriority[anim] >= AnimationPriority[CurrentAnimationType] || !CurrentAnimation.IsPlaying)

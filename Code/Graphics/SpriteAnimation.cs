@@ -19,7 +19,6 @@ public class SpriteAnimation
         {
             return _frames
                 .Where(f => f.TimeStamp <= PlaybackProgress)
-                .OrderBy(f => f.TimeStamp)
                 .LastOrDefault();
 
         }
@@ -63,6 +62,9 @@ public class SpriteAnimation
         SpriteAnimationFrame frame = new SpriteAnimationFrame(sprite, timeStamp);
         
         _frames.Add(frame);
+        _frames = _frames
+            .OrderBy(f => f.TimeStamp)
+            .ToList();
     }
 
     public void Update(GameTime gameTime)
