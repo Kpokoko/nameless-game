@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using nameless.Code.SceneManager;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.UI;
@@ -14,9 +15,9 @@ namespace nameless.UI;
 
 public class Minimap : UIElement, IEntity
 {
-    private TileGridEntity[,] _mapArray;
+    private Storage _mapArray;
     private int blockSize;
-    public Minimap(Vector2 position, int width, int height, TileGridEntity[,] array, Alignment align) : base(position, width, height, align)
+    public Minimap(Vector2 position, int width, int height, Storage array, Alignment align) : base(position, width, height, align)
     {
         _mapArray = array;
         blockSize = 10;
@@ -27,8 +28,8 @@ public class Minimap : UIElement, IEntity
     public void Draw(SpriteBatch spriteBatch)
     {
         Color color = Color.Transparent;
-        for (var i = 0;i< _mapArray.GetLength(0);i++)
-            for (var j =0; j< _mapArray.GetLength(1); j++)
+        for (var i = 0; i < _mapArray.GetLength(0);i++)
+            for (var j = 0; j < _mapArray.GetLength(1); j++)
             {
                 var entity = _mapArray[i,j];
                 if (entity == null) continue;
@@ -36,8 +37,9 @@ public class Minimap : UIElement, IEntity
 
                 switch (entity.GetType().Name)
                 {
+                    case "EditorBlock": color = Color.AliceBlue; break;
+                    case "InventoryBlock": color = Color.Red; break;
                     case "Block": color = Color.Brown; break;
-                    case "EditorBlock": color = Color.Red; break;
                     case "Platform": color = Color.Green; rect.Height = 2; break;
                 }
 

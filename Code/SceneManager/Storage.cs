@@ -37,5 +37,10 @@ namespace nameless.Code.SceneManager
         {
             return Entities;
         }
+
+        public int GetLength(int dimension)
+        {
+            return Entities[0].GetLength(dimension);
+        }
     }
 }

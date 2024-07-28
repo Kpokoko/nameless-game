@@ -19,6 +19,8 @@ using nameless.UI;
 using nameless.Code.Constructors;
 using System.IO;
 using System.Xml.Serialization;
+using System.Diagnostics.Metrics;
+using System.Text;
 
 namespace nameless.Engine;
 
@@ -26,8 +28,8 @@ public class Engine : Game
 {
     private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
 
-    public const int WINDOW_WIDTH = 1920;
-    public const int WINDOW_HEIGHT = 1200;
+    private int _windowWidth;
+    private int _windowHeight;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -59,15 +61,19 @@ public class Engine : Game
         {
             Globals.Constructor = new Constructor();
         }
-        base.Initialize();
-        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _windowWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _windowHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.PreferredBackBufferHeight = _windowHeight;
+        _graphics.PreferredBackBufferWidth = _windowWidth;
+        _graphics.IsFullScreen = true; // Включить полноэкранный режим
+        _graphics.HardwareModeSwitch = false; // Убрать рамку окна
         _graphics.ApplyChanges();
+        base.Initialize();
     }
 
     public void LoadCollisions()
     {
-        var collisionComponent = () => new CollisionComponent(new RectangleF(0 - 100, 0 - 100, WINDOW_WIDTH + 100, WINDOW_HEIGHT + 100));
+        var collisionComponent = () => new CollisionComponent(new RectangleF(0 - 100, 0 - 100, _windowWidth + 200, _windowHeight + 200));
         Globals.CollisionManager = new CollisionManager(collisionComponent());
         CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
@@ -79,6 +85,14 @@ public class Engine : Game
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
+
+        //using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        //{
+        //    var serializer = new XmlSerializer(typeof(List<string>));
+        //    var a = new List<string> { "0 0 Center" };
+        //    serializer.Serialize(writer, a);
+        //}
+
         Map.LoadMap();
         LoadScene();
         //Globals.Map = new string[3][]
@@ -92,13 +106,10 @@ public class Engine : Game
         //Globals.Map[1][2] = "right";
         //Globals.Map[0][1] = "up";
         //Globals.Map[2][1] = "down";
-        //using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
-        //{
-        //    //var a = typeof(List<T>);
-        //    var serializer = new XmlSerializer(typeof(string[][]));
-        //    var a = Globals.Map;
-        //    serializer.Serialize(writer, a);
-        //}
+//        <? xml version = "1.0" encoding = "utf-8" ?>
+//< ArrayOfString xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns: xsd = "http://www.w3.org/2001/XMLSchema" >
+//  < string > 0 0 Center </ string >
+//</ ArrayOfString >
     }
 
 

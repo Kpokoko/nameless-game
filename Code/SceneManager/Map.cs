@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using nameless.Engine;
+using nameless.Serialize;
+using nameless.UI;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -153,13 +155,12 @@ public class Map
 
     public static void LoadMap()
     {
-
-        //using (var reader = new StreamReader(new FileStream(Path.Combine("..", "net6.0", "Map.xml"), FileMode.Open)))
-        //{
-        //    var serializer = new XmlSerializer(typeof(string[][]));
-        //    var scores = (string[][])serializer.Deserialize(reader);
-        //    Globals.Map = new Map(scores);
-        //}
+        List<string> visitedScenes;
+        using (var reader = new StreamReader(new FileStream(Path.Combine("..", "net6.0", "Map.xml"), FileMode.Open)))
+        {
+            var serializer = new XmlSerializer(typeof(List<string>));
+            visitedScenes = (List<string>)serializer.Deserialize(reader);
+        }
         var scenes = Directory.GetFiles(Path.Combine("..", "net6.0", "Levels"));
         var sceneInfo = new List<SceneInfo>();
         foreach (var scene in scenes)
@@ -167,7 +168,17 @@ public class Map
             string name = null;
             var sceneCoords = ParseCoordinates(scene, out name);
             if (sceneCoords == null) continue;
-            sceneInfo.Add(new SceneInfo(name, (Point)sceneCoords));
+            var nameThatDoesntExistInThisContext = new SceneInfo(name, (Point)sceneCoords);
+            // new Minimap(new Vector2(1600, 300 + 220), 0, 0, a, Alignment.Center)
+            sceneInfo.Add(nameThatDoesntExistInThisContext);
+            var nameThatDoesntExistInThisContextNAME = nameThatDoesntExistInThisContext.FullName;
+            if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME))
+            {
+                var a = new Scene(nameThatDoesntExistInThisContextNAME).Storage;
+                nameThatDoesntExistInThisContext.Minimap = new Minimap(
+                    new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * 23 * 10 + 900, (nameThatDoesntExistInThisContext.Coordinates.Y) * 13 * 10 + 700),
+                    0, 0, a, Alignment.Center);
+            }
         }
         Globals.Map = new Map(sceneInfo);
     }
@@ -187,11 +198,13 @@ public class SceneInfo
 {
     public string Name;
     public Point Coordinates;
+    public Minimap Minimap;
     public string FullName { get { return Name != null ? Coordinates.ToSimpleString() + ' ' + Name : Coordinates.ToSimpleString(); } }
 
-    public SceneInfo(string name, Point coords)
+    public SceneInfo(string name, Point coords, Minimap minimap = null)
     {
         Name = name;
         Coordinates = coords;
+        Minimap = minimap;
     }
 }
