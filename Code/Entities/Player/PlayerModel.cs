@@ -88,6 +88,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         _horizontalVelocity = 0;
 
         Colliders.Add(new KinematicAccurateCollider(this, 44,52));
+        Colliders[0].Color = Color.Transparent;
 
         PrepareSerializationInfo();
 

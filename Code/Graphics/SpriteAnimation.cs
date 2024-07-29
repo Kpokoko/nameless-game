@@ -18,8 +18,8 @@ public class SpriteAnimation
         get
         {
             return _frames
-                .Where(f => f.TimeStamp <= PlaybackProgress)
-                .LastOrDefault();
+                .Where(f => f.TimeStamp >= PlaybackProgress)
+                .FirstOrDefault();
 
         }
     }

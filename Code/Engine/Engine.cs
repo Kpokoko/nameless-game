@@ -25,6 +25,8 @@ namespace nameless.Engine;
 public class Engine : Game
 {
     private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
+    private const string ASSET_NAME_SPRITESHEET2 = "PlayerSpritesheet";
+
 
     public const int WINDOW_WIDTH = 1920;
     public const int WINDOW_HEIGHT = 1200;
@@ -78,6 +80,8 @@ public class Engine : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+        Globals.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
+
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
         Map.LoadMap();
         LoadScene();

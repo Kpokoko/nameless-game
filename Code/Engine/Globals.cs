@@ -34,6 +34,7 @@ public static class Globals
     public static Constructor Constructor;
 
     public static Texture2D SpriteSheet;
+    public static Texture2D SpriteSheet2;
 
     public static CollisionManager CollisionManager;
 

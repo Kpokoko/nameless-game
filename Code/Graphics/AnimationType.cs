@@ -13,9 +13,10 @@ public enum AnimationType
     IdleRight,
     MoveLeft,
     MoveRight,
+    JumpRight,
+    JumpLeft,
     Up, 
     Down,
-    Jump,
     Landing,
     Hit,
 }

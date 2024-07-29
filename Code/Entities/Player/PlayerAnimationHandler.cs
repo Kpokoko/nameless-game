@@ -15,120 +15,58 @@ public class PlayerAnimationHandler : AnimationHandler
 {
     public override IEntity _entity { get; set ; }
 
-    private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
-
-
-    public const int RIGHT_SPRITE_POS_X = 848;
-    public const int RIGHT_SPRITE_POS_Y = 0;
-    public const int LEFT_SPRITE_POS_X = 980;
-    public const int LEFT_SPRITE_POS_Y = 68;
-
-    private const int RIGHT_RUN_FRAME_X = RIGHT_SPRITE_POS_X + SPRITE_WIDTH * 2;
-    private const int LEFT_RUN_FRAME_X = LEFT_SPRITE_POS_X - SPRITE_WIDTH * 2;
-
-
-    public const int SPRITE_WIDTH = 44;
-    public const int SPRITE_HEIGHT = 52;
-
     private Vector2 lastNonZeroVelocity;
     private PlayerState previousState = PlayerState.Still;
 
     public PlayerAnimationHandler(PlayerModel entity) : base(entity)
     {
-        var spriteSheet = Globals.SpriteSheet;
+        var spriteSheet = Globals.SpriteSheet2;
         CurrentAnimationType = AnimationType.MoveRight;
+        var sprites = new SpriteSheet(spriteSheet, 44, 52);
 
-        var _rightSprite = new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT);
-        var _leftSprite = new Sprite(spriteSheet,
-                LEFT_SPRITE_POS_X,
-                LEFT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT);
-        var _currentSprite = _rightSprite;
+        var right = sprites[0, 0];
+        var left = sprites[1, 0];
 
-        var _runRightAnimation = new SpriteAnimation();
-        _runRightAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                RIGHT_RUN_FRAME_X,
-                RIGHT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), 0);
-        _runRightAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                RIGHT_RUN_FRAME_X + SPRITE_WIDTH,
-                RIGHT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
-        _runRightAnimation.AddFrame(_runRightAnimation[0].Sprite, 2 * RUN_ANIMATION_FRAME_LENGTH);
-        _runRightAnimation.Play();
+        var runRight = new SpriteAnimation();
+        runRight.AddFrame(right, 0.07f);
+        runRight.AddFrame(sprites[2, 0], 0.14f);
 
-        var _runLeftAnimation = new SpriteAnimation();
-        _runLeftAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                LEFT_RUN_FRAME_X,
-                LEFT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), 0);
-        _runLeftAnimation.AddFrame(
-            new Sprite(
-                spriteSheet,
-                LEFT_RUN_FRAME_X - SPRITE_WIDTH,
-                LEFT_SPRITE_POS_Y,
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
-        _runLeftAnimation.AddFrame(_runLeftAnimation[0].Sprite, 2 * RUN_ANIMATION_FRAME_LENGTH);
-        _runLeftAnimation.Play();
+        var runLeft = new SpriteAnimation();
+        runLeft.AddFrame(left, 0.07f);
+        runLeft.AddFrame(sprites[3, 0], 0.14f);
 
-        var idleRightAnimation = new SpriteAnimation();
-        idleRightAnimation.AddFrame(_rightSprite,0);
+        var idleRight = new SpriteAnimation();
+        idleRight.AddFrame(right,0);
 
-        var idleLeftAnimation = new SpriteAnimation();
-        idleLeftAnimation.AddFrame(_leftSprite, 0);
+        var idleLeft = new SpriteAnimation();
+        idleLeft.AddFrame(left, 0);
 
-        var jumpAnimation = new SpriteAnimation();
-        jumpAnimation.AddFrame(new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 10,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT),0);
-        jumpAnimation.AddFrame(new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 20,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.08f);
-        jumpAnimation.AddFrame(new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 30,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.16f);
-        jumpAnimation.AddFrame(new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 40,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.24f);
-        jumpAnimation.AddFrame(new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 50,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.32f);
-        jumpAnimation.AddFrame(new Sprite(spriteSheet,
-        RIGHT_SPRITE_POS_X,
-        RIGHT_SPRITE_POS_Y + 50,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT), 0.4f);
+        var jumpRight = new SpriteAnimation();
+        jumpRight.AddFrame(sprites[2, 1], 0.04f);
+        jumpRight.AddFrame(sprites[1, 1], 0.08f);
+        jumpRight.AddFrame(sprites[0, 1], 0.13f);
+        jumpRight.AddFrame(sprites[1, 1], 0.18f);
+        jumpRight.AddFrame(sprites[2, 1], 0.25f);
+        jumpRight.AddFrame(sprites[3, 1], 0.32f);
+        jumpRight.AddFrame(sprites[2, 1], 0.46f);
 
-        AddAnimation(AnimationType.MoveRight, _runRightAnimation);
-        AddAnimation(AnimationType.MoveLeft, _runLeftAnimation);
-        AddAnimation(AnimationType.IdleRight, idleRightAnimation);
-        AddAnimation(AnimationType.IdleLeft, idleLeftAnimation);
-        AddAnimation(AnimationType.Jump, jumpAnimation, 1);
+        var jumpLeft = new SpriteAnimation();
+        jumpLeft.AddFrame(sprites[2, 2], 0.04f);
+        jumpLeft.AddFrame(sprites[1, 2], 0.08f);
+        jumpLeft.AddFrame(sprites[0, 2], 0.13f);
+        jumpLeft.AddFrame(sprites[1, 2], 0.18f);
+        jumpLeft.AddFrame(sprites[2, 2], 0.25f);
+        jumpLeft.AddFrame(sprites[3, 2], 0.32f);
+        jumpLeft.AddFrame(sprites[2, 2], 0.46f);
+
+
+        AddAnimation(AnimationType.MoveRight, runRight);
+        AddAnimation(AnimationType.MoveLeft, runLeft);
+        AddAnimation(AnimationType.IdleRight, idleRight);
+        AddAnimation(AnimationType.IdleLeft, idleLeft);
+        AddAnimation(AnimationType.JumpRight, jumpRight, 1);
+        AddAnimation(AnimationType.JumpLeft, jumpLeft, 1);
+
 
     }
 
@@ -156,7 +94,10 @@ public class PlayerAnimationHandler : AnimationHandler
         }
         if (player.State is PlayerState.Jumping && previousState is not PlayerState.Jumping)
         {
-            AnimationBuffer.Enqueue(AnimationType.Jump);
+            if (lastNonZeroVelocity.X > 0) 
+                AnimationBuffer.Enqueue(AnimationType.JumpRight);
+            else
+                AnimationBuffer.Enqueue(AnimationType.JumpLeft);
         }
 
         previousState = player.State;
