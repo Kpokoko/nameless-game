@@ -12,6 +12,7 @@ using nameless.Tiles;
 using nameless.UI.Scenes;
 using System.Collections.Generic;
 using System.Timers;
+using nameless.Entity.Player;
 
 namespace nameless.Entity;
 
@@ -19,10 +20,16 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 {
     public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
+<<<<<<< HEAD
     private const float _time_effect = 1 / 60f;
 
     private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
     private const float MIN_POS_Y = 1900;
+=======
+    private const float MIN_POS_Y = 900;
+>>>>>>> Animation
+
+    private const float _time_effect = 1 / 60f;
 
     private const float MIN_JUMP_HEIGHT = 4f / _time_effect;
     private const float JUMP_VELOCITY = -13f / _time_effect;
@@ -78,9 +85,11 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public GameObjects.TimerTrigger Coyote { get; private set; }
     public Colliders Colliders { get; set; } = new();
     public Vector2 Velocity { get; private set; }
+    public Vector2 InnerForce { get; private set; }
     public Vector2 OuterForce { get; private set; }
     public Stack<Action> Actions { get; set; } = new Stack<Action>();
 
+    private PlayerAnimationHandler _animationHandler;
 
     public PlayerModel() { }
     public SerializationInfo Info { get; set; } = new();
@@ -140,16 +149,21 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         _runLeftAnimation.AddFrame(_runLeftAnimation[0].Sprite, 2 * RUN_ANIMATION_FRAME_LENGTH);
         _runLeftAnimation.Play();
 
+
         State = PlayerState.Still;
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
         Colliders.Add(new KinematicAccurateCollider(this, _currentSprite.Width,_currentSprite.Height));
+        Colliders.Add(new KinematicAccurateCollider(this, 44,52));
+        Colliders[0].Color = Color.Transparent;
 
         PrepareSerializationInfo();
 
         Coyote = new GameObjects.TimerTrigger(100, GameObjects.SignalProperty.Once);
         Coyote.OnTimeoutEvent += () => CanJump = false;
+
+        _animationHandler = new PlayerAnimationHandler(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -164,6 +178,17 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         }
         else
             Globals.Draw(Position, spriteBatch, _currentSprite);
+        _animationHandler.Draw(spriteBatch);
+        //if (_horizontalVelocity < 0)
+        //{
+        //    Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runLeftAnimation);
+        //} 
+        //else if (_horizontalVelocity > 0)
+        //{
+        //    Globals.Draw(Position, new Vector2(_currentSprite.Width, _currentSprite.Height), spriteBatch, _runRightAnimation);
+        //}
+        //else
+        //    Globals.Draw(Position, spriteBatch, _currentSprite);
     }
 
     public void Update(GameTime gameTime)
@@ -204,6 +229,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         }
 
         Velocity = OuterForce + new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        InnerForce = new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Velocity = OuterForce + InnerForce;
         Position = Position + Velocity;
 
         //Velocity = Position - oldPos;

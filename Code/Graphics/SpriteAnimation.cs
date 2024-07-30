@@ -18,9 +18,8 @@ public class SpriteAnimation
         get
         {
             return _frames
-                .Where(f => f.TimeStamp <= PlaybackProgress)
-                .OrderBy(f => f.TimeStamp)
-                .LastOrDefault();
+                .Where(f => f.TimeStamp >= PlaybackProgress)
+                .FirstOrDefault();
 
         }
     }
@@ -44,7 +43,7 @@ public class SpriteAnimation
         } 
     }
 
-    public bool ShouldLoop { get; set; } = true;
+    public bool ShouldLoop { get; set; } = false;
 
     public bool IsPlaying { get; private set; }
 
@@ -63,6 +62,9 @@ public class SpriteAnimation
         SpriteAnimationFrame frame = new SpriteAnimationFrame(sprite, timeStamp);
         
         _frames.Add(frame);
+        _frames = _frames
+            .OrderBy(f => f.TimeStamp)
+            .ToList();
     }
 
     public void Update(GameTime gameTime)
@@ -83,11 +85,15 @@ public class SpriteAnimation
 
     public void Play()
     {
+        if (!Globals.AnimationManager.SpriteAnimations.Contains(this))
+            Globals.AnimationManager.SpriteAnimations.Add(this);
         IsPlaying = true;
     }
 
     public void Stop()
     {
+        if (Globals.AnimationManager.SpriteAnimations.Contains(this))
+            Globals.AnimationManager.SpriteAnimations.Remove(this);
         IsPlaying = false;
         PlaybackProgress = 0;
     }

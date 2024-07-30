@@ -73,7 +73,7 @@ public class CollisionManager
         {
             var platform = InactivePlatformColliders[InactivePlatformColliders.Count - 1];
             var platformPos = ((RectangleF)platform.Bounds).Top;
-            if (player < platformPos + 1)
+            if (player <= platformPos + 1)
             {
                 CollisionComponent.Insert(platform);
                 InactivePlatformColliders.RemoveAt(InactivePlatformColliders.Count - 1);

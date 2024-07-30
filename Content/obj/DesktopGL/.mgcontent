@@ -5,9 +5,11 @@
   <Config />
   <SourceFiles>
     <File>C:/C#/Games/Repos/nameless-game/Content/BasicFont.spritefont</File>
+    <File>C:/C#/Games/Repos/nameless-game/Content/PlayerSpritesheet.png</File>
     <File>C:/C#/Games/Repos/nameless-game/Content/TrexSpritesheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

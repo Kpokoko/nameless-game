@@ -27,6 +27,8 @@ namespace nameless.Engine;
 public class Engine : Game
 {
     private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
+    private const string ASSET_NAME_SPRITESHEET2 = "PlayerSpritesheet";
+
 
     private int _windowWidth;
     private int _windowHeight;
@@ -84,6 +86,8 @@ public class Engine : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+        Globals.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
+
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
 
         //using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
@@ -173,6 +177,8 @@ public class Engine : Game
 
         MouseInputController.ProcessControls();
 
+        Globals.AnimationManager.Update(gameTime);
+
         Globals.SceneManager.Update(gameTime);
 
         //_player.Update(gameTime);
@@ -201,6 +207,7 @@ public class Engine : Game
         //_player.Draw(_spriteBatch, gameTime);
 
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
+
 
         Globals.UIManager.Draw(_spriteBatch);
 
