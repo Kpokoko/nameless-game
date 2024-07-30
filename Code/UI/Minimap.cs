@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using nameless.Code.SceneManager;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.UI;
@@ -14,12 +15,11 @@ namespace nameless.UI;
 
 public class Minimap : UIElement, IEntity
 {
-    private TileGridEntity[,] _mapArray;
-    private int blockSize;
-    public Minimap(Vector2 position, int width, int height, TileGridEntity[,] array, Alignment align) : base(position, width, height, align)
+    private EntityTypeEnum[,] _mapArray;
+    public const int TileSize = 10;
+    public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
     {
         _mapArray = array;
-        blockSize = 10;
 
         Globals.UIManager.Minimaps.Add(this);
     }
@@ -27,21 +27,22 @@ public class Minimap : UIElement, IEntity
     public void Draw(SpriteBatch spriteBatch)
     {
         Color color = Color.Transparent;
-        for (var i = 0;i< _mapArray.GetLength(0);i++)
-            for (var j =0; j< _mapArray.GetLength(1); j++)
+        for (var i = 0; i < _mapArray.GetLength(0);i++)
+            for (var j = 0; j < _mapArray.GetLength(1); j++)
             {
                 var entity = _mapArray[i,j];
-                if (entity == null) continue;
-                var rect = new Rectangle(i * blockSize + (int)Position.X, j * blockSize + (int)Position.Y, blockSize, blockSize);
+                if (entity is EntityTypeEnum.None || entity is EntityTypeEnum.HitboxTrigger) continue;
+                var rect = new Rectangle(i * TileSize + (int)Position.X, j * TileSize + (int)Position.Y, TileSize, TileSize);
 
-                switch (entity.GetType().Name)
+                switch (entity)
                 {
-                    case "Block": color = Color.Brown; break;
-                    case "EditorBlock": color = Color.Red; break;
-                    case "Platform": color = Color.Green; rect.Height = 2; break;
+                    case EntityTypeEnum.EditorBlock: color = Color.AliceBlue; break;
+                    case EntityTypeEnum.InventoryBlock: color = Color.Red; break;
+                    case EntityTypeEnum.Block: color = Color.Brown; break;
+                    case EntityTypeEnum.Platform: color = Color.Green; rect.Height = 2; break;
                 }
 
-                spriteBatch.DrawRectangle(rect, color, blockSize/2);
+                spriteBatch.DrawRectangle(rect, color, TileSize/2);
             }
     }
 

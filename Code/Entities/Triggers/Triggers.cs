@@ -91,7 +91,7 @@ public partial class HitboxTrigger
         trigger.TriggerType = TriggerType.DamagePlayer;
 
         trigger.Color = Color.IndianRed;
-        trigger.OnCollisionEvent += () => { Globals.SceneManager.ReloadScene(); };
+        trigger.OnCollisionEvent += () => { if (Globals.IsNoclipEnabled) return; Globals.SceneManager.ReloadScene(); };
         return trigger;
     }
 

@@ -18,6 +18,7 @@ namespace nameless.Code.Constructors;
 
 public class Constructor : IGameObject
 {
+    private Vector2 _prevMouseTilePos;
     public int DrawOrder => 1;
     private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
     protected List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
@@ -36,12 +37,14 @@ public class Constructor : IGameObject
         if (Globals.IsConstructorModeEnabled)
         {
             Globals.UIManager.SetScene(UIScenes.ConstructorScene);
-            Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]
-                .AddElements(new Minimap(new Vector2(1600, 300 + 220), 0, 0, _storage.GetArray()[0], Alignment.Center));
+            Globals.UIManager.ShowMap();
+            //Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]
+            //    .AddElements(new Minimap(new Vector2(1600, 300 + 220), 0, 0, _storage, Alignment.Center));
         }
         else
         {
             Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
+            Globals.UIManager.HideMap();
             var serializer = new Serializer();
             serializer.Serialize(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
         }
@@ -49,9 +52,7 @@ public class Constructor : IGameObject
 
     public void Update(GameTime gameTime)
     {
-        if (Keyboard.GetState().IsKeyDown(Keys.Tab) && MouseInputController.LeftButton.IsJustPressed)
-            Console.WriteLine("");
-        var mouseTilePos = MouseInputController.MouseTilePos;
+        var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
         if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
@@ -68,7 +69,9 @@ public class Constructor : IGameObject
 
         if (entityUnderMouse is null && _holdingEntity is not null)
            MoveBlock(mouseTilePos);
+        _prevMouseTilePos = mouseTilePos;
     }
+
 
     private void HoldBlock(IConstructable entity)
     {

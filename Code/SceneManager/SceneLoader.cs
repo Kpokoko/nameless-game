@@ -6,6 +6,7 @@ using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;
 using nameless.Tiles;
+using nameless.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -99,9 +100,8 @@ namespace nameless.Code.SceneManager
 
         public static void SaveScene()
         {
-            var serializer = new Serializer();
             var entities = Globals.SceneManager.GetEntities();
-            serializer.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
+            _serialize.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
         }
 
         public static Vector2 SwitchScene(HitboxTrigger trigger)
@@ -113,6 +113,23 @@ namespace nameless.Code.SceneManager
             {
                 var serialize = new XmlSerializer(typeof(Vector2));
                 serialize.Serialize(writer, newLoc);
+            }
+            List<string> data;
+            using (var reader = new StreamReader(new FileStream("Map.xml", FileMode.Open)))
+            {
+                var serialize = new XmlSerializer(typeof(List<string>));
+                data = (List<string>)serialize.Deserialize(reader);
+            }
+            using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+            {
+                var serialize = new XmlSerializer(typeof(List<string>));
+                var name = Globals.SceneManager.GetName();
+                if (!data.Contains(name))
+                {
+                    data.Add(name);
+                    Globals.UIManager.Minimaps.Add(new Minimap(new Vector2((currLoc.X) * 23 * 10 + 900, (currLoc.Y)* 13 * 10 + 700), 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum(), Alignment.Center));
+                }
+                serialize.Serialize(writer, data);
             }
             return newLoc;
         }

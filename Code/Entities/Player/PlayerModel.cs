@@ -22,7 +22,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private const float _time_effect = 1 / 60f;
 
     private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
-    private const float MIN_POS_Y = 900;
+    private const float MIN_POS_Y = 1900;
 
     private const float MIN_JUMP_HEIGHT = 4f / _time_effect;
     private const float JUMP_VELOCITY = -13f / _time_effect;
