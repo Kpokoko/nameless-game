@@ -127,7 +127,7 @@ namespace nameless.Code.SceneManager
                 if (!data.Contains(name))
                 {
                     data.Add(name);
-                    Globals.UIManager.Minimaps.Add(new Minimap(new Vector2((currLoc.X) * 23 * 10 + 900, (currLoc.Y)* 13 * 10 + 700), 0, 0, Globals.SceneManager.GetStorage(), Alignment.Center));
+                    Globals.UIManager.Minimaps.Add(new Minimap(new Vector2((currLoc.X) * 23 * 10 + 900, (currLoc.Y)* 13 * 10 + 700), 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum(), Alignment.Center));
                 }
                 serialize.Serialize(writer, data);
             }

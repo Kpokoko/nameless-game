@@ -14,7 +14,8 @@ public enum EntityTypeEnum
     InventoryBlock,
     EditorBlock,
     HitboxTrigger,
-    Platform
+    Platform,
+    MovingPlatform
 }
 
 public static class EntityType
@@ -25,6 +26,8 @@ public static class EntityType
         { EntityTypeEnum.InventoryBlock, typeof(InventoryBlock)},
         { EntityTypeEnum.EditorBlock, typeof(EditorBlock)},
         { EntityTypeEnum.HitboxTrigger, typeof(HitboxTrigger)},
+        { EntityTypeEnum.Platform, typeof(Platform)},
+        { EntityTypeEnum.MovingPlatform, typeof(MovingPlatform)},
     };
 
     public static Dictionary<Type, EntityTypeEnum> EntityTypeToEnumTranslator = EntityEnumToTypeTranslator

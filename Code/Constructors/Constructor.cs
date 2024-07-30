@@ -52,8 +52,6 @@ public class Constructor : IGameObject
 
     public void Update(GameTime gameTime)
     {
-        if (Keyboard.GetState().IsKeyDown(Keys.Tab) && MouseInputController.LeftButton.IsJustPressed)
-            Console.WriteLine("");
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 

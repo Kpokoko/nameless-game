@@ -15,9 +15,9 @@ namespace nameless.UI;
 
 public class Minimap : UIElement, IEntity
 {
-    private Storage _mapArray;
+    private EntityTypeEnum[,] _mapArray;
     public const int TileSize = 10;
-    public Minimap(Vector2 position, int width, int height, Storage array, Alignment align) : base(position, width, height, align)
+    public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
     {
         _mapArray = array;
 
@@ -31,15 +31,15 @@ public class Minimap : UIElement, IEntity
             for (var j = 0; j < _mapArray.GetLength(1); j++)
             {
                 var entity = _mapArray[i,j];
-                if (entity == null) continue;
+                if (entity is EntityTypeEnum.None || entity is EntityTypeEnum.HitboxTrigger) continue;
                 var rect = new Rectangle(i * TileSize + (int)Position.X, j * TileSize + (int)Position.Y, TileSize, TileSize);
 
-                switch (entity.GetType().Name)
+                switch (entity)
                 {
-                    case "EditorBlock": color = Color.AliceBlue; break;
-                    case "InventoryBlock": color = Color.Red; break;
-                    case "Block": color = Color.Brown; break;
-                    case "Platform": color = Color.Green; rect.Height = 2; break;
+                    case EntityTypeEnum.EditorBlock: color = Color.AliceBlue; break;
+                    case EntityTypeEnum.InventoryBlock: color = Color.Red; break;
+                    case EntityTypeEnum.Block: color = Color.Brown; break;
+                    case EntityTypeEnum.Platform: color = Color.Green; rect.Height = 2; break;
                 }
 
                 spriteBatch.DrawRectangle(rect, color, TileSize/2);

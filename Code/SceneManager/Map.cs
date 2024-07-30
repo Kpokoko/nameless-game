@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using nameless.Engine;
+using nameless.Entity;
 using nameless.Serialize;
 using nameless.UI;
 using Newtonsoft.Json.Linq;
@@ -173,7 +174,7 @@ public class Map
             var nameThatDoesntExistInThisContextNAME = nameThatDoesntExistInThisContext.FullName;
             if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME) || Globals.IsDeveloperModeEnabled)
             {
-                var visitedSceneStorage = Scene.GetSceneStorage(nameThatDoesntExistInThisContextNAME);
+                var visitedSceneStorage = Scene.GetSceneStorage(nameThatDoesntExistInThisContextNAME).ConvertToEnum();
                 nameThatDoesntExistInThisContext.Minimap = new Minimap(
                     new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * Storage.StorageWidth * Minimap.TileSize + 900, (nameThatDoesntExistInThisContext.Coordinates.Y) * Storage.StorageHeight * Minimap.TileSize + 700),
                     0, 0, visitedSceneStorage, Alignment.Center);

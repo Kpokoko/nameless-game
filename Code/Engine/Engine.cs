@@ -65,8 +65,8 @@ public class Engine : Game
         _windowHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         _graphics.PreferredBackBufferHeight = _windowHeight;
         _graphics.PreferredBackBufferWidth = _windowWidth;
-        _graphics.IsFullScreen = true; // Включить полноэкранный режим
-        _graphics.HardwareModeSwitch = false; // Убрать рамку окна
+        //_graphics.IsFullScreen = true; // Включить полноэкранный режим
+        //_graphics.HardwareModeSwitch = false; // Убрать рамку окна
         _graphics.ApplyChanges();
         base.Initialize();
     }
