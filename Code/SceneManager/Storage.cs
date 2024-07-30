@@ -11,7 +11,9 @@ namespace nameless.Code.SceneManager
 {
     public class Storage
     {
-        private TileGridEntity[][,] Entities = new[] { new TileGridEntity[40, 23] , new TileGridEntity[40, 23] };
+        private TileGridEntity[][,] Entities = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight] };
+        public const int StorageWidth = 23;
+        public const int StorageHeight = 13;
 
         public Storage(List<IEntity> entities)
         {
@@ -21,6 +23,15 @@ namespace nameless.Code.SceneManager
                 if (entity is null) continue;
                 var layer = entity.Layer;
                 var pos = entity.TilePosition;
+
+                //
+                if (!IsInBounds(pos))
+                {
+                    entities.Remove(entities[i]);
+                    continue;
+                }
+                //
+
                 Entities[layer][(int)pos.X, (int)pos.Y] = entity;
                 if (entity is EditorBlock)
                     Entities[layer][(int)pos.X, (int)pos.Y - 1] = entity;
@@ -36,6 +47,11 @@ namespace nameless.Code.SceneManager
         public TileGridEntity[][,] GetArray()
         {
             return Entities;
+        }
+
+        public static bool IsInBounds(Vector2 pos)
+        {
+            return pos.X >= 0 && pos.X < StorageWidth && pos.Y >= 0 && pos.Y < StorageHeight;
         }
 
         public int GetLength(int dimension)

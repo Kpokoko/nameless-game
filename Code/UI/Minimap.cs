@@ -16,11 +16,10 @@ namespace nameless.UI;
 public class Minimap : UIElement, IEntity
 {
     private Storage _mapArray;
-    private int blockSize;
+    public const int TileSize = 10;
     public Minimap(Vector2 position, int width, int height, Storage array, Alignment align) : base(position, width, height, align)
     {
         _mapArray = array;
-        blockSize = 10;
 
         Globals.UIManager.Minimaps.Add(this);
     }
@@ -33,7 +32,7 @@ public class Minimap : UIElement, IEntity
             {
                 var entity = _mapArray[i,j];
                 if (entity == null) continue;
-                var rect = new Rectangle(i * blockSize + (int)Position.X, j * blockSize + (int)Position.Y, blockSize, blockSize);
+                var rect = new Rectangle(i * TileSize + (int)Position.X, j * TileSize + (int)Position.Y, TileSize, TileSize);
 
                 switch (entity.GetType().Name)
                 {
@@ -43,7 +42,7 @@ public class Minimap : UIElement, IEntity
                     case "Platform": color = Color.Green; rect.Height = 2; break;
                 }
 
-                spriteBatch.DrawRectangle(rect, color, blockSize/2);
+                spriteBatch.DrawRectangle(rect, color, TileSize/2);
             }
     }
 

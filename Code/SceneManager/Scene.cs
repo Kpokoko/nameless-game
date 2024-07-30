@@ -31,7 +31,11 @@ namespace nameless.Code.SceneManager
             Name = sceneName;
         }
 
-        private bool _prevKeyPressed;
+        public static Storage GetSceneStorage(string sceneName)
+        {
+            var entities = SceneLoader.LoadScene(sceneName);
+            return new Storage(entities);
+        }
 
         public void Update(GameTime gameTime)
         {

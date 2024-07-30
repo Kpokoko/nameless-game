@@ -165,19 +165,18 @@ public class Map
         var sceneInfo = new List<SceneInfo>();
         foreach (var scene in scenes)
         {
-            string name = null;
-            var sceneCoords = ParseCoordinates(scene, out name);
+            var sceneCoords = ParseCoordinates(scene, out var name);
             if (sceneCoords == null) continue;
             var nameThatDoesntExistInThisContext = new SceneInfo(name, (Point)sceneCoords);
             // new Minimap(new Vector2(1600, 300 + 220), 0, 0, a, Alignment.Center)
             sceneInfo.Add(nameThatDoesntExistInThisContext);
             var nameThatDoesntExistInThisContextNAME = nameThatDoesntExistInThisContext.FullName;
-            if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME))
+            if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME) || Globals.IsDeveloperModeEnabled)
             {
-                var a = new Scene(nameThatDoesntExistInThisContextNAME).Storage;
+                var visitedSceneStorage = Scene.GetSceneStorage(nameThatDoesntExistInThisContextNAME);
                 nameThatDoesntExistInThisContext.Minimap = new Minimap(
-                    new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * 23 * 10 + 900, (nameThatDoesntExistInThisContext.Coordinates.Y) * 13 * 10 + 700),
-                    0, 0, a, Alignment.Center);
+                    new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * Storage.StorageWidth * Minimap.TileSize + 900, (nameThatDoesntExistInThisContext.Coordinates.Y) * Storage.StorageHeight * Minimap.TileSize + 700),
+                    0, 0, visitedSceneStorage, Alignment.Center);
             }
         }
         Globals.Map = new Map(sceneInfo);

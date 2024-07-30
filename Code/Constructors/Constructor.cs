@@ -54,7 +54,7 @@ public class Constructor : IGameObject
     {
         if (Keyboard.GetState().IsKeyDown(Keys.Tab) && MouseInputController.LeftButton.IsJustPressed)
             Console.WriteLine("");
-        var mouseTilePos = IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
+        var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
         if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
@@ -74,10 +74,6 @@ public class Constructor : IGameObject
         _prevMouseTilePos = mouseTilePos;
     }
 
-    private bool IsInBounds(Vector2 pos)
-    {
-        return pos.X >= 0 && pos.X < 40 && pos.Y >= 0 && pos.Y < 23;
-    }
 
     private void HoldBlock(IConstructable entity)
     {

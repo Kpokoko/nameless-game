@@ -20,14 +20,14 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>0</X>
-      <Y>13</Y>
+      <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>25</X>
+      <X>22</X>
       <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -35,8 +35,8 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>25</X>
-      <Y>13</Y>
+      <X>22</X>
+      <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
   </SerializationInfo>
