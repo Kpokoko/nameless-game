@@ -9,14 +9,31 @@ namespace nameless.Graphics;
 public enum AnimationType
 {
     None,
+
+    Idle,
     IdleLeft,
     IdleRight,
+
+    Move,
     MoveLeft,
     MoveRight,
+
+    Jump,
     JumpRight,
     JumpLeft,
-    Up, 
-    Down,
+
+    Falling,
+    FallingLeft,
+    FallingRight,
+
     Landing,
+    LandingLeft,
+    LandingRight,
+
     Hit,
+    HitLeft,
+    HitRight,
+
+    Up,
+    Down,
 }

@@ -166,10 +166,11 @@ public class Engine : Game
 
         MouseInputController.ProcessControls();
 
+        Globals.AnimationManager.Update(gameTime);
+
         Globals.SceneManager.Update(gameTime);
 
         //_player.Update(gameTime);
-        Globals.AnimationManager.Update(gameTime);
 
         Globals.CollisionManager.Update(gameTime);
         Globals.TriggerManager.Update(gameTime);

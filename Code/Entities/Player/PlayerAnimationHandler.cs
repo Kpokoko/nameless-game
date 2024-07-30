@@ -42,30 +42,42 @@ public class PlayerAnimationHandler : AnimationHandler
         idleLeft.AddFrame(left, 0);
 
         var jumpRight = new SpriteAnimation();
-        jumpRight.AddFrame(sprites[2, 1], 0.04f);
-        jumpRight.AddFrame(sprites[1, 1], 0.08f);
-        jumpRight.AddFrame(sprites[0, 1], 0.12f);
-        jumpRight.AddFrame(sprites[1, 1], 0.16f);
-        jumpRight.AddFrame(sprites[2, 1], 0.20f);
+        jumpRight.AddFrame(sprites[0, 1], 0.08f);
+        jumpRight.AddFrame(sprites[1, 1], 0.12f);
+        jumpRight.AddFrame(sprites[2, 1], 0.18f);
         jumpRight.AddFrame(sprites[3, 1], 0.26f);
         jumpRight.AddFrame(sprites[2, 1], 0.32f);
 
         var jumpLeft = new SpriteAnimation();
-        jumpLeft.AddFrame(sprites[2, 2], 0.04f);
-        jumpLeft.AddFrame(sprites[1, 2], 0.08f);
-        jumpLeft.AddFrame(sprites[0, 2], 0.12f);
-        jumpLeft.AddFrame(sprites[1, 2], 0.16f);
-        jumpLeft.AddFrame(sprites[2, 2], 0.20f);
+        jumpLeft.AddFrame(sprites[0, 2], 0.08f);
+        jumpLeft.AddFrame(sprites[1, 2], 0.12f);
+        jumpLeft.AddFrame(sprites[2, 2], 0.18f);
         jumpLeft.AddFrame(sprites[3, 2], 0.26f);
         jumpLeft.AddFrame(sprites[2, 2], 0.32f);
+
+        var fallingRight = new SpriteAnimation();
+        fallingRight.AddFrame(sprites[1, 1], 0.1f);
+
+        var fallingLeft = new SpriteAnimation();
+        fallingLeft.AddFrame(sprites[1, 2], 0.1f);
+
+        var landingRight = new SpriteAnimation();
+        landingRight.AddFrame(right, 0.05f);
+
+        var landingLeft = new SpriteAnimation();
+        landingLeft.AddFrame(left, 0.05f);
 
 
         AddAnimation(AnimationType.MoveRight, runRight);
         AddAnimation(AnimationType.MoveLeft, runLeft);
         AddAnimation(AnimationType.IdleRight, idleRight);
         AddAnimation(AnimationType.IdleLeft, idleLeft);
-        AddAnimation(AnimationType.JumpRight, jumpRight, 1);
-        AddAnimation(AnimationType.JumpLeft, jumpLeft, 1);
+        AddAnimation(AnimationType.JumpRight, jumpRight, 2);
+        AddAnimation(AnimationType.JumpLeft, jumpLeft, 2);
+        AddAnimation(AnimationType.FallingRight, fallingRight, 1);
+        AddAnimation(AnimationType.FallingLeft, fallingLeft, 1);
+        AddAnimation(AnimationType.LandingRight, landingRight, 3);
+        AddAnimation(AnimationType.LandingLeft, landingLeft, 3);
 
 
     }
@@ -92,12 +104,26 @@ public class PlayerAnimationHandler : AnimationHandler
             else if (!CurrentAnimation.IsPlaying && lastNonZeroVelocity.X > 0)
                 AnimationBuffer.Enqueue(AnimationType.IdleRight);
         }
-        if (player.State is PlayerState.Jumping && previousState is not PlayerState.Jumping)
+        if (player.State is PlayerState.Still && previousState is not PlayerState.Still)
+        {
+            if (lastNonZeroVelocity.X > 0)
+                AnimationBuffer.Enqueue(AnimationType.LandingRight);
+            else
+                AnimationBuffer.Enqueue(AnimationType.LandingLeft);
+        }
+        else if (player.State is PlayerState.Jumping && previousState is not PlayerState.Jumping)
         {
             if (lastNonZeroVelocity.X > 0) 
                 AnimationBuffer.Enqueue(AnimationType.JumpRight);
             else
                 AnimationBuffer.Enqueue(AnimationType.JumpLeft);
+        }
+        else if (player.State is PlayerState.Falling || player.State is PlayerState.Jumping)
+        {
+            if (lastNonZeroVelocity.X > 0)
+                AnimationBuffer.Enqueue(AnimationType.FallingRight);
+            else
+                AnimationBuffer.Enqueue(AnimationType.FallingLeft);
         }
 
         previousState = player.State;
