@@ -21,7 +21,6 @@ public partial class PlayerModel
     {
         if (Globals.IsNoclipEnabled)
         {
-            _verticalVelocity -= GRAVITY;
             Globals.CollisionManager.KinematicAccurateColliders.Remove(this.Colliders.colliders[0] as KinematicAccurateCollider);
         }
         else if (!Globals.IsNoclipEnabled && !Globals.CollisionManager.KinematicAccurateColliders.Contains(this.Colliders.colliders[0] as KinematicAccurateCollider))

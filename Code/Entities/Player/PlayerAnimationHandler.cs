@@ -62,10 +62,10 @@ public class PlayerAnimationHandler : AnimationHandler
         fallingLeft.AddFrame(sprites[1, 2], 0.1f);
 
         var landingRight = new SpriteAnimation();
-        landingRight.AddFrame(right, 0.05f);
+        landingRight.AddFrame(right, 0.1f);
 
         var landingLeft = new SpriteAnimation();
-        landingLeft.AddFrame(left, 0.05f);
+        landingLeft.AddFrame(left, 0.1f);
 
 
         AddAnimation(AnimationType.MoveRight, runRight);
@@ -76,8 +76,8 @@ public class PlayerAnimationHandler : AnimationHandler
         AddAnimation(AnimationType.JumpLeft, jumpLeft, 2);
         AddAnimation(AnimationType.FallingRight, fallingRight, 1);
         AddAnimation(AnimationType.FallingLeft, fallingLeft, 1);
-        AddAnimation(AnimationType.LandingRight, landingRight, 3);
-        AddAnimation(AnimationType.LandingLeft, landingLeft, 3);
+        AddAnimation(AnimationType.LandingRight, landingRight, 2);
+        AddAnimation(AnimationType.LandingLeft, landingLeft, 2);
 
 
     }

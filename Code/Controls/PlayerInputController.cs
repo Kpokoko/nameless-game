@@ -26,22 +26,33 @@ public class PlayerInputController
     {
         KeyboardState keyboardState = Keyboard.GetState();
 
-        bool isJumpKeyPressed = keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space);
+        bool isJumpKeyPressed = false;
+        bool isJumpKeyHolding = false;
+
+        if (_previousKeyboardState != null)
+        {
+            isJumpKeyHolding = keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space);
+            isJumpKeyPressed = isJumpKeyHolding && !(_previousKeyboardState.IsKeyDown(Keys.Up) || _previousKeyboardState.IsKeyDown(Keys.W) || _previousKeyboardState.IsKeyDown(Keys.Space));
+        }
+
 
         if (Globals.IsNoclipEnabled)
         {
-            MeasureNoclip(keyboardState, isJumpKeyPressed);
+            MeasureNoclip(keyboardState, isJumpKeyHolding);
         }
         else
         {
-            MeasureMovement(keyboardState, isJumpKeyPressed);
+            MeasureMovement(keyboardState, isJumpKeyPressed, isJumpKeyHolding);
         }
 
 
 
 
         if (Keyboard.GetState().IsKeyDown(Keys.N) && !_previousKeyboardState.IsKeyDown(Keys.N) && Globals.IsDeveloperModeEnabled)
-            Globals.IsNoclipEnabled = Globals.IsNoclipEnabled ? false : true;
+        {
+            SwitchNoclip();
+
+        }
 
         if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled || Globals.IsDeveloperModeEnabled) 
             && !_previousKeyboardState.IsKeyDown(Keys.E) && keyboardState.IsKeyDown(Keys.E))
@@ -53,13 +64,18 @@ public class PlayerInputController
         _previousKeyboardState = keyboardState;
     }
 
-    private void MeasureMovement(KeyboardState keyboardState, bool isJumpKeyPressed)
+    private void SwitchNoclip()
+    {
+        Globals.IsNoclipEnabled = Globals.IsNoclipEnabled ? false : true;
+    }
+
+    private void MeasureMovement(KeyboardState keyboardState, bool isJumpKeyPressed, bool isJumpKeyHolding)
     {
         if (isJumpKeyPressed)
         {
             _player.Actions.Push(_player.TryJump);
         }
-        else if (_player.State == PlayerState.Jumping && !isJumpKeyPressed)
+        else if (_player.State == PlayerState.Jumping && !isJumpKeyHolding)
         {
             _player.Actions.Push(_player.CancelJump);
         }
@@ -81,9 +97,9 @@ public class PlayerInputController
             _player.Actions.Push(_player.Stop);
     }
 
-    private void MeasureNoclip(KeyboardState keyboardState, bool isJumpKeyPressed)
+    private void MeasureNoclip(KeyboardState keyboardState, bool isJumpKeyHolding)
     {
-        if (isJumpKeyPressed)
+        if (isJumpKeyHolding)
         {
             _player.Actions.Push(_player.Up);
         }
@@ -91,7 +107,7 @@ public class PlayerInputController
         {
             _player.Actions.Push(_player.Down);
         }
-        else if (!isJumpKeyPressed && !keyboardState.IsKeyDown(Keys.S))
+        else if (!isJumpKeyHolding && !keyboardState.IsKeyDown(Keys.S))
         {
             _player.Actions.Push(_player.StopVertical);
         }

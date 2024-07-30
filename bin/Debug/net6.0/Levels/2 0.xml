@@ -79,12 +79,12 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
+    <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>0</X>
-      <Y>8</Y>
+      <Y>7</Y>
     </TilePos>
-    <TriggerType>SwitchScene</TriggerType>
+    <TriggerType>None</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>
@@ -92,12 +92,12 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
+    <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
       <X>0</X>
-      <Y>7</Y>
+      <Y>8</Y>
     </TilePos>
-    <TriggerType>None</TriggerType>
+    <TriggerType>SwitchScene</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

@@ -64,6 +64,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public PlayerState State { get; set; }
     public bool CanJump { get; set; }
     public GameObjects.TimerTrigger Coyote { get; private set; }
+    public GameObjects.TimerTrigger JumpBuffer { get; private set; }
     public Colliders Colliders { get; set; } = new();
     public Vector2 Velocity { get; private set; }
     public Vector2 InnerForce { get; private set; }
@@ -96,6 +97,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         Coyote = new GameObjects.TimerTrigger(100, GameObjects.SignalProperty.Once);
         Coyote.OnTimeoutEvent += () => CanJump = false;
 
+        JumpBuffer = new GameObjects.TimerTrigger(200, GameObjects.SignalProperty.Once);
+
         _animationHandler = new PlayerAnimationHandler(this);
     }
 
@@ -121,7 +124,11 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
         //var oldPos = Position;
         if (State is PlayerState.Still)
+        {
             CanJump = true;
+            if (JumpBuffer.IsRunning)
+                TryJump();
+        }
 
         OuterForce = Vector2.Zero;
 
@@ -155,8 +162,15 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         }
     }
 
+    private void StartJumpBufferTimer()
+    {
+        JumpBuffer.Reset();
+        JumpBuffer.Start();
+    }
+
     public void ApplyGravity()
     {
+        if (Globals.IsNoclipEnabled) return;
         _verticalVelocity += GRAVITY;
     }
 
@@ -205,6 +219,10 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         if (State is PlayerState.Still || (State is PlayerState.Falling && Coyote != null && Coyote.IsRunning && CanJump))
         {
             Jump();
+        }
+        else
+        {
+            StartJumpBufferTimer();
         }
     }
 
