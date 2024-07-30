@@ -44,20 +44,20 @@ public class PlayerAnimationHandler : AnimationHandler
         var jumpRight = new SpriteAnimation();
         jumpRight.AddFrame(sprites[2, 1], 0.04f);
         jumpRight.AddFrame(sprites[1, 1], 0.08f);
-        jumpRight.AddFrame(sprites[0, 1], 0.13f);
-        jumpRight.AddFrame(sprites[1, 1], 0.18f);
-        jumpRight.AddFrame(sprites[2, 1], 0.25f);
-        jumpRight.AddFrame(sprites[3, 1], 0.32f);
-        jumpRight.AddFrame(sprites[2, 1], 0.46f);
+        jumpRight.AddFrame(sprites[0, 1], 0.12f);
+        jumpRight.AddFrame(sprites[1, 1], 0.16f);
+        jumpRight.AddFrame(sprites[2, 1], 0.20f);
+        jumpRight.AddFrame(sprites[3, 1], 0.26f);
+        jumpRight.AddFrame(sprites[2, 1], 0.32f);
 
         var jumpLeft = new SpriteAnimation();
         jumpLeft.AddFrame(sprites[2, 2], 0.04f);
         jumpLeft.AddFrame(sprites[1, 2], 0.08f);
-        jumpLeft.AddFrame(sprites[0, 2], 0.13f);
-        jumpLeft.AddFrame(sprites[1, 2], 0.18f);
-        jumpLeft.AddFrame(sprites[2, 2], 0.25f);
-        jumpLeft.AddFrame(sprites[3, 2], 0.32f);
-        jumpLeft.AddFrame(sprites[2, 2], 0.46f);
+        jumpLeft.AddFrame(sprites[0, 2], 0.12f);
+        jumpLeft.AddFrame(sprites[1, 2], 0.16f);
+        jumpLeft.AddFrame(sprites[2, 2], 0.20f);
+        jumpLeft.AddFrame(sprites[3, 2], 0.26f);
+        jumpLeft.AddFrame(sprites[2, 2], 0.32f);
 
 
         AddAnimation(AnimationType.MoveRight, runRight);
