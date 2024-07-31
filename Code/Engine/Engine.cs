@@ -113,7 +113,7 @@ public class Engine : Game
     public void LoadUtilities()
     {
         _player = Globals.SceneManager.GetPlayer();
-        _inputController = new PlayerInputController(_player);
+        Globals.InputController = new PlayerInputController(_player);
     }
 
     public void Restart()
@@ -147,10 +147,8 @@ public class Engine : Game
         Globals.CollisionManager.Update(gameTime);
         Globals.TriggerManager.Update(gameTime);
 
-        KeyboardState keyboardState = Keyboard.GetState();
 
-        _inputController.ProcessControls(gameTime);
-        _previousKeybardState = keyboardState;
+        Globals.InputController.ProcessControls(gameTime);
 
         Globals.UIManager.Update(gameTime);
 

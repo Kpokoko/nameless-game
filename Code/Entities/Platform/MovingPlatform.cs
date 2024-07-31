@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using nameless.Collisions;
 using System;
@@ -14,6 +15,7 @@ namespace nameless.Entity
     {
         public Vector2 Direction;
         public float Speed;
+        private bool Collided = false;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
             Position = new Vector2(Position.X, Position.Y - 27);
@@ -25,17 +27,28 @@ namespace nameless.Entity
             PrepareSerializationInfo();
         }
 
+        public void SetMovement(Vector2 dir, float speed)
+        {
+            Direction = dir.NormalizedCopy();
+            Speed = speed;
+            PrepareSerializationInfo();
+        }
+
         public override void Update(GameTime gameTime)
         {
             Position += Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Collided = false;
         }
 
         public override void OnCollision(params CollisionEventArgs[] collisionsInfo)
         {
+            if (Collided)
+                return;
             base.OnCollision(collisionsInfo);
             if (collisionsInfo.Select(i => i.Other).Any(o => o is HitboxTrigger || o is KinematicAccurateCollider))
                 return;
             TurnAround();
+            Collided = true;
         }
 
         public override void PrepareSerializationInfo()

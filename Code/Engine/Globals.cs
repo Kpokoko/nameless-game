@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Content;
 using nameless.Code.Constructors;
 using nameless.Interfaces;
 using System.IO;
+using nameless.Controls;
 
 namespace nameless;
 
@@ -29,6 +30,8 @@ public static class Globals
     public static bool IsNoclipEnabled = false;
 
     public static bool OnEditorBlock = false;
+
+    public static PlayerInputController InputController;
 
     public static SceneManager SceneManager;
 

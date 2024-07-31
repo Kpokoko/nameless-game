@@ -14,7 +14,8 @@ namespace nameless.Controls;
 
 public class PlayerInputController
 {
-    private KeyboardState _previousKeyboardState;
+    public KeyboardState PreviousKeyboardState;
+    public KeyboardState KeyboardState;
     private PlayerModel _player;
 
     public PlayerInputController(PlayerModel player)
@@ -24,44 +25,44 @@ public class PlayerInputController
 
     public void ProcessControls(GameTime gameTime)
     {
-        KeyboardState keyboardState = Keyboard.GetState();
+        KeyboardState = Keyboard.GetState();
 
         bool isJumpKeyPressed = false;
         bool isJumpKeyHolding = false;
 
-        if (_previousKeyboardState != null)
+        if (PreviousKeyboardState != null)
         {
-            isJumpKeyHolding = keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space);
-            isJumpKeyPressed = isJumpKeyHolding && !(_previousKeyboardState.IsKeyDown(Keys.Up) || _previousKeyboardState.IsKeyDown(Keys.W) || _previousKeyboardState.IsKeyDown(Keys.Space));
+            isJumpKeyHolding = KeyboardState.IsKeyDown(Keys.Up) || KeyboardState.IsKeyDown(Keys.W) || KeyboardState.IsKeyDown(Keys.Space);
+            isJumpKeyPressed = isJumpKeyHolding && !(PreviousKeyboardState.IsKeyDown(Keys.Up) || PreviousKeyboardState.IsKeyDown(Keys.W) || PreviousKeyboardState.IsKeyDown(Keys.Space));
         }
 
 
         if (Globals.IsNoclipEnabled)
         {
-            MeasureNoclip(keyboardState, isJumpKeyHolding);
+            MeasureNoclip(KeyboardState, isJumpKeyHolding);
         }
         else
         {
-            MeasureMovement(keyboardState, isJumpKeyPressed, isJumpKeyHolding);
+            MeasureMovement(KeyboardState, isJumpKeyPressed, isJumpKeyHolding);
         }
 
 
 
 
-        if (Keyboard.GetState().IsKeyDown(Keys.N) && !_previousKeyboardState.IsKeyDown(Keys.N) && Globals.IsDeveloperModeEnabled)
+        if (Keyboard.GetState().IsKeyDown(Keys.N) && !PreviousKeyboardState.IsKeyDown(Keys.N) && Globals.IsDeveloperModeEnabled)
         {
             SwitchNoclip();
 
         }
 
         if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled || Globals.IsDeveloperModeEnabled) 
-            && !_previousKeyboardState.IsKeyDown(Keys.E) && keyboardState.IsKeyDown(Keys.E))
+            && !PreviousKeyboardState.IsKeyDown(Keys.E) && KeyboardState.IsKeyDown(Keys.E))
         {
             Globals.Constructor.SwitchMode();
         }
 
         _player.Actions.Push(_player.UpdateNoclip);
-        _previousKeyboardState = keyboardState;
+        PreviousKeyboardState = KeyboardState;
     }
 
     private void SwitchNoclip()

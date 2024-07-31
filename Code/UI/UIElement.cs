@@ -12,17 +12,17 @@ namespace nameless.UI;
 
 public abstract class UIElement
 {
-    protected UIElement(Vector2 position, int width, int height, Alignment align)
+    protected UIElement(Vector2 position, int width, int height, Alignment align = Alignment.Center)
     {
         Size = new Vector2(width, height);
         Alignment = align;
         Position = position;
     }
 
-    protected UIElement(Vector2 position, Vector2 size, Alignment align) : this(position, (int)size.X, (int)size.Y, align)
+    protected UIElement(Vector2 position, Vector2 size, Alignment align = Alignment.Center) : this(position, (int)size.X, (int)size.Y, align)
     {}
 
-    public Vector2 Position
+    public virtual Vector2 Position
     {
         get { return _position; }
         set { _position = value;
