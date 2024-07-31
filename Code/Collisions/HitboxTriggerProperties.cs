@@ -16,7 +16,8 @@ public enum SignalProperty
 {
     Once,
     OnceOnEveryContact,
-    Continuous
+    Continuous,
+    OnceAtGame
 }
 
 public enum ActivateProperty

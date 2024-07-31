@@ -31,6 +31,9 @@ public partial class HitboxTrigger
             case TriggerType.DamagePlayer:
                 trigger = CreateDamagePlayerTrigger(pivot);
                 break;
+            case TriggerType.Disposable:
+                trigger = CreateDisposableTrigger(pivot);
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -38,6 +41,17 @@ public partial class HitboxTrigger
             return null;
         pivot.Colliders.Add(trigger);
         pivot.PrepareSerializationInfo();
+        return trigger;
+    }
+
+    public static HitboxTrigger CreateDisposableTrigger(Block pivot)
+    {
+        var trigger = new HitboxTrigger(pivot, 10, 10, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceAtGame);
+        trigger.TriggerType = TriggerType.Disposable;
+        trigger.OnCollisionEvent += () =>
+        {
+            Globals.Constructor.DeleteBlock(pivot);
+        };
         return trigger;
     }
 

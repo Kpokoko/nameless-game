@@ -98,7 +98,7 @@ public class Constructor : IGameObject
         }
     }
 
-    private void DeleteBlock(TileGridEntity entity)
+    public void DeleteBlock(TileGridEntity entity)
     {
         _entities.Remove(entity as IEntity);
         (entity as IEntity).Remove();

@@ -63,7 +63,7 @@ public class ConstructorScene : UIScene
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);
-        var button7 = new Button(Vector2.Zero, 240, 40, "None", ButtonActivationProperty.Switch);
+        var button7 = new Button(Vector2.Zero, 240, 40, "Disposable", ButtonActivationProperty.Switch);
 
         hitboxContainer.AddElements(button5, button6, button7);
 
@@ -75,7 +75,7 @@ public class ConstructorScene : UIScene
 
         button5.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.SwitchScene;
         button6.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.DamagePlayer;
-        button7.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.None;
+        button7.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.Disposable;
     }
 
     private void DespawnHitboxContainer()
