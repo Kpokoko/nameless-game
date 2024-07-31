@@ -17,6 +17,7 @@ public class UIManager
     public List<Label> Labels = new List<Label>();
     public List<Container> Containers = new List<Container>();
     public List<Minimap> Minimaps = new List<Minimap>();
+    public List<CircleController> CircleControllers = new List<CircleController>();
     public Dictionary<Keys, Button> KeyboardButtons = new();
     public Dictionary<UIScenes, UIScene> CurrentUIScenes = new();
     public SpriteFont Font;
@@ -31,6 +32,8 @@ public class UIManager
         }
         for (var i = 0; i < Containers.Count; i++)
             Containers[i].Update(gameTime);
+        for (var i = 0; i < CircleControllers.Count; i++)
+            CircleControllers[i].Update();
     }
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -43,6 +46,8 @@ public class UIManager
             Buttons[i].Draw(spriteBatch);
         for (var i = 0; i < Labels.Count; i++)
             Labels[i].Draw(spriteBatch);
+        for (var i = 0; i < CircleControllers.Count; i++)
+            CircleControllers[i].Draw(spriteBatch);
     }
 
     public void SetScene(UIScenes scene)

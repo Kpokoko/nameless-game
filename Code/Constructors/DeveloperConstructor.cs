@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nameless.Collisions;
+using nameless.UI;
+using nameless.Tiles;
 namespace nameless.Code.Constructors
 {
     public class DeveloperConstructor : Constructor
@@ -29,6 +31,13 @@ namespace nameless.Code.Constructors
                     break;
                 case EntityTypeEnum.Platform:
                     _entities.Add(new Platform((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                    break;
+                case EntityTypeEnum.MovingPlatform:
+                    var mp = new MovingPlatform((int)mouseTilePos.X, (int)mouseTilePos.Y, Vector2.One, 1);
+                    var circle = new CircleController(Tile.GetTileCenter(mouseTilePos));
+                    circle.OnDirectionSet += () => 
+                        mp.SetMovement(circle.Direction, circle.Length);
+                    _entities.Add(mp);
                     break;
                 case EntityTypeEnum.HitboxTrigger:
                     if (SelectedEntityProperty is not TriggerType) return;

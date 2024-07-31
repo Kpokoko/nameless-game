@@ -17,4 +17,14 @@ public class MiddleButton
 
     public bool IsJustReleased
     { get { return (MouseInputController.PreviousMouseState.MiddleButton is ButtonState.Pressed && MouseInputController.MouseState.MiddleButton is ButtonState.Released); } }
+
+    public bool IsScrolled
+    { get { return IsScrolledUp || IsScrolledDown; } }
+
+    public bool IsScrolledUp 
+    { get { return (MouseInputController.PreviousMouseState.ScrollWheelValue < MouseInputController.MouseState.ScrollWheelValue); } }
+    
+    public bool IsScrolledDown
+    { get { return (MouseInputController.PreviousMouseState.ScrollWheelValue > MouseInputController.MouseState.ScrollWheelValue); } }
+
 }
