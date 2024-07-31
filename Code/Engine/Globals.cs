@@ -10,6 +10,7 @@ using nameless.Code.SceneManager;
 using Microsoft.Xna.Framework.Content;
 using nameless.Code.Constructors;
 using nameless.Interfaces;
+using System.IO;
 
 namespace nameless;
 
@@ -60,4 +61,29 @@ public static class Globals
     }
 
     public static Vector2 Offset(int width, int height) => new Vector2(-width / 2, -height / 2);
+
+    public static string GetPath(string name)
+    {
+        return Path.Combine("..", "net6.0", name);
+    }
+
+    public static void CopyFiles(string source, string target, bool copyAllFiles)
+    {
+        var fullSource = GetPath(source);
+        var fullTarget = GetPath(target);
+        if (copyAllFiles)
+        {
+            var sourceData = Directory.GetFiles(fullSource);
+            foreach (var file in sourceData)
+            {
+                var name = Path.GetFileName(file);
+                var targetFile = Path.Combine(fullTarget, name);
+                File.Copy(file, targetFile, true);
+            }
+        }
+        else
+        {
+            File.Copy(fullSource, fullTarget, true);
+        }
+    }
 }

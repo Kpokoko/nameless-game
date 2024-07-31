@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using nameless.Controls;
 using Microsoft.Xna.Framework.Content;
 using nameless.Collisions;
+using System.IO;
 
 namespace nameless.Code.SceneManager
 {
@@ -39,6 +40,8 @@ namespace nameless.Code.SceneManager
 
         public void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.C) && Globals.IsDeveloperModeEnabled)
+                Globals.CopyFiles(Path.Combine("Levels", Name + ".xml"), Path.Combine("levelsBaseCopy", Name + ".xml"), false);
             if (Globals.IsConstructorModeEnabled)
                 Globals.Constructor.Update(gameTime);
 

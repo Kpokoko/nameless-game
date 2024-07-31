@@ -90,30 +90,8 @@ public class Engine : Game
 
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
 
-        //using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
-        //{
-        //    var serializer = new XmlSerializer(typeof(List<string>));
-        //    var a = new List<string> { "0 0 Center" };
-        //    serializer.Serialize(writer, a);
-        //}
-
         Map.LoadMap();
         LoadScene();
-        //Globals.Map = new string[3][]
-        //{
-        //    new string[3],
-        //    new string[3],
-        //    new string[3],
-        //};
-        //Globals.Map[1][1] = "center";
-        //Globals.Map[1][0] = "left";
-        //Globals.Map[1][2] = "right";
-        //Globals.Map[0][1] = "up";
-        //Globals.Map[2][1] = "down";
-//        <? xml version = "1.0" encoding = "utf-8" ?>
-//< ArrayOfString xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns: xsd = "http://www.w3.org/2001/XMLSchema" >
-//  < string > 0 0 Center </ string >
-//</ ArrayOfString >
     }
 
 
@@ -151,37 +129,20 @@ public class Engine : Game
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
 
-        //if (Keyboard.GetState().IsKeyDown(Keys.X))
-        //{
-        //    var mov = new MovingPlatform(2, 5, new Vector2(1, 0), 1.0f);
-        //    var a = new List<ISerializable> { mov };
-        //    var serializer = new Serializer();
-        //    serializer.Serialize("afasfafsafsafsafsafsafsafsafsafsafsafsafsa", a);
-        //}
-
-        if (Keyboard.GetState().IsKeyDown(Keys.Q))
-        {
-            var serializer = new Serializer();
-            serializer.Serialize(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
-        }
-
         if (Keyboard.GetState().IsKeyDown(Keys.R))
         {
             Restart();
-            //Globals.SceneManager.ReloadScene();
-            //_player = Globals.SceneManager.GetPlayer();
-            //_inputController = new PlayerInputController(_player);
             return;
         }
 
+        if (Keyboard.GetState().IsKeyDown(Keys.L))
+            HardReset();
 
         MouseInputController.ProcessControls();
 
         Globals.AnimationManager.Update(gameTime);
 
         Globals.SceneManager.Update(gameTime);
-
-        //_player.Update(gameTime);
 
         Globals.CollisionManager.Update(gameTime);
         Globals.TriggerManager.Update(gameTime);
@@ -219,5 +180,23 @@ public class Engine : Game
     {
         Globals.SceneManager.SaveScene();
         base.OnExiting(sender, args);
+    }
+
+    private void HardReset()
+    {
+        Globals.CopyFiles("LevelsBaseCopy", "Levels", true);
+        using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
+        {
+            var serializer = new XmlSerializer(typeof(Vector2));
+            var a = new Vector2(0, 0);
+            serializer.Serialize(writer, a);
+        }
+        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        {
+            var serializer = new XmlSerializer(typeof(List<string>));
+            var a = new List<string> { "0 0 Center" };
+            serializer.Serialize(writer, a);
+        }
+        Restart();
     }
 }

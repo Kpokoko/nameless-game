@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/C#/Games/Repos/nameless-game/Content/PlayerSpritesheet.png</SourceFile>
-  <SourceTime>2024-07-29T21:30:36.2259905+05:00</SourceTime>
-  <DestFile>C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/Content/PlayerSpritesheet.xnb</DestFile>
-  <DestTime>2024-07-29T21:30:48.2833103+05:00</DestTime>
+  <SourceFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/PlayerSpritesheet.png</SourceFile>
+  <SourceTime>2024-07-30T12:29:52.8307555+05:00</SourceTime>
+  <DestFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Content/PlayerSpritesheet.xnb</DestFile>
+  <DestTime>2024-07-31T10:39:07.5105887+05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T16:44:56+05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
