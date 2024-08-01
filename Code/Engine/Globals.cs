@@ -19,6 +19,8 @@ public static class Globals
 {
     public static Engine.Engine Engine;
 
+    public static Camera Camera;
+
     public static Map Map;
 
     public static GameTime GameTime;

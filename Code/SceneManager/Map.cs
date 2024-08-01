@@ -169,14 +169,13 @@ public class Map
             var sceneCoords = ParseCoordinates(scene, out var name);
             if (sceneCoords == null) continue;
             var nameThatDoesntExistInThisContext = new SceneInfo(name, (Point)sceneCoords);
-            // new Minimap(new Vector2(1600, 300 + 220), 0, 0, a, Alignment.Center)
             sceneInfo.Add(nameThatDoesntExistInThisContext);
             var nameThatDoesntExistInThisContextNAME = nameThatDoesntExistInThisContext.FullName;
             if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME) || Globals.IsDeveloperModeEnabled)
             {
                 var visitedSceneStorage = Scene.GetSceneStorage(nameThatDoesntExistInThisContextNAME).ConvertToEnum();
                 nameThatDoesntExistInThisContext.Minimap = new Minimap(
-                    new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * Storage.StorageWidth * Minimap.TileSize + 900, (nameThatDoesntExistInThisContext.Coordinates.Y) * Storage.StorageHeight * Minimap.TileSize + 700),
+                    new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * Storage.StorageWidth * Minimap.TileSize + Globals.Engine.Window.ClientBounds.Width / 2 - Minimap.TileSize * 23 / 2, (nameThatDoesntExistInThisContext.Coordinates.Y) * Storage.StorageHeight * Minimap.TileSize + Globals.Engine.Window.ClientBounds.Height / 2 - Minimap.TileSize * 13 / 2),
                     0, 0, visitedSceneStorage, Alignment.Center);
             }
         }

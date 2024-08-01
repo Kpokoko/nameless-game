@@ -5,22 +5,13 @@ using nameless.Entity;
 using nameless.Controls;
 using MonoGame.Extended.Collisions;
 using MonoGame.Extended;
-using nameless.Collisions;
-using nameless.Serialize;
 using System.Collections.Generic;
-using nameless.Interfaces;
-using System.Linq;
 using nameless.Code.SceneManager;
 using System;
-using System.ComponentModel.Design;
-using nameless.GameObjects;
-using MonoGame.Extended.Collections;
-using nameless.UI;
 using nameless.Code.Constructors;
 using System.IO;
 using System.Xml.Serialization;
-using System.Diagnostics.Metrics;
-using System.Text;
+using nameless.UI;
 
 namespace nameless.Engine;
 
@@ -28,7 +19,6 @@ public class Engine : Game
 {
     private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
     private const string ASSET_NAME_SPRITESHEET2 = "PlayerSpritesheet";
-
 
     private int _windowWidth;
     private int _windowHeight;
@@ -67,6 +57,9 @@ public class Engine : Game
         _windowHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         _graphics.PreferredBackBufferHeight = _windowHeight;
         _graphics.PreferredBackBufferWidth = _windowWidth;
+        var camera = new Camera();
+        camera.Zoom = _windowWidth / 23.0f / 64;
+        Globals.Camera = camera;
         //_graphics.IsFullScreen = true; // Включить полноэкранный режим
         //_graphics.HardwareModeSwitch = false; // Убрать рамку окна
         _graphics.ApplyChanges();
@@ -129,6 +122,11 @@ public class Engine : Game
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
 
+
+        //Camera.Position = new Vector2(_player.Position.X, _player.Position.Y); // Пример следования за игроком
+        Globals.Camera.Position = new Vector2(23*32, 13*32);
+        Globals.Camera.Update();
+
         if (Keyboard.GetState().IsKeyDown(Keys.R))
         {
             Restart();
@@ -159,18 +157,15 @@ public class Engine : Game
     {
         GraphicsDevice.Clear(Globals.BackgroungColor);
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
-
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.Camera.Transform);
         Globals.SceneManager.Draw(_spriteBatch);
-
-        //_player.Draw(_spriteBatch, gameTime);
-
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
-
-
-        Globals.UIManager.Draw(_spriteBatch);
-
         _spriteBatch.End();
+
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
+        Globals.UIManager.Draw(_spriteBatch);
+        _spriteBatch.End();
+
         base.Draw(gameTime);
     }
 
@@ -195,6 +190,7 @@ public class Engine : Game
             var a = new List<string> { "0 0 Center" };
             serializer.Serialize(writer, a);
         }
+        Globals.UIManager.Minimaps.Clear();
         Restart();
     }
 }

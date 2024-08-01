@@ -12,7 +12,7 @@ namespace nameless.UI;
 
 public abstract class UIElement
 {
-    protected UIElement(Vector2 position, int width, int height, Alignment align = Alignment.Center)
+    protected UIElement(Vector2 position, float width, float height, Alignment align = Alignment.Center)
     {
         Size = new Vector2(width, height);
         Alignment = align;

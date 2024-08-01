@@ -14,11 +14,13 @@ public static class MouseInputController
 {
     public static MouseState MouseState { get; private set; } = new MouseState();
     public static Vector2 MousePos { get; private set; } = new Vector2(0, 0);
-    public static Vector2 MouseTilePos { get { return Tile.GetPosInTileCoordinats(MousePos); } }
+    public static Vector2 TransformedMousePos { get; private set; } = new Vector2(0, 0);
+    public static Vector2 MouseTilePos { get { return Tile.GetPosInTileCoordinats(TransformedMousePos); } }
 
     public static MouseState PreviousMouseState { get; private set; } = new MouseState();
+    public static Vector2 PreviousTransformedMousePos { get; private set; } = new Vector2(0, 0);
     public static Vector2 PreviousMousePos { get; private set; } = new Vector2(0, 0);
-    public static Vector2 PreviousMouseTilePos { get { return Tile.GetPosInTileCoordinats(PreviousMousePos); } }
+    public static Vector2 PreviousMouseTilePos { get { return Tile.GetPosInTileCoordinats(PreviousTransformedMousePos); } }
 
     public static Rectangle MouseBounds { get { return new Rectangle((int)MousePos.X, (int)MousePos.Y, 1, 1); } }
 
@@ -36,9 +38,11 @@ public static class MouseInputController
 
     public static void ProcessControls()
     {
+        PreviousTransformedMousePos = TransformedMousePos;
         PreviousMousePos = MousePos;
         PreviousMouseState = MouseState;
         MouseState = Mouse.GetState();
+        TransformedMousePos = new Vector2(MouseState.X, MouseState.Y) / Globals.Camera.Zoom;
         MousePos = new Vector2(MouseState.X, MouseState.Y);
 
         OnUIElement = false;

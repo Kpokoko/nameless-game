@@ -25,7 +25,7 @@ public class Button : UIElement, IEntity
     private Keys Key { get; set; }
 
     public Button
-        (Vector2 position, int width, int height, string text = null, 
+        (Vector2 position, float width, float height, string text = null, 
         ButtonActivationProperty property = ButtonActivationProperty.Click, Alignment align = Alignment.Center) 
         : base(position, width, height, align)
     {
@@ -101,7 +101,7 @@ public class Button : UIElement, IEntity
     public void Draw(SpriteBatch spriteBatch)
     {
         var offset = !Pressed ? Point.Zero : new Point(0,3);
-        var boundsSize = 6;
+        var boundsSize = (int)(6 / Globals.Camera.Zoom);
         var fillRect = new Rectangle(Bounds.Location + offset,Bounds.Size);
         var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint() + offset, Bounds.Size + new Point(boundsSize*2, boundsSize*2));
         spriteBatch.DrawRectangle(boundsRect, !Pressed ? Color.Black : Color.Gray,boundsSize,0.9f);

@@ -16,7 +16,7 @@ namespace nameless.UI;
 public class Minimap : UIElement, IEntity
 {
     private EntityTypeEnum[,] _mapArray;
-    public const int TileSize = 10;
+    public static int TileSize = (int)(20 / Globals.Camera.Zoom);
     public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
     {
         _mapArray = array;
@@ -42,7 +42,7 @@ public class Minimap : UIElement, IEntity
                     case EntityTypeEnum.Platform: color = Color.Green; rect.Height = 2; break;
                 }
 
-                spriteBatch.DrawRectangle(rect, color, TileSize/2);
+                spriteBatch.DrawRectangle(rect, color, TileSize/2 + 1);
             }
     }
 

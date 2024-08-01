@@ -86,14 +86,8 @@ public class Container : UIElement, IEntity
         for (int i = 0; i < switchButtons.Length; i++)
         {
             var button = switchButtons[i];
-            if (button == clickedButton)
-            {
-
-            }
-            else
-            {
+            if (button != clickedButton)
                 button.Deactivate();
-            }
         }
     }
 
@@ -114,9 +108,9 @@ public class Container : UIElement, IEntity
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var boundsSize = 6;
+        var boundsSize = (int)(6 / Globals.Camera.Zoom);
         var fillRect = new Rectangle(Bounds.Location, Bounds.Size);
-        var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint() , Bounds.Size + new Point(boundsSize * 2, boundsSize * 2));
+        var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint(), Bounds.Size + new Point(boundsSize * 2, boundsSize * 2));
         spriteBatch.DrawRectangle(boundsRect, Color.Black, boundsSize, 0.89f);
         spriteBatch.FillRectangle(fillRect, Globals.PrimaryColor , 0.89f);
     }
