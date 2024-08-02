@@ -115,7 +115,6 @@ public class Engine : Game
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
 
-
         //Camera.Position = new Vector2(_player.Position.X, _player.Position.Y); // Пример следования за игроком
         Globals.Camera.Position = new Vector2(23*32, 13*32);
         Globals.Camera.Update();

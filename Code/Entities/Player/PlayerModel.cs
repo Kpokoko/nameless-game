@@ -83,8 +83,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         else
             Position = (Vector2)position;
 
-
-
         State = PlayerState.Still;
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
@@ -311,6 +309,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Remove()
     {
-        throw new NotImplementedException();
+        _animationHandler.Remove();
     }
 }

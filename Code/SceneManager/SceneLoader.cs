@@ -20,7 +20,7 @@ namespace nameless.Code.SceneManager
     public static class SceneLoader
     {
         private static Serializer _serialize = new Serializer();
-        public static List<IEntity> LoadScene(string sceneName)
+        public static List<IEntity> LoadScene(string sceneName, bool pizdec = false)
         {
             var readedData = new List<IEntity>();
             var sceneContent = new List<IEntity>();
@@ -34,6 +34,7 @@ namespace nameless.Code.SceneManager
                         sceneContent.Add(new Block((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
                     case "PlayerModel":
+                        if (pizdec) continue;
                         sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos)));
                         continue;
                     case "InventoryBlock":

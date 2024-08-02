@@ -30,6 +30,10 @@ public class SceneManager
 
     public void LoadScene(Vector2 currentLocation, EntryData entryData = null)
     {
+        if (_currentScene != null)
+            RemoveScene();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
         var scene = Globals.Map[(int)currentLocation.X, (int)currentLocation.Y];
         string sceneName;
         if (scene != null)
@@ -46,7 +50,6 @@ public class SceneManager
         CurrentLocation = currentLocation;
         Globals.Engine.LoadCollisions();
         _currentScene = new Scene(sceneName);
-
         if (entryData != null)
         {
             GetPlayer().Position = GetEntryPosition(entryData);
@@ -72,6 +75,12 @@ public class SceneManager
         //    };
         //}
         Globals.Engine.LoadUtilities();
+    }
+
+    public void RemoveScene()
+    {
+        GetPlayer().Remove();
+        _currentScene = null;
     }
 
     public void ReloadScene()
@@ -155,6 +164,8 @@ public class SceneManager
     public void Update(GameTime gameTime) => _currentScene.Update(gameTime);
 
     public void Draw(SpriteBatch spriteBatch) => _currentScene.Draw(spriteBatch);
+
+    public Scene GetScene() => _currentScene;
 }
 
 public class EntryData

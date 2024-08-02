@@ -163,15 +163,17 @@ public class Map
         {
             var sceneCoords = ParseCoordinates(scene, out var name);
             if (sceneCoords == null) continue;
-            var nameThatDoesntExistInThisContext = new SceneInfo(name, (Point)sceneCoords);
-            sceneInfo.Add(nameThatDoesntExistInThisContext);
-            var nameThatDoesntExistInThisContextNAME = nameThatDoesntExistInThisContext.FullName;
-            if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME) /*|| Globals.IsDeveloperModeEnabled*/)
+            var coolName = new SceneInfo(name, (Point)sceneCoords);
+            sceneInfo.Add(coolName);
+            var coolNameNAME = coolName.FullName;
+            if (visitedScenes.Contains(coolNameNAME) /*|| Globals.IsDeveloperModeEnabled*/)
             {
-                var visitedSceneStorage = Scene.GetSceneStorage(nameThatDoesntExistInThisContextNAME).ConvertToEnum();
-                nameThatDoesntExistInThisContext.Minimap = new Minimap(
-                    new Vector2(nameThatDoesntExistInThisContext.Coordinates.X, nameThatDoesntExistInThisContext.Coordinates.Y ),
+                var visitedSceneStorage = Scene.GetSceneStorage(coolNameNAME).ConvertToEnum();
+                coolName.Minimap = new Minimap(
+                    new Vector2(coolName.Coordinates.X, coolName.Coordinates.Y ),
                     0, 0, visitedSceneStorage, Alignment.Center);
+                visitedSceneStorage = null;
+                GC.Collect();
             }
         }
         Globals.Map = new Map(sceneInfo);
