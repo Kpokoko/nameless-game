@@ -19,6 +19,9 @@ public class Minimap : UIElement, IEntity
     public static int TileSize = (int)(20 / Globals.Camera.Zoom);
     public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
     {
+        position.X = position.X * Storage.StorageWidth * TileSize + Globals.Engine.Window.ClientBounds.Width / 2 - TileSize * 23 / 2;
+        position.Y = position.Y * Storage.StorageHeight * TileSize + Globals.Engine.Window.ClientBounds.Height / 2 - TileSize * 13 / 2;
+        base.Position = position;
         _mapArray = array;
 
         Globals.UIManager.Minimaps.Add(this);

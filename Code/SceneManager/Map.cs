@@ -156,12 +156,7 @@ public class Map
 
     public static void LoadMap()
     {
-        List<string> visitedScenes;
-        using (var reader = new StreamReader(new FileStream(Path.Combine("..", "net6.0", "Map.xml"), FileMode.Open)))
-        {
-            var serializer = new XmlSerializer(typeof(List<string>));
-            visitedScenes = (List<string>)serializer.Deserialize(reader);
-        }
+        var visitedScenes = Globals.Serializer.ReadVisitedScenes();
         var scenes = Directory.GetFiles(Path.Combine("..", "net6.0", "Levels"));
         var sceneInfo = new List<SceneInfo>();
         foreach (var scene in scenes)
@@ -171,25 +166,15 @@ public class Map
             var nameThatDoesntExistInThisContext = new SceneInfo(name, (Point)sceneCoords);
             sceneInfo.Add(nameThatDoesntExistInThisContext);
             var nameThatDoesntExistInThisContextNAME = nameThatDoesntExistInThisContext.FullName;
-            if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME) || Globals.IsDeveloperModeEnabled)
+            if (visitedScenes.Contains(nameThatDoesntExistInThisContextNAME) /*|| Globals.IsDeveloperModeEnabled*/)
             {
                 var visitedSceneStorage = Scene.GetSceneStorage(nameThatDoesntExistInThisContextNAME).ConvertToEnum();
                 nameThatDoesntExistInThisContext.Minimap = new Minimap(
-                    new Vector2((nameThatDoesntExistInThisContext.Coordinates.X) * Storage.StorageWidth * Minimap.TileSize + Globals.Engine.Window.ClientBounds.Width / 2 - Minimap.TileSize * 23 / 2, (nameThatDoesntExistInThisContext.Coordinates.Y) * Storage.StorageHeight * Minimap.TileSize + Globals.Engine.Window.ClientBounds.Height / 2 - Minimap.TileSize * 13 / 2),
+                    new Vector2(nameThatDoesntExistInThisContext.Coordinates.X, nameThatDoesntExistInThisContext.Coordinates.Y ),
                     0, 0, visitedSceneStorage, Alignment.Center);
             }
         }
         Globals.Map = new Map(sceneInfo);
-    }
-
-    public static void SaveMap()
-    {
-        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
-        {
-            var serializer = new XmlSerializer(typeof(string[][]));
-            var mapArray = Globals.Map.MapArray;
-            serializer.Serialize(writer, mapArray);
-        }
     }
 }
 

@@ -45,6 +45,7 @@ public class Engine : Game
         Globals.UIManager = new UIManager();
         Globals.AnimationManager = new AnimationManager();
         Globals.SceneManager = new SceneManager();
+        Globals.Serializer = new Serialize.Serializer();
         if (Globals.IsDeveloperModeEnabled)
         {
             Globals.Constructor = new DeveloperConstructor();
@@ -90,17 +91,8 @@ public class Engine : Game
 
     private void LoadScene()
     {
-        //Globals.Map[0, 2] = "down2";
-        var serializer = new XmlSerializer(typeof(Vector2));
-        using (var reader = new StreamReader(new FileStream("CurrentLoc.xml", FileMode.Open)))
-        {
-            var location = (Vector2)serializer.Deserialize(reader);
-            Globals.SceneManager.LoadScene(location);
-        }
+        Globals.Serializer.GetMapPos();
         LoadUtilities();
-        //var levelChanger = HitboxTrigger.CreateHitboxTrigger(TriggerType.SwitchScene, new Pivot(20, 12));
-
-        //Globals.SceneManager.GetEntities().Add(levelChanger.Entity);
     }
 
     public void LoadUtilities()
@@ -178,19 +170,10 @@ public class Engine : Game
     private void HardReset()
     {
         Globals.CopyFiles("LevelsBaseCopy", "Levels", true);
-        using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
-        {
-            var serializer = new XmlSerializer(typeof(Vector2));
-            var a = new Vector2(0, 0);
-            serializer.Serialize(writer, a);
-        }
-        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
-        {
-            var serializer = new XmlSerializer(typeof(List<string>));
-            var a = new List<string> { "0 0 Center" };
-            serializer.Serialize(writer, a);
-        }
+        Globals.Serializer.Restart();
         Globals.UIManager.Minimaps.Clear();
+        var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
+        Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, 0, 0, visitedSceneStorage, Alignment.Center));
         Restart();
     }
 }

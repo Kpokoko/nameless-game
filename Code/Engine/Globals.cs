@@ -12,6 +12,7 @@ using nameless.Code.Constructors;
 using nameless.Interfaces;
 using System.IO;
 using nameless.Controls;
+using nameless.Serialize;
 
 namespace nameless;
 
@@ -21,6 +22,7 @@ public static class Globals
 
     public static Camera Camera;
 
+    public static Serializer Serializer;
     public static Map Map;
 
     public static GameTime GameTime;
