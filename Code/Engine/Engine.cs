@@ -64,6 +64,7 @@ public class Engine : Game
         //_graphics.IsFullScreen = true; // Включить полноэкранный режим
         //_graphics.HardwareModeSwitch = false; // Убрать рамку окна
         _graphics.ApplyChanges();
+        //HardReset();
         base.Initialize();
     }
 

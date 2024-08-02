@@ -104,15 +104,15 @@ namespace nameless.Code.SceneManager
             _serialize.SerializeScene(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
         }
 
-        public static Vector2 SwitchScene(HitboxTrigger trigger)
+        public static void SwitchScene(HitboxTrigger trigger, SceneChangerDirection direction, Func<Vector2> playerPosition)
         {
             SaveScene();
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
             Globals.Serializer.SavePosition(newLoc);
+            Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
             var data = Globals.Serializer.ReadVisitedScenes();
-            Globals.Serializer.LoadMinimap(currLoc, data);
-            return newLoc;
+            Globals.Serializer.LoadMinimap(currLoc, data, newLoc);
         }
     }
 }

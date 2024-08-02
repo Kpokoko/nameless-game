@@ -1,4 +1,5 @@
-﻿using nameless.Entity;
+﻿using nameless.Engine;
+using nameless.Entity;
 using nameless.Interfaces;
 using nameless.UI;
 using System;
@@ -80,16 +81,25 @@ public struct Serializer
         }
     }
 
-    public void LoadMinimap(Vector2 pos, List<string> data)
+    public void UpdateVisitedScenes(List<string> scenes)
     {
         using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
         {
             var serialize = new XmlSerializer(typeof(List<string>));
-            var name = Globals.SceneManager.GetName();
+            serialize.Serialize(writer, scenes);
+        }
+    }
+
+    public void LoadMinimap(Vector2 pos, List<string> data, Vector2 newPos)
+    {
+        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        {
+            var serialize = new XmlSerializer(typeof(List<string>));
+            var name = newPos.ToSimpleString();
             if (!data.Contains(name))
             {
                 data.Add(name);
-                Globals.UIManager.Minimaps.Add(new Minimap(pos, 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum(), Alignment.Center));
+                Globals.UIManager.Minimaps.Add(new Minimap(newPos, 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum(), Alignment.Center));
             }
             serialize.Serialize(writer, data);
         }
