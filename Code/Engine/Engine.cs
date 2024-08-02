@@ -175,25 +175,10 @@ public class Engine : Game
     private void HardReset()
     {
         Globals.CopyFiles("LevelsBaseCopy", "Levels", true);
-<<<<<<< Updated upstream
-        using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
-        {
-            var serializer = new XmlSerializer(typeof(Vector2));
-            var a = new Vector2(0, 0);
-            serializer.Serialize(writer, a);
-        }
-        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
-        {
-            var serializer = new XmlSerializer(typeof(List<string>));
-            var a = new List<string> { "0 0 Center" };
-            serializer.Serialize(writer, a);
-        }
-=======
         Globals.Serializer.Restart();
         Globals.UIManager.Minimaps.Clear();
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
         Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, 0, 0, visitedSceneStorage, Alignment.Center));
->>>>>>> Stashed changes
         Restart();
     }
 }

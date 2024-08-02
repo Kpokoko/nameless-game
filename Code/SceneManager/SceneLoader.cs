@@ -109,34 +109,9 @@ namespace nameless.Code.SceneManager
             SaveScene();
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
-<<<<<<< Updated upstream
-            using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
-            {
-                var serialize = new XmlSerializer(typeof(Vector2));
-                serialize.Serialize(writer, newLoc);
-            }
-            List<string> data;
-            using (var reader = new StreamReader(new FileStream("Map.xml", FileMode.Open)))
-            {
-                var serialize = new XmlSerializer(typeof(List<string>));
-                data = (List<string>)serialize.Deserialize(reader);
-            }
-            using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
-            {
-                var serialize = new XmlSerializer(typeof(List<string>));
-                var name = Globals.SceneManager.GetName();
-                if (!data.Contains(name))
-                {
-                    data.Add(name);
-                    Globals.UIManager.Minimaps.Add(new Minimap(new Vector2((currLoc.X) * 23 * 10 + 900, (currLoc.Y)* 13 * 10 + 700), 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum(), Alignment.Center));
-                }
-                serialize.Serialize(writer, data);
-            }
-=======
             Globals.Serializer.SavePosition(newLoc);
             var data = Globals.Serializer.ReadVisitedScenes();
             Globals.Serializer.LoadMinimap(currLoc, data);
->>>>>>> Stashed changes
             return newLoc;
         }
     }
