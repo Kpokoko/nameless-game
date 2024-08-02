@@ -13,6 +13,7 @@ using nameless.UI.Scenes;
 using System.Collections.Generic;
 using System.Timers;
 using nameless.Entity.Player;
+using System.Linq;
 
 namespace nameless.Entity;
 
@@ -20,6 +21,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 {
     public Vector2 TilePosition { get => Tile.GetPosInTileCoordinats(Position); }
 
+    #region "Movement constants"
     private const float _time_effect = 1 / 60f;
 
     private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f;
@@ -39,7 +41,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private const float AIR_HOR_ACCELERATION = 0.6f;
     private const float AIR_HOR_STOP_ACCELERATION = 0.15f;
     private const float AIR_HOR_TURN_ACCELERATION = 1.5f;
-
+    #endregion 
 
     private float _verticalVelocity;
     //private float _realVerticalVelocity;
@@ -48,12 +50,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public int DrawOrder => 10;
 
-    private Sprite _currentSprite;
-    private Sprite _leftSprite;
-    private Sprite _rightSprite;
-
-    private SpriteAnimation _runRightAnimation;
-    private SpriteAnimation _runLeftAnimation;
 
     public Vector2 Position { get { return _position; } 
         set 
@@ -68,12 +64,17 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public Colliders Colliders { get; set; } = new();
     public Vector2 Velocity { get; private set; }
     public Vector2 InnerForce { get; private set; }
-    public Vector2 OuterForce { get; private set; }
+    public Vector2 OuterForce { get => PullingForce + PushingForce; 
+        private set  { PushingForce = value; PullingForce = value; } }
+    public Vector2 PushingForce { get; private set; }
+    public Vector2 PullingForce { get; private set; }
+
+
     public Stack<Action> Actions { get; set; } = new Stack<Action>();
+    public Side? PreviousCollisionSide { get; set; } = null;
 
     private PlayerAnimationHandler _animationHandler;
 
-    public PlayerModel() { }
     public SerializationInfo Info { get; set; } = new();
 
     public PlayerModel(Texture2D spriteSheet, Vector2? position = null) 
@@ -89,7 +90,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         _verticalVelocity = 0;
         _horizontalVelocity = 0;
 
-        Colliders.Add(new KinematicAccurateCollider(this, 44,52));
+        Colliders.Add(new KinematicAccurateCollider(this, 44,72));
         Colliders[0].Color = Color.Transparent;
 
         PrepareSerializationInfo();
@@ -147,8 +148,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         }
 
         InnerForce = new Vector2(_horizontalVelocity, _verticalVelocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Velocity = OuterForce + InnerForce;
-        Position = Position + Velocity;
+        Velocity = InnerForce;// + OuterForce;
+        Position = Position + InnerForce + PullingForce;// + OuterForce;
 
         //Velocity = Position - oldPos;
     }
@@ -178,9 +179,21 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     
     public void OnCollision(params MyCollisionEventArgs[] collisionsInfo)
     {
+        IsOppositeSides(collisionsInfo);
+
         foreach (var collisionInfo in collisionsInfo)
         {
             var collisionSide = collisionInfo.CollisionSide;
+
+            if (((Collider)collisionInfo.Other).Entity is MovingPlatform)
+            {
+                var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
+                if (collisionSide is Side.Bottom)
+                    Actions.Push(() => Pull(platform.Velocity));
+                else
+                    Actions.Push(() => Push(platform.Velocity));
+            }
+
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)
             {
@@ -198,20 +211,40 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
                     _verticalVelocity = 0;
                     State = PlayerState.Falling;
                 }
-
-                if (((Collider)collisionInfo.Other).Entity is MovingPlatform)
-                {
-                    var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
-                    var vel = platform.Direction * platform.Speed;
-                    Actions.Push(() => Pull(vel));
-                }
             }
         }
     }
 
+    private void IsOppositeSides(MyCollisionEventArgs[] collisionsInfo)
+    {
+        var sides = collisionsInfo.Select(i => i.CollisionSide);
+        if ((sides.Contains(Side.Top) && sides.Contains(Side.Bottom)))
+            Globals.Engine.Restart();
+        if ((sides.Contains(Side.Right) && sides.Contains(Side.Left)))
+            Globals.Engine.Restart();
+        //if (sides.Contains(Side.Left))
+        //{
+        //    if (PreviousCollisionSide != null && (Side)PreviousCollisionSide == Side.Right)
+        //        Globals.Engine.Restart();
+        //    PreviousCollisionSide = Side.Left;
+        //}
+
+        //if (sides.Contains(Side.Right))
+        //{
+        //    if (PreviousCollisionSide != null && (Side)PreviousCollisionSide == Side.Left)
+        //        Globals.Engine.Restart();
+        //    PreviousCollisionSide = Side.Right;
+        //}
+    }
+
     public void Pull(Vector2 force)
     {
-        OuterForce = force;
+        PullingForce = force;
+    }
+
+    public void Push(Vector2 force)
+    {
+        PushingForce = force;
     }
 
     public void TryJump()

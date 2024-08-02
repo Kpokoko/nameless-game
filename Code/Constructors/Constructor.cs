@@ -55,16 +55,19 @@ public class Constructor : IGameObject
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
+        if (MouseInputController.OnUIElement)
+            return;
+
         if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
             HoldBlock(entityUnderMouse as IConstructable);
 
         if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) 
             ReleaseBlock();
 
-        if (((MouseInputController.LeftButton.IsJustReleased && !MouseInputController.OnUIElement) || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
+        if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
             SpawnBlock(mouseTilePos);
 
-        if (((MouseInputController.RightButton.IsJustReleased && !MouseInputController.OnUIElement) || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
+        if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
             DeleteBlock(entityUnderMouse);
 
         if (entityUnderMouse is null && _holdingEntity is not null)
@@ -116,7 +119,7 @@ public class Constructor : IGameObject
 
     private bool PossibleToInteract(TileGridEntity entity)
     {
-        return entity is IConstructable && 
-            ((Globals.IsDeveloperModeEnabled) || ((IConstructable)entity).IsEnableToPlayer);
+        return (entity is IConstructable && 
+            (Globals.IsDeveloperModeEnabled || ((IConstructable)entity).IsEnableToPlayer)) ;
     }
 }

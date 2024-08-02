@@ -26,6 +26,9 @@ public static class MouseInputController
 
     private static bool OnUIBuffer { get; set; }
 
+    public static bool IsJustPressed {
+        get { return LeftButton.IsJustPressed || RightButton.IsJustPressed; }}
+
 
     public static LeftButton LeftButton = new();
 

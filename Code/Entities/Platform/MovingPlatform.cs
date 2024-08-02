@@ -15,6 +15,7 @@ namespace nameless.Entity
     {
         public Vector2 Direction;
         public float Speed;
+        public Vector2 Velocity { get => Direction * Speed; }
         private bool Collided = false;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
@@ -25,6 +26,15 @@ namespace nameless.Entity
             Colliders.Add(new DynamicCollider(this, 64, 10));
             Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
+
+            var pullTrigger = new HitboxTrigger(this, 64, 1, ReactOnProperty.ReactOnEntityType, SignalProperty.Continuous);
+            pullTrigger.Color = Color.Beige;
+            pullTrigger.SetOffset(new Vector2(0, -5));
+            pullTrigger.OnCollisionEvent += () =>
+            {
+                //Globals.SceneManager.GetPlayer().Actions.Push(() => Globals.SceneManager.GetPlayer().Pull(Velocity));
+            };
+            Colliders.Add(pullTrigger);
         }
 
         public void SetMovement(Vector2 dir, float speed)

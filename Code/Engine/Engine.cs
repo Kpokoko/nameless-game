@@ -77,7 +77,7 @@ public class Engine : Game
     {
         var collisionComponent = () => new CollisionComponent(new RectangleF(0 - 100, 0 - 100, _windowWidth + 200, _windowHeight + 200));
         Globals.CollisionManager = new CollisionManager(collisionComponent());
-        CollisionManager.TestCollisionComponent = collisionComponent();
+        Globals.CollisionManager.TestCollisionComponent = collisionComponent();
         Globals.TriggerManager = new TriggerManager();
     }
 
@@ -153,6 +153,8 @@ public class Engine : Game
         Globals.UIManager.Update(gameTime);
 
         base.Update(gameTime);
+
+
     }
 
     protected override void Draw(GameTime gameTime)
