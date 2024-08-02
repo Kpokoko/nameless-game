@@ -25,7 +25,7 @@ namespace nameless.Code.SceneManager
             var readedData = new List<IEntity>();
             var sceneContent = new List<IEntity>();
             var path = Path.Combine("..", "net6.0", "Levels", sceneName + ".xml");
-            var rawData = _serialize.Deserialize(path);
+            var rawData = _serialize.DeserializeScene(path);
             foreach (var data in rawData)
             {
                 switch (data.TypeOfElement)
@@ -101,7 +101,7 @@ namespace nameless.Code.SceneManager
         public static void SaveScene()
         {
             var entities = Globals.SceneManager.GetEntities();
-            _serialize.Serialize(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
+            _serialize.SerializeScene(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
         }
 
         public static Vector2 SwitchScene(HitboxTrigger trigger)
@@ -109,6 +109,7 @@ namespace nameless.Code.SceneManager
             SaveScene();
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
+<<<<<<< Updated upstream
             using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
             {
                 var serialize = new XmlSerializer(typeof(Vector2));
@@ -131,6 +132,11 @@ namespace nameless.Code.SceneManager
                 }
                 serialize.Serialize(writer, data);
             }
+=======
+            Globals.Serializer.SavePosition(newLoc);
+            var data = Globals.Serializer.ReadVisitedScenes();
+            Globals.Serializer.LoadMinimap(currLoc, data);
+>>>>>>> Stashed changes
             return newLoc;
         }
     }

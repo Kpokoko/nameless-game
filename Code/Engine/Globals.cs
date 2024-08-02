@@ -12,6 +12,7 @@ using nameless.Code.Constructors;
 using nameless.Interfaces;
 using System.IO;
 using nameless.Controls;
+using nameless.Serialize;
 
 namespace nameless;
 
@@ -19,6 +20,13 @@ public static class Globals
 {
     public static Engine.Engine Engine;
 
+<<<<<<< Updated upstream
+=======
+    public static Camera Camera;
+
+    public static Serializer Serializer;
+
+>>>>>>> Stashed changes
     public static Map Map;
 
     public static GameTime GameTime;
