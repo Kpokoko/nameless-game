@@ -1041,49 +1041,10 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>16</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>-1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>3.4999988</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>16</X>
-      <Y>8</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>3.4999988</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>InventoryBlock</TypeOfElement>
     <TilePos>
-      <X>11</X>
+      <X>12</X>
       <Y>8</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>InventoryBlock</TypeOfElement>
-    <TilePos>
-      <X>11</X>
-      <Y>9</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -1096,7 +1057,7 @@
     <TypeOfElement>InventoryBlock</TypeOfElement>
     <TilePos>
       <X>12</X>
-      <Y>10</Y>
+      <Y>9</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -1104,6 +1065,58 @@
       <Y>0</Y>
     </Direction>
     <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Platform</TypeOfElement>
+    <TilePos>
+      <X>9</X>
+      <Y>7</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>9</X>
+      <Y>0</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>MovingPlatform</TypeOfElement>
+    <TilePos>
+      <X>17</X>
+      <Y>8</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>1</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>2.0000002</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>MovingPlatform</TypeOfElement>
+    <TilePos>
+      <X>17</X>
+      <Y>9</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>-1</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>2.0000002</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
@@ -1164,6 +1177,19 @@
       <Y>12</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>InventoryBlock</TypeOfElement>
+    <TilePos>
+      <X>11</X>
+      <Y>10</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

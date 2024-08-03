@@ -26,15 +26,6 @@ namespace nameless.Entity
             Colliders.Add(new DynamicCollider(this, 64, 10));
             Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
-
-            var pullTrigger = new HitboxTrigger(this, 64, 1, ReactOnProperty.ReactOnEntityType, SignalProperty.Continuous);
-            pullTrigger.Color = Color.Beige;
-            pullTrigger.SetOffset(new Vector2(0, -5));
-            pullTrigger.OnCollisionEvent += () =>
-            {
-                //Globals.SceneManager.GetPlayer().Actions.Push(() => Globals.SceneManager.GetPlayer().Pull(Velocity));
-            };
-            Colliders.Add(pullTrigger);
         }
 
         public void SetMovement(Vector2 dir, float speed)
@@ -42,6 +33,11 @@ namespace nameless.Entity
             Direction = dir.NormalizedCopy();
             Speed = speed;
             PrepareSerializationInfo();
+        }
+
+        public override void OnPositionChange(Vector2 position)
+        {
+            //base.OnPositionChange(position);
         }
 
         public override void Update(GameTime gameTime)
