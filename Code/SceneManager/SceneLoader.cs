@@ -34,7 +34,8 @@ namespace nameless.Code.SceneManager
                         sceneContent.Add(new Block((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
                     case "PlayerModel":
-                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos)));
+                        var vel = Globals.SceneManager.GetPlayer() != null ? Globals.SceneManager.GetPlayer().InnerForce * 60 : Vector2.Zero;
+                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos),vel));
                         continue;
                     case "InventoryBlock":
                         sceneContent.Add(new InventoryBlock((int)data.TilePos.X, (int)data.TilePos.Y));

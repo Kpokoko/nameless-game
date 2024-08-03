@@ -108,6 +108,7 @@ public class Engine : Game
         _player = Globals.SceneManager.GetPlayer();
         //Globals.KeyboardInputController = new KeyboardInputController(_player);
         Globals.KeyboardInputController.SetPlayer();
+        Globals.UIManager.Clear();
     }
 
     public void Restart()

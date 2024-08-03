@@ -77,7 +77,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public SerializationInfo Info { get; set; } = new();
 
-    public PlayerModel(Texture2D spriteSheet, Vector2? position = null) 
+    public PlayerModel(Texture2D spriteSheet, Vector2? position = null, Vector2 velocity = new Vector2()) 
     {
         if (position == null)
             Position = new Vector2(176, 450);
@@ -86,9 +86,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
 
 
-        State = PlayerState.Still;
-        _verticalVelocity = 0;
-        _horizontalVelocity = 0;
+        State = PlayerState.Falling;
+        _verticalVelocity = velocity.Y;
+        _horizontalVelocity = velocity.X;
 
         Colliders.Add(new KinematicAccurateCollider(this, 44,52));
         Colliders[0].Color = Color.Transparent;

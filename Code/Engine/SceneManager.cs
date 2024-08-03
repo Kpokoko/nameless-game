@@ -144,7 +144,7 @@ public class SceneManager
             .Select(e => e.Entity.Position)
             .Distinct();
 
-    public PlayerModel GetPlayer() => _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel;
+    public PlayerModel GetPlayer() => _currentScene != null  ? _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel : null;
 
     public Storage GetStorage() => _currentScene.Storage;
 

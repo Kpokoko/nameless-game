@@ -3,8 +3,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>22</X>
-      <Y>11</Y>
+      <X>5</X>
+      <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -1065,6 +1065,19 @@
       <Y>0</Y>
     </Direction>
     <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>MovingPlatform</TypeOfElement>
+    <TilePos>
+      <X>12</X>
+      <Y>6</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>-1</Y>
+    </Direction>
+    <Speed>6.899996</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>

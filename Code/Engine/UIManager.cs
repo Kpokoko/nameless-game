@@ -100,6 +100,7 @@ public class UIManager
         Buttons.Clear();
         Labels.Clear();
         KeyboardButtons.Clear();
+        Containers.Clear();
     }
 
     public void ShowMap() => _mapIsActive = true;

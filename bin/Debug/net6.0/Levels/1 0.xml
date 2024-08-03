@@ -926,19 +926,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>17</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>14</X>
       <Y>12</Y>
     </TilePos>
@@ -1135,6 +1122,19 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>6</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>17</X>
       <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
