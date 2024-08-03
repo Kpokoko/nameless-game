@@ -18,7 +18,7 @@ public class CollisionManager
     public CollisionManager(CollisionComponent collisionComponent) {CollisionComponent = collisionComponent;}
 
     public CollisionComponent CollisionComponent;
-    public static CollisionComponent TestCollisionComponent;
+    public CollisionComponent TestCollisionComponent;
 
     public static bool OnCollisionDisabled;
     public static Collider Processing;
@@ -42,6 +42,11 @@ public class CollisionManager
         OnCollisionDisabled = false;
         CollisionComponent.Update(gameTime);
         OnCollisionDisabled = true;
+        UpdateKinematic();
+    }
+
+    public void UpdateKinematic()
+    {
         for (var i = 0; i < KinematicColliders.Count; i++)
         {
             Processing = KinematicColliders[i];

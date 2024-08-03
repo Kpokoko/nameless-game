@@ -22,4 +22,11 @@ public class MyCollisionEventArgs
         Other = other;
         CollisionSide = side;
     }
+
+    public MyCollisionEventArgs(CollisionEventArgs collisionInfo)
+    {
+        PenetrationVector = collisionInfo.PenetrationVector;
+        Other = collisionInfo.Other;
+        CollisionSide = Collider.CollisionToSide(collisionInfo);
+    }
 }

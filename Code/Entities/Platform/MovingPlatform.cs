@@ -15,6 +15,7 @@ namespace nameless.Entity
     {
         public Vector2 Direction;
         public float Speed;
+        public Vector2 Velocity { get => Direction * Speed; }
         private bool Collided = false;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
@@ -32,6 +33,11 @@ namespace nameless.Entity
             Direction = dir.NormalizedCopy();
             Speed = speed;
             PrepareSerializationInfo();
+        }
+
+        public override void OnPositionChange(Vector2 position)
+        {
+            //base.OnPositionChange(position);
         }
 
         public override void Update(GameTime gameTime)

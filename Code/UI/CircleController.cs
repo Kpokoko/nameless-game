@@ -14,7 +14,17 @@ public class CircleController : UIElement
     new private CircleF Bounds {  get; set; }
     override public Vector2 Position { get; set; }
     new public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
-    public Vector2 Direction { get; private set; } = Vector2.Zero;
+    public Vector2 Direction 
+    {
+        get => _direction;
+        private set 
+        { 
+            _direction = value; 
+            if (OnDirectionSet != null)
+                OnDirectionSet(); 
+        } 
+    }
+    private Vector2 _direction = Vector2.Zero;
     public float Length { get { return Direction.Length(); } }
 
     public event Action OnDirectionSet;
@@ -26,17 +36,30 @@ public class CircleController : UIElement
 
     public override void Remove()
     {
-        Globals.UIManager.CircleControllers.Remove(this);
+        if (!Globals.UIManager.ToRemove.Contains(this))
+            Globals.UIManager.ToRemove.Add(this);
+        else
+            Globals.UIManager.CircleControllers.Remove(this);
     }
 
     public void Update()
     {
         if (!Hovered)
         {
-            if (MouseInputController.LeftButton.IsJustPressed)
+            if (MouseInputController.IsJustPressed)
                 Remove();
             return;
         }
+
+        MouseInputController.SetOnUIState();
+
+        if (MouseInputController.RightButton.IsJustReleased)
+        {
+            Remove();
+            return;
+        }
+
+
         if (MouseInputController.MiddleButton.IsScrolled)
             ChangeSelectedLength();
 
@@ -47,8 +70,6 @@ public class CircleController : UIElement
         if (Globals.InputController.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             dir = AllignToAxis(dir);
         Direction = dir;
-        if (OnDirectionSet != null)
-            OnDirectionSet();
     }
 
     private void ChangeSelectedLength()
@@ -61,8 +82,6 @@ public class CircleController : UIElement
         if (MouseInputController.MiddleButton.IsScrolledUp)
             if (Direction.Length() != 0)
                 Direction = Direction + Direction.NormalizedCopy() / 10;
-        if (OnDirectionSet != null)
-            OnDirectionSet();
     }
 
     private Vector2 AllignToAxis(Vector2 dir)

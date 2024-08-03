@@ -84,6 +84,7 @@ public class KinematicAccurateCollider : DynamicCollider
             var collisionInfo = collisionsInfo[i];
             Bounds.Position = actualPosition - collisionInfo.PenetrationVector;
             Globals.CollisionManager.CollisionComponent.Update(Globals.GameTime);
+
             if (collisionInfoBuffer.Count == 0)
             {
                 Bounds.Position = actualPosition;
@@ -117,8 +118,29 @@ public class KinematicAccurateCollider : DynamicCollider
     private MyCollisionEventArgs TraceCollisionBasedOnKinematicVelocity(CollisionEventArgs collisionInfo)
     {
         var vel = ((IKinematic)Entity).Velocity;
-        if (vel == Vector2.Zero) 
-            vel = new Vector2(0, 1);
+        if (((Collider)collisionInfo.Other).Entity is (MovingPlatform))
+        {
+            var player = (PlayerModel)Entity;
+
+
+            if (player.PullingForce != ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity)
+            {
+                //    vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
+                if (player.PullingForce != Vector2.Zero)
+                    vel += player.PullingForce;
+                else
+                    vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
+            }
+        }
+        else
+        {
+            vel += ((PlayerModel)Entity).OuterForce;
+        }
+        if (vel == Vector2.Zero)
+        {
+            return new MyCollisionEventArgs(collisionInfo);
+            //vel = new Vector2(0, 1);
+        }
         var possibleSides = VelocityToPossibleCollisionSides(vel);
         var collidingBorderPositions = possibleSides.Select(s => GetBoundsBorderPosition((RectangleF)Bounds, s)).ToArray();
         var otherCollidingBorderPositions = possibleSides.Select(s => GetBoundsBorderPosition((RectangleF)collisionInfo.Other.Bounds, GetOppositeSide(s))).ToArray();

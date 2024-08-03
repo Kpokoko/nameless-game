@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <string>0 0 Center</string>
+  <string>1 0</string>
+  <string>0 -1</string>
+  <string>-1 0 Cliff</string>
+  <string>0 1</string>
+  <string>1 1 Jumper</string>
+  <string>2 0</string>
 </ArrayOfString>

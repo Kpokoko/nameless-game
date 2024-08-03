@@ -13,13 +13,19 @@ namespace nameless.Engine;
 public class UIManager
 {
     private bool _mapIsActive = false;
+
     public List<Button> Buttons = new List<Button>();
     public List<Label> Labels = new List<Label>();
     public List<Container> Containers = new List<Container>();
     public List<Minimap> Minimaps = new List<Minimap>();
     public List<CircleController> CircleControllers = new List<CircleController>();
+
+    public List<UIElement> ToRemove = new List<UIElement>();
+
     public Dictionary<Keys, Button> KeyboardButtons = new();
+
     public Dictionary<UIScenes, UIScene> CurrentUIScenes = new();
+
     public SpriteFont Font;
     public void Update(GameTime gameTime)
     {
@@ -34,6 +40,10 @@ public class UIManager
             Containers[i].Update(gameTime);
         for (var i = 0; i < CircleControllers.Count; i++)
             CircleControllers[i].Update();
+
+        for (var i = 0;i< ToRemove.Count; i++)
+            ToRemove[i].Remove();
+        ToRemove.Clear();
     }
     public void Draw(SpriteBatch spriteBatch)
     {
