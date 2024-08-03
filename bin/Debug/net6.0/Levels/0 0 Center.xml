@@ -133,7 +133,7 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>0</X>
+      <X>22</X>
       <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -1112,19 +1112,6 @@
       <Y>12</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>9</X>
-      <Y>11</Y>
-    </TilePos>
-    <TriggerType>Disposable</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

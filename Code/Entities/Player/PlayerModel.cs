@@ -77,7 +77,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public SerializationInfo Info { get; set; } = new();
 
-    public PlayerModel(Texture2D spriteSheet, Vector2? position = null, Vector2 velocity = new Vector2()) 
+    public PlayerModel(Texture2D spriteSheet, Vector2? position = null, Vector2 velocity = new Vector2(), PlayerState state = PlayerState.Falling) 
     {
         if (position == null)
             Position = new Vector2(176, 450);
@@ -86,7 +86,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
 
 
-        State = PlayerState.Falling;
+        State = state;
         _verticalVelocity = velocity.Y;
         _horizontalVelocity = velocity.X;
 

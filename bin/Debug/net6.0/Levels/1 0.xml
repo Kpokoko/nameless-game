@@ -16,8 +16,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>0</X>
-      <Y>11</Y>
+      <X>16</X>
+      <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>

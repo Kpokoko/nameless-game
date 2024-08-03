@@ -34,8 +34,13 @@ namespace nameless.Code.SceneManager
                         sceneContent.Add(new Block((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
                     case "PlayerModel":
-                        var vel = Globals.SceneManager.GetPlayer() != null ? Globals.SceneManager.GetPlayer().InnerForce * 60 : Vector2.Zero;
-                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos),vel));
+                        var vel = Vector2.Zero;
+                        var state = PlayerState.Falling;
+                        if (Globals.SceneManager.GetPlayer() != null) {
+                            vel = Globals.SceneManager.GetPlayer().InnerForce * 60; 
+                            state = Globals.SceneManager.GetPlayer().State;
+                        }
+                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos),vel,state));
                         continue;
                     case "InventoryBlock":
                         sceneContent.Add(new InventoryBlock((int)data.TilePos.X, (int)data.TilePos.Y));
