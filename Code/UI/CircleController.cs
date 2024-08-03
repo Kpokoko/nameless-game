@@ -67,7 +67,7 @@ public class CircleController : UIElement
 
         var dir = MouseInputController.MousePos - Position;
         dir.Normalize();
-        if (Globals.InputController.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+        if (Globals.KeyboardInputController.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             dir = AllignToAxis(dir);
         Direction = dir;
     }

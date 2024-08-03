@@ -40,8 +40,12 @@ namespace nameless.Code.SceneManager
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.C) && Globals.IsDeveloperModeEnabled)
+            if (Globals.KeyboardInputController.IsJustPressed(Keys.C) && Globals.IsDeveloperModeEnabled)
+            {
                 Globals.CopyFiles(Path.Combine("Levels", Name + ".xml"), Path.Combine("levelsBaseCopy", Name + ".xml"), false);
+                Globals.UIManager.PopupMessage("Initial level state updated");
+            
+            }
             if (Globals.IsConstructorModeEnabled)
                 Globals.Constructor.Update(gameTime);
 

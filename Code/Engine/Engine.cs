@@ -36,7 +36,7 @@ public class Engine : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private PlayerModel _player;
-    private PlayerInputController _inputController;
+    private KeyboardInputController _inputController;
     private KeyboardState _previousKeybardState;
 
     private Texture2D _spriteSheet;
@@ -53,6 +53,7 @@ public class Engine : Game
         LoadCollisions();
         Globals.Engine = this;
         Globals.UIManager = new UIManager();
+        Globals.KeyboardInputController = new KeyboardInputController();
         Globals.AnimationManager = new AnimationManager();
         Globals.SceneManager = new SceneManager();
         Globals.Serializer = new Serialize.Serializer();
@@ -105,13 +106,15 @@ public class Engine : Game
     public void LoadUtilities()
     {
         _player = Globals.SceneManager.GetPlayer();
-        Globals.InputController = new PlayerInputController(_player);
+        //Globals.KeyboardInputController = new KeyboardInputController(_player);
+        Globals.KeyboardInputController.SetPlayer();
     }
 
     public void Restart()
     {
         LoadCollisions();
         LoadScene();
+        Globals.UIManager.PopupMessage("Restart");
     }
 
     protected override void Update(GameTime gameTime)
@@ -121,13 +124,13 @@ public class Engine : Game
         if (Globals.GameTime == null)
             Globals.GameTime = gameTime;
 
-        if (Keyboard.GetState().IsKeyDown(Keys.R))
+        if (Globals.KeyboardInputController.IsJustPressed(Keys.R))
         {
             Restart();
-            return;
+            //return;
         }
 
-        if (Keyboard.GetState().IsKeyDown(Keys.L))
+        if (Globals.KeyboardInputController.IsJustPressed(Keys.L))
             HardReset();
 
         MouseInputController.ProcessControls();
@@ -140,7 +143,7 @@ public class Engine : Game
         Globals.TriggerManager.Update(gameTime);
 
 
-        Globals.InputController.ProcessControls(gameTime);
+        Globals.KeyboardInputController.ProcessControls(gameTime);
 
         Globals.UIManager.Update(gameTime);
 
@@ -182,5 +185,6 @@ public class Engine : Game
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
         Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, 0, 0, visitedSceneStorage, Alignment.Center));
         Restart();
+        Globals.UIManager.PopupMessage("Hard reset");
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Timers;
+using nameless.GameObjects;
 using nameless.UI;
 using nameless.UI.Scenes;
 using System;
@@ -19,6 +20,8 @@ public class UIManager
     public List<Container> Containers = new List<Container>();
     public List<Minimap> Minimaps = new List<Minimap>();
     public List<CircleController> CircleControllers = new List<CircleController>();
+
+    public List<Container> Popups = new List<Container>();
 
     public List<UIElement> ToRemove = new List<UIElement>();
 
@@ -75,6 +78,21 @@ public class UIManager
     {
         CurrentUIScenes[scene].Clear();
         CurrentUIScenes.Remove(scene);
+    }
+
+    public void PopupMessage(string message)
+    {
+        foreach (var c in Popups)
+            c.Remove();
+        Popups.Clear();
+        var label = new Label(new Vector2(), message, Alignment.CenterLeft);
+        var container = new Container(new Vector2(100,40), label.Bounds.Width,label.Bounds.Height,Alignment.CenterLeft,FlexDirection.Horizontal, new Vector2(10,10));
+        container.AddElements(label);
+        Popups.Add(container);
+        TimerTrigger.DelayEvent(3000, () => 
+        { 
+            container.Remove(); 
+        });
     }
 
     public void Clear()

@@ -17,7 +17,7 @@ public class Container : UIElement, IEntity
     private FlexDirection _flexDirection {  get; set; }
     private Vector2 _padding { get; set; }
     public List<UIElement> Elements { get; set; } = new();
-    public Container(Vector2 position, int width, int height, Alignment align, FlexDirection flexDir, Vector2 padding) : base(position, width, height, align)
+    public Container(Vector2 position, int width, int height, Alignment align = Alignment.Center, FlexDirection flexDir = FlexDirection.Horizontal, Vector2 padding = new Vector2()) : base(position, width, height, align)
     {
         _flexDirection = flexDir;
         _padding = padding;

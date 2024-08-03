@@ -24,7 +24,7 @@
       <X>1</X>
       <Y>0</Y>
     </Direction>
-    <Speed>-0.8</Speed>
+    <Speed>0.8</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -133,7 +133,7 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>22</X>
+      <X>0</X>
       <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -160,6 +160,19 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>8</X>
+      <Y>0</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Block</TypeOfElement>
+    <TilePos>
+      <X>9</X>
       <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -1041,84 +1054,6 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>InventoryBlock</TypeOfElement>
-    <TilePos>
-      <X>12</X>
-      <Y>8</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>InventoryBlock</TypeOfElement>
-    <TilePos>
-      <X>12</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Platform</TypeOfElement>
-    <TilePos>
-      <X>9</X>
-      <Y>7</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>9</X>
-      <Y>0</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>17</X>
-      <Y>8</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>2.0000002</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>17</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>-1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>2.0000002</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
       <X>7</X>
@@ -1184,12 +1119,12 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>InventoryBlock</TypeOfElement>
+    <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
-      <X>11</X>
-      <Y>10</Y>
+      <X>9</X>
+      <Y>11</Y>
     </TilePos>
-    <TriggerType>None</TriggerType>
+    <TriggerType>Disposable</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

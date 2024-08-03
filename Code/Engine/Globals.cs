@@ -34,7 +34,7 @@ public static class Globals
 
     public static bool OnEditorBlock = false;
 
-    public static PlayerInputController InputController;
+    public static KeyboardInputController KeyboardInputController;
 
     public static SceneManager SceneManager;
 
