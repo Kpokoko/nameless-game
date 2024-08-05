@@ -104,7 +104,7 @@ public class Button : UIElement, IEntity
         var boundsSize = (int)(6 / Globals.Camera.Zoom);
         var fillRect = new Rectangle(Bounds.Location + offset,Bounds.Size);
         var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint() + offset, Bounds.Size + new Point(boundsSize*2, boundsSize*2));
-        spriteBatch.DrawRectangle(boundsRect, !Pressed ? Color.Black : Color.Gray,boundsSize,0.9f);
-        spriteBatch.FillRectangle(fillRect, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor,0.9f);
+        spriteBatch.DrawRectangle(boundsRect, !Pressed ? Color.Black : Color.Gray,boundsSize, 0.02f);
+        spriteBatch.FillRectangle(fillRect, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor, 0.02f);
     }
 }

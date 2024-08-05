@@ -32,6 +32,6 @@ public class Label : UIElement, IEntity
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.DrawString(Font, Text, (Bounds.Location).ToVector2(), Color.Black,0,Vector2.Zero,1,SpriteEffects.None,0.91f);
+        spriteBatch.DrawString(Font, Text, (Bounds.Location).ToVector2(), Color.Black,0,Vector2.Zero,1,SpriteEffects.None,0.03f);
     }
 }

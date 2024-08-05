@@ -24,7 +24,7 @@
       <X>1</X>
       <Y>0</Y>
     </Direction>
-    <Speed>-0.8</Speed>
+    <Speed>0.8</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -133,8 +133,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>7</X>
-      <Y>0</Y>
+      <X>0</X>
+      <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>

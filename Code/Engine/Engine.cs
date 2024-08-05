@@ -61,8 +61,8 @@ public class Engine : Game
         var camera = new Camera();
         camera.Zoom = _windowWidth / 23.0f / 64;
         Globals.Camera = camera;
-        //_graphics.IsFullScreen = true; // Включить полноэкранный режим
-        //_graphics.HardwareModeSwitch = false; // Убрать рамку окна
+        _graphics.IsFullScreen = true; // Включить полноэкранный режим
+        _graphics.HardwareModeSwitch = false; // Убрать рамку окна
         _graphics.ApplyChanges();
         //HardReset();
         base.Initialize();
@@ -154,7 +154,7 @@ public class Engine : Game
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
         _spriteBatch.End();
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.Camera.Transform);
         Globals.UIManager.Draw(_spriteBatch);
         _spriteBatch.End();
 

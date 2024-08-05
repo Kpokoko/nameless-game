@@ -43,7 +43,7 @@ public static class MouseInputController
         PreviousMouseState = MouseState;
         MouseState = Mouse.GetState();
         TransformedMousePos = new Vector2(MouseState.X, MouseState.Y) / Globals.Camera.Zoom;
-        MousePos = new Vector2(MouseState.X, MouseState.Y);
+        MousePos = new Vector2(MouseState.X, MouseState.Y) / Globals.Camera.Zoom;
 
         OnUIElement = false;
         if (OnUIBuffer)

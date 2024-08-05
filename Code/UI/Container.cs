@@ -111,7 +111,7 @@ public class Container : UIElement, IEntity
         var boundsSize = (int)(6 / Globals.Camera.Zoom);
         var fillRect = new Rectangle(Bounds.Location, Bounds.Size);
         var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint(), Bounds.Size + new Point(boundsSize * 2, boundsSize * 2));
-        spriteBatch.DrawRectangle(boundsRect, Color.Black, boundsSize, 0.89f);
-        spriteBatch.FillRectangle(fillRect, Globals.PrimaryColor , 0.89f);
+        spriteBatch.DrawRectangle(boundsRect, Color.Black, boundsSize, 0.01f);
+        spriteBatch.FillRectangle(fillRect, Globals.PrimaryColor, 0.01f);
     }
 }

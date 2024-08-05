@@ -16,7 +16,7 @@ namespace nameless.UI;
 public class Minimap : UIElement, IEntity
 {
     private EntityTypeEnum[,] _mapArray;
-    public static int TileSize = (int)(20 / Globals.Camera.Zoom);
+    public static int TileSize = 6;
     public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
     {
         position.X = position.X * Storage.StorageWidth * TileSize + Globals.Engine.Window.ClientBounds.Width / 2 - TileSize * 23 / 2;

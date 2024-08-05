@@ -42,7 +42,7 @@ public class CircleController : UIElement
 
         if (!MouseInputController.LeftButton.IsPressed) return;
 
-        var dir = MouseInputController.TransformedMousePos - Position;
+        var dir = MouseInputController.MousePos - Position;
         dir.Normalize();
         if (Globals.InputController.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             dir = AllignToAxis(dir);
@@ -78,7 +78,7 @@ public class CircleController : UIElement
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.DrawCircle(Bounds, 20, Globals.PrimaryColor, 3,0.9f);
-        spriteBatch.DrawPoint(Position + Direction * Bounds.Radius, Color.Red, 10, 0.92f);
+        spriteBatch.DrawCircle(Bounds, 20, Globals.PrimaryColor, 3,0.04f);
+        spriteBatch.DrawPoint(Position + Direction * Bounds.Radius, Color.Red, 10, 0.04f);
     }
 }

@@ -18,14 +18,14 @@ public class ConstructorScene : UIScene
         var zoom = Globals.Camera.Zoom;
         Name = UIScenes.ConstructorScene;
 
-        var spawnContainer = new Container(new Vector2(1700, 300) / zoom, (int)(300 / zoom), (int)(400 / zoom), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(new Vector2(1200, 300), (int)(300 ), (int)(400 ), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
 
-        var button1 = new Button(Vector2.Zero, 280 / zoom, 50 / zoom, "InventoryBlock", ButtonActivationProperty.Switch);
-        var button2 = new Button(Vector2.Zero, 280 / zoom, 50 / zoom, "EditorBlock", ButtonActivationProperty.Switch);
-        var button3 = new Button(Vector2.Zero, 280 / zoom, 50 / zoom, "Block", ButtonActivationProperty.Switch);
-        var button4 = new Button(Vector2.Zero, 280 / zoom, 50 / zoom, "Platform", ButtonActivationProperty.Switch);
-        var button5 = new Button(Vector2.Zero, 280 / zoom, 50 / zoom, "MovingPlatform", ButtonActivationProperty.Switch);
-        var button6 = new Button(Vector2.Zero, 280 / zoom, 50 / zoom, "Hitbox", ButtonActivationProperty.Switch);
+        var button1 = new Button(Vector2.Zero, 280 , 50 , "InventoryBlock", ButtonActivationProperty.Switch);
+        var button2 = new Button(Vector2.Zero, 280 , 50 , "EditorBlock", ButtonActivationProperty.Switch);
+        var button3 = new Button(Vector2.Zero, 280 , 50 , "Block", ButtonActivationProperty.Switch);
+        var button4 = new Button(Vector2.Zero, 280 , 50 , "Platform", ButtonActivationProperty.Switch);
+        var button5 = new Button(Vector2.Zero, 280 , 50 , "MovingPlatform", ButtonActivationProperty.Switch);
+        var button6 = new Button(Vector2.Zero, 280 , 50 , "Hitbox", ButtonActivationProperty.Switch);
 
         spawnContainer.AddElements(button1,button2,button3,button4,button5,button6);
         AddElements(spawnContainer);
@@ -60,7 +60,7 @@ public class ConstructorScene : UIScene
 
     private void SpawnHitboxContainer()
     {
-        hitboxContainer = new Container(new Vector2(1600, 800) / Globals.Camera.Zoom, (int)(300 / Globals.Camera.Zoom), (int)(240 / Globals.Camera.Zoom), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        hitboxContainer = new Container(new Vector2(1200, 650), (int)(300), (int)(240), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);
