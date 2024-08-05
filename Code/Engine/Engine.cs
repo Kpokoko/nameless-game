@@ -86,11 +86,9 @@ public class Engine : Game
 
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
 
-        try
-        {
-            Map.LoadMap();
-        }
-        catch (System.IO.DirectoryNotFoundException)
+         
+        Map.LoadMap();
+        if (Globals.Map[0,0] == null)
         {
             HardReset();
         }
