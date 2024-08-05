@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nameless.Code.Entities.Blocks
+namespace nameless.Entity
 {
     public class FragileBlock : Block
     {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using nameless.Code.Entities.Blocks;
 using nameless.Code.SceneManager;
 using nameless.Controls;
 using nameless.Entity;

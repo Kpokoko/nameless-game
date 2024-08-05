@@ -55,6 +55,12 @@ namespace nameless.Code.SceneManager
                     case "Platform":
                         sceneContent.Add(new Platform((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
+                    case "FragileBlock":
+                        sceneContent.Add(new FragileBlock((int)data.TilePos.X, (int)data.TilePos.Y));
+                        continue;
+                    case "StickyBlock":
+                        sceneContent.Add(new StickyBlock((int)data.TilePos.X, (int)data.TilePos.Y));
+                        continue;
                     default: break;
                 }
             }
