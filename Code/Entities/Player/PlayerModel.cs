@@ -181,14 +181,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         {
             var collisionSide = collisionInfo.CollisionSide;
 
-            if (((Collider)collisionInfo.Other).Entity is MovingPlatform)
-            {
-                var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
-                if (collisionSide is Side.Bottom)
-                    Actions.Push(() => Pull(platform.Velocity));
-                else
-                    Actions.Push(() => Push(platform.Velocity));
-            }
+            IsMovingObject(collisionInfo, collisionSide);
+            IsScickyObject(collisionInfo, collisionSide);
 
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)
@@ -208,6 +202,26 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
                     State = PlayerState.Falling;
                 }
             }
+        }
+    }
+
+    private void IsMovingObject(MyCollisionEventArgs collisionInfo, Side collisionSide)
+    {
+        if (((Collider)collisionInfo.Other).Entity is MovingPlatform)
+        {
+            var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
+            if (collisionSide is Side.Bottom)
+                Actions.Push(() => Pull(platform.Velocity));
+            else
+                Actions.Push(() => Push(platform.Velocity));
+        }
+    }
+
+    private void IsScickyObject(MyCollisionEventArgs collisionInfo, Side collisionSide)
+    {
+        if (collisionSide == Side.Bottom && ((Collider)collisionInfo.Other).Entity is StickyBlock)
+        {
+            Actions.Push(() => Stick());
         }
     }
 
@@ -241,6 +255,11 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public void Push(Vector2 force)
     {
         PushingForce = force;
+    }
+
+    public void Stick()
+    {
+        CanJump = false;
     }
 
     public void TryJump()
