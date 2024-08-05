@@ -16,7 +16,9 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
+<<<<<<< HEAD
       <X>8</X>
+=======
       <X>0</X>
       <Y>0</Y>
     </TilePos>
@@ -31,6 +33,7 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>0</X>
+>>>>>>> CameraScam
       <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -45,6 +48,7 @@
     <TilePos>
 <<<<<<< HEAD
       <X>4</X>
+=======
       <X>22</X>
       <Y>0</Y>
     </TilePos>
@@ -59,6 +63,7 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>22</X>
+>>>>>>> CameraScam
       <Y>12</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -81,6 +86,7 @@
     </Direction>
     <Speed>0</Speed>
   </SerializationInfo>
+<<<<<<< HEAD
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
@@ -458,4 +464,6 @@
     </Direction>
     <Speed>0</Speed>
   </SerializationInfo>
+=======
+>>>>>>> CameraScam
 </ArrayOfSerializationInfo>
