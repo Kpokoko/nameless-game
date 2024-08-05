@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using nameless.Code.Entities.Blocks;
 using nameless.Code.SceneManager;
 using nameless.Controls;
 using nameless.Entity;
@@ -95,6 +96,9 @@ public class Constructor : IGameObject
         {
             case EntityTypeEnum.InventoryBlock:
                 _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                break;
+            case EntityTypeEnum.FragileBlock:
+                _entities.Add(new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
             default:
                 break;

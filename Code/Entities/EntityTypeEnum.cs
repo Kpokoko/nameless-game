@@ -1,4 +1,5 @@
-﻿using nameless.Collisions;
+﻿using nameless.Code.Entities.Blocks;
+using nameless.Collisions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ public enum EntityTypeEnum
     EditorBlock,
     HitboxTrigger,
     Platform,
-    MovingPlatform
+    MovingPlatform,
+    FragileBlock
 }
 
 public static class EntityType
@@ -28,6 +30,7 @@ public static class EntityType
         { EntityTypeEnum.HitboxTrigger, typeof(HitboxTrigger)},
         { EntityTypeEnum.Platform, typeof(Platform)},
         { EntityTypeEnum.MovingPlatform, typeof(MovingPlatform)},
+        { EntityTypeEnum.FragileBlock, typeof(FragileBlock)},
     };
 
     public static Dictionary<Type, EntityTypeEnum> EntityTypeToEnumTranslator = EntityEnumToTypeTranslator

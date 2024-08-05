@@ -26,8 +26,9 @@ public class ConstructorScene : UIScene
         var button4 = new Button(Vector2.Zero, 280 , 50 , "Platform", ButtonActivationProperty.Switch);
         var button5 = new Button(Vector2.Zero, 280 , 50 , "MovingPlatform", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 280 , 50 , "Hitbox", ButtonActivationProperty.Switch);
+        var button8 = new Button(Vector2.Zero, 280, 50, "FragileBlock", ButtonActivationProperty.Switch);
 
-        spawnContainer.AddElements(button1,button2,button3,button4,button5,button6);
+        spawnContainer.AddElements(button1,button2,button3,button4,button5,button6,button8);
         AddElements(spawnContainer);
 
 
@@ -41,6 +42,7 @@ public class ConstructorScene : UIScene
         button4.OnClickEvent += () => { spawnContainer.SwitchButtons(button4); DespawnHitboxContainer(); };
         button5.OnClickEvent += () => { spawnContainer.SwitchButtons(button5); DespawnHitboxContainer(); };
         button6.OnClickEvent += () => { spawnContainer.SwitchButtons(button6); SpawnHitboxContainer(); };
+        button8.OnClickEvent += () => { spawnContainer.SwitchButtons(button8); DespawnHitboxContainer(); };
 
         button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.InventoryBlock;
         button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.EditorBlock;
@@ -48,6 +50,7 @@ public class ConstructorScene : UIScene
         button4.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.Platform;
         button5.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.MovingPlatform;
         button6.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.HitboxTrigger;
+        button8.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.FragileBlock;
 
         button1.SetKeyboardKey(Keys.D1);
         button2.SetKeyboardKey(Keys.D2);
@@ -55,6 +58,7 @@ public class ConstructorScene : UIScene
         button4.SetKeyboardKey(Keys.D4);
         button5.SetKeyboardKey(Keys.D5);
         button6.SetKeyboardKey(Keys.D6);
+        button8.SetKeyboardKey(Keys.D8);
 
     }
 
