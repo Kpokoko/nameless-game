@@ -96,6 +96,9 @@ public class Constructor : IGameObject
             case EntityTypeEnum.InventoryBlock:
                 _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
+            case EntityTypeEnum.StickyBlock:
+                _entities.Add(new StickyBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                break;
             default:
                 break;
         }
