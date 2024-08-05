@@ -19,8 +19,8 @@ public class Minimap : UIElement, IEntity
     public static int TileSize = 6;
     public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
     {
-        position.X = position.X * Storage.StorageWidth * TileSize + Globals.Engine.Window.ClientBounds.Width / 2 - TileSize * 23 / 2;
-        position.Y = position.Y * Storage.StorageHeight * TileSize + Globals.Engine.Window.ClientBounds.Height / 2 - TileSize * 13 / 2;
+        position.X = position.X * Storage.StorageWidth * TileSize + Globals.Engine.Window.ClientBounds.Width / 2 / Globals.Camera.Zoom - TileSize * 23 / 2;
+        position.Y = position.Y * Storage.StorageHeight * TileSize + Globals.Engine.Window.ClientBounds.Height / 2 / Globals.Camera.Zoom - TileSize * 13 / 2;
         base.Position = position;
         _mapArray = array;
 
