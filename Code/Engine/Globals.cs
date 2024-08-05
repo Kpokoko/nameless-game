@@ -77,6 +77,11 @@ public static class Globals
     {
         var fullSource = GetPath(source);
         var fullTarget = GetPath(target);
+        if (!Path.HasExtension(fullTarget) && !Directory.Exists(fullTarget))
+        {
+            Directory.CreateDirectory(fullTarget);
+        }
+
         if (copyAllFiles)
         {
             var sourceData = Directory.GetFiles(fullSource);

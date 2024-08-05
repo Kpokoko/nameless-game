@@ -86,7 +86,15 @@ public class Engine : Game
 
         Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
 
-        Map.LoadMap();
+        try
+        {
+            Map.LoadMap();
+        }
+        catch (System.IO.DirectoryNotFoundException)
+        {
+            HardReset();
+        }
+
         LoadScene();
     }
 
@@ -180,6 +188,7 @@ public class Engine : Game
         Globals.UIManager.Minimaps.Clear();
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
         Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, 0, 0, visitedSceneStorage, Alignment.Center));
+        Map.LoadMap();
         Restart();
         Globals.UIManager.PopupMessage("Hard reset");
     }

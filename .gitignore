@@ -3,6 +3,10 @@ bin/Debug/net6.0/*
 !bin/Debug/net6.0/Map.xml
 !bin/Debug/net6.0/CurrentLoc.xml
 !bin/Debug/net6.0/LevelsBaseCopy
+!bin/Debug/net6.0/Levels
+
+bin/Debug/net6.0/Levels*
+!bin/Debug/net6.0/Levels/.xml
 
 /.vs
 

@@ -21,6 +21,7 @@ public struct Serializer
             var a = entities.Select(x => x.Info).ToList();
             serializer.Serialize(writer, a);
         }
+        Globals.UIManager.PopupMessage("Serialized");
     }
     public List<SerializationInfo> DeserializeScene(string sceneName)
     {
