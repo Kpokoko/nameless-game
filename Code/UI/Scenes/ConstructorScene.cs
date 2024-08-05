@@ -15,16 +15,17 @@ public class ConstructorScene : UIScene
     private Container hitboxContainer = null;
     public ConstructorScene()
     {
+        var zoom = Globals.Camera.Zoom;
         Name = UIScenes.ConstructorScene;
 
-        var spawnContainer = new Container(new Vector2(1700, 300), 300, 400, Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(new Vector2(1200, 300), (int)(300 ), (int)(400 ), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
 
-        var button1 = new Button(Vector2.Zero, 280, 50, "InventoryBlock", ButtonActivationProperty.Switch);
-        var button2 = new Button(Vector2.Zero, 280, 50, "EditorBlock", ButtonActivationProperty.Switch);
-        var button3 = new Button(Vector2.Zero, 280, 50, "Block", ButtonActivationProperty.Switch);
-        var button4 = new Button(Vector2.Zero, 280, 50, "Platform", ButtonActivationProperty.Switch);
-        var button5 = new Button(Vector2.Zero, 280, 50, "MovingPlatform", ButtonActivationProperty.Switch);
-        var button6 = new Button(Vector2.Zero, 280, 50, "Hitbox", ButtonActivationProperty.Switch);
+        var button1 = new Button(Vector2.Zero, 280 , 50 , "InventoryBlock", ButtonActivationProperty.Switch);
+        var button2 = new Button(Vector2.Zero, 280 , 50 , "EditorBlock", ButtonActivationProperty.Switch);
+        var button3 = new Button(Vector2.Zero, 280 , 50 , "Block", ButtonActivationProperty.Switch);
+        var button4 = new Button(Vector2.Zero, 280 , 50 , "Platform", ButtonActivationProperty.Switch);
+        var button5 = new Button(Vector2.Zero, 280 , 50 , "MovingPlatform", ButtonActivationProperty.Switch);
+        var button6 = new Button(Vector2.Zero, 280 , 50 , "Hitbox", ButtonActivationProperty.Switch);
 
         spawnContainer.AddElements(button1,button2,button3,button4,button5,button6);
         AddElements(spawnContainer);
@@ -38,8 +39,8 @@ public class ConstructorScene : UIScene
         button2.OnClickEvent += () => { spawnContainer.SwitchButtons(button2); DespawnHitboxContainer(); };
         button3.OnClickEvent += () => { spawnContainer.SwitchButtons(button3); DespawnHitboxContainer(); };
         button4.OnClickEvent += () => { spawnContainer.SwitchButtons(button4); DespawnHitboxContainer(); };
-        button5.OnClickEvent += () => { spawnContainer.SwitchButtons(button4); DespawnHitboxContainer(); };
-        button6.OnClickEvent += () => { spawnContainer.SwitchButtons(button5); SpawnHitboxContainer(); };
+        button5.OnClickEvent += () => { spawnContainer.SwitchButtons(button5); DespawnHitboxContainer(); };
+        button6.OnClickEvent += () => { spawnContainer.SwitchButtons(button6); SpawnHitboxContainer(); };
 
         button1.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.InventoryBlock;
         button2.OnClickEvent += () => Globals.Constructor.SelectedEntity = EntityTypeEnum.EditorBlock;
@@ -59,7 +60,7 @@ public class ConstructorScene : UIScene
 
     private void SpawnHitboxContainer()
     {
-        hitboxContainer = new Container(new Vector2(1600, 800), 300, 240, Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        hitboxContainer = new Container(new Vector2(1200, 650), (int)(300), (int)(240), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);

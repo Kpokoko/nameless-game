@@ -83,13 +83,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             Position = new Vector2(176, 450);
         else
             Position = (Vector2)position;
-
-
-
         State = state;
         _verticalVelocity = velocity.Y;
         _horizontalVelocity = velocity.X;
-
         Colliders.Add(new KinematicAccurateCollider(this, 44,52));
         Colliders[0].Color = Color.Transparent;
 
@@ -344,6 +340,6 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Remove()
     {
-        throw new NotImplementedException();
+        _animationHandler.Remove();
     }
 }

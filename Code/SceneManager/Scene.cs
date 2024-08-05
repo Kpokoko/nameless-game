@@ -23,7 +23,6 @@ namespace nameless.Code.SceneManager
 
         public string Name { get; }
         private ContentManager _content;
-        //public bool ConstructorMode { get; private set; } = true;
 
         public Scene(string sceneName)
         {
@@ -34,7 +33,7 @@ namespace nameless.Code.SceneManager
 
         public static Storage GetSceneStorage(string sceneName)
         {
-            var entities = SceneLoader.LoadScene(sceneName);
+            var entities = SceneLoader.LoadScene(sceneName, true);
             return new Storage(entities);
         }
 

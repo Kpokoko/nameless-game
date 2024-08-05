@@ -97,7 +97,7 @@ public class CircleController : UIElement
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.DrawCircle(Bounds, 20, Globals.PrimaryColor, 3,0.9f);
-        spriteBatch.DrawPoint(Position + Direction * Bounds.Radius, Color.Red, 10, 0.92f);
+        spriteBatch.DrawCircle(Bounds, 20, Globals.PrimaryColor, 3,0.04f);
+        spriteBatch.DrawPoint(Position + Direction * Bounds.Radius, Color.Red, 10, 0.04f);
     }
 }

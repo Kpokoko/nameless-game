@@ -20,7 +20,7 @@ namespace nameless.Code.SceneManager
     public static class SceneLoader
     {
         private static Serializer _serialize = new Serializer();
-        public static List<IEntity> LoadScene(string sceneName)
+        public static List<IEntity> LoadScene(string sceneName, bool pizdec = false)
         {
             var readedData = new List<IEntity>();
             var sceneContent = new List<IEntity>();
@@ -40,6 +40,7 @@ namespace nameless.Code.SceneManager
                             vel = Globals.SceneManager.GetPlayer().InnerForce * 60; 
                             state = Globals.SceneManager.GetPlayer().State;
                         }
+                        if (pizdec) continue;
                         sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos),vel,state));
                         continue;
                     case "InventoryBlock":
@@ -110,14 +111,15 @@ namespace nameless.Code.SceneManager
             _serialize.SerializeScene(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
         }
 
-        public static Vector2 SwitchScene(HitboxTrigger trigger)
+        public static void SwitchScene(HitboxTrigger trigger, SceneChangerDirection direction, Func<Vector2> playerPosition)
         {
             SaveScene();
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
             Globals.Serializer.SavePosition(newLoc);
+            Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
             var data = Globals.Serializer.ReadVisitedScenes();
-            Globals.Serializer.LoadMinimap(currLoc, data);
+            Globals.Serializer.LoadMinimap(currLoc, data, newLoc);
             return newLoc;
         }
     }
