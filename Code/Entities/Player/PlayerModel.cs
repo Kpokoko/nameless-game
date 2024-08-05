@@ -59,6 +59,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private Vector2 _position;
     public PlayerState State { get; set; }
     public bool CanJump { get; set; }
+    public bool Sticky {  get; set; }
     public GameObjects.TimerTrigger Coyote { get; private set; }
     public GameObjects.TimerTrigger JumpBuffer { get; private set; }
     public Colliders Colliders { get; set; } = new();
@@ -116,21 +117,24 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
+        Sticky = false;
         if (State is PlayerState.Falling)
             StartCoyoteTimer();
 
         //var oldPos = Position;
+
+
+        OuterForce = Vector2.Zero;
+
+        while (Actions.TryPop(out var action))
+            action();
+
         if (State is PlayerState.Still)
         {
             CanJump = true;
             if (JumpBuffer.IsRunning)
                 TryJump();
         }
-
-        OuterForce = Vector2.Zero;
-
-        while (Actions.TryPop(out var action))
-            action();
 
         ApplyGravity();
 
@@ -259,12 +263,12 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Stick()
     {
-        CanJump = false;
+        Sticky = true;
     }
 
     public void TryJump()
     {
-        if (State is PlayerState.Still || (State is PlayerState.Falling && Coyote != null && Coyote.IsRunning && CanJump))
+        if ((State is PlayerState.Still && !Sticky) || (State is PlayerState.Falling && Coyote != null && Coyote.IsRunning && CanJump))
         {
             Jump();
         }

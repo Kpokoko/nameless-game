@@ -144,11 +144,15 @@ public class Engine : Game
 
         Globals.SceneManager.Update(gameTime);
 
+
+        Globals.KeyboardInputController.ProcessControls(gameTime);
+
+
         Globals.CollisionManager.Update(gameTime);
         Globals.TriggerManager.Update(gameTime);
 
+        //here was Keyboard upd
 
-        Globals.KeyboardInputController.ProcessControls(gameTime);
 
         Globals.UIManager.Update(gameTime);
 
