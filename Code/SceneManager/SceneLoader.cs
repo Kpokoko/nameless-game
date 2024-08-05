@@ -120,7 +120,7 @@ namespace nameless.Code.SceneManager
             Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
             var data = Globals.Serializer.ReadVisitedScenes();
             Globals.Serializer.LoadMinimap(currLoc, data, newLoc);
-            return newLoc;
+            //return newLoc;
         }
     }
 }

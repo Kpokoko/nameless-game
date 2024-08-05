@@ -21,6 +21,7 @@ namespace nameless.Engine;
 public class SceneManager
 {
     private Scene _currentScene;
+    private PlayerModel _goodOlPlaye;
     public Vector2 CurrentLocation;
 
     public void SaveScene()
@@ -31,7 +32,7 @@ public class SceneManager
     public void LoadScene(Vector2 currentLocation, EntryData entryData = null)
     {
         if (_currentScene != null)
-            RemoveScene();
+            _goodOlPlaye = GetPlayer();
         GC.Collect();
         GC.WaitForPendingFinalizers();
         var scene = Globals.Map[(int)currentLocation.X, (int)currentLocation.Y];
@@ -153,7 +154,7 @@ public class SceneManager
             .Select(e => e.Entity.Position)
             .Distinct();
 
-    public PlayerModel GetPlayer() => _currentScene != null  ? _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel : null;
+    public PlayerModel GetPlayer() => _currentScene != null  ? _currentScene.Entities.Where(item => item is PlayerModel).First() as PlayerModel : _goodOlPlaye != null ? _goodOlPlaye : null;
 
     public Storage GetStorage() => _currentScene.Storage;
 
