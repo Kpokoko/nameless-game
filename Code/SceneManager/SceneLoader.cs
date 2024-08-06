@@ -61,6 +61,9 @@ namespace nameless.Code.SceneManager
                     case "StickyBlock":
                         sceneContent.Add(new StickyBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
+                    case "TemporaryBlock":
+                        sceneContent.Add(new TemporaryBlock((int)data.TilePos.X, (int)data.TilePos.Y));
+                        continue;
                     default: break;
                 }
             }

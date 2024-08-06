@@ -105,6 +105,10 @@ public class Constructor : IGameObject
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                     _entities.Add(new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
+            case EntityTypeEnum.TemporaryBlock:
+                if (Globals.Inventory.TryGetEntity(SelectedEntity))
+                    _entities.Add(new TemporaryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                break;
             default:
                 break;
         }

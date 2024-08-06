@@ -21,7 +21,8 @@ public enum EntityTypeEnum
     Pivot,
     Platform,
     MovingPlatform,
-    FragileBlock
+    FragileBlock,
+    TemporaryBlock
 }
 
 public static class EntityType
