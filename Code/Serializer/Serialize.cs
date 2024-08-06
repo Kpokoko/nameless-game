@@ -116,6 +116,27 @@ public struct Serializer
         }
     }
 
+    public Dictionary<EntityTypeEnum, int> GetInventory()
+    {
+        using (var reader = new StreamReader(new FileStream("Inventory.xml", FileMode.Open)))
+        {
+            var serializer = new XmlSerializer(typeof(List<MyTuple<EntityTypeEnum, int>>));
+            var inventory = (List<MyTuple<EntityTypeEnum, int>>)serializer.Deserialize(reader);
+            var dict = inventory.ToDictionary(x => x.Item1, x => x.Item2);
+            return dict;
+        }
+    }
+
+    public void SaveInventory(Dictionary<EntityTypeEnum, int> inventory)
+    {
+        using (var writer = new StreamWriter(new FileStream("Inventory.xml", FileMode.Create)))
+        {
+            var serialize = new XmlSerializer(typeof(List<MyTuple<EntityTypeEnum, int>>));
+            var list = inventory.Select(x => new MyTuple<EntityTypeEnum, int>(x.Key, x.Value)).ToList();
+            serialize.Serialize(writer, list);
+        }
+    }
+
     //public void SaveMap()
     //{
     //    using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))

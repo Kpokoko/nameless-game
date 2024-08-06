@@ -12,6 +12,7 @@ using nameless.Code.Constructors;
 using System.IO;
 using System.Xml.Serialization;
 using nameless.UI;
+using nameless.Interfaces;
 
 namespace nameless.Engine;
 
@@ -47,6 +48,7 @@ public class Engine : Game
         Globals.AnimationManager = new AnimationManager();
         Globals.SceneManager = new SceneManager();
         Globals.Serializer = new Serialize.Serializer();
+        Globals.Inventory = new Inventory();
         if (Globals.IsDeveloperModeEnabled)
         {
             Globals.Constructor = new DeveloperConstructor();
@@ -66,6 +68,7 @@ public class Engine : Game
         _graphics.HardwareModeSwitch = false; // Убрать рамку окна
         _graphics.ApplyChanges();
         //HardReset();
+        
         base.Initialize();
     }
 
@@ -108,6 +111,7 @@ public class Engine : Game
         _player = Globals.SceneManager.GetPlayer();
         //Globals.KeyboardInputController = new KeyboardInputController(_player);
         Globals.KeyboardInputController.SetPlayer();
+        Globals.Inventory = new Inventory();
         Globals.UIManager.Clear();
     }
 
@@ -191,6 +195,11 @@ public class Engine : Game
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
         Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, 0, 0, visitedSceneStorage, Alignment.Center));
         Map.LoadMap();
+        var dict = new Dictionary<EntityTypeEnum, int>
+        {
+            { EntityTypeEnum.FragileBlock, 0 }
+        };
+        Globals.Serializer.SaveInventory(dict);
         Restart();
         Globals.UIManager.PopupMessage("Hard reset");
     }

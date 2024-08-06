@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMyTupleOfEntityTypeEnumInt32 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MyTupleOfEntityTypeEnumInt32>
+    <Item1>FragileBlock</Item1>
+    <Item2>0</Item2>
+  </MyTupleOfEntityTypeEnumInt32>
+</ArrayOfMyTupleOfEntityTypeEnumInt32>

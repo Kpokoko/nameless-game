@@ -1004,19 +1004,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>21</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>20</X>
       <Y>12</Y>
     </TilePos>
@@ -1058,6 +1045,58 @@
     <TilePos>
       <X>22</X>
       <Y>12</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>StickyBlock</TypeOfElement>
+    <TilePos>
+      <X>18</X>
+      <Y>10</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>StickyBlock</TypeOfElement>
+    <TilePos>
+      <X>18</X>
+      <Y>11</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>FragileBlock</TypeOfElement>
+    <TilePos>
+      <X>19</X>
+      <Y>11</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>FragileBlock</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>10</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -1476,6 +1515,19 @@
       <Y>11</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>EditorBlock</TypeOfElement>
+    <TilePos>
+      <X>21</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

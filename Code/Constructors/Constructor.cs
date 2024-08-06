@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using nameless.Code.SceneManager;
 using nameless.Controls;
@@ -7,12 +6,9 @@ using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;
 using nameless.UI;
-using nameless.UI.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nameless.Code.Constructors;
 
@@ -36,6 +32,9 @@ public class Constructor : IGameObject
         Globals.IsConstructorModeEnabled = Globals.IsConstructorModeEnabled ? false : true;
         if (Globals.IsConstructorModeEnabled)
         {
+            var playerPos = Globals.SceneManager.GetPlayer().Position;
+            Globals.SceneManager.LoadScene(Globals.SceneManager.CurrentLocation);
+            Globals.SceneManager.GetPlayer().Position = playerPos;
             Globals.UIManager.SetScene(UIScenes.ConstructorScene);
             Globals.UIManager.ShowMap();
             //Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]
@@ -47,6 +46,7 @@ public class Constructor : IGameObject
             Globals.UIManager.HideMap();
             var serializer = new Serializer();
             serializer.SerializeScene(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
+            serializer.SaveInventory(Globals.Inventory.GetInventory());
         }
     }
 
@@ -94,13 +94,16 @@ public class Constructor : IGameObject
         switch (SelectedEntity)
         {
             case EntityTypeEnum.InventoryBlock:
-                _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                if (Globals.Inventory.TryGetEntity(SelectedEntity))
+                    _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
             case EntityTypeEnum.StickyBlock:
-                _entities.Add(new StickyBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                if (Globals.Inventory.TryGetEntity(SelectedEntity))
+                    _entities.Add(new StickyBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
             case EntityTypeEnum.FragileBlock:
-                _entities.Add(new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                if (Globals.Inventory.TryGetEntity(SelectedEntity))
+                    _entities.Add(new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
                 break;
             default:
                 break;
@@ -109,6 +112,7 @@ public class Constructor : IGameObject
 
     public void DeleteBlock(TileGridEntity entity)
     {
+        Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _entities.Remove(entity as IEntity);
         (entity as IEntity).Remove();
     }

@@ -115,6 +115,7 @@ namespace nameless.Code.SceneManager
         {
             var entities = Globals.SceneManager.GetEntities();
             _serialize.SerializeScene(Globals.SceneManager.GetName(), entities.Select(x => x as ISerializable).ToList());
+            _serialize.SaveInventory(Globals.Inventory.GetInventory());
         }
 
         public static void SwitchScene(HitboxTrigger trigger, SceneChangerDirection direction, Func<Vector2> playerPosition)
