@@ -71,7 +71,7 @@ public class KeyboardInputController
             Globals.Constructor.SwitchMode();
         }
 
-        _player.Actions.Push(_player.UpdateNoclip);
+        _player.Actions.Add(_player.UpdateNoclip);
     }
 
     private void SwitchNoclip()
@@ -84,11 +84,11 @@ public class KeyboardInputController
     {
         if (isJumpKeyPressed)
         {
-            _player.Actions.Push(_player.TryJump);
+            _player.Actions.Add(_player.TryJump);
         }
         else if (_player.State == PlayerState.Jumping && !isJumpKeyHolding)
         {
-            _player.Actions.Push(_player.CancelJump);
+            _player.Actions.Add(_player.CancelJump);
         }
         else if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
         {
@@ -98,40 +98,40 @@ public class KeyboardInputController
 
         if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
         {
-            _player.Actions.Push(_player.MoveLeft);
+            _player.Actions.Add(_player.MoveLeft);
         }
         else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
         {
-            _player.Actions.Push(_player.MoveRight);
+            _player.Actions.Add(_player.MoveRight);
         }
         else
-            _player.Actions.Push(_player.Stop);
+            _player.Actions.Add(_player.Stop);
     }
 
     private void MeasureNoclip(KeyboardState keyboardState, bool isJumpKeyHolding)
     {
         if (isJumpKeyHolding)
         {
-            _player.Actions.Push(_player.Up);
+            _player.Actions.Add(_player.Up);
         }
         else if (keyboardState.IsKeyDown(Keys.S))
         {
-            _player.Actions.Push(_player.Down);
+            _player.Actions.Add(_player.Down);
         }
         else if (!isJumpKeyHolding && !keyboardState.IsKeyDown(Keys.S))
         {
-            _player.Actions.Push(_player.StopVertical);
+            _player.Actions.Add(_player.StopVertical);
         }
 
         if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
         {
-            _player.Actions.Push(_player.Left);
+            _player.Actions.Add(_player.Left);
         }
         else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
         {
-            _player.Actions.Push(_player.Right);
+            _player.Actions.Add(_player.Right);
         }
         else
-            _player.Actions.Push(_player.StopHorizontal);
+            _player.Actions.Add(_player.StopHorizontal);
     }
 }

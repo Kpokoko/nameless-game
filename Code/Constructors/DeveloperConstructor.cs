@@ -39,7 +39,7 @@ namespace nameless.Code.Constructors
                         mp.SetMovement(circle.Direction, circle.Length);
                     _entities.Add(mp);
                     break;
-                case EntityTypeEnum.HitboxTrigger:
+                case EntityTypeEnum.Pivot:
                     if (SelectedEntityProperty is not TriggerType) return;
                     var type = (TriggerType)SelectedEntityProperty;
                     if (type is TriggerType.None) return;

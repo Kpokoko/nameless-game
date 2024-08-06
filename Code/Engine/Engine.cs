@@ -42,6 +42,7 @@ public class Engine : Game
     protected override void Initialize()
     {
         LoadCollisions();
+        EntityType.ParseEntityTypeEnum();
         Globals.Engine = this;
         Globals.UIManager = new UIManager();
         Globals.KeyboardInputController = new KeyboardInputController();

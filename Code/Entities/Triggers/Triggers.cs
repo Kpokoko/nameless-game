@@ -39,6 +39,7 @@ public partial class HitboxTrigger
         }
         if (trigger == null)
             return null;
+        trigger.TriggerType = type;
         pivot.Colliders.Add(trigger);
         pivot.PrepareSerializationInfo();
         return trigger;
@@ -86,7 +87,6 @@ public partial class HitboxTrigger
             trigger.SetOffset(new Vector2(30, 0));
             trigger.DestinationScene = new Vector2(1, 0);
         }
-        trigger.TriggerType = TriggerType.SwitchScene;
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
         trigger.OnCollisionEvent += () =>  SceneLoader.SwitchScene(trigger, direction, playerPosition);
@@ -97,7 +97,6 @@ public partial class HitboxTrigger
     {
         HitboxTrigger trigger = new HitboxTrigger(pivot, 60, 60, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact,QuantityProperty.OneAtATime);
         var player = () => Globals.SceneManager.GetPlayer();
-        trigger.TriggerType = TriggerType.DamagePlayer;
 
         trigger.Color = Color.IndianRed;
         trigger.OnCollisionEvent += () => { if (Globals.IsNoclipEnabled) return; Globals.SceneManager.ReloadScene(); };

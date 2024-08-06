@@ -22,7 +22,7 @@ public class Constructor : IGameObject
     public EntityTypeEnum SelectedEntity { get; set; }
     public object SelectedEntityProperty { get; set; }
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
-    public int Layer { get { return (SelectedEntity is EntityTypeEnum.HitboxTrigger) ? 1 : 0; } }
+    public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : 0; } }
 
     public void Draw(SpriteBatch spriteBatch)
     { }
