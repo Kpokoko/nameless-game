@@ -126,7 +126,7 @@ public class SceneManager
         enters = GetEntities()
         .Where(e => e is Block)
         .Select(e => ((Block)e).TilePosition);
-        Globals.Constructor.SelectedEntity = EntityTypeEnum.HitboxTrigger;
+        Globals.Constructor.SelectedEntity = EntityTypeEnum.Pivot;
         Globals.Constructor.SelectedEntityProperty = TriggerType.SwitchScene;
         switch (entryData.Direction)
         {

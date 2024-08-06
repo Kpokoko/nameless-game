@@ -71,14 +71,15 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public Vector2 PullingForce { get; private set; }
 
 
-    public Stack<Action> Actions { get; set; } = new Stack<Action>();
+    public List<Action> Actions { get; set; } = new List<Action>();
+    private Dictionary<Action, int> ActionPriority = new();
     public Side? PreviousCollisionSide { get; set; } = null;
 
     private PlayerAnimationHandler _animationHandler;
 
     public SerializationInfo Info { get; set; } = new();
 
-    public PlayerModel(Texture2D spriteSheet, Vector2? position = null, Vector2 velocity = new Vector2(), PlayerState state = PlayerState.Falling) 
+    public PlayerModel(Texture2D spriteSheet, Vector2? position = null, Vector2 velocity = new Vector2(), PlayerState state = PlayerState.Falling)
     {
         if (position == null)
             Position = new Vector2(176, 450);
@@ -87,7 +88,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         State = state;
         _verticalVelocity = velocity.Y;
         _horizontalVelocity = velocity.X;
-        Colliders.Add(new KinematicAccurateCollider(this, 44,52));
+        Colliders.Add(new KinematicAccurateCollider(this, 44, 52));
         Colliders[0].Color = Color.Transparent;
 
         PrepareSerializationInfo();
@@ -98,6 +99,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         JumpBuffer = new GameObjects.TimerTrigger(200, GameObjects.SignalProperty.Once);
 
         _animationHandler = new PlayerAnimationHandler(this);
+
+        SetActionsPriority();
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -117,6 +120,10 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
+        Actions = Actions
+            .OrderByDescending(a => ActionPriority.ContainsKey(a) ? ActionPriority[a] : 0)
+            .ToList();
+
         Sticky = false;
         if (State is PlayerState.Falling)
             StartCoyoteTimer();
@@ -126,8 +133,12 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
         OuterForce = Vector2.Zero;
 
-        while (Actions.TryPop(out var action))
+        while (Actions.Count > 0)
+        {
+            var action = Actions[^1];
+            Actions.RemoveAt(Actions.Count - 1);
             action();
+        }
 
         if (State is PlayerState.Still)
         {
@@ -215,9 +226,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         {
             var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
             if (collisionSide is Side.Bottom)
-                Actions.Push(() => Pull(platform.Velocity));
+                Actions.Add(() => Pull(platform.Velocity));
             else
-                Actions.Push(() => Push(platform.Velocity));
+                Actions.Add(() => Push(platform.Velocity));
         }
     }
 
@@ -225,7 +236,11 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     {
         if (collisionSide == Side.Bottom && ((Collider)collisionInfo.Other).Entity is StickyBlock)
         {
-            Actions.Push(() => Stick());
+            Actions.Add(() => Stick());
+        }
+        else if (Sticky)
+        {
+            Actions.Add(() => Unstick());
         }
     }
 
@@ -264,6 +279,11 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public void Stick()
     {
         Sticky = true;
+    }
+
+    public void Unstick()
+    {
+        Sticky = false;
     }
 
     public void TryJump()
@@ -364,5 +384,18 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     public void Remove()
     {
         _animationHandler.Remove();
+    }
+
+    private void SetActionsPriority()
+    {
+        ActionPriority[TryJump] = 6;
+        ActionPriority[CancelJump] = 5;
+
+        ActionPriority[MoveLeft] = 4;
+        ActionPriority[MoveRight] = 4;
+
+        ActionPriority[Stop] = 4;
+
+        ActionPriority[Stick] = 7;
     }
 }

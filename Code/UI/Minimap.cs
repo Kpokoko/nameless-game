@@ -34,7 +34,7 @@ public class Minimap : UIElement, IEntity
             for (var j = 0; j < _mapArray.GetLength(1); j++)
             {
                 var entity = _mapArray[i,j];
-                if (entity is EntityTypeEnum.None || entity is EntityTypeEnum.HitboxTrigger) continue;
+                if (entity is EntityTypeEnum.None || entity is EntityTypeEnum.Pivot) continue;
                 var rect = new Rectangle(i * TileSize + (int)Position.X, j * TileSize + (int)Position.Y, TileSize, TileSize);
 
                 switch (entity)
