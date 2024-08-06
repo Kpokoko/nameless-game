@@ -124,8 +124,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             .OrderByDescending(a => ActionPriority.ContainsKey(a) ? ActionPriority[a] : 0)
             .ToList();
 
-        Sticky = false;
-        if (State is PlayerState.Falling)
+        if (State is PlayerState.Falling && !Sticky)
             StartCoyoteTimer();
 
         //var oldPos = Position;
@@ -133,12 +132,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
         OuterForce = Vector2.Zero;
 
-        while (Actions.Count > 0)
-        {
-            var action = Actions[^1];
-            Actions.RemoveAt(Actions.Count - 1);
-            action();
-        }
+        foreach (var act in Actions)
+            act();
+        Actions.Clear();
 
         if (State is PlayerState.Still)
         {
@@ -278,6 +274,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Stick()
     {
+        if (Sticky) 
+            return;
         Sticky = true;
     }
 

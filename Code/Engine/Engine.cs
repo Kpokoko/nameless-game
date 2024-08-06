@@ -147,10 +147,11 @@ public class Engine : Game
 
         Globals.AnimationManager.Update(gameTime);
 
+        Globals.KeyboardInputController.ProcessControls(gameTime);
+
         Globals.SceneManager.Update(gameTime);
 
 
-        Globals.KeyboardInputController.ProcessControls(gameTime);
 
 
         Globals.CollisionManager.Update(gameTime);
