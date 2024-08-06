@@ -13,7 +13,7 @@ namespace nameless.Entity
     {
         public FragileBlock(int x, int y) : base(x, y)
         {
-            var trigger = new HitboxTrigger(this, 64, 64, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.Continuous);
+            var trigger = new HitboxTrigger(this, 64, 64, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
             trigger.OnCollisionExitEvent += () =>
             { TimerTrigger.DelayEvent(250, () => { if (!trigger.isActivated) Break(); });
             };
