@@ -28,7 +28,8 @@ public class ConstructorScene : UIScene
         var button6 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Pivot);
         var button7 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.StickyBlock);
         var button8 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.FragileBlock);
-        spawnContainer.AddElements(button1,button2,button3,button4,button5,button6,button7,button8);
+        var button9 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.TemporaryBlock);
+        spawnContainer.AddElements(button1,button2,button3,button4,button5,button6,button7,button8,button9);
         AddElements(spawnContainer);
 
 
@@ -50,6 +51,7 @@ public class ConstructorScene : UIScene
         button6.SetKeyboardKey(Keys.D6);
         button7.SetKeyboardKey(Keys.D7);
         button8.SetKeyboardKey(Keys.D8);
+        button9.SetKeyboardKey(Keys.D9);
 
     }
 
