@@ -86,7 +86,8 @@ public class UIManager
             c.Remove();
         Popups.Clear();
         var label = new Label(new Vector2(), message, Alignment.CenterLeft);
-        var container = new Container(new Vector2(100,40), label.Bounds.Width,label.Bounds.Height,Alignment.CenterLeft,FlexDirection.Horizontal, new Vector2(10,10));
+        var container = new Container(new Vector2(100,40), (int)label.Bounds.Width,(int)label.Bounds.Height,FlexDirection.Horizontal, new Vector2(10,10));
+        container.Alignment = Alignment.CenterLeft;
         container.AddElements(label);
         Popups.Add(container);
         TimerTrigger.DelayEvent(3000, () => 

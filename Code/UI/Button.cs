@@ -10,24 +10,25 @@ using MonoGame.Extended;
 using nameless.Controls;
 using Microsoft.Xna.Framework.Input;
 using System.Reflection.Emit;
+using nameless.GameObjects;
 
 namespace nameless.UI;
 
-public class Button : UIElement, IEntity
+public class Button : UIElement
 {
     public event Action OnClickEvent;
     //private Rectangle Bounds { get; set; }
 
-    public Label Label { get; set; }
     public bool Pressed { get; set; }
     public bool Activated { get; set; } = false;
     public ButtonActivationProperty ActivatedProperty { get; set; }
     private Keys Key { get; set; }
+    private CRectangle BorderBounds;
 
     public Button
         (Vector2 position, float width, float height, string text = null, 
-        ButtonActivationProperty property = ButtonActivationProperty.Click, Alignment align = Alignment.Center) 
-        : base(position, width, height, align)
+        ButtonActivationProperty property = ButtonActivationProperty.Click) 
+        : base(position, width, height)
     {
         Globals.UIManager.Buttons.Add(this);
 
@@ -41,9 +42,8 @@ public class Button : UIElement, IEntity
     /// </summary>
     public void SetText(Label label)
     {
-        label.ParentPosition = Position;
-        label.UpdatePosition();
-        Label = label;
+        label.ParentPosition = AbsolutePosition;
+        Elements.Add(label);
     }
 
     public void SetKeyboardKey(Keys key)
@@ -72,16 +72,8 @@ public class Button : UIElement, IEntity
         Globals.UIManager.Buttons.Remove(this);
         if (Globals.UIManager.KeyboardButtons.ContainsKey(Key))
             Globals.UIManager.KeyboardButtons.Remove(Key);
-        if (Label != null)
-            Label.Remove();
-    }
-
-    public override void UpdatePosition()
-    {
-        base.UpdatePosition();
-        if (Label == null) return;
-        Label.ParentPosition = AbsolutePosition;
-        Label.UpdatePosition();
+        if (Elements.Any())
+            Elements[0].Remove();
     }
 
     public void Update(GameTime gameTime)
@@ -100,11 +92,17 @@ public class Button : UIElement, IEntity
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var offset = !Pressed ? Point.Zero : new Point(0,3);
-        var boundsSize = (int)(6 / Globals.Camera.Zoom);
-        var fillRect = new Rectangle(Bounds.Location + offset,Bounds.Size);
-        var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint() + offset, Bounds.Size + new Point(boundsSize*2, boundsSize*2));
-        spriteBatch.DrawRectangle(boundsRect, !Pressed ? Color.Black : Color.Gray,boundsSize, 0.02f);
-        spriteBatch.FillRectangle(fillRect, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor, 0.02f);
+        var offset = !Pressed ? Vector2.Zero : new Vector2(0,3);
+
+        var boundsSize = 5;
+        var fillRect = Bounds.RectangleF;
+        if (BorderBounds == null)
+            BorderBounds = new CRectangle(Bounds.Position - new Vector2(boundsSize, boundsSize) + offset, Bounds.Size + new Vector2(boundsSize*2, boundsSize*2));
+
+        Bounds.Position = AbsolutePosition + offset;
+        BorderBounds.Position = AbsolutePosition + offset;
+
+        spriteBatch.DrawRectangle(BorderBounds.RectangleF, !Pressed ? Color.Black : Color.Gray,boundsSize, 0.02f);
+        spriteBatch.FillRectangle(Bounds.RectangleF, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor, 0.02f);
     }
 }

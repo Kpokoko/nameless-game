@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nameless.Tiles;
+using MonoGame.Extended;
 
 namespace nameless.Controls;
 
@@ -22,7 +23,7 @@ public static class MouseInputController
     public static Vector2 PreviousMousePos { get; private set; } = new Vector2(0, 0);
     public static Vector2 PreviousMouseTilePos { get { return Tile.GetPosInTileCoordinats(PreviousTransformedMousePos); } }
 
-    public static Rectangle MouseBounds { get { return new Rectangle((int)MousePos.X, (int)MousePos.Y, 1, 1); } }
+    public static RectangleF MouseBounds { get { return new RectangleF(MousePos.X, MousePos.Y, 1, 1); } }
 
     public static bool OnUIElement {  get; private set; }
 

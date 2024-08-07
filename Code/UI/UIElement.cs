@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using nameless.Controls;
+using nameless.GameObjects;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,43 +13,54 @@ namespace nameless.UI;
 
 public abstract class UIElement
 {
-    protected UIElement(Vector2 position, float width, float height, Alignment align = Alignment.Center)
+    protected UIElement(Vector2 position, float width, float height)
     {
         Size = new Vector2(width, height);
-        Alignment = align;
-        Position = position;
+        Bounds = new CRectangle(position, Size);
+        RelativePosition = position;
     }
 
-    protected UIElement(Vector2 position, Vector2 size, Alignment align = Alignment.Center) : this(position, (int)size.X, (int)size.Y, align)
+    protected UIElement(Vector2 position, Vector2 size) : this(position, (int)size.X, (int)size.Y)
     {}
 
-    public virtual Vector2 Position
+    private Vector2 _relativePosition;
+    public virtual Vector2 RelativePosition
     {
-        get { return _position; }
-        set { _position = value;
-            if (Size == null) throw new ArgumentNullException(nameof(Size));
-            Bounds = new Rectangle((_position + _offset + ParentPosition + Globals.Offset((int)Size.X, (int)Size.Y)).ToPoint(),new Point((int)Size.X,(int)Size.Y));
+        get { return _relativePosition; }
+        set 
+        { 
+            _relativePosition = value;
+            Bounds.Position = AbsolutePosition;
+            foreach (var e in Elements)
+                e.ParentPosition = AbsolutePosition;
         }
     }
-    private Vector2 _position;
-    public Vector2 ParentPosition { get; set; }
-    public Vector2 AbsolutePosition { get { return Position + ParentPosition; } }
-    private Vector2 Size { get; set; }
-    public Vector2 TilePosition { get; set; }
-    public int DrawOrder => 1;
-    public Rectangle Bounds { get; set; }
-    protected Alignment Alignment { 
-        set {
-            if (value == Alignment.Center) _offset = Vector2.Zero;
-            if (value == Alignment.CenterLeft) _offset = -Globals.Offset((int)Size.X, (int)Size.Y).SetY(0);
-        } }
-    public Vector2 _offset { get; set; }
-    public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
-
-    public virtual void UpdatePosition()
-    {
-        Position = Position;
+    private Vector2 _parentPosition;
+    public Vector2 ParentPosition {
+        get { return _parentPosition; }
+        set 
+        { 
+            _parentPosition = value;
+            Bounds.Position = AbsolutePosition;
+            foreach (var e in Elements)
+                e.ParentPosition = AbsolutePosition;
+        }
     }
+    public Vector2 AbsolutePosition { get { return RelativePosition + ParentPosition + Offset; } }
+    public List<UIElement> Elements { get; set; } = new();
+    protected Vector2 Size { get; set; }
+    public int DrawOrder => 1;
+    public CRectangle Bounds { get; set; }
+    public Vector2 Offset { get; set; }
+    public Alignment Alignment
+    {
+        set
+        {
+            if (value == Alignment.Center) Offset = Vector2.Zero;
+            if (value == Alignment.CenterLeft) Offset = -Globals.Offset((int)Size.X, (int)Size.Y).SetY(0);
+        }
+    }
+    public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds.RectangleF); } }
 
     public abstract void Remove();
 }

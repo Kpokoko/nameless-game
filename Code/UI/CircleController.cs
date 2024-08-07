@@ -12,7 +12,7 @@ namespace nameless.UI;
 public class CircleController : UIElement
 {
     new private CircleF Bounds {  get; set; }
-    override public Vector2 Position { get; set; }
+    override public Vector2 RelativePosition { get; set; }
     new public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
     public Vector2 Direction 
     {
@@ -65,7 +65,7 @@ public class CircleController : UIElement
 
         if (!MouseInputController.LeftButton.IsPressed) return;
 
-        var dir = MouseInputController.MousePos - Position;
+        var dir = MouseInputController.MousePos - RelativePosition;
         dir.Normalize();
         if (Globals.KeyboardInputController.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             dir = AllignToAxis(dir);
@@ -98,6 +98,6 @@ public class CircleController : UIElement
     public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.DrawCircle(Bounds, 20, Globals.PrimaryColor, 3,0.04f);
-        spriteBatch.DrawPoint(Position + Direction * Bounds.Radius, Color.Red, 10, 0.04f);
+        spriteBatch.DrawPoint(RelativePosition + Direction * Bounds.Radius, Color.Red, 10, 0.04f);
     }
 }

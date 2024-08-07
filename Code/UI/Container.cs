@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using nameless.Controls;
+using nameless.GameObjects;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public class Container : UIElement, IEntity
+public class Container : UIElement
 {
     private FlexDirection _flexDirection {  get; set; }
     private Vector2 _padding { get; set; }
-    public List<UIElement> Elements { get; set; } = new();
-    public Container(Vector2 position, int width, int height, Alignment align = Alignment.Center, FlexDirection flexDir = FlexDirection.Horizontal, Vector2 padding = new Vector2()) : base(position, width, height, align)
+    private CRectangle BorderBounds;
+    public Container(Vector2 position, int width, int height, 
+        FlexDirection flexDir = FlexDirection.Horizontal, Vector2 padding = new Vector2()) : base(position, width, height)
     {
         _flexDirection = flexDir;
         _padding = padding;
@@ -31,6 +33,7 @@ public class Container : UIElement, IEntity
     public void AddElements(params UIElement[] elements)
     {
         Elements = Elements.Concat(elements).ToList();
+
         PlaceElements();
     }
 
@@ -38,8 +41,7 @@ public class Container : UIElement, IEntity
     {
         if (Elements.Count == 1)
         {
-            Elements[0].ParentPosition = Position;
-            Elements[0].UpdatePosition();
+            Elements[0].ParentPosition = AbsolutePosition;
             return;
         }
 
@@ -53,7 +55,6 @@ public class Container : UIElement, IEntity
             for (int i = 0; i < Elements.Count; i++)
             {
                 Elements[i].ParentPosition = new Vector2(x, y + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Height / 2);
-                Elements[i].UpdatePosition();
             }
         }
         else if (_flexDirection == FlexDirection.Horizontal)
@@ -64,7 +65,6 @@ public class Container : UIElement, IEntity
             for (int i = 0; i < Elements.Count; i++)
             {
                 Elements[i].ParentPosition = new Vector2(x + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Width / 2, y);
-                Elements[i].UpdatePosition();
             }
         }
         //var spaceBetween = (Bounds.Height - _padding.Y * 2) / (Elements.Count + 1);
@@ -108,10 +108,12 @@ public class Container : UIElement, IEntity
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var boundsSize = (int)(6 / Globals.Camera.Zoom);
-        var fillRect = new Rectangle(Bounds.Location, Bounds.Size);
-        var boundsRect = new Rectangle(Bounds.Location - (new Vector2(boundsSize, boundsSize)).ToPoint(), Bounds.Size + new Point(boundsSize * 2, boundsSize * 2));
-        spriteBatch.DrawRectangle(boundsRect, Color.Black, boundsSize, 0.01f);
-        spriteBatch.FillRectangle(fillRect, Globals.PrimaryColor, 0.01f);
+        var boundsSize = 5;
+        var fillRect = Bounds.RectangleF;
+        if (BorderBounds == null)
+            BorderBounds = new CRectangle(Bounds.Position, Bounds.Size + new Vector2(boundsSize * 2, boundsSize * 2));
+
+        spriteBatch.DrawRectangle(BorderBounds.RectangleF, Color.Black, boundsSize, 0.01f);
+        spriteBatch.FillRectangle(Bounds.RectangleF, Globals.PrimaryColor, 0.01f);
     }
 }

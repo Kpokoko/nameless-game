@@ -13,15 +13,15 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public class Minimap : UIElement, IEntity
+public class Minimap : UIElement
 {
     private EntityTypeEnum[,] _mapArray;
     public static int TileSize = 6;
-    public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array, Alignment align) : base(position, width, height, align)
+    public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array) : base(position, width, height)
     {
         position.X = position.X * Storage.StorageWidth * TileSize + Globals.Engine.Window.ClientBounds.Width / 2 / Globals.Camera.Zoom - TileSize * 23 / 2;
         position.Y = position.Y * Storage.StorageHeight * TileSize + Globals.Engine.Window.ClientBounds.Height / 2 / Globals.Camera.Zoom - TileSize * 13 / 2;
-        base.Position = position;
+        base.RelativePosition = position;
         _mapArray = array;
 
         Globals.UIManager.Minimaps.Add(this);
@@ -35,7 +35,7 @@ public class Minimap : UIElement, IEntity
             {
                 var entity = _mapArray[i,j];
                 if (entity is EntityTypeEnum.None || entity is EntityTypeEnum.Pivot) continue;
-                var rect = new Rectangle(i * TileSize + (int)Position.X, j * TileSize + (int)Position.Y, TileSize, TileSize);
+                var rect = new Rectangle(i * TileSize + (int)AbsolutePosition.X, j * TileSize + (int)AbsolutePosition.Y, TileSize, TileSize);
 
                 switch (entity)
                 {
