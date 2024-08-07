@@ -30,20 +30,28 @@ public abstract class UIElement
         set 
         { 
             _relativePosition = value;
-            Bounds.Position = AbsolutePosition;
-            foreach (var e in Elements)
-                e.ParentPosition = AbsolutePosition;
+            OnPositionChange();
         }
     }
+
     private Vector2 _parentPosition;
     public Vector2 ParentPosition {
         get { return _parentPosition; }
         set 
         { 
             _parentPosition = value;
-            Bounds.Position = AbsolutePosition;
-            foreach (var e in Elements)
-                e.ParentPosition = AbsolutePosition;
+            OnPositionChange();
+        }
+    }
+
+    public Vector2 _offset;
+    public Vector2 Offset
+    {
+        get { return _offset; }
+        set
+        {
+            _offset = value;
+            OnPositionChange();
         }
     }
     public Vector2 AbsolutePosition { get { return RelativePosition + ParentPosition + Offset; } }
@@ -51,7 +59,15 @@ public abstract class UIElement
     protected Vector2 Size { get; set; }
     public int DrawOrder => 1;
     public CRectangle Bounds { get; set; }
-    public Vector2 Offset { get; set; }
+
+
+    private void OnPositionChange()
+    {
+        Bounds.Position = AbsolutePosition;
+        foreach (var e in Elements)
+            e.ParentPosition = AbsolutePosition;
+    }
+
     public Alignment Alignment
     {
         set

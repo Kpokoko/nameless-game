@@ -88,6 +88,9 @@ public class Button : UIElement
         {
             if (ActivatedProperty is ButtonActivationProperty.Click) Activated = false;
         }
+
+        if (Hovered)
+            MouseInputController.SetOnUIState(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)

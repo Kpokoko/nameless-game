@@ -17,7 +17,11 @@ public class Container : UIElement
 {
     private FlexDirection _flexDirection {  get; set; }
     private Vector2 _padding { get; set; }
+
     private CRectangle BorderBounds;
+
+    private bool Grabbed;
+
     public Container(Vector2 position, int width, int height, 
         FlexDirection flexDir = FlexDirection.Horizontal, Vector2 padding = new Vector2()) : base(position, width, height)
     {
@@ -45,6 +49,9 @@ public class Container : UIElement
             return;
         }
 
+        foreach (var element in Elements)
+            element.ParentPosition = AbsolutePosition;
+
         float x; float y;
         float justifiedSpaceBetween; float spaceBetween;
         if (_flexDirection == FlexDirection.Vertical)
@@ -54,7 +61,7 @@ public class Container : UIElement
             justifiedSpaceBetween = (Bounds.Height - _padding.Y * 2 - Elements[0].Bounds.Height * Elements.Count) / (Elements.Count + 1);
             for (int i = 0; i < Elements.Count; i++)
             {
-                Elements[i].ParentPosition = new Vector2(x, y + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Height / 2);
+                Elements[i].Offset = new Vector2(x, y + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Height / 2) - AbsolutePosition;
             }
         }
         else if (_flexDirection == FlexDirection.Horizontal)
@@ -64,7 +71,7 @@ public class Container : UIElement
             justifiedSpaceBetween = (Bounds.Width - _padding.X * 2 - Elements[0].Bounds.Width * Elements.Count) / (Elements.Count + 1);
             for (int i = 0; i < Elements.Count; i++)
             {
-                Elements[i].ParentPosition = new Vector2(x + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Width / 2, y);
+                Elements[i].Offset = new Vector2(x + justifiedSpaceBetween * (i + 1) + ((i + 1) * 2 - 1) * Elements[0].Bounds.Width / 2, y) - AbsolutePosition;
             }
         }
         //var spaceBetween = (Bounds.Height - _padding.Y * 2) / (Elements.Count + 1);
@@ -100,10 +107,31 @@ public class Container : UIElement
 
     public void Update(GameTime gameTime)
     {
-        if (Hovered)
+        if (MouseInputController.LeftButton.IsJustReleased)
         {
-            MouseInputController.SetOnUIState();
+            Grabbed = false;
         }
+
+        if (Grabbed)
+            Drag();
+
+        if (!Hovered) return;
+        MouseInputController.SetOnUIState(this);
+
+
+        if (MouseInputController.OnUIElementsList.Count == 1
+            && MouseInputController.OnUIElementsList.Contains(this)
+            && MouseInputController.LeftButton.IsJustPressed)
+        {
+            Grabbed = true;
+        }
+    }
+
+    private void Drag()
+    {
+        var delta = MouseInputController.MousePos - MouseInputController.PreviousMousePos;
+        RelativePosition += delta;
+        BorderBounds.Position += delta;
     }
 
     public void Draw(SpriteBatch spriteBatch)

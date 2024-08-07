@@ -85,7 +85,7 @@ public class UIManager
         foreach (var c in Popups)
             c.Remove();
         Popups.Clear();
-        var label = new Label(new Vector2(), message, Alignment.CenterLeft);
+        var label = new Label(new Vector2(), message);
         var container = new Container(new Vector2(100,40), (int)label.Bounds.Width,(int)label.Bounds.Height,FlexDirection.Horizontal, new Vector2(10,10));
         container.Alignment = Alignment.CenterLeft;
         container.AddElements(label);

@@ -51,7 +51,7 @@ public class CircleController : UIElement
             return;
         }
 
-        MouseInputController.SetOnUIState();
+        MouseInputController.SetOnUIState(this);
 
         if (MouseInputController.RightButton.IsJustReleased)
         {
