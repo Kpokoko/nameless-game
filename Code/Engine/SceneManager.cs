@@ -53,7 +53,10 @@ public class SceneManager
         _currentScene = new Scene(sceneName);
         if (entryData != null)
         {
-            GetPlayer().Position = GetEntryPosition(entryData);
+            var tempPos = GetEntryPosition(entryData);
+            if (entryData.Direction is SceneChangerDirection.top)
+                GetPlayer().Position = new Vector2(tempPos.X, tempPos.Y - 60);
+            else GetPlayer().Position = tempPos;
             GetPlayer().PrepareSerializationInfo();
         }
 
@@ -134,7 +137,7 @@ public class SceneManager
                 newEnterPos.Y = enters.Select(e => e.Y).Max();
                 break;
             case SceneChangerDirection.bottom:
-                newEnterPos.Y = enters.Select(e => e.Y).Min();
+                newEnterPos.Y = enters.Select(e => e.Y).Min() + 65;
                 break;
             case SceneChangerDirection.left:
                 newEnterPos.X = enters.Select(e => e.X).Max();

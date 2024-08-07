@@ -133,7 +133,7 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>0</X>
+      <X>6</X>
       <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -303,19 +303,6 @@
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>19</X>
-      <Y>0</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
-      <X>6</X>
       <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -809,19 +796,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>6</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>8</X>
       <Y>12</Y>
     </TilePos>
@@ -1054,6 +1028,19 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
+    <TypeOfElement>Platform</TypeOfElement>
+    <TilePos>
+      <X>6</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
       <X>7</X>
@@ -1125,6 +1112,32 @@
       <Y>11</Y>
     </TilePos>
     <TriggerType>Disposable</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>6</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Pivot</TypeOfElement>
+    <TilePos>
+      <X>6</X>
+      <Y>0</Y>
+    </TilePos>
+    <TriggerType>SwitchScene</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

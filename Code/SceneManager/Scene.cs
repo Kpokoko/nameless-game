@@ -27,6 +27,7 @@ namespace nameless.Code.SceneManager
         public Scene(string sceneName)
         {
             Entities = SceneLoader.LoadScene(sceneName);
+            //SceneLoader.SaveScene();
             Storage = new(Entities);
             Name = sceneName;
         }

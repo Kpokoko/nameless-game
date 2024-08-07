@@ -56,13 +56,9 @@ public class KeyboardInputController
             MeasureMovement(KeyboardState, isJumpKeyPressed, isJumpKeyHolding);
         }
 
-
-
-
         if (Keyboard.GetState().IsKeyDown(Keys.N) && !PreviousKeyboardState.IsKeyDown(Keys.N) && Globals.IsDeveloperModeEnabled)
         {
             SwitchNoclip();
-
         }
 
         if ((Globals.OnEditorBlock || Globals.IsConstructorModeEnabled || Globals.IsDeveloperModeEnabled) 
@@ -77,6 +73,7 @@ public class KeyboardInputController
     private void SwitchNoclip()
     {
         Globals.IsNoclipEnabled = Globals.IsNoclipEnabled ? false : true;
+        //Globals.SceneManager.GetPlayer().Velocity = Vector2.Zero;
         Globals.UIManager.PopupMessage("Noclip switch");
     }
 

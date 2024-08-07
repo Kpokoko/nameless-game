@@ -4,7 +4,7 @@
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
       <X>21</X>
-      <Y>12</Y>
+      <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -1567,6 +1567,19 @@
       <Y>3</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>Platform</TypeOfElement>
+    <TilePos>
+      <X>20</X>
+      <Y>12</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

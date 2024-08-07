@@ -128,6 +128,7 @@ namespace nameless.Code.SceneManager
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
             Globals.Serializer.SavePosition(newLoc);
             Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
+            Globals.SceneManager.SaveScene();
             var data = Globals.Serializer.ReadVisitedScenes();
             Globals.Serializer.LoadMinimap(currLoc, data, newLoc);
             //return newLoc;
