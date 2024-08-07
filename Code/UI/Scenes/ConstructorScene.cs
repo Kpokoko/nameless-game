@@ -18,7 +18,7 @@ public class ConstructorScene : UIScene
         var zoom = Globals.Camera.Zoom;
         Name = UIScenes.ConstructorScene;
 
-        var spawnContainer = new Container(new Vector2(1200, 300), (300 ), (450 ), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(new Vector2(1200, 300), (300 ), (600 ), FlexDirection.Vertical, Vector2.Zero);
 
         var button1 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.InventoryBlock);
         var button2 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.EditorBlock);
@@ -57,7 +57,7 @@ public class ConstructorScene : UIScene
 
     private void SpawnHitboxContainer()
     {
-        hitboxContainer = new Container(new Vector2(1200, 650), (int)(300), (int)(240), Alignment.Center, FlexDirection.Vertical, Vector2.Zero);
+        hitboxContainer = new Container(new Vector2(1200, 700), (int)(300), (int)(240), FlexDirection.Vertical, Vector2.Zero);
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);

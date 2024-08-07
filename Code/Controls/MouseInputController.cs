@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nameless.Tiles;
+using MonoGame.Extended;
+using nameless.UI;
 
 namespace nameless.Controls;
 
@@ -22,11 +24,13 @@ public static class MouseInputController
     public static Vector2 PreviousMousePos { get; private set; } = new Vector2(0, 0);
     public static Vector2 PreviousMouseTilePos { get { return Tile.GetPosInTileCoordinats(PreviousTransformedMousePos); } }
 
-    public static Rectangle MouseBounds { get { return new Rectangle((int)MousePos.X, (int)MousePos.Y, 1, 1); } }
+    public static RectangleF MouseBounds { get { return new RectangleF(MousePos.X, MousePos.Y, 1, 1); } }
 
     public static bool OnUIElement {  get; private set; }
 
-    private static bool OnUIBuffer { get; set; }
+    private static List<UIElement> OnUIBuffer { get; set; } = new();
+    public static List<UIElement> OnUIElementsList { get; set; } = new();
+
 
     public static bool IsJustPressed {
         get { return LeftButton.IsJustPressed || RightButton.IsJustPressed; }}
@@ -49,15 +53,17 @@ public static class MouseInputController
         MousePos = new Vector2(MouseState.X, MouseState.Y) / Globals.Camera.Zoom;
 
         OnUIElement = false;
-        if (OnUIBuffer)
+        OnUIElementsList.Clear();
+        if (OnUIBuffer.Any())
         {
             OnUIElement = true;
-            OnUIBuffer = false;
+            OnUIElementsList = OnUIBuffer.ToList();
+            OnUIBuffer.Clear();
         }
     }
 
-    public static void SetOnUIState()
+    public static void SetOnUIState(UIElement element)
     {
-        OnUIBuffer = true;
+        OnUIBuffer.Add(element);
     }
 }

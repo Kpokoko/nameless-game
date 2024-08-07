@@ -171,7 +171,7 @@ public class Map
                 var visitedSceneStorage = Scene.GetSceneStorage(coolNameNAME).ConvertToEnum();
                 coolName.Minimap = new Minimap(
                     new Vector2(coolName.Coordinates.X, coolName.Coordinates.Y ),
-                    0, 0, visitedSceneStorage, Alignment.Center);
+                    0, 0, visitedSceneStorage);
                 visitedSceneStorage = null;
                 GC.Collect();
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace nameless.UI;
 
-public class Label : UIElement, IEntity
+public class Label : UIElement
 {
     public string Text { get; set; }
     public SpriteFont Font { get; set; } = Globals.UIManager.Font;
 
-    public Label(Vector2 position, string text, Alignment align = Alignment.Center) : base(position, Globals.UIManager.Font.MeasureString(text), align)
+    public Label(Vector2 position, string text, Alignment align = Alignment.Center) : base(position, Globals.UIManager.Font.MeasureString(text))
     {
+        Alignment = align;
         Text = text;
         Globals.UIManager.Labels.Add(this);
     }
@@ -32,6 +34,6 @@ public class Label : UIElement, IEntity
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.DrawString(Font, Text, (Bounds.Location).ToVector2(), Color.Black,0,Vector2.Zero,1,SpriteEffects.None,0.03f);
+        spriteBatch.DrawString(Font, Text, (Bounds.RectangleF.Position), Color.Black,0,Vector2.Zero,1,SpriteEffects.None,0.03f);
     }
 }

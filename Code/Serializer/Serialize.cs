@@ -100,7 +100,7 @@ public struct Serializer
             if (!data.Contains(name))
             {
                 data.Add(name);
-                Globals.UIManager.Minimaps.Add(new Minimap(newPos, 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum(), Alignment.Center));
+                Globals.UIManager.Minimaps.Add(new Minimap(newPos, 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum()));
             }
             serialize.Serialize(writer, data);
         }
