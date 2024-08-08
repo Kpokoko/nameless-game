@@ -13,6 +13,7 @@ using nameless.Interfaces;
 using System.IO;
 using nameless.Controls;
 using nameless.Serialize;
+using nameless.Entity;
 
 namespace nameless;
 
@@ -21,6 +22,9 @@ public static class Globals
     public static Inventory Inventory;
     public static Engine.Engine Engine;
     public static Camera Camera;
+
+    public static SerializationInfo LastVisitedCheckpoint;
+    public static bool CanActivateSave = true;
 
     public static Serializer Serializer;
     public static Map Map;

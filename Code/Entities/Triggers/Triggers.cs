@@ -34,6 +34,9 @@ public partial class HitboxTrigger
             case TriggerType.Disposable:
                 trigger = CreateDisposableTrigger(pivot);
                 break;
+            case TriggerType.Saver:
+                trigger = CreateSaverTrigger(pivot);
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -42,6 +45,22 @@ public partial class HitboxTrigger
         trigger.TriggerType = type;
         pivot.Colliders.Add(trigger);
         pivot.PrepareSerializationInfo();
+        return trigger;
+    }
+
+    public static HitboxTrigger CreateSaverTrigger(Block pivot)
+    {
+        var trigger = new HitboxTrigger(pivot, 96, 96, ReactOnProperty.ReactOnEntityType, SignalProperty.Once);
+        trigger.TriggerType = TriggerType.Disposable;
+        trigger.OnCollisionEvent += () =>
+        {
+            if (!Globals.CanActivateSave) return;
+            Globals.CanActivateSave = false;
+            pivot.PrepareSerializationInfo();
+            Globals.LastVisitedCheckpoint = pivot.Info;
+            Globals.Serializer.WriteSaveSpot();
+        };
+        trigger.Color = Color.DarkViolet;
         return trigger;
     }
 

@@ -20,6 +20,7 @@ namespace nameless.Entity;
 /// </summary>
 public class Pivot :  Block, IEntity, ICollider
 {
+
     public Pivot(int x, int y)
     {
         TilePosition = new Vector2(x, y);

@@ -48,6 +48,26 @@ public struct Serializer
         }
     }
 
+    public Vector2 ReadSaveSpot()
+    {
+        var serializer = new XmlSerializer(typeof(SerializationInfo));
+        using (var reader = new StreamReader(new FileStream("SaveSpot.xml", FileMode.Open)))
+        {
+            var block = (SerializationInfo)serializer.Deserialize(reader);
+            Globals.LastVisitedCheckpoint = block;
+            return block.TilePos;
+        }
+    }
+
+    public void WriteSaveSpot()
+    {
+        var serializer = new XmlSerializer(typeof(SerializationInfo));
+        using (var writer = new StreamWriter(new FileStream("SaveSpot.xml", FileMode.Create)))
+        {
+            serializer.Serialize(writer, Globals.LastVisitedCheckpoint);
+        }
+    }
+
     public void Restart()
     {
         using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))

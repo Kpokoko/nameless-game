@@ -53,12 +53,11 @@ public class SceneManager
         _currentScene = new Scene(sceneName);
         if (entryData != null)
         {
+            Globals.CanActivateSave = true;
             var tempPos = GetEntryPosition(entryData);
-            if (entryData.Direction is SceneChangerDirection.top)
-                GetPlayer().Position = new Vector2(tempPos.X, tempPos.Y - 60);
-            else GetPlayer().Position = tempPos;
-            GetPlayer().PrepareSerializationInfo();
+            GetPlayer().Position = tempPos;
         }
+        GetPlayer().PrepareSerializationInfo();
 
         //var entities = _currentScene.Entities;
         //foreach (var block in entities.Where(item => item is Block))
