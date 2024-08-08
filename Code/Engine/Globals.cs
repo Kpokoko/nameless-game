@@ -24,7 +24,7 @@ public static class Globals
     public static Camera Camera;
 
     public static SerializationInfo LastVisitedCheckpoint;
-    public static bool CanActivateSave = true;
+    public static bool CanActivateSave = false;
 
     public static Serializer Serializer;
     public static Map Map;

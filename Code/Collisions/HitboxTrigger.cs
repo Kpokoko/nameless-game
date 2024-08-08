@@ -70,13 +70,15 @@ public partial class HitboxTrigger : Collider
         if (InvokeBuffered)
         {
             InvokeBuffered = false;
+            if (isActivated && signalProperty == SignalProperty.Once) return;
             TryInvoke();
         }
 
         if (triggerInside) triggerInside = false;
         else if (isActivated)
         {
-            isActivated = false;
+            if (signalProperty != SignalProperty.Once)
+                isActivated = false;
             if (OnCollisionExitEvent != null)
                 OnCollisionExitEvent();
         }
@@ -85,7 +87,6 @@ public partial class HitboxTrigger : Collider
     public sealed override void OnCollision(CollisionEventArgs collisionInfo)
     {
         if (CollisionManager.OnCollisionDisabled) return;
-        if (isActivated && signalProperty is SignalProperty.Once) return;
 
         switch (reactOnProperty)
         {
