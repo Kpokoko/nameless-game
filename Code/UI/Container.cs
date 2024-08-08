@@ -22,6 +22,8 @@ public class Container : UIElement
 
     private bool Grabbed;
 
+    public event Action OnDrag;
+
     public Container(Vector2 position, int width, int height, 
         FlexDirection flexDir = FlexDirection.Horizontal, Vector2 padding = new Vector2()) : base(position, width, height)
     {
@@ -132,6 +134,8 @@ public class Container : UIElement
         var delta = MouseInputController.MousePos - MouseInputController.PreviousMousePos;
         RelativePosition += delta;
         BorderBounds.Position += delta;
+        if (OnDrag != null)
+            OnDrag.Invoke();
     }
 
     public void Draw(SpriteBatch spriteBatch)

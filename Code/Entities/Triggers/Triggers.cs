@@ -99,7 +99,7 @@ public partial class HitboxTrigger
         var player = () => Globals.SceneManager.GetPlayer();
 
         trigger.Color = Color.IndianRed;
-        trigger.OnCollisionEvent += () => { if (Globals.IsNoclipEnabled) return; Globals.SceneManager.ReloadScene(); };
+        trigger.OnCollisionEvent += () => { if (Globals.IsNoclipEnabled) return; player().Actions.Add(player().Death); };
         return trigger;
     }
 

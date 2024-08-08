@@ -10,7 +10,8 @@ namespace nameless.Entity
     {
         Jumping,
         Falling,
-        Still
+        Still,
+        Static
     }
 
     public enum MovableState

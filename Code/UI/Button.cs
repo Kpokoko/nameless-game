@@ -11,6 +11,7 @@ using nameless.Controls;
 using Microsoft.Xna.Framework.Input;
 using System.Reflection.Emit;
 using nameless.GameObjects;
+using nameless.Graphics;
 
 namespace nameless.UI;
 
@@ -44,6 +45,12 @@ public class Button : UIElement
     {
         label.ParentPosition = AbsolutePosition;
         Elements.Add(label);
+    }
+
+    public void SetSprite(SpriteBox sprite)
+    {
+        sprite.ParentPosition = AbsolutePosition;
+        Elements.Add(sprite);
     }
 
     public void SetKeyboardKey(Keys key)

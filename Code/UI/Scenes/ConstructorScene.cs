@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using nameless.Entity;
+using nameless.Graphics;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,23 @@ namespace nameless.UI.Scenes;
 
 public class ConstructorScene : UIScene
 {
-    private Container hitboxContainer = null;
+    private static Vector2 _spawnContainerPos = new Vector2(1200, 300);
+    private static Vector2 _hitboxContainerPos = new Vector2(1200, 700);
+
+    private Container _hitboxContainer = null;
+
+
     public ConstructorScene()
     {
         var zoom = Globals.Camera.Zoom;
         Name = UIScenes.ConstructorScene;
 
-        var spawnContainer = new Container(new Vector2(1200, 300), (300 ), (600 ), FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(_spawnContainerPos, (300 ), (600 ), FlexDirection.Vertical, Vector2.Zero);
+        spawnContainer.OnDrag += () => _spawnContainerPos = spawnContainer.RelativePosition;
 
         var button1 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.InventoryBlock);
+        //button1.SetSprite(new SpriteBox(Vector2.Zero,new Sprite(Globals.SpriteSheet, 0, 0, 60, 60),60,60));
+        //button1.Elements[1].Offset += new Vector2(0,50);
         var button2 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.EditorBlock);
         var button3 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Block);
         var button4 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Platform);
@@ -57,20 +66,21 @@ public class ConstructorScene : UIScene
 
     private void SpawnHitboxContainer()
     {
-        hitboxContainer = new Container(new Vector2(1200, 700), (int)(300), (int)(240), FlexDirection.Vertical, Vector2.Zero);
+        _hitboxContainer = new Container(_hitboxContainerPos, (int)(300), (int)(240), FlexDirection.Vertical, Vector2.Zero);
+        _hitboxContainer.OnDrag += () => _hitboxContainerPos = _hitboxContainer.RelativePosition;
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);
         var button7 = new Button(Vector2.Zero, 240, 40, "Disposable", ButtonActivationProperty.Switch);
 
-        hitboxContainer.AddElements(button5, button6, button7);
+        _hitboxContainer.AddElements(button5, button6, button7);
 
-        AddElements(hitboxContainer);
+        AddElements(_hitboxContainer);
 
-        foreach (var b in hitboxContainer.Elements)
+        foreach (var b in _hitboxContainer.Elements)
         {
             var button = (Button)b;
-            button.OnClickEvent += () => { hitboxContainer.SwitchButtons(button); };
+            button.OnClickEvent += () => { _hitboxContainer.SwitchButtons(button); };
         }
 
         button5.OnClickEvent += () => Globals.Constructor.SelectedEntityProperty = TriggerType.SwitchScene;
@@ -80,6 +90,6 @@ public class ConstructorScene : UIScene
 
     private void DespawnHitboxContainer()
     {
-        RemoveElements(hitboxContainer);
+        RemoveElements(_hitboxContainer);
     }
 }

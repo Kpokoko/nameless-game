@@ -20,6 +20,7 @@ public class UIManager
     public List<Container> Containers = new List<Container>();
     public List<Minimap> Minimaps = new List<Minimap>();
     public List<CircleController> CircleControllers = new List<CircleController>();
+    public List<SpriteBox> SpriteBoxes = new List<SpriteBox>();
 
     public List<Container> Popups = new List<Container>();
 
@@ -61,6 +62,8 @@ public class UIManager
             Labels[i].Draw(spriteBatch);
         for (var i = 0; i < CircleControllers.Count; i++)
             CircleControllers[i].Draw(spriteBatch);
+        for (var i = 0; i < SpriteBoxes.Count; i++)
+            SpriteBoxes[i].Draw(spriteBatch);
     }
 
     public void SetScene(UIScenes scene)

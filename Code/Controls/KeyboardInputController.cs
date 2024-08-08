@@ -75,6 +75,18 @@ public class KeyboardInputController
         Globals.IsNoclipEnabled = Globals.IsNoclipEnabled ? false : true;
         //Globals.SceneManager.GetPlayer().Velocity = Vector2.Zero;
         Globals.UIManager.PopupMessage("Noclip switch");
+
+        if (Globals.IsNoclipEnabled)
+        {
+            Globals.CollisionManager.KinematicAccurateColliders.Remove(_player.Colliders[0] as KinematicAccurateCollider);
+        }
+        else if (!Globals.IsNoclipEnabled && !Globals.CollisionManager.KinematicAccurateColliders.Contains(_player.Colliders[0] as KinematicAccurateCollider))
+        {
+            _player.Colliders.Remove(_player.Colliders.colliders[0]);
+            _player.Colliders.Add(new KinematicAccurateCollider(Globals.SceneManager.GetPlayer(), 44, 52));
+            var collider = _player.Colliders.colliders[0] as KinematicAccurateCollider;
+            Globals.CollisionManager.KinematicAccurateColliders.Add(collider);
+        }
     }
 
     private void MeasureMovement(KeyboardState keyboardState, bool isJumpKeyPressed, bool isJumpKeyHolding)

@@ -28,7 +28,7 @@ public class Sprite
     public Color TintColor { get; set; } = Color.White;
     public void Draw(SpriteBatch spriteBatch, Vector2 position)
     {
-        spriteBatch.Draw(Texture, position, new Rectangle(X, Y, Width, Height), TintColor);
+        spriteBatch.Draw(Texture, position, new Rectangle(X, Y, Width, Height), TintColor,0,Vector2.Zero,1,SpriteEffects.None,0.03f);
     }
 
 }

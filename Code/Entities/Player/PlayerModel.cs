@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Timers;
 using nameless.Entity.Player;
 using System.Linq;
+using nameless.GameObjects;
 
 namespace nameless.Entity;
 
@@ -120,11 +121,14 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Update(GameTime gameTime)
     {
+        if (State == PlayerState.Static)
+            return;
+
         Actions = Actions
             .OrderByDescending(a => ActionPriority.ContainsKey(a) ? ActionPriority[a] : 0)
             .ToList();
 
-        if (State is PlayerState.Falling && !Sticky)
+        if (State is PlayerState.Falling)
             StartCoyoteTimer();
 
         //var oldPos = Position;
@@ -136,7 +140,10 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             act();
         Actions.Clear();
 
-        if (State is PlayerState.Still)
+        if (State == PlayerState.Static)
+            return;
+
+        if (State is PlayerState.Still && !Sticky)
         {
             CanJump = true;
             if (JumpBuffer.IsRunning)
@@ -163,7 +170,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     private void StartCoyoteTimer()
     {
-        if (CanJump && !Coyote.IsRunning)
+        if (CanJump && !Coyote.IsRunning && !Sticky)
         {
             Coyote.Reset();
             Coyote.Start();
@@ -198,9 +205,13 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             //Position -= collisionInfo.PenetrationVector;
             if (collisionInfo.Other is Collider)
             {
-                if (collisionSide is Side.Left || collisionSide is Side.Right)
+                if (collisionSide is Side.Left)
                 {
-                    _horizontalVelocity = 0;
+                    _horizontalVelocity = Math.Max(_horizontalVelocity, 0);
+                }
+                else if (collisionSide is Side.Right)
+                {
+                    _horizontalVelocity = Math.Min(_horizontalVelocity, 0);
                 }
                 else if (collisionSide is Side.Bottom && State != PlayerState.Still && State != PlayerState.Jumping)
                 {
@@ -277,6 +288,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         if (Sticky) 
             return;
         Sticky = true;
+        CanJump = false;
     }
 
     public void Unstick()
@@ -379,6 +391,14 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         Info.TypeOfElement = this.GetType().Name;
     }
 
+    public void Death()
+    {
+        State = PlayerState.Static;
+        Globals.UIManager.PopupMessage("LoL u Died");
+        Globals.CollisionManager.KinematicAccurateColliders.Clear();
+        TimerTrigger.DelayEvent(700, Globals.SceneManager.ReloadScene);
+    }
+
     public void Remove()
     {
         _animationHandler.Remove();
@@ -395,5 +415,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         ActionPriority[Stop] = 4;
 
         ActionPriority[Stick] = 7;
+
+        ActionPriority[Death] = -1;
     }
 }
