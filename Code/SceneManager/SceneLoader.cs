@@ -33,16 +33,6 @@ namespace nameless.Code.SceneManager
                     case "Block":
                         sceneContent.Add(new Block((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
-                    case "PlayerModel":
-                        var vel = Vector2.Zero;
-                        var state = PlayerState.Falling;
-                        if (Globals.SceneManager.GetPlayer() != null) {
-                            vel = Globals.SceneManager.GetPlayer().InnerForce * 60; 
-                            state = Globals.SceneManager.GetPlayer().State;
-                        }
-                        if (pizdec) continue;
-                        sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(data.TilePos),vel,state));
-                        continue;
                     case "InventoryBlock":
                         sceneContent.Add(new InventoryBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
@@ -74,43 +64,16 @@ namespace nameless.Code.SceneManager
                 sceneContent.Add(pivot);
                 continue;
             }
-            //var file = File.OpenRead(path);
-
-            //foreach (var file in Directory.GetFiles(path))
-            
-                //var typeAsText = file.Split("\\")[^1];
-                //typeAsText = typeAsText.Remove(typeAsText.Count() - 4, 4);
-                //var type = Type.GetType(typeAsText);
-                //MethodInfo method = typeof(Serializer).GetMethod("Deserialize");
-                //MethodInfo generic = method.MakeGenericMethod(type);
-                //readedData.AddRange(((IEnumerable)generic.Invoke(_serialize, new object[] { file })).Cast<T>());
-                //foreach (var item in readedData)
-                //{
-                //    if (item is InventoryBlock)
-                //    {
-                //        var constructor = item.GetType().GetConstructor(new Type[] { typeof(int), typeof(int) });
-                //        var x = (int)item.TilePosition.X;
-                //        var y = (int)item.TilePosition.Y;
-                //        sceneContent.Add((T)constructor.Invoke(new object[] { x, y }));
-                //        continue;
-                //    }
-                //    if (item is Block)
-                //    {
-                //        var constructor = item.GetType().GetConstructor(new Type[] { typeof(int), typeof(int) });
-                //        var x = (int)item.TilePosition.X;
-                //        var y = (int)item.TilePosition.Y;
-                //        sceneContent.Add((T)constructor.Invoke(new object[] {x, y}));
-                //        continue;
-                //    }
-                //    if (item is PlayerModel)
-                //    {
-                //        var constructor = item.GetType().GetConstructor(new Type[] { typeof(Texture2D) });
-                //        sceneContent.Add((T)constructor.Invoke(new object[] { Globals.SpriteSheet }));
-                //        continue;
-                //    }
-                //}
-                //readedData = new List<T>();
-            
+            var playerPos = _serialize.ReadSaveSpot();
+            var vel = Vector2.Zero;
+            var state = PlayerState.Falling;
+            if (Globals.SceneManager.GetPlayer() != null)
+            {
+                vel = Globals.SceneManager.GetPlayer().InnerForce * 60;
+                state = Globals.SceneManager.GetPlayer().State;
+            }
+            if (pizdec) return sceneContent;
+            sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(playerPos), vel, state));
             return sceneContent;
         }
 

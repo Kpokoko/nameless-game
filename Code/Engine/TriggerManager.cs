@@ -16,6 +16,8 @@ public class TriggerManager
 {
     public List<HitboxTrigger> TriggerHitboxes = new List<HitboxTrigger>();
 
+    public List<HitboxTrigger> SwitchSceneTriggerHitboxes = new List<HitboxTrigger>();
+
     public List<TriggerType> ActivatedTriggers = new List<TriggerType>();
 
     public List<TimerTrigger> Timers = new List<TimerTrigger>();
@@ -27,8 +29,10 @@ public class TriggerManager
         //if (Globals.IsConstructorModeEnabled) return;
         for (var i = 0; i < Timers.Count; i++)
             Timers[i].Update(gameTime);
+
         for (var i = 0; i < TriggerHitboxes.Count; i++)
             TriggerHitboxes[i].UpdateActivation();
+
         if (!Globals.IsConstructorModeEnabled)
             for (var i = 0; i < AutoTimers.Count; i++)
                 AutoTimers[i].Update(gameTime);
@@ -36,5 +40,8 @@ public class TriggerManager
             for (var i = 0; i < AutoTimers.Count; i++)
                 AutoTimers[i].Reset();
         ActivatedTriggers.Clear();
+
+        for (var i = 0; i < SwitchSceneTriggerHitboxes.Count; i++)
+            SwitchSceneTriggerHitboxes[i].UpdateActivation();
     }
 }

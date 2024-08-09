@@ -34,6 +34,9 @@ public partial class HitboxTrigger
             case TriggerType.Disposable:
                 trigger = CreateDisposableTrigger(pivot);
                 break;
+            case TriggerType.Saver:
+                trigger = CreateSaverTrigger(pivot);
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -42,6 +45,23 @@ public partial class HitboxTrigger
         trigger.TriggerType = type;
         pivot.Colliders.Add(trigger);
         pivot.PrepareSerializationInfo();
+        return trigger;
+    }
+
+    public static HitboxTrigger CreateSaverTrigger(Block pivot)
+    {
+        var trigger = new HitboxTrigger(pivot, 96, 96, ReactOnProperty.ReactOnEntityType, SignalProperty.Once);
+        var triggerInfo = new SerializationInfo() { TilePos = pivot.TilePosition };
+        trigger.TriggerType = TriggerType.Disposable;
+        trigger.OnCollisionEvent += () =>
+        {
+            if (!Globals.CanActivateSave) return;
+            Globals.CanActivateSave = false;
+            //pivot.PrepareSerializationInfo();
+            Globals.LastVisitedCheckpoint = triggerInfo;
+            Globals.Serializer.WriteSaveSpot();
+        };
+        trigger.Color = Color.DarkViolet;
         return trigger;
     }
 
@@ -90,6 +110,9 @@ public partial class HitboxTrigger
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
         trigger.OnCollisionEvent += () =>  SceneLoader.SwitchScene(trigger, direction, playerPosition);
+
+        Globals.TriggerManager.SwitchSceneTriggerHitboxes.Add(trigger);
+        Globals.TriggerManager.TriggerHitboxes.Remove(trigger);
         return trigger;
     }
 
