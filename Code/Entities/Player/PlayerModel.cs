@@ -227,6 +227,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         }
     }
 
+
     private void IsMovingObject(MyCollisionEventArgs collisionInfo, Side collisionSide)
     {
         if (((Collider)collisionInfo.Other).Entity is MovingPlatform)

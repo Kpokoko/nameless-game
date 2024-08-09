@@ -127,10 +127,11 @@ public class KinematicAccurateCollider : DynamicCollider
             if (player.PullingForce != ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity)
             {
                 //    vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
+
                 if (player.PullingForce != Vector2.Zero)
                     vel += player.PullingForce;
-                else
-                    vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
+                //else
+                vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
             }
         }
         else

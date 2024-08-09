@@ -19,7 +19,17 @@ public partial class PlayerModel
 
     public void UpdateNoclip()
     {
-
+        if (Globals.IsNoclipEnabled)
+        {
+            Globals.CollisionManager.KinematicAccurateColliders.Remove(this.Colliders[0] as KinematicAccurateCollider);
+        }
+        else if (!Globals.IsNoclipEnabled && !Globals.CollisionManager.KinematicAccurateColliders.Contains(this.Colliders[0] as KinematicAccurateCollider))
+        {
+            this.Colliders.Remove(this.Colliders.colliders[0]);
+            this.Colliders.Add(new KinematicAccurateCollider(Globals.SceneManager.GetPlayer(), 44, 52));
+            var collider = this.Colliders.colliders[0] as KinematicAccurateCollider;
+            Globals.CollisionManager.KinematicAccurateColliders.Add(collider);
+        }
     }
 
     

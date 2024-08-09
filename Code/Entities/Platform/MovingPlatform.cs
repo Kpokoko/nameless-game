@@ -19,11 +19,11 @@ namespace nameless.Entity
         private bool Collided = false;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
-            Position = new Vector2(Position.X, Position.Y - 27);
+            //Position = new Vector2(Position.X, Position.Y - 27);
             Direction = dir;
             Speed = speed;
             Colliders.Remove(this.Colliders[0]);
-            Colliders.Add(new DynamicCollider(this, 64, 10));
+            Colliders.Add(new DynamicCollider(this, 64, 64));
             Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
         }
