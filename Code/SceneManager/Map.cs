@@ -166,7 +166,7 @@ public class Map
             var coolName = new SceneInfo(name, (Point)sceneCoords);
             sceneInfo.Add(coolName);
             var coolNameNAME = coolName.FullName;
-            if (visitedScenes.Contains(coolNameNAME) /*|| Globals.IsDeveloperModeEnabled*/)
+            if (visitedScenes.Contains(coolNameNAME) || Globals.IsDeveloperModeEnabled)
             {
                 var visitedSceneStorage = Scene.GetSceneStorage(coolNameNAME).ConvertToEnum();
                 coolName.Minimap = new Minimap(

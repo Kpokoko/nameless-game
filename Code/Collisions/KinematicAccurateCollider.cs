@@ -63,6 +63,7 @@ public class KinematicAccurateCollider : DynamicCollider
         //if (collisionsInfo.Length > 2)
         collisionsInfo = collisionsInfo
             .OrderByDescending(info => info.PenetrationVector.Length())
+            .ThenBy(info => Math.Abs(Position.X - ((RectangleF)info.Other.Bounds).Center.X))
             .DistinctBy(info => info.CollisionSide)
             .ToArray();
 
@@ -118,9 +119,11 @@ public class KinematicAccurateCollider : DynamicCollider
 
     private MyCollisionEventArgs TraceCollisionBasedOnKinematicVelocity(CollisionEventArgs collisionInfo)
     {
+        bool isDynamic = false;
         var vel = ((IKinematic)Entity).Velocity;
         if (((Collider)collisionInfo.Other).Entity is (MovingPlatform))
         {
+            isDynamic = true;
             var player = (PlayerModel)Entity;
 
 
@@ -161,6 +164,7 @@ public class KinematicAccurateCollider : DynamicCollider
         {
             tracedCollisionInfo = new MyCollisionEventArgs(tracedCollisionInfo.Other, tracedCollisionInfo.PenetrationVector.SetY(0), tracedCollisionInfo.CollisionSide);
         }
+        tracedCollisionInfo.OtherIsDynamic = isDynamic;
         return tracedCollisionInfo;
     }
 }

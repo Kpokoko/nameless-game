@@ -61,6 +61,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
         return SceneChangerDirection.right;
     }
 
+
     public virtual void Remove()
     {
         Colliders.RemoveAll();

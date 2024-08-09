@@ -50,7 +50,7 @@ public partial class HitboxTrigger
 
     public static HitboxTrigger CreateSaverTrigger(Block pivot)
     {
-        var trigger = new HitboxTrigger(pivot, 96, 96, ReactOnProperty.ReactOnEntityType, SignalProperty.Once);
+        var trigger = new HitboxTrigger(pivot, 140, 140, ReactOnProperty.ReactOnEntityType, SignalProperty.Once);
         var triggerInfo = new SerializationInfo() { TilePos = pivot.TilePosition };
         trigger.TriggerType = TriggerType.Disposable;
         trigger.OnCollisionEvent += () =>
@@ -61,7 +61,7 @@ public partial class HitboxTrigger
             Globals.LastVisitedCheckpoint = triggerInfo;
             Globals.Serializer.WriteSaveSpot();
         };
-        trigger.Color = Color.DarkViolet;
+        trigger.Color = Color.PaleTurquoise * 0.3f;
         return trigger;
     }
 

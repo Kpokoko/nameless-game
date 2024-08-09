@@ -123,10 +123,11 @@ public class Constructor : IGameObject
 
     private void MoveBlock(Vector2 mouseTilePos)
     {
-        _holdingEntity.UpdateConstructor();
         var tileEntity = _holdingEntity as TileGridEntity;
         if (tileEntity.TilePosition != mouseTilePos)
             tileEntity.TilePosition = mouseTilePos;
+        _holdingEntity.UpdateConstructor();
+
     }
 
 

@@ -14,24 +14,45 @@ public class CircleController : UIElement
     new private CircleF Bounds {  get; set; }
     override public Vector2 RelativePosition { get; set; }
     new public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds); } }
-    public Vector2 Direction 
+
+    private Vector2 _direction = Vector2.Zero;
+    private Vector2 Direction 
     {
         get => _direction;
-        private set 
+        set 
         { 
             _direction = value; 
             if (OnDirectionSet != null)
                 OnDirectionSet(); 
         } 
     }
-    private Vector2 _direction = Vector2.Zero;
-    public float Length { get { return Direction.Length(); } }
+    private float _lenght = 1;
+    private float Length
+    {
+        get => _lenght;
+        set
+        {
+            _lenght = value;
+            if (OnDirectionSet != null)
+                OnDirectionSet();
+        }
+    }
+    public Vector2 Vector { get => Direction * Length; }
+    private float[] _lenghtValues { get; set; }
+    private int _currentLength = 0;
 
     public event Action OnDirectionSet;
+
     public CircleController(Vector2 position, int width = 60) : base(position, width, width)
     {
         Bounds = new CircleF(position.ToPoint(), width);
         Globals.UIManager.CircleControllers.Add(this);
+    }
+
+    public void SetPossibleValues(params float[] values)
+    {
+        _lenghtValues = values;
+        Length = _lenghtValues[0];
     }
 
     public override void Remove()
@@ -69,19 +90,36 @@ public class CircleController : UIElement
         dir.Normalize();
         if (Globals.KeyboardInputController.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
             dir = AllignToAxis(dir);
+
         Direction = dir;
     }
 
     private void ChangeSelectedLength()
     {
-        if (MouseInputController.MiddleButton.IsScrolledDown)
+        if (_lenghtValues != null)
+        {
+            if (MouseInputController.MiddleButton.IsScrolledDown)
+            {
+                if (_currentLength > 0)
+                    _currentLength--;
+            }
+            else if (MouseInputController.MiddleButton.IsScrolledUp)
+            {
+                if (_currentLength < _lenghtValues.Length - 1)
+                    _currentLength++;
+            }
+
+            Length = _lenghtValues[_currentLength];
+        }
+        else if (MouseInputController.MiddleButton.IsScrolledDown)
+        {
             if (Direction.Length() < 0.1f)
-                Direction = Vector2.Zero;
+                Length = 0;
             else
-                Direction = Direction - Direction.NormalizedCopy() / 10;
-        if (MouseInputController.MiddleButton.IsScrolledUp)
-            if (Direction.Length() != 0)
-                Direction = Direction + Direction.NormalizedCopy() / 10;
+                Length -= 0.1f;
+        }
+        else if (MouseInputController.MiddleButton.IsScrolledUp)
+            Length += 0.1f;
     }
 
     private Vector2 AllignToAxis(Vector2 dir)
@@ -98,6 +136,6 @@ public class CircleController : UIElement
     public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.DrawCircle(Bounds, 20, Globals.PrimaryColor, 3,0.04f);
-        spriteBatch.DrawPoint(RelativePosition + Direction * Bounds.Radius, Color.Red, 10, 0.04f);
+        spriteBatch.DrawPoint(RelativePosition + Vector * Bounds.Radius, Color.Red, 10, 0.04f);
     }
 }

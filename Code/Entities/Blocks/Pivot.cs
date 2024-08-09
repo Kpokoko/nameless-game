@@ -27,7 +27,7 @@ public class Pivot :  Block, IEntity, ICollider
         Layer = 1;
         Colliders.Add(new Collider(this, 64, 64));
         Globals.CollisionManager.CollisionComponent.Remove(Colliders[0]);
-        Colliders[0].Color = Color.LightSteelBlue;
+        Colliders[0].Color = Color.LightSteelBlue * 0.4f;
     }
 
     public override void PrepareSerializationInfo()

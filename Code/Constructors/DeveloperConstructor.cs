@@ -34,9 +34,7 @@ namespace nameless.Code.Constructors
                     break;
                 case EntityTypeEnum.MovingPlatform:
                     var mp = new MovingPlatform((int)mouseTilePos.X, (int)mouseTilePos.Y, Vector2.One, 1);
-                    var circle = new CircleController(Tile.GetTileCenter(mouseTilePos));
-                    circle.OnDirectionSet += () => 
-                        mp.SetMovement(circle.Direction, circle.Length);
+                    EditMovingPlatform(mp);
                     _entities.Add(mp);
                     break;
                 case EntityTypeEnum.Pivot:
@@ -51,6 +49,14 @@ namespace nameless.Code.Constructors
                 default:
                     break;
             }
+        }
+
+        private void EditMovingPlatform(MovingPlatform platform)
+        {
+            var circle = new CircleController(platform.Position);
+            circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 1.5f, 2f);
+            circle.OnDirectionSet += () =>
+                platform.SetMovement(circle.Vector, circle.Vector.Length() * 10);
         }
     }
 }

@@ -40,6 +40,14 @@ namespace nameless.Entity
             //base.OnPositionChange(position);
         }
 
+        public override void UpdateConstructor()
+        {
+            base.UpdateConstructor();
+            if (Colliders != null)
+                Colliders.Position = Position;
+            PrepareSerializationInfo();
+        }
+
         public override void Update(GameTime gameTime)
         {
             Position += Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;

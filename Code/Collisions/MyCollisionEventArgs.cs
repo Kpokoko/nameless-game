@@ -15,13 +15,15 @@ public class MyCollisionEventArgs
     public Vector2 PenetrationVector { get; internal set; }
 
     public Side CollisionSide { get; internal set; }
-    
-    public MyCollisionEventArgs(ICollisionActor other, Vector2 penetrationVector, Side side)
+
+    public bool OtherIsDynamic { get; internal set; } = false;
+    public MyCollisionEventArgs(ICollisionActor other, Vector2 penetrationVector, Side side, bool otherIsDynamic = false)
     {
         PenetrationVector = penetrationVector;
         Other = other;
         CollisionSide = side;
-    }
+        OtherIsDynamic = otherIsDynamic;
+     }
 
     public MyCollisionEventArgs(CollisionEventArgs collisionInfo)
     {

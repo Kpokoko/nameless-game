@@ -86,7 +86,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             Position = new Vector2(176, 450);
         else
             Position = (Vector2)position;
-        State = state;
+        if (state != PlayerState.Static)
+            State = state;
         _verticalVelocity = velocity.Y;
         _horizontalVelocity = velocity.X;
         Colliders.Add(new KinematicAccurateCollider(this, 44, 52));
