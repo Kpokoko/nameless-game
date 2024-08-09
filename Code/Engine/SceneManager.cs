@@ -56,6 +56,7 @@ public class SceneManager
             Globals.CanActivateSave = true;
             var tempPos = GetEntryPosition(entryData);
             GetPlayer().Position = tempPos;
+            GetPlayer().Colliders.Position = tempPos;
         }
         GetPlayer().PrepareSerializationInfo();
 
