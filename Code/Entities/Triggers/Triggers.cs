@@ -110,6 +110,9 @@ public partial class HitboxTrigger
         trigger.SetTriggerEntityTypes(typeof(PlayerModel));
         trigger.Color = Color.SkyBlue;
         trigger.OnCollisionEvent += () =>  SceneLoader.SwitchScene(trigger, direction, playerPosition);
+
+        Globals.TriggerManager.SwitchSceneTriggerHitboxes.Add(trigger);
+        Globals.TriggerManager.TriggerHitboxes.Remove(trigger);
         return trigger;
     }
 
