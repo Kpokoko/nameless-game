@@ -74,11 +74,7 @@ public class ConstructorScene : UIScene
         var button7 = new Button(Vector2.Zero, 240, 40, "Disposable", ButtonActivationProperty.Switch);
         var button8 = new Button(Vector2.Zero, 240, 40, "Saver", ButtonActivationProperty.Switch);
 
-<<<<<<< HEAD
-        _hitboxContainer.AddElements(button5, button6, button7);
-=======
-        hitboxContainer.AddElements(button5, button6, button7, button8);
->>>>>>> ебаная-хуйня
+        _hitboxContainer.AddElements(button5, button6, button7, button8);
 
         AddElements(_hitboxContainer);
 
