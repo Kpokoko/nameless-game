@@ -39,6 +39,8 @@ public class CollisionManager
 
         for (var i = 0; i < DynamicColliders.Count; i++)
             DynamicColliders[i].Update();
+
+
         OnCollisionDisabled = false;
         CollisionComponent.Update(gameTime);
         OnCollisionDisabled = true;
@@ -62,11 +64,12 @@ public class CollisionManager
     public void MeasurePlatforms()
     {
         var player = ((RectangleF)((ICollider)Globals.SceneManager.GetPlayer()).Colliders[0].Bounds).Bottom;
+        //var player = Globals.SceneManager.GetPlayer().Position.Y + 26;
         while (PlatformColliders.Count > 0)
         {
             var platform = PlatformColliders[PlatformColliders.Count - 1];
             var platformPos = ((RectangleF)platform.Bounds).Top;
-            if (player > platformPos)
+            if (player > platformPos + 1)
             {
                 CollisionComponent.Remove(platform);
                 PlatformColliders.RemoveAt(PlatformColliders.Count - 1);
@@ -78,7 +81,7 @@ public class CollisionManager
         {
             var platform = InactivePlatformColliders[InactivePlatformColliders.Count - 1];
             var platformPos = ((RectangleF)platform.Bounds).Top;
-            if (player <= platformPos + 1)
+            if (player <= platformPos - 1)
             {
                 CollisionComponent.Insert(platform);
                 InactivePlatformColliders.RemoveAt(InactivePlatformColliders.Count - 1);

@@ -101,6 +101,7 @@ public class KinematicAccurateCollider : DynamicCollider
         var Position = Entity.GetType().GetProperty("Position");
         Position.SetValue(Entity, (Vector2)Position.GetValue(Entity) - penetrationVector);
 
+        Update();
         ((PlayerModel)Entity).OnCollision(collisionsInfo);
     }
 
