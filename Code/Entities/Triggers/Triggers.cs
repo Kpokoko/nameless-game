@@ -71,7 +71,7 @@ public partial class HitboxTrigger
         trigger.TriggerType = TriggerType.Disposable;
         trigger.OnCollisionEvent += () =>
         {
-            Globals.Constructor.DeleteBlock(pivot);
+            Globals.Constructor.DeleteBlock(pivot, false);
         };
         return trigger;
     }

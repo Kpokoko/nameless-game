@@ -67,6 +67,16 @@ public class KeyboardInputController
             Globals.Constructor.SwitchMode();
         }
 
+        if (Keyboard.GetState().IsKeyDown(Keys.U) && !PreviousKeyboardState.IsKeyDown(Keys.U))
+        {
+            Globals.Constructor.Undo();
+        }
+
+        if (Keyboard.GetState().IsKeyDown(Keys.Y) && !PreviousKeyboardState.IsKeyDown(Keys.Y))
+        {
+            Globals.Constructor.Redo();
+        }
+
         _player.Actions.Add(_player.UpdateNoclip);
     }
 

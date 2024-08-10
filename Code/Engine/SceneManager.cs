@@ -146,7 +146,7 @@ public class SceneManager
                 newEnterPos.X = enters.Select(e => e.X).Min();
                 break;
         }
-        Globals.Constructor.SpawnBlock(newEnterPos);
+        Globals.Constructor.SpawnBlock(newEnterPos, false);
         return enters.Select(e => Tile.GetTileCenter(e));
     }
 

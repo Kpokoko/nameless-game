@@ -8,6 +8,7 @@ using nameless.Serialize;
 using nameless.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace nameless.Code.Constructors;
@@ -23,6 +24,10 @@ public class Constructor : IGameObject
     public object SelectedEntityProperty { get; set; }
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
     public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : 0; } }
+
+    private Stack<Action> _history = new Stack<Action>();
+
+    private Stack<Action> _redoHistory = new Stack<Action>();
 
     public void Draw(SpriteBatch spriteBatch)
     { }
@@ -47,7 +52,21 @@ public class Constructor : IGameObject
             var serializer = new Serializer();
             serializer.SerializeScene(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
             serializer.SaveInventory(Globals.Inventory.GetInventory());
+            _history.Clear();
+            _redoHistory.Clear();
         }
+    }
+
+    public void Undo()
+    {
+        if (_history.Count > 0)
+            _history.Pop().Invoke();
+    }
+
+    public void Redo()
+    {
+        if (_redoHistory.Count > 0)
+            _redoHistory.Pop().Invoke();
     }
 
     public void Update(GameTime gameTime)
@@ -65,10 +84,10 @@ public class Constructor : IGameObject
             ReleaseBlock();
 
         if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
-            SpawnBlock(mouseTilePos);
+            SpawnBlock(mouseTilePos, false);
 
         if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
-            DeleteBlock(entityUnderMouse);
+            DeleteBlock(entityUnderMouse, false);
 
         if (entityUnderMouse is null && _holdingEntity is not null)
            MoveBlock(mouseTilePos);
@@ -88,37 +107,82 @@ public class Constructor : IGameObject
         _holdingEntity = null;
     }
 
-    public virtual void SpawnBlock(Vector2 mouseTilePos)
+    public virtual void SpawnBlock(Vector2 mouseTilePos, bool isCalledFromStack)
     {
         if (SelectedEntity is EntityTypeEnum.None) return;
+        Block entity = null;
         switch (SelectedEntity)
         {
             case EntityTypeEnum.InventoryBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
-                    _entities.Add(new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                {
+                    entity = new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    _entities.Add(entity);
+                }
                 break;
             case EntityTypeEnum.StickyBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
-                    _entities.Add(new StickyBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                {
+                    entity = new StickyBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    _entities.Add(entity);
+                }
                 break;
             case EntityTypeEnum.FragileBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
-                    _entities.Add(new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                {
+                    entity = new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    _entities.Add(entity);
+                }
                 break;
             case EntityTypeEnum.TemporaryBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
-                    _entities.Add(new TemporaryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y));
+                {
+                    entity = new TemporaryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    _entities.Add(entity);
+                }
                 break;
             default:
                 break;
         }
+        if (!isCalledFromStack)
+            _history.Push(() => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], true));
+        else if (entity != null)
+            _redoHistory.Push(() => SpawnBlock(entity.Info));
     }
 
-    public void DeleteBlock(TileGridEntity entity)
+    public virtual void SpawnBlock(SerializationInfo info)
+    {
+        SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
+        SpawnBlock(info.TilePos, false);
+        //_history.Push(() => DeleteBlock((new Block((int)info.TilePos.X, (int)info.TilePos.Y)) as TileGridEntity, false));
+    }
+
+    public void DeleteBlock(TileGridEntity entity, bool isCalledFromStack)
     {
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _entities.Remove(entity as IEntity);
         (entity as IEntity).Remove();
+        if (!isCalledFromStack)
+            _history.Push(() => SpawnBlock((entity as Block).Info));
+        else
+            _redoHistory.Push(() => SpawnBlock((entity as Block).Info));
+    }
+
+    public void DeleteBlock(SerializationInfo info)
+    {
+        var entity = _storage[(int)info.TilePos.X, (int)info.TilePos.Y];
+        _entities.Remove(entity as IEntity);
+        (entity as IEntity).Remove();
+        //switch (info.TypeOfElement)
+        //{
+        //    case "Block":
+        //        var block = new Block((int)info.TilePos.X, (int)info.TilePos.Y);
+        //        _entities.Add(new Block((int)info.TilePos.X, (int)info.TilePos.Y));
+        //        break;
+        //    default:
+        //        break;
+        //}
+        _history.Push(() => SpawnBlock(new Vector2(info.TilePos.X, info.TilePos.Y), false));
     }
 
     private void MoveBlock(Vector2 mouseTilePos)
