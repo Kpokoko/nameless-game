@@ -174,14 +174,18 @@ public class Constructor : IGameObject
             newEvent.Action = () => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], newEvent);
             _history.Push(newEvent);
         }
-        //else if (entity != null)
-        //    _redoHistory.Push(new HistoryEventInfo(() => SpawnBlock(entity.Info)));
+        else if (entity != null)
+        {
+            var newEvent = new HistoryEventInfo(historyEvent.EventType);
+            newEvent.Action = () => SpawnBlock(entity.Info);
+            _redoHistory.Push(newEvent);
+        }
     }
 
-    public virtual void SpawnBlock(SerializationInfo info, HistoryEventInfo historyEvent)
+    public virtual void SpawnBlock(SerializationInfo info)
     {
         SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
-        SpawnBlock(info.TilePos, historyEvent);
+        SpawnBlock(info.TilePos);
     }
 
     public void DeleteBlock(TileGridEntity entity, HistoryEventInfo historyEvent = null)
@@ -193,8 +197,14 @@ public class Constructor : IGameObject
         if (historyEvent == null)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => SpawnBlock((entity as Block).Info, newEvent);
+            newEvent.Action = () => SpawnBlock((entity as Block).Info);
             _history.Push(newEvent);
+        }
+        else
+        {
+            var newEvent = new HistoryEventInfo(historyEvent.EventType);
+            newEvent.Action = () => SpawnBlock((entity as Block).Info);
+            _redoHistory.Push(newEvent);
         }
         //else
         //    _redoHistory.Push(new HistoryEventInfo(() => SpawnBlock((entity as Block).Info)));
