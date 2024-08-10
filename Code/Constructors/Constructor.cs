@@ -25,9 +25,11 @@ public class Constructor : IGameObject
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
     public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : 0; } }
 
-    private Stack<Action> _history = new Stack<Action>();
+    private Stack<HistoryEventInfo> _history = new();
 
-    private Stack<Action> _redoHistory = new Stack<Action>();
+    private Stack<HistoryEventInfo> _redoHistory = new();
+
+    private bool _groupInteraction;
 
     public void Draw(SpriteBatch spriteBatch)
     { }
@@ -59,8 +61,21 @@ public class Constructor : IGameObject
 
     public void Undo()
     {
-        if (_history.Count > 0)
+        while (_history.Count > 0 && _history.Peek().IsSeparator)
+            _history.Pop();
+
+        if (_history.Count == 0)
+            return;
+
+        if (_history.Peek().IsInGroup)
+        {
+            while (_history.Count > 0 && _history.Peek().IsInGroup)
+                _history.Pop().Invoke();
+        }
+        else
+        {
             _history.Pop().Invoke();
+        }
     }
 
     public void Redo()
@@ -74,6 +89,8 @@ public class Constructor : IGameObject
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
+        _groupInteraction = IsGroupInteraction();
+
         if (MouseInputController.OnUIElement)
             return;
 
@@ -83,17 +100,23 @@ public class Constructor : IGameObject
         if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) 
             ReleaseBlock();
 
-        if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && entityUnderMouse == null)
-            SpawnBlock(mouseTilePos, false);
+        if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && _groupInteraction) && entityUnderMouse == null)
+            SpawnBlock(mouseTilePos);
 
-        if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && Keyboard.GetState().IsKeyDown(Keys.Space)) && PossibleToInteract(entityUnderMouse))
-            DeleteBlock(entityUnderMouse, false);
+        if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && _groupInteraction) && PossibleToInteract(entityUnderMouse))
+            DeleteBlock(entityUnderMouse);
 
         if (entityUnderMouse is null && _holdingEntity is not null)
            MoveBlock(mouseTilePos);
         _prevMouseTilePos = mouseTilePos;
     }
 
+    private bool IsGroupInteraction()
+    {
+        if (Globals.KeyboardInputController.IsJustPressed(Keys.Space) || Globals.KeyboardInputController.IsJustReleased(Keys.Space))
+            _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
+        return Globals.KeyboardInputController.IsPressed(Keys.Space);
+    }
 
     private void HoldBlock(IConstructable entity)
     {
@@ -107,7 +130,7 @@ public class Constructor : IGameObject
         _holdingEntity = null;
     }
 
-    public virtual void SpawnBlock(Vector2 mouseTilePos, bool isCalledFromStack)
+    public virtual void SpawnBlock(Vector2 mouseTilePos, HistoryEventInfo historyEvent = null)
     {
         if (SelectedEntity is EntityTypeEnum.None) return;
         Block entity = null;
@@ -144,46 +167,47 @@ public class Constructor : IGameObject
             default:
                 break;
         }
-        if (!isCalledFromStack)
-            _history.Push(() => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], true));
-        else if (entity != null)
-            _redoHistory.Push(() => SpawnBlock(entity.Info));
+
+        if (historyEvent != null)
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], newEvent);
+            _history.Push(newEvent);
+        }
+        //else if (entity != null)
+        //    _redoHistory.Push(new HistoryEventInfo(() => SpawnBlock(entity.Info)));
     }
 
-    public virtual void SpawnBlock(SerializationInfo info)
+    public virtual void SpawnBlock(SerializationInfo info, HistoryEventInfo historyEvent)
     {
         SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
-        SpawnBlock(info.TilePos, false);
-        //_history.Push(() => DeleteBlock((new Block((int)info.TilePos.X, (int)info.TilePos.Y)) as TileGridEntity, false));
+        SpawnBlock(info.TilePos, historyEvent);
     }
 
-    public void DeleteBlock(TileGridEntity entity, bool isCalledFromStack)
+    public void DeleteBlock(TileGridEntity entity, HistoryEventInfo historyEvent = null)
     {
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _entities.Remove(entity as IEntity);
         (entity as IEntity).Remove();
-        if (!isCalledFromStack)
-            _history.Push(() => SpawnBlock((entity as Block).Info));
-        else
-            _redoHistory.Push(() => SpawnBlock((entity as Block).Info));
+
+        if (historyEvent != null)
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => SpawnBlock((entity as Block).Info, newEvent);
+            _history.Push(newEvent);
+        }
+        //else
+        //    _redoHistory.Push(new HistoryEventInfo(() => SpawnBlock((entity as Block).Info)));
     }
 
-    public void DeleteBlock(SerializationInfo info)
-    {
-        var entity = _storage[(int)info.TilePos.X, (int)info.TilePos.Y];
-        _entities.Remove(entity as IEntity);
-        (entity as IEntity).Remove();
-        //switch (info.TypeOfElement)
-        //{
-        //    case "Block":
-        //        var block = new Block((int)info.TilePos.X, (int)info.TilePos.Y);
-        //        _entities.Add(new Block((int)info.TilePos.X, (int)info.TilePos.Y));
-        //        break;
-        //    default:
-        //        break;
-        //}
-        _history.Push(() => SpawnBlock(new Vector2(info.TilePos.X, info.TilePos.Y), false));
-    }
+    //public void DeleteBlock(SerializationInfo info)
+    //{
+    //    var entity = _storage[(int)info.TilePos.X, (int)info.TilePos.Y];
+    //    _entities.Remove(entity as IEntity);
+    //    (entity as IEntity).Remove();
+
+    //    _history.Push(new HistoryEventInfo(() => SpawnBlock(new Vector2(info.TilePos.X, info.TilePos.Y), false)));
+    //}
 
     private void MoveBlock(Vector2 mouseTilePos)
     {

@@ -32,6 +32,16 @@ public class KeyboardInputController
         return KeyboardState.IsKeyDown(key) && !PreviousKeyboardState.IsKeyDown(key) ;
     }
 
+    public bool IsPressed(Keys key)
+    {
+        return KeyboardState.IsKeyDown(key);
+    }
+
+    public bool IsJustReleased(Keys key)
+    {
+        return !KeyboardState.IsKeyDown(key) && PreviousKeyboardState.IsKeyDown(key);
+    }
+
     public void ProcessControls(GameTime gameTime)
     {
         PreviousKeyboardState = KeyboardState;
