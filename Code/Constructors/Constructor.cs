@@ -59,51 +59,7 @@ public class Constructor : IGameObject
         }
     }
 
-    public void Undo()
-    {
-        while (_history.Count > 0 && _history.Peek().IsSeparator)
-        {
-            _redoHistory.Push(_history.Pop());
-        }
 
-        if (_history.Count == 0)
-            return;
-
-        if (_history.Peek().IsInGroup)
-        {
-            _groupInteraction = true;
-            while (_history.Count > 0 && _history.Peek().IsInGroup)
-                _history.Pop().Invoke();
-            _groupInteraction = false;
-        }
-        else
-        {
-            _history.Pop().Invoke();
-        }
-    }
-
-    public void Redo()
-    {
-        while (_redoHistory.Count > 0 && _redoHistory.Peek().IsSeparator)
-        {
-            _history.Push(_redoHistory.Pop());
-        }
-
-        if (_redoHistory.Count == 0)
-            return;
-
-        if (_redoHistory.Peek().IsInGroup)
-        {
-            _groupInteraction = true;
-            while (_redoHistory.Count > 0 && _redoHistory.Peek().IsInGroup)
-                _redoHistory.Pop().Invoke();
-            _groupInteraction = false;
-        }
-        else
-        {
-            _redoHistory.Pop().Invoke();
-        }
-    }
 
     public void Update(GameTime gameTime)
     {
@@ -151,7 +107,7 @@ public class Constructor : IGameObject
         _holdingEntity = null;
     }
 
-    public virtual void SpawnBlock(Vector2 mouseTilePos, bool calledFromHistory = false)
+    public virtual void SpawnBlock(Vector2 tilePos, bool calledFromHistory = false)
     {
         if (SelectedEntity is EntityTypeEnum.None) return;
         Block entity = null;
@@ -160,28 +116,28 @@ public class Constructor : IGameObject
             case EntityTypeEnum.InventoryBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new InventoryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    entity = new InventoryBlock((int)tilePos.X, (int)tilePos.Y);
                     _entities.Add(entity);
                 }
                 break;
             case EntityTypeEnum.StickyBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new StickyBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    entity = new StickyBlock((int)tilePos.X, (int)tilePos.Y);
                     _entities.Add(entity);
                 }
                 break;
             case EntityTypeEnum.FragileBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new FragileBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    entity = new FragileBlock((int)tilePos.X, (int)tilePos.Y);
                     _entities.Add(entity);
                 }
                 break;
             case EntityTypeEnum.TemporaryBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new TemporaryBlock((int)mouseTilePos.X, (int)mouseTilePos.Y);
+                    entity = new TemporaryBlock((int)tilePos.X, (int)tilePos.Y);
                     _entities.Add(entity);
                 }
                 break;
@@ -192,21 +148,23 @@ public class Constructor : IGameObject
         if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], true);
+            var layer = Layer;
+            newEvent.Action = () => DeleteBlock(tilePos , layer, true);
             _history.Push(newEvent);
         }
-        else if (entity != null)
+        else 
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => SpawnBlock(entity.Info);
+            var layer = Layer;
+            newEvent.Action = () => DeleteBlock(tilePos, layer);
             _redoHistory.Push(newEvent);
         }
     }
 
-    public virtual void SpawnBlock(SerializationInfo info)
+    public virtual void SpawnBlock(SerializationInfo info, bool calledFromHistory = false)
     {
         SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
-        SpawnBlock(info.TilePos, true);
+        SpawnBlock(info.TilePos, calledFromHistory);
     }
 
     public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)
@@ -218,15 +176,21 @@ public class Constructor : IGameObject
         if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => SpawnBlock((entity as Block).Info);
+            newEvent.Action = () => SpawnBlock((entity as Block).Info.Clone(), true);
             _history.Push(newEvent);
         }
         else
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => SpawnBlock((entity as Block).Info);
+            newEvent.Action = () => SpawnBlock((entity as Block).Info.Clone());
             _redoHistory.Push(newEvent);
         }
+    }
+
+    public void DeleteBlock(Vector2 tilePos, int layer, bool calledFromHistory = false)
+    {
+        var entity = _storage[(int)tilePos.X, (int)tilePos.Y, layer];
+        DeleteBlock(entity , calledFromHistory);
     }
 
     //public void DeleteBlock(SerializationInfo info)
@@ -248,10 +212,42 @@ public class Constructor : IGameObject
     }
 
 
-
     private bool PossibleToInteract(TileGridEntity entity)
     {
         return (entity is IConstructable && 
             (Globals.IsDeveloperModeEnabled || ((IConstructable)entity).IsEnableToPlayer)) ;
+    }
+
+    public void Undo()
+    {
+        ProcessHistoryStack(_history, _redoHistory);
+    }
+
+    public void Redo()
+    {
+        ProcessHistoryStack(_redoHistory, _history);
+    }
+
+    private void ProcessHistoryStack(Stack<HistoryEventInfo> stack, Stack<HistoryEventInfo> otherStack)
+    {
+        while (stack.Count > 0 && stack.Peek().IsSeparator)
+        {
+            otherStack.Push(stack.Pop());
+        }
+
+        if (stack.Count == 0)
+            return;
+
+        if (stack.Peek().IsInGroup)
+        {
+            _groupInteraction = true;
+            while (stack.Count > 0 && stack.Peek().IsInGroup)
+                stack.Pop().Invoke();
+            _groupInteraction = false;
+        }
+        else
+        {
+            stack.Pop().Invoke();
+        }
     }
 }
