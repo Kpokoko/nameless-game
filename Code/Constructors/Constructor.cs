@@ -62,15 +62,19 @@ public class Constructor : IGameObject
     public void Undo()
     {
         while (_history.Count > 0 && _history.Peek().IsSeparator)
-            _history.Pop();
+        {
+            _redoHistory.Push(_history.Pop());
+        }
 
         if (_history.Count == 0)
             return;
 
         if (_history.Peek().IsInGroup)
         {
+            _groupInteraction = true;
             while (_history.Count > 0 && _history.Peek().IsInGroup)
                 _history.Pop().Invoke();
+            _groupInteraction = false;
         }
         else
         {
@@ -80,8 +84,25 @@ public class Constructor : IGameObject
 
     public void Redo()
     {
-        if (_redoHistory.Count > 0)
+        while (_redoHistory.Count > 0 && _redoHistory.Peek().IsSeparator)
+        {
+            _history.Push(_redoHistory.Pop());
+        }
+
+        if (_redoHistory.Count == 0)
+            return;
+
+        if (_redoHistory.Peek().IsInGroup)
+        {
+            _groupInteraction = true;
+            while (_redoHistory.Count > 0 && _redoHistory.Peek().IsInGroup)
+                _redoHistory.Pop().Invoke();
+            _groupInteraction = false;
+        }
+        else
+        {
             _redoHistory.Pop().Invoke();
+        }
     }
 
     public void Update(GameTime gameTime)
@@ -113,7 +134,7 @@ public class Constructor : IGameObject
 
     private bool IsGroupInteraction()
     {
-        if (Globals.KeyboardInputController.IsJustPressed(Keys.Space) || Globals.KeyboardInputController.IsJustReleased(Keys.Space))
+        if (Globals.KeyboardInputController.IsPressed(Keys.Space) && MouseInputController.IsJustPressed)
             _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
         return Globals.KeyboardInputController.IsPressed(Keys.Space);
     }
@@ -130,7 +151,7 @@ public class Constructor : IGameObject
         _holdingEntity = null;
     }
 
-    public virtual void SpawnBlock(Vector2 mouseTilePos, HistoryEventInfo historyEvent = null)
+    public virtual void SpawnBlock(Vector2 mouseTilePos, bool calledFromHistory = false)
     {
         if (SelectedEntity is EntityTypeEnum.None) return;
         Block entity = null;
@@ -168,15 +189,15 @@ public class Constructor : IGameObject
                 break;
         }
 
-        if (historyEvent == null)
+        if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], newEvent);
+            newEvent.Action = () => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], true);
             _history.Push(newEvent);
         }
         else if (entity != null)
         {
-            var newEvent = new HistoryEventInfo(historyEvent.EventType);
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
             newEvent.Action = () => SpawnBlock(entity.Info);
             _redoHistory.Push(newEvent);
         }
@@ -185,16 +206,16 @@ public class Constructor : IGameObject
     public virtual void SpawnBlock(SerializationInfo info)
     {
         SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
-        SpawnBlock(info.TilePos);
+        SpawnBlock(info.TilePos, true);
     }
 
-    public void DeleteBlock(TileGridEntity entity, HistoryEventInfo historyEvent = null)
+    public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)
     {
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _entities.Remove(entity as IEntity);
         (entity as IEntity).Remove();
 
-        if (historyEvent == null)
+        if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
             newEvent.Action = () => SpawnBlock((entity as Block).Info);
@@ -202,12 +223,10 @@ public class Constructor : IGameObject
         }
         else
         {
-            var newEvent = new HistoryEventInfo(historyEvent.EventType);
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
             newEvent.Action = () => SpawnBlock((entity as Block).Info);
             _redoHistory.Push(newEvent);
         }
-        //else
-        //    _redoHistory.Push(new HistoryEventInfo(() => SpawnBlock((entity as Block).Info)));
     }
 
     //public void DeleteBlock(SerializationInfo info)

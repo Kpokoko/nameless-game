@@ -18,9 +18,9 @@ namespace nameless.Code.Constructors
 {
     public class DeveloperConstructor : Constructor
     {
-        public override void SpawnBlock(Vector2 mouseTilePos, HistoryEventInfo historyEvent)
+        public override void SpawnBlock(Vector2 mouseTilePos, bool calledFromHistory = false)
         {
-            base.SpawnBlock(mouseTilePos, historyEvent);
+            base.SpawnBlock(mouseTilePos, calledFromHistory);
             switch (SelectedEntity)
             {
                 case EntityTypeEnum.EditorBlock:
