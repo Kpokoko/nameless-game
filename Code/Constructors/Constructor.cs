@@ -168,7 +168,7 @@ public class Constructor : IGameObject
                 break;
         }
 
-        if (historyEvent != null)
+        if (historyEvent == null)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
             newEvent.Action = () => DeleteBlock(_storage[(int)mouseTilePos.X, (int)mouseTilePos.Y], newEvent);
@@ -190,7 +190,7 @@ public class Constructor : IGameObject
         _entities.Remove(entity as IEntity);
         (entity as IEntity).Remove();
 
-        if (historyEvent != null)
+        if (historyEvent == null)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
             newEvent.Action = () => SpawnBlock((entity as Block).Info, newEvent);
