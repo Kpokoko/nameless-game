@@ -11,15 +11,16 @@ namespace nameless.Engine;
 public class AudioManager
 {
     public ContentManager Content;
-    private SoundEffect _deathSound;
+    private SoundEffectInstance _deathSound;
 
     public void Initialize()
     {
-        _deathSound = Content.Load<SoundEffect>("Sounds/DeathSound")/*.CreateInstance()*/;
+        _deathSound = Content.Load<SoundEffect>("Sounds/DeathSound").CreateInstance();
     }
 
     public void PlayDeathSound()
     {
+        _deathSound.Volume = 0.7f;
         _deathSound.Play();
     }
 }
