@@ -10,5 +10,5 @@ namespace nameless.Entity;
 public class StickyBlock : Block, IConstructable
 {
     public StickyBlock(int x, int y) : base(x, y)
-    { Colliders[0].Color = Color.LimeGreen; IsEnableToPlayer = true; }
+    { Colliders[0].Color = Color.GreenYellow; IsEnableToPlayer = true; }
 }

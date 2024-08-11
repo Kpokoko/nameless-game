@@ -22,7 +22,8 @@ public enum EntityTypeEnum
     Platform,
     MovingPlatform,
     FragileBlock,
-    TemporaryBlock
+    TemporaryBlock,
+    DelayedDeathBlock
 }
 
 public static class EntityType

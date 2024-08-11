@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/C#/Games/Repos/nameless-game/Content/PlayerSpritesheet.png</SourceFile>
-  <SourceTime>2024-07-29T21:30:36.2259905+05:00</SourceTime>
-  <DestFile>C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/PlayerSpritesheet.xnb</DestFile>
-  <DestTime>2024-07-29T21:30:45.2979545+05:00</DestTime>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/PlayerSpritesheet.png</SourceFile>
+  <SourceTime>2024-08-10T13:31:54.7225958+05:00</SourceTime>
+  <DestFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/PlayerSpritesheet.xnb</DestFile>
+  <DestTime>2024-08-11T12:53:46.8337776+05:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2022-07-26T16:44:56+05:00</ImporterTime>
+  <ImporterTime>2018-12-08T21:35:54+05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2022-07-26T16:44:56+05:00</ProcessorTime>
+  <ProcessorTime>2018-12-08T21:35:54+05:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>

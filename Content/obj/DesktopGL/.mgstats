@@ -1,4 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/C#/Games/Repos/nameless-game/Content/BasicFont.spritefont","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/BasicFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,70687,0,2331259
-"C:/C#/Games/Repos/nameless-game/Content/PlayerSpritesheet.png","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/PlayerSpritesheet.xnb","TextureProcessor","Texture2DContent",6987,109909,0,0342942
-"C:/C#/Games/Repos/nameless-game/Content/TrexSpritesheet.png","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/TrexSpritesheet.xnb","TextureProcessor","Texture2DContent",6662,739885,0,0250304
+"C:/Users/User/Desktop/nameless-game/nameless-game/Content/Sounds/DeathSound.wav","C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Sounds/DeathSound.xnb","SoundEffectProcessor","SoundEffectContent",760398,760425,0,2252441

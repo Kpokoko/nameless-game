@@ -49,6 +49,7 @@ public class Engine : Game
         Globals.AnimationManager = new AnimationManager();
         Globals.SceneManager = new SceneManager();
         Globals.Serializer = new Serialize.Serializer();
+        Globals.AudioManager = new AudioManager();
         Globals.Inventory = new Inventory();
         if (Globals.IsDeveloperModeEnabled)
         {
@@ -84,7 +85,8 @@ public class Engine : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+        Globals.AudioManager.Content = Content;
+        Globals.AudioManager.Initialize();
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         Globals.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
 
@@ -118,6 +120,7 @@ public class Engine : Game
 
     public void Restart()
     {
+        Globals.AudioManager.PlayDeathSound();
         LoadCollisions();
         LoadScene();
         Globals.UIManager.PopupMessage("Restart");

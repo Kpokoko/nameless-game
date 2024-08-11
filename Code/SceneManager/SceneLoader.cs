@@ -54,6 +54,9 @@ namespace nameless.Code.SceneManager
                     case "TemporaryBlock":
                         sceneContent.Add(new TemporaryBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
+                    case "DelayedDeathBlock":
+                        sceneContent.Add(new DelayedDeathBlock((int)data.TilePos.X, (int)data.TilePos.Y));
+                        continue;
                     default: break;
                 }
             }

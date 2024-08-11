@@ -42,6 +42,7 @@ public static class Globals
     public static KeyboardInputController KeyboardInputController;
 
     public static SceneManager SceneManager;
+    public static AudioManager AudioManager;
 
     public static Constructor Constructor;
 

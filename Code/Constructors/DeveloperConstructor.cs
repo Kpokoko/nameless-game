@@ -43,7 +43,7 @@ namespace nameless.Code.Constructors
                     if (type is TriggerType.None) return;
 
                     var pivot = new Pivot((int)mouseTilePos.X, (int)mouseTilePos.Y);
-                    var b = HitboxTrigger.CreateHitboxTrigger(type, pivot,Globals.SceneManager.GetEntities());
+                    var b = HitboxTrigger.CreateHitboxTrigger(type, pivot, Globals.SceneManager.GetEntities());
                     _entities.Add(pivot);
                     break;
                 default:

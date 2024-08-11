@@ -20,6 +20,13 @@
 /processorParam:TextureFormat=Compressed
 /build:BasicFont.spritefont
 
+#begin BasicFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:BasicFont.spritefont
+
 #begin PlayerSpritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -31,6 +38,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:PlayerSpritesheet.png
+
+#begin Sounds/DeathSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/DeathSound.wav
 
 #begin TrexSpritesheet.png
 /importer:TextureImporter

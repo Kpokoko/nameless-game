@@ -18,7 +18,7 @@ namespace nameless.Collisions;
 public partial class HitboxTrigger
 {
     public Vector2 DestinationScene;
-    public static HitboxTrigger CreateHitboxTrigger(TriggerType type, Block pivot, List<IEntity> sceneContent = null)
+    public static HitboxTrigger CreateHitboxTrigger(TriggerType type, Block pivot, List<IEntity> sceneContent = null, int x = 60, int y = 60)
     {
         HitboxTrigger trigger = null;
         switch (type)
@@ -29,7 +29,7 @@ public partial class HitboxTrigger
                 trigger = CreateSwitchSceneTrigger(pivot,sceneContent);
                 break;
             case TriggerType.DamagePlayer:
-                trigger = CreateDamagePlayerTrigger(pivot);
+                trigger = CreateDamagePlayerTrigger(pivot, x, y);
                 break;
             case TriggerType.Disposable:
                 trigger = CreateDisposableTrigger(pivot);
@@ -116,9 +116,9 @@ public partial class HitboxTrigger
         return trigger;
     }
 
-    public static HitboxTrigger CreateDamagePlayerTrigger(Block pivot)
+    public static HitboxTrigger CreateDamagePlayerTrigger(Block pivot, int x, int y)
     {
-        HitboxTrigger trigger = new HitboxTrigger(pivot, 60, 60, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact,QuantityProperty.OneAtATime);
+        HitboxTrigger trigger = new HitboxTrigger(pivot, x, y, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact,QuantityProperty.OneAtATime);
         var player = () => Globals.SceneManager.GetPlayer();
 
         trigger.Color = Color.IndianRed;
