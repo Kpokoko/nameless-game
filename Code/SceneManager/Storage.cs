@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using nameless.Entity;
 using nameless.Interfaces;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +37,35 @@ namespace nameless.Code.SceneManager
             }
         }
 
-        public TileGridEntity this[int index, int index2, int layer = 0]
+        public TileGridEntity this[int x, int y, int layer = 0]
         {
-            get { return Entities[layer][index, index2]; }
-            set { Entities[layer][index, index2] = value; }
+            get { return Entities[layer][x, y]; }
+            set { Entities[layer][x, y] = value; }
         }
+
+        public TileGridEntity this[Vector2 tilePos, int layer = 0]
+        {
+            get { return Entities[layer][(int)tilePos.X, (int)tilePos.Y]; }
+            set { Entities[layer][(int)tilePos.X, (int)tilePos.Y] = value; }
+        }
+
+        public void RemoveEntity(int x, int y, int layer = 0)
+        {
+            var iEntity = (IEntity)this[x, y, layer];
+            this[x, y, layer] = null;
+            if (iEntity != null && Globals.SceneManager.GetEntities().Contains(iEntity))
+                Globals.SceneManager.GetEntities().Remove(iEntity);
+        }
+        public void RemoveEntity(Vector2 tilePos, int layer = 0) => RemoveEntity((int)tilePos.X, (int)tilePos.Y, layer);
+
+        public void AddEntity(TileGridEntity entity, int x, int y, int layer = 0)
+        {
+            Entities[layer][x, y] = entity;
+            var iEntity = (IEntity)entity;
+            if (!Globals.SceneManager.GetEntities().Contains(iEntity))
+                Globals.SceneManager.GetEntities().Add(iEntity);
+        }
+        public void AddEntity(TileGridEntity entity, Vector2 tilePos, int layer = 0) => AddEntity(entity, (int)tilePos.X, (int)tilePos.Y, layer);
 
         public TileGridEntity[][,] GetArray()
         {

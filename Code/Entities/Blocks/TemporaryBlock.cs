@@ -17,6 +17,8 @@ namespace nameless.Entity
             trigger.Start();
             Colliders[0].Color = Color.DarkSeaGreen;
         }
+        public TemporaryBlock(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
 
         public void Break()
         {

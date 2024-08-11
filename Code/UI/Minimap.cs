@@ -45,7 +45,7 @@ public class Minimap : UIElement
                     case EntityTypeEnum.Platform: color = Color.Green; rect.Height = 2; break;
                 }
 
-                spriteBatch.DrawRectangle(rect, color, TileSize/2 + 1);
+                spriteBatch.DrawRectangle(rect, color * 0.3f, TileSize/2 + 1);
             }
     }
 

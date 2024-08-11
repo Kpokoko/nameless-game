@@ -15,6 +15,7 @@ namespace nameless.Entity
     {
         public InventoryBlock(int x, int y) : base(x, y)
         { Colliders[0].Color = Color.Red; IsEnableToPlayer = true; }
+        public InventoryBlock(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
 
         //public bool IsHolding { get; set; }
 

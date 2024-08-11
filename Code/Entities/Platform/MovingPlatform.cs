@@ -27,6 +27,8 @@ namespace nameless.Entity
             Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
         }
+        public MovingPlatform(Vector2 tilePosition, Vector2 dir, float speed) : this((int)tilePosition.X, (int)tilePosition.Y, dir, speed) { }
+
 
         public void SetMovement(Vector2 dir, float speed)
         {

@@ -11,4 +11,6 @@ public class StickyBlock : Block, IConstructable
 {
     public StickyBlock(int x, int y) : base(x, y)
     { Colliders[0].Color = Color.LimeGreen; IsEnableToPlayer = true; }
+    public StickyBlock(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
 }

@@ -29,6 +29,8 @@ public class Pivot :  Block, IEntity, ICollider
         Globals.CollisionManager.CollisionComponent.Remove(Colliders[0]);
         Colliders[0].Color = Color.LightSteelBlue * 0.4f;
     }
+    public Pivot(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
 
     public override void PrepareSerializationInfo()
     {

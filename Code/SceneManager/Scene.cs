@@ -67,7 +67,7 @@ namespace nameless.Code.SceneManager
                 //Обновляем тут движущиеся объекты на сцене
             }
 
-            Storage = new Storage(Entities);
+            //Storage = new Storage(Entities);
         }
 
         public void Draw(SpriteBatch spriteBatch)
