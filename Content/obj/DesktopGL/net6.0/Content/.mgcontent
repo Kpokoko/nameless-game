@@ -6,10 +6,12 @@
   <SourceFiles>
     <File>C:/Users/User/Desktop/nameless-game/nameless-game/Content/BasicFont.spritefont</File>
     <File>C:/Users/User/Desktop/nameless-game/nameless-game/Content/PlayerSpritesheet.png</File>
+    <File>C:/Users/User/Desktop/nameless-game/nameless-game/Content/Sounds/Click.wav</File>
     <File>C:/Users/User/Desktop/nameless-game/nameless-game/Content/Sounds/DeathSound.wav</File>
     <File>C:/Users/User/Desktop/nameless-game/nameless-game/Content/TrexSpritesheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

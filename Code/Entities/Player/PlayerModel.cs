@@ -395,7 +395,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Death()
     {
-        Globals.AudioManager.PlayDeathSound();
+        Globals.AudioManager.PlaySound("DeathSound", 0.2f);
         State = PlayerState.Static;
         Globals.UIManager.PopupMessage("LoL u Died");
         Globals.CollisionManager.KinematicAccurateColliders.Clear();

@@ -11,16 +11,23 @@ namespace nameless.Engine;
 public class AudioManager
 {
     public ContentManager Content;
-    private SoundEffectInstance _deathSound;
+    private Dictionary<string, SoundEffect> _soundEffects;
 
     public void Initialize()
     {
-        _deathSound = Content.Load<SoundEffect>("Sounds/DeathSound").CreateInstance();
+        var deathSound = Content.Load<SoundEffect>("Sounds/DeathSound");
+        var clickSound = Content.Load<SoundEffect>("Sounds/Click");
+        _soundEffects = new Dictionary<string, SoundEffect>
+        {
+            { "DeathSound", deathSound },
+            { "Click", clickSound }
+        };
     }
 
-    public void PlayDeathSound()
+    public void PlaySound(string name, float volume = 1)
     {
-        _deathSound.Volume = 0.7f;
-        _deathSound.Play();
+        var instance = _soundEffects[name].CreateInstance();
+        instance.Volume = volume;
+        instance.Play();
     }
 }

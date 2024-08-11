@@ -120,7 +120,7 @@ public class Engine : Game
 
     public void Restart()
     {
-        Globals.AudioManager.PlayDeathSound();
+        Globals.AudioManager.PlaySound("DeathSound", 0.7f);
         LoadCollisions();
         LoadScene();
         Globals.UIManager.PopupMessage("Restart");

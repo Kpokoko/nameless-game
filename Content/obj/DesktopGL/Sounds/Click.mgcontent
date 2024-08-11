@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/Sounds/DeathSound.wav</SourceFile>
-  <SourceTime>2024-08-11T13:12:02.0061994+05:00</SourceTime>
-  <DestFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Sounds/DeathSound.xnb</DestFile>
-  <DestTime>2024-08-11T13:18:49.9652344+05:00</DestTime>
+  <SourceFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/Sounds/Click.wav</SourceFile>
+  <SourceTime>2024-08-11T13:16:58.7097523+05:00</SourceTime>
+  <DestFile>C:/Users/User/Desktop/nameless-game/nameless-game/Content/bin/DesktopGL/Sounds/Click.xnb</DestFile>
+  <DestTime>2024-08-11T13:19:05.3043366+05:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2018-12-08T21:35:54+05:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

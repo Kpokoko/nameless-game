@@ -75,6 +75,7 @@ namespace nameless.Entity
         public void TurnAround()
         {
             Speed = Speed * (-1);
+            Globals.AudioManager.PlaySound("Click", 0.2f);
         }
     }
 }
