@@ -15,9 +15,9 @@ namespace nameless.Code.Constructors;
 
 public class Constructor : IGameObject
 {
-    private Vector2 _prevMouseTilePos;
     public int DrawOrder => 1;
-    private Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
+    protected Vector2 _prevMouseTilePos = Vector2.Zero;
+    protected Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
     protected List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
     private IConstructable _holdingEntity { get; set; }
     public EntityTypeEnum SelectedEntity { get; set; }
@@ -25,11 +25,11 @@ public class Constructor : IGameObject
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
     public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : 0; } }
 
-    private Stack<HistoryEventInfo> _history = new();
+    protected Stack<HistoryEventInfo> _history = new();
 
-    private Stack<HistoryEventInfo> _redoHistory = new();
+    protected Stack<HistoryEventInfo> _redoHistory = new();
 
-    private bool _groupInteraction;
+    protected bool _groupInteraction;
 
     public void Draw(SpriteBatch spriteBatch)
     { }
@@ -61,7 +61,7 @@ public class Constructor : IGameObject
 
 
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
@@ -71,7 +71,7 @@ public class Constructor : IGameObject
         if (MouseInputController.OnUIElement)
             return;
 
-        if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
+        if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse) && ! _groupInteraction)
             HoldBlock(entityUnderMouse as IConstructable);
 
         if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) 
@@ -85,10 +85,11 @@ public class Constructor : IGameObject
 
         if (entityUnderMouse is null && _holdingEntity is not null)
            MoveBlock(mouseTilePos);
+
         _prevMouseTilePos = mouseTilePos;
     }
 
-    private bool IsGroupInteraction()
+    protected bool IsGroupInteraction()
     {
         if (Globals.KeyboardInputController.IsPressed(Keys.Space) && MouseInputController.IsJustPressed)
             _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
@@ -110,35 +111,30 @@ public class Constructor : IGameObject
     public virtual void SpawnBlock(Vector2 tilePos, bool calledFromHistory = false)
     {
         if (SelectedEntity is EntityTypeEnum.None) return;
-        Block entity = null;
         switch (SelectedEntity)
         {
             case EntityTypeEnum.InventoryBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new InventoryBlock((int)tilePos.X, (int)tilePos.Y);
-                    _entities.Add(entity);
+                    _storage.AddEntity(new InventoryBlock(tilePos), tilePos, Layer);
                 }
                 break;
             case EntityTypeEnum.StickyBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new StickyBlock((int)tilePos.X, (int)tilePos.Y);
-                    _entities.Add(entity);
+                    _storage.AddEntity(new StickyBlock(tilePos), tilePos, Layer);
                 }
                 break;
             case EntityTypeEnum.FragileBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new FragileBlock((int)tilePos.X, (int)tilePos.Y);
-                    _entities.Add(entity);
+                    _storage.AddEntity(new FragileBlock(tilePos), tilePos, Layer);
                 }
                 break;
             case EntityTypeEnum.TemporaryBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new TemporaryBlock((int)tilePos.X, (int)tilePos.Y);
-                    _entities.Add(entity);
+                    _storage.AddEntity(new TemporaryBlock(tilePos), tilePos, Layer);
                 }
                 break;
             case EntityTypeEnum.DelayedDeathBlock:
@@ -177,7 +173,7 @@ public class Constructor : IGameObject
     public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)
     {
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
-        _entities.Remove(entity as IEntity);
+        _storage.RemoveEntity(entity.TilePosition, Layer);
         (entity as IEntity).Remove();
 
         if (!calledFromHistory)
@@ -212,8 +208,10 @@ public class Constructor : IGameObject
     private void MoveBlock(Vector2 mouseTilePos)
     {
         var tileEntity = _holdingEntity as TileGridEntity;
+        _storage[tileEntity.TilePosition, Layer] = null;
         if (tileEntity.TilePosition != mouseTilePos)
             tileEntity.TilePosition = mouseTilePos;
+        _storage[mouseTilePos, Layer] = tileEntity;
         _holdingEntity.UpdateConstructor();
 
     }
@@ -255,6 +253,27 @@ public class Constructor : IGameObject
         else
         {
             stack.Pop().Invoke();
+        }
+    }
+
+    protected void ClearHistoryStackAction(Stack<HistoryEventInfo> stack)
+    {
+        while (stack.Count > 0 && stack.Peek().IsSeparator)
+        {
+            stack.Pop();
+        }
+
+        if (stack.Count == 0)
+            return;
+
+        if (stack.Peek().IsInGroup)
+        {
+            while (stack.Count > 0 && stack.Peek().IsInGroup)
+                stack.Pop();
+        }
+        else
+        {
+            stack.Pop();
         }
     }
 }

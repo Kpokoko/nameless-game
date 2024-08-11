@@ -22,6 +22,8 @@ namespace nameless.Entity
             Globals.CollisionManager.PlatformColliders.Add(Colliders[0]);
             Globals.CollisionManager.PlatformColliders.Sort((p2,p) => p.Position.Y.CompareTo(p2.Position.Y));
         }
+        public Platform(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
 
         public override Vector2 TilePosition
         {

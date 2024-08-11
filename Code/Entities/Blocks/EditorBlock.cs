@@ -23,5 +23,7 @@ namespace nameless.Entity
             trigger.OnCollisionExitEvent += () => Globals.OnEditorBlock = false;
             Colliders.Add(trigger);
         }
+        public EditorBlock(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
     }
 }

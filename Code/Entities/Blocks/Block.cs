@@ -25,6 +25,8 @@ public partial class Block : TileGridEntity, IEntity, ICollider
         Colliders[0].Color = Color.Brown;
     }
 
+    public Block(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
     public Block() { }
     [XmlIgnore]
 

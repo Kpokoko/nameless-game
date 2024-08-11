@@ -22,6 +22,8 @@ namespace nameless.Entity
             Colliders[0].Color = Color.Purple;
             IsEnableToPlayer = true;
         }
+        public FragileBlock(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
+
 
         public void Break()
         {
