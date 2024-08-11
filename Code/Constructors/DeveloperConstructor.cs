@@ -45,6 +45,7 @@ namespace nameless.Code.Constructors
         {
             _startMouseTilePos = null;
             _previousDrawTilePos = null;
+            _blocksDeleted = false ;
         }
 
         private void DeleteRectangle(Vector2 mouseTilePos) => DrawRectangle(mouseTilePos, false);
