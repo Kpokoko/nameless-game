@@ -140,8 +140,7 @@ public class Constructor : IGameObject
             case EntityTypeEnum.DelayedDeathBlock:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    entity = new DelayedDeathBlock((int)tilePos.X, (int)tilePos.Y);
-                    _entities.Add(entity);
+                    _storage.AddEntity(new DelayedDeathBlock((int)tilePos.X, (int)tilePos.Y), tilePos, Layer);
                 }
                 break;
             default:

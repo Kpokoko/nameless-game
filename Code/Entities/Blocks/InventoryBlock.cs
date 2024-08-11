@@ -14,12 +14,8 @@ namespace nameless.Entity
     public class InventoryBlock : Block, IConstructable
     {
         public InventoryBlock(int x, int y) : base(x, y)
-<<<<<<< HEAD
         { Colliders[0].Color = Color.Green; IsEnableToPlayer = true; }
-=======
-        { Colliders[0].Color = Color.Red; IsEnableToPlayer = true; }
         public InventoryBlock(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
->>>>>>> Constructor-features
 
         //public bool IsHolding { get; set; }
 

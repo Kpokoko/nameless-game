@@ -133,16 +133,9 @@ namespace nameless.Code.Constructors
                     if (SelectedEntityProperty is not TriggerType) return;
                     var type = (TriggerType)SelectedEntityProperty;
                     if (type is TriggerType.None) return;
-
-<<<<<<< HEAD
-                    var pivot = new Pivot((int)mouseTilePos.X, (int)mouseTilePos.Y);
-                    var b = HitboxTrigger.CreateHitboxTrigger(type, pivot, Globals.SceneManager.GetEntities());
-                    _entities.Add(pivot);
-=======
                     var pivot = new Pivot((int)tilePos.X, (int)tilePos.Y);
                     var b = HitboxTrigger.CreateHitboxTrigger(type, pivot,Globals.SceneManager.GetEntities());
                     _storage.AddEntity(pivot, tilePos, Layer);
->>>>>>> Constructor-features
                     break;
                 default:
                     break;
