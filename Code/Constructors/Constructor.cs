@@ -63,6 +63,7 @@ public class Constructor : IGameObject
             serializer.SaveInventory(Globals.Inventory.GetInventory());
             _history.Clear();
             _redoHistory.Clear();
+            ReleaseBlock();
         }
     }
 
@@ -73,7 +74,7 @@ public class Constructor : IGameObject
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
-        _groupInteraction = IsGroupInteraction();
+        _groupInteraction = IsGroupInteraction() || (_groupInteraction && _isDeveloperAction);
 
         if (MouseInputController.OnUIElement || _isDeveloperAction)
             return;
@@ -93,7 +94,7 @@ public class Constructor : IGameObject
         else if (IsMoving())
            MoveBlock(mouseTilePos);
 
-        if (!IsMoving())
+        if (!_groupInteraction)
             ResetDrawing();
 
         _prevMouseTilePos = mouseTilePos;
@@ -175,7 +176,6 @@ public class Constructor : IGameObject
         _storage.RemoveEntity(entity.TilePosition, Layer);
         (entity as IEntity).Remove();
 
-        _groupInteraction = true;
         if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
@@ -213,8 +213,12 @@ public class Constructor : IGameObject
         if (!calledFromHistory)
             moveOn = mouseTilePos - (Vector2)_startMouseTilePos;
 
+        if (_holdingEntities.Any(e => !Storage.IsInBounds(((TileGridEntity)e).TilePosition + moveOn)))
+            return;
+
         _blocksSpawned = true;
         _groupInteraction = true;
+
         foreach (var entity in _holdingEntities)
         {
             _storage[((TileGridEntity)entity).TilePosition, Layer] = null;
@@ -260,7 +264,7 @@ public class Constructor : IGameObject
     {
         if ((IsDrawing() || IsMoving()) && MouseInputController.IsJustPressed)
             _history.Push(new HistoryEventInfo(HistoryEventType.Separator));
-        return IsDrawing() || IsMoving();
+        return IsDrawing() || IsMoving() && MouseInputController.IsPressed;
     }
 
     private bool IsDrawing() => Globals.KeyboardInputController.IsPressed(Keys.Space);

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using nameless.Engine;
 using nameless.Graphics;
 using nameless.Interfaces;
 using System;
@@ -20,7 +22,7 @@ public class PlayerAnimationHandler : AnimationHandler
 
     public PlayerAnimationHandler(PlayerModel entity) : base(entity)
     {
-        var spriteSheet = Globals.SpriteSheet2;
+        var spriteSheet = ResourceManager.SpriteSheet2;
         CurrentAnimationType = AnimationType.MoveRight;
         var sprites = new SpriteSheet(spriteSheet, 44, 52);
 

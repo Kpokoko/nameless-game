@@ -73,7 +73,7 @@ namespace nameless.Code.SceneManager
                 state = Globals.SceneManager.GetPlayer().State;
             }
             if (pizdec) return sceneContent;
-            sceneContent.Add(new PlayerModel(Globals.SpriteSheet, Tile.GetTileCenter(playerPos), vel, state));
+            sceneContent.Add(new PlayerModel(ResourceManager.SpriteSheet, Tile.GetTileCenter(playerPos), vel, state));
             return sceneContent;
         }
 

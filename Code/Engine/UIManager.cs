@@ -24,6 +24,8 @@ public class UIManager
     public List<CircleController> CircleControllers = new List<CircleController>();
     public List<SpriteBox> SpriteBoxes = new List<SpriteBox>();
 
+    public SpriteFont Font = ResourceManager.Font;
+
     public List<Container> Popups = new List<Container>();
 
     public List<Block> Selected = new();
@@ -34,7 +36,6 @@ public class UIManager
 
     public Dictionary<UIScenes, UIScene> CurrentUIScenes = new();
 
-    public SpriteFont Font;
     public void Update(GameTime gameTime)
     {
         for (var i = 0; i < Buttons.Count; i++)
@@ -89,8 +90,11 @@ public class UIManager
     }
     public void RemoveScene(UIScenes scene)
     {
-        CurrentUIScenes[scene].Clear();
-        CurrentUIScenes.Remove(scene);
+        if (CurrentUIScenes.ContainsKey(scene))
+        {
+            CurrentUIScenes[scene].Clear();
+            CurrentUIScenes.Remove(scene);
+        }
     }
 
     public void PopupMessage(string message)

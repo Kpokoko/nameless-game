@@ -38,7 +38,7 @@ public struct Serializer
         {
             using (StreamWriter writer = new StreamWriter(sceneName))
             {
-                serializer.Serialize(writer, new List<SerializationInfo> { new PlayerModel(Globals.SpriteSheet).Info });
+                serializer.Serialize(writer, new List<SerializationInfo> { new PlayerModel(ResourceManager.SpriteSheet).Info });
             }
             using (var reader = new StreamReader(new FileStream(sceneName, FileMode.Open)))
             {
