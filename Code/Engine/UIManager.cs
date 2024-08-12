@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Timers;
+using nameless.Entity;
 using nameless.GameObjects;
 using nameless.UI;
 using nameless.UI.Scenes;
@@ -23,6 +25,8 @@ public class UIManager
     public List<SpriteBox> SpriteBoxes = new List<SpriteBox>();
 
     public List<Container> Popups = new List<Container>();
+
+    public List<Block> Selected = new();
 
     public List<UIElement> ToRemove = new List<UIElement>();
 
@@ -64,6 +68,12 @@ public class UIManager
             CircleControllers[i].Draw(spriteBatch);
         for (var i = 0; i < SpriteBoxes.Count; i++)
             SpriteBoxes[i].Draw(spriteBatch);
+
+        for (var i = 0; i < Selected.Count; i++)
+        {
+            spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.5f);
+
+        }
     }
 
     public void SetScene(UIScenes scene)

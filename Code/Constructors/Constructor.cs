@@ -99,16 +99,9 @@ public class Constructor : IGameObject
         _prevMouseTilePos = mouseTilePos;
     }
 
-    protected bool IsGroupInteraction()
-    {
-        if ((IsDrawing() || IsMoving()) && MouseInputController.IsJustPressed)
-            _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
-        return Globals.KeyboardInputController.IsPressed(Keys.Space) || (_holdingEntities.Any() && MouseInputController.LeftButton.IsPressed);
-    }
-
     private void HoldBlock(IConstructable entity)
     {
-        entity.IsHolding = true;
+        entity.IsSelected = true;
         if (!_holdingEntities.Contains(entity))
             _holdingEntities.Add(entity);
     }
@@ -116,7 +109,7 @@ public class Constructor : IGameObject
     private void ReleaseBlock()
     {
         foreach (var entity in _holdingEntities)
-            entity.IsHolding = false;
+            entity.IsSelected = false;
         _holdingEntities.Clear();
     }
 
@@ -177,6 +170,7 @@ public class Constructor : IGameObject
 
     public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)
     {
+        entity.IsSelected = false;
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _storage.RemoveEntity(entity.TilePosition, Layer);
         (entity as IEntity).Remove();
@@ -219,7 +213,7 @@ public class Constructor : IGameObject
         if (!calledFromHistory)
             moveOn = mouseTilePos - (Vector2)_startMouseTilePos;
 
-                                                                    _blocksSpawned = true;
+        _blocksSpawned = true;
         _groupInteraction = true;
         foreach (var entity in _holdingEntities)
         {
@@ -229,6 +223,13 @@ public class Constructor : IGameObject
         {
             var tileEntity = entity as TileGridEntity;
             tileEntity.TilePosition += moveOn;
+
+            var coveredEntity = _storage[tileEntity.TilePosition, Layer];
+            if (coveredEntity != null)
+            {
+                DeleteBlock(coveredEntity);
+            }
+
             _storage[tileEntity.TilePosition, Layer] = tileEntity;
             entity.UpdateConstructor();
         }
@@ -249,15 +250,23 @@ public class Constructor : IGameObject
         }
 
     }
-
-    private bool IsDrawing() => Globals.KeyboardInputController.IsPressed(Keys.Space);
-    private bool IsMoving() => _holdingEntities.Any() && MouseInputController.LeftButton.IsPressed;
-
     private bool PossibleToInteract(TileGridEntity entity)
     {
-        return (entity is IConstructable && 
-            (Globals.IsDeveloperModeEnabled || ((IConstructable)entity).IsEnableToPlayer)) ;
+        return (entity is IConstructable &&
+            (Globals.IsDeveloperModeEnabled || ((IConstructable)entity).IsEnableToPlayer));
     }
+
+    protected bool IsGroupInteraction()
+    {
+        if ((IsDrawing() || IsMoving()) && MouseInputController.IsJustPressed)
+            _history.Push(new HistoryEventInfo(HistoryEventType.Separator));
+        return IsDrawing() || IsMoving();
+    }
+
+    private bool IsDrawing() => Globals.KeyboardInputController.IsPressed(Keys.Space);
+
+    private bool IsMoving() => _holdingEntities.Any() && MouseInputController.LeftButton.IsPressed;
+
 
     public void Undo()
     {
