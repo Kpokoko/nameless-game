@@ -18,9 +18,6 @@ namespace nameless.Code.Constructors
 {
     public class DeveloperConstructor : Constructor
     {
-        private Vector2? _startMouseTilePos;
-        private Vector2? _previousDrawTilePos;
-        private bool _blocksDeleted = false;
         private bool _fill = false;
         public override void Update(GameTime gameTime)
         {
@@ -29,41 +26,94 @@ namespace nameless.Code.Constructors
             var entityUnderMouse = _storage[(int)mouseTilePos.X, (int)mouseTilePos.Y, Layer];
 
             _groupInteraction = IsDeveloperGroupInteraction();
-            if (!_groupInteraction)
-                ResetDrawing();
 
             if ((MouseInputController.LeftButton.IsPressed && IsDrawingRectangle()))
                 DrawRectangle(mouseTilePos);
 
-            if ((MouseInputController.RightButton.IsPressed && IsDrawingRectangle()))
+            else if ((MouseInputController.RightButton.IsPressed && IsDrawingRectangle()))
                 DeleteRectangle(mouseTilePos);
+
+            else if (MouseInputController.LeftButton.IsPressed && IsDrawingLine())
+                DrawLine(mouseTilePos);
+
+            else if ((MouseInputController.RightButton.IsPressed && IsDrawingLine()))
+                DeleteLine(mouseTilePos);
 
             base.Update(gameTime);
         }
 
-        private void ResetDrawing()
+        private void DeleteLine(Vector2 mouseTilePos) => DrawLine(mouseTilePos, false);
+        private void DrawLine(Vector2 mouseTilePos, bool spawn = true)
         {
-            _startMouseTilePos = null;
-            _previousDrawTilePos = null;
-            _blocksDeleted = false ;
+            if (!IsMouseMoved(mouseTilePos, spawn))
+                return;
+
+            var startMousePos = (Vector2)_startMouseTilePos;
+            var x1 = (int)startMousePos.X;
+            var x2 = (int)mouseTilePos.X;
+            var y1 = (int)startMousePos.Y;
+            var y2 = (int)mouseTilePos.Y;
+            int xDiff = Math.Abs(x1 - x2);
+            int yDiff = Math.Abs(y1 - y2);
+
+            double deltaX, deltaY;
+            int num;
+            if (xDiff > yDiff)
+            {
+                //deltaY = 0;
+                //if ((x2 - x1) != 0)
+                //    deltaY = (y2 - y1) / (x2 - x1);
+                //deltaX = 1;
+                num = xDiff;
+            }
+            else
+            {
+                //deltaX = 0;
+                //if ((y2 - y1) != 0)
+                //    deltaX = (x2 - x1) / (y2 - y1);
+                //deltaY = 1;
+                num = yDiff;
+            }
+
+            _groupInteraction = true;
+
+            var entity = _storage[startMousePos, Layer];
+            if (spawn && entity == null)
+            {
+                SpawnBlock(startMousePos);
+                _blocksSpawned = true;
+            }
+            else if (!spawn && entity != null)
+            {
+                DeleteBlock(entity);
+                _blocksDeleted = true;
+            }
+
+            for (int i = 1; i <= num; i++)
+            {
+                var mouseDelta = (mouseTilePos - startMousePos) / num * (i);
+                var tilePos = startMousePos + new Vector2((float)Math.Round(mouseDelta.X), (float)Math.Round(mouseDelta.Y));
+                entity = _storage[tilePos, Layer];
+                if (spawn && entity == null)
+                {
+                    SpawnBlock(tilePos);
+                    _blocksSpawned = true;
+                }
+                else if (!spawn && entity != null)
+                {
+                    DeleteBlock(entity);
+                    _blocksDeleted = true;
+                }
+            }
+
         }
 
         private void DeleteRectangle(Vector2 mouseTilePos) => DrawRectangle(mouseTilePos, false);
 
         private void DrawRectangle(Vector2 mouseTilePos, bool spawn = true)
         {
-            if (_startMouseTilePos == null)
-                _startMouseTilePos = mouseTilePos;
-            if (_previousDrawTilePos != null && mouseTilePos == _previousDrawTilePos)
+            if (!IsMouseMoved(mouseTilePos , spawn))
                 return;
-            if ((spawn && _previousDrawTilePos != mouseTilePos && _previousDrawTilePos != null)
-                || (!spawn && _blocksDeleted))
-            {
-                Undo();
-                ClearHistoryStackAction(_redoHistory);
-                _blocksDeleted = false;
-            }
-            _previousDrawTilePos = mouseTilePos;
 
             var startMousePos = (Vector2)_startMouseTilePos;
             var minX = (int)Math.Min(startMousePos.X, mouseTilePos.X);
@@ -82,6 +132,7 @@ namespace nameless.Code.Constructors
                     if (spawn && entity == null)
                     {
                         SpawnBlock(tilePos);
+                        _blocksSpawned = true;
                     }
                     else if (!spawn && entity != null)
                     {
@@ -94,9 +145,12 @@ namespace nameless.Code.Constructors
 
         private bool IsDeveloperGroupInteraction()
         {
-            if ((IsDrawingRectangle() || IsDrawingLine()) && MouseInputController.IsJustPressed)
+            _isDeveloperAction = false;
+            if (IsDrawingRectangle() || IsDrawingLine())
             {
-                _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
+                _isDeveloperAction = true;
+                if (MouseInputController.IsJustPressed)
+                    _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
             }
 
             if (Globals.KeyboardInputController.KeyboardState.CapsLock)

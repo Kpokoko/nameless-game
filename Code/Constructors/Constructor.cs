@@ -19,7 +19,7 @@ public class Constructor : IGameObject
     protected Vector2 _prevMouseTilePos = Vector2.Zero;
     protected Storage _storage { get { return Globals.SceneManager.GetStorage(); } }
     protected List<IEntity> _entities { get { return Globals.SceneManager.GetEntities(); } }
-    private IConstructable _holdingEntity { get; set; }
+    private List<IConstructable> _holdingEntities { get; set; } = new();
     public EntityTypeEnum SelectedEntity { get; set; }
     public object SelectedEntityProperty { get; set; }
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
@@ -30,6 +30,13 @@ public class Constructor : IGameObject
     protected Stack<HistoryEventInfo> _redoHistory = new();
 
     protected bool _groupInteraction;
+    protected bool _isDeveloperAction = false;
+
+    protected Vector2? _startMouseTilePos;
+    protected Vector2? _previousDrawingTilePos;
+    protected bool _blocksDeleted = false;
+    protected bool _blocksSpawned = false;
+
 
     public void Draw(SpriteBatch spriteBatch)
     { }
@@ -68,44 +75,49 @@ public class Constructor : IGameObject
 
         _groupInteraction = IsGroupInteraction();
 
-        if (MouseInputController.OnUIElement)
+        if (MouseInputController.OnUIElement || _isDeveloperAction)
             return;
 
-        if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse) && ! _groupInteraction)
-            HoldBlock(entityUnderMouse as IConstructable);
+        else if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
+            HoldBlock(entityUnderMouse);
 
-        if (!MouseInputController.LeftButton.IsPressed && _holdingEntity is not null) 
+        else if (MouseInputController.IsJustPressed && _holdingEntities.Any() && !_holdingEntities.Contains(entityUnderMouse)) 
             ReleaseBlock();
 
-        if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && _groupInteraction) && entityUnderMouse == null)
+        else if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && IsDrawing()) && entityUnderMouse == null)
             SpawnBlock(mouseTilePos);
 
-        if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && _groupInteraction) && PossibleToInteract(entityUnderMouse))
+        else if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && IsDrawing()) && PossibleToInteract(entityUnderMouse))
             DeleteBlock(entityUnderMouse);
 
-        if (entityUnderMouse is null && _holdingEntity is not null)
+        else if (IsMoving())
            MoveBlock(mouseTilePos);
+
+        if (!IsMoving())
+            ResetDrawing();
 
         _prevMouseTilePos = mouseTilePos;
     }
 
     protected bool IsGroupInteraction()
     {
-        if (Globals.KeyboardInputController.IsPressed(Keys.Space) && MouseInputController.IsJustPressed)
+        if ((IsDrawing() || IsMoving()) && MouseInputController.IsJustPressed)
             _history.Push(new HistoryEventInfo(null, HistoryEventType.Separator));
-        return Globals.KeyboardInputController.IsPressed(Keys.Space);
+        return Globals.KeyboardInputController.IsPressed(Keys.Space) || (_holdingEntities.Any() && MouseInputController.LeftButton.IsPressed);
     }
 
     private void HoldBlock(IConstructable entity)
     {
         entity.IsHolding = true;
-        _holdingEntity = entity;
+        if (!_holdingEntities.Contains(entity))
+            _holdingEntities.Add(entity);
     }
 
     private void ReleaseBlock()
     {
-        _holdingEntity.IsHolding = false;
-        _holdingEntity = null;
+        foreach (var entity in _holdingEntities)
+            entity.IsHolding = false;
+        _holdingEntities.Clear();
     }
 
     public virtual void SpawnBlock(Vector2 tilePos, bool calledFromHistory = false)
@@ -169,6 +181,7 @@ public class Constructor : IGameObject
         _storage.RemoveEntity(entity.TilePosition, Layer);
         (entity as IEntity).Remove();
 
+        _groupInteraction = true;
         if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
@@ -198,17 +211,47 @@ public class Constructor : IGameObject
     //    _history.Push(new HistoryEventInfo(() => SpawnBlock(new Vector2(info.TilePos.X, info.TilePos.Y), false)));
     //}
 
-    private void MoveBlock(Vector2 mouseTilePos)
+    private void MoveBlock(Vector2 mouseTilePos, Vector2 moveOn = new Vector2(), bool calledFromHistory = false)
     {
-        var tileEntity = _holdingEntity as TileGridEntity;
-        _storage[tileEntity.TilePosition, Layer] = null;
-        if (tileEntity.TilePosition != mouseTilePos)
-            tileEntity.TilePosition = mouseTilePos;
-        _storage[mouseTilePos, Layer] = tileEntity;
-        _holdingEntity.UpdateConstructor();
+        if (!calledFromHistory && !IsMouseMoved(mouseTilePos, true, true))
+            return;
+
+        if (!calledFromHistory)
+            moveOn = mouseTilePos - (Vector2)_startMouseTilePos;
+
+                                                                    _blocksSpawned = true;
+        _groupInteraction = true;
+        foreach (var entity in _holdingEntities)
+        {
+            _storage[((TileGridEntity)entity).TilePosition, Layer] = null;
+        }
+        foreach (var entity in _holdingEntities)
+        {
+            var tileEntity = entity as TileGridEntity;
+            tileEntity.TilePosition += moveOn;
+            _storage[tileEntity.TilePosition, Layer] = tileEntity;
+            entity.UpdateConstructor();
+        }
+
+        if (!calledFromHistory)
+        {
+            var moveBack = - moveOn;
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => MoveBlock(Vector2.Zero, moveBack, true);
+            _history.Push(newEvent);
+        }
+        else
+        {
+            var moveBack = -moveOn;
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => MoveBlock(Vector2.Zero, moveBack);
+            _redoHistory.Push(newEvent);
+        }
 
     }
 
+    private bool IsDrawing() => Globals.KeyboardInputController.IsPressed(Keys.Space);
+    private bool IsMoving() => _holdingEntities.Any() && MouseInputController.LeftButton.IsPressed;
 
     private bool PossibleToInteract(TileGridEntity entity)
     {
@@ -268,5 +311,36 @@ public class Constructor : IGameObject
         {
             stack.Pop();
         }
+    }
+
+    protected bool IsMouseMoved(Vector2 mouseTilePos, bool spawn, bool move = false)
+    {
+        var moved = true;
+        if (_startMouseTilePos == null)
+        {
+            _startMouseTilePos = mouseTilePos;
+            if (move)
+                moved = false;
+        }
+        if (_previousDrawingTilePos != null && mouseTilePos == _previousDrawingTilePos)
+            return false;
+        if ((spawn && _previousDrawingTilePos != mouseTilePos && _previousDrawingTilePos != null && _blocksSpawned)
+            || (!spawn && _blocksDeleted))
+        {
+            Undo();
+            ClearHistoryStackAction(_redoHistory);
+            _blocksDeleted = false;
+            _blocksSpawned = false;
+        }
+        _previousDrawingTilePos = mouseTilePos;
+        return moved;
+    }
+
+    protected void ResetDrawing()
+    {
+        _startMouseTilePos = null;
+        _previousDrawingTilePos = null;
+        _blocksDeleted = false;
+        _blocksSpawned = false;
     }
 }
