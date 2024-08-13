@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SerializationInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TilePos>
-    <X>6</X>
-    <Y>1</Y>
+    <X>1</X>
+    <Y>11</Y>
   </TilePos>
   <TriggerType>None</TriggerType>
   <Direction>
