@@ -10,7 +10,9 @@ namespace nameless.Interfaces;
 public interface IConstructable
 {
     public void UpdateConstructor();
-    public bool IsHolding { get; set; }
+
+    public event Action OnSelection;
+    public bool IsSelected { get; set; }
     public bool IsEnableToPlayer { get; set; }
     public int Layer { get; set; }
 

@@ -74,5 +74,6 @@ public partial class Collider : ICollisionActor
         var rectBounds = (RectangleF)Bounds;
         //spriteBatch.DrawRectangle(new RectangleF(new Point2(rectBounds.X - rectBounds.Width / 2, rectBounds.Y - rectBounds.Height / 2), rectBounds.Size), Color.Red, 5);
         spriteBatch.DrawRectangle((RectangleF)Bounds, Color,4);
+        spriteBatch.FillRectangle((RectangleF)Bounds, Color * 0.3f);
     }
 }

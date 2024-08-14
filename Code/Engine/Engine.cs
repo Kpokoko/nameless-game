@@ -85,12 +85,18 @@ public class Engine : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+<<<<<<< HEAD
         Globals.AudioManager.Content = Content;
         Globals.AudioManager.Initialize();
         Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         Globals.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
+=======
 
-        Globals.UIManager.Font = Content.Load<SpriteFont>("BasicFont");
+        ResourceManager.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+        ResourceManager.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
+>>>>>>> Constructor-features
+
+        ResourceManager.Font = Content.Load<SpriteFont>("BasicFont");
 
          
         Map.LoadMap();
@@ -115,7 +121,7 @@ public class Engine : Game
         //Globals.KeyboardInputController = new KeyboardInputController(_player);
         Globals.KeyboardInputController.SetPlayer();
         Globals.Inventory = new Inventory();
-        Globals.UIManager.Clear();
+        Globals.UIManager = new UIManager();
     }
 
     public void Restart()

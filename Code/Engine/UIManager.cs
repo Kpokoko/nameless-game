@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Timers;
+using nameless.Entity;
 using nameless.GameObjects;
 using nameless.UI;
 using nameless.UI.Scenes;
@@ -22,7 +24,12 @@ public class UIManager
     public List<CircleController> CircleControllers = new List<CircleController>();
     public List<SpriteBox> SpriteBoxes = new List<SpriteBox>();
 
+    public SpriteFont Font = ResourceManager.Font;
+
     public List<Container> Popups = new List<Container>();
+
+    public List<Block> Selected = new();
+    public Rectangle SelectionArea = new Rectangle();
 
     public List<UIElement> ToRemove = new List<UIElement>();
 
@@ -30,7 +37,6 @@ public class UIManager
 
     public Dictionary<UIScenes, UIScene> CurrentUIScenes = new();
 
-    public SpriteFont Font;
     public void Update(GameTime gameTime)
     {
         for (var i = 0; i < Buttons.Count; i++)
@@ -64,6 +70,13 @@ public class UIManager
             CircleControllers[i].Draw(spriteBatch);
         for (var i = 0; i < SpriteBoxes.Count; i++)
             SpriteBoxes[i].Draw(spriteBatch);
+
+        for (var i = 0; i < Selected.Count; i++)
+        {
+            if (Selected[i].Colliders.colliders.Any())
+                spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.5f);
+        }
+        spriteBatch.FillRectangle(SelectionArea, Color.DeepSkyBlue * 0.3f);
     }
 
     public void SetScene(UIScenes scene)
@@ -79,8 +92,11 @@ public class UIManager
     }
     public void RemoveScene(UIScenes scene)
     {
-        CurrentUIScenes[scene].Clear();
-        CurrentUIScenes.Remove(scene);
+        if (CurrentUIScenes.ContainsKey(scene))
+        {
+            CurrentUIScenes[scene].Clear();
+            CurrentUIScenes.Remove(scene);
+        }
     }
 
     public void PopupMessage(string message)

@@ -28,10 +28,8 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     public Block(Vector2 tilePosition) : this((int)tilePosition.X, (int)tilePosition.Y) { }
 
     public Block() { }
-    [XmlIgnore]
 
     int IGameObject.DrawOrder => 1;
-    [XmlIgnore]
     public Colliders Colliders { get; set; } = new();
 
     public override void OnPositionChange(Vector2 position)
@@ -39,6 +37,23 @@ public partial class Block : TileGridEntity, IEntity, ICollider
         if (Colliders != null)
             Colliders.Position = position;
         PrepareSerializationInfo();
+    }
+
+    private bool _isSelected;
+    public override bool IsSelected
+    {
+        get { return _isSelected; }
+        set 
+        {
+            _isSelected = value;
+            if (_isSelected)
+            {
+                if (!Globals.UIManager.Selected.Contains(this))
+                    Globals.UIManager.Selected.Add(this);
+            }
+            else
+                Globals.UIManager.Selected.Remove(this);
+        }
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
