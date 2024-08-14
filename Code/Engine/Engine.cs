@@ -85,17 +85,11 @@ public class Engine : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-<<<<<<< HEAD
         Globals.AudioManager.Content = Content;
         Globals.AudioManager.Initialize();
-        Globals.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
-        Globals.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
-=======
 
         ResourceManager.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         ResourceManager.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
->>>>>>> Constructor-features
-
         ResourceManager.Font = Content.Load<SpriteFont>("BasicFont");
 
          
