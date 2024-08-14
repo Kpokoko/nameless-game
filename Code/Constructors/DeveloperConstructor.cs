@@ -146,7 +146,7 @@ namespace nameless.Code.Constructors
         private bool IsDeveloperGroupInteraction()
         {
             _isDeveloperAction = false;
-            if ((IsDrawingRectangle() || IsDrawingLine()) && MouseInputController.IsPressed)
+            if ((IsDrawingRectangle() || IsDrawingLine()) && MouseInputController.IsPressed)//EVERY FRAME&!&!&!&
             {
                 _isDeveloperAction = true;
                 if (MouseInputController.IsJustPressed)

@@ -5,6 +5,7 @@ using nameless.Controls;
 using nameless.Entity;
 using nameless.Interfaces;
 using nameless.Serialize;
+using nameless.Tiles;
 using nameless.UI;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ public class Constructor : IGameObject
     protected Vector2? _previousDrawingTilePos;
     protected bool _blocksDeleted = false;
     protected bool _blocksSpawned = false;
+    private bool _areaSelection = false;
 
 
     public void Draw(SpriteBatch spriteBatch)
@@ -61,10 +63,11 @@ public class Constructor : IGameObject
             var serializer = new Serializer();
             serializer.SerializeScene(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
             serializer.SaveInventory(Globals.Inventory.GetInventory());
-            _history.Clear();
-            _redoHistory.Clear();
-            ReleaseBlock();
+
         }
+        _history.Clear();
+        _redoHistory.Clear();
+        ReleaseBlock();
     }
 
 
@@ -76,13 +79,18 @@ public class Constructor : IGameObject
 
         _groupInteraction = IsGroupInteraction() || (_groupInteraction && _isDeveloperAction);
 
+
+
         if (MouseInputController.OnUIElement || _isDeveloperAction)
             return;
+
+        else if (IsSelecting())
+            SelectArea(mouseTilePos);
 
         else if (MouseInputController.LeftButton.IsJustPressed && PossibleToInteract(entityUnderMouse))
             HoldBlock(entityUnderMouse);
 
-        else if (MouseInputController.IsJustPressed && _holdingEntities.Any() && !_holdingEntities.Contains(entityUnderMouse)) 
+        else if (MouseInputController.IsJustPressed && _holdingEntities.Any() && !_holdingEntities.Contains(entityUnderMouse))
             ReleaseBlock();
 
         else if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && IsDrawing()) && entityUnderMouse == null)
@@ -92,7 +100,7 @@ public class Constructor : IGameObject
             DeleteBlock(entityUnderMouse);
 
         else if (IsMoving())
-           MoveBlock(mouseTilePos);
+            MoveBlock(mouseTilePos);
 
         if (!_groupInteraction)
             ResetDrawing();
@@ -100,18 +108,83 @@ public class Constructor : IGameObject
         _prevMouseTilePos = mouseTilePos;
     }
 
-    private void HoldBlock(IConstructable entity)
+    private void SelectArea(Vector2 mouseTilePos)
+    {
+        _areaSelection = false;
+        if (!IsMouseMoved(mouseTilePos, true))
+            return;
+        _areaSelection = true;
+
+        _history.Push(new HistoryEventInfo(HistoryEventType.Separator));
+
+        var startMousePos = (Vector2)_startMouseTilePos;
+        var minX = (int)Math.Min(startMousePos.X, mouseTilePos.X);
+        var maxX = (int)Math.Max(startMousePos.X, mouseTilePos.X);
+        var minY = (int)Math.Min(startMousePos.Y, mouseTilePos.Y);
+        var maxY = (int)Math.Max(startMousePos.Y, mouseTilePos.Y);
+
+        Globals.UIManager.SelectionArea = new Rectangle(Tile.GetTileCenter(new Vector2(minX, minY)).ToPoint(), Tile.GetTileCenter(new Vector2(maxX - minX, maxY - minY)).ToPoint());
+
+        _groupInteraction = true;
+        for (var x = minX; x <= maxX; x++)
+            for (var y = minY; y <= maxY; y++)
+            {
+                var tilePos = new Vector2(x, y);
+                var entity = _storage[tilePos, Layer];
+                if (entity == null)
+                    continue;
+                HoldBlock(entity);
+                _blocksSpawned = true;
+            }
+
+    }
+
+    private void HoldBlock(IConstructable entity, bool calledFromHistory = false)
     {
         entity.IsSelected = true;
         if (!_holdingEntities.Contains(entity))
             _holdingEntities.Add(entity);
+        else
+            return;
+
+        if (!calledFromHistory)
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => ReleaseBlock(entity, true);
+            _history.Push(newEvent);
+        }
+        else
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => ReleaseBlock(entity);
+            _redoHistory.Push(newEvent);
+        }
     }
 
     private void ReleaseBlock()
     {
-        foreach (var entity in _holdingEntities)
-            entity.IsSelected = false;
-        _holdingEntities.Clear();
+        _groupInteraction = true;
+        foreach (var entity in _holdingEntities.ToArray())
+            ReleaseBlock(entity);
+    }
+
+    private void ReleaseBlock(IConstructable entity, bool calledFromHistory = false)
+    {
+        entity.IsSelected = false;
+        _holdingEntities.Remove(entity);
+
+        if (!calledFromHistory)
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => HoldBlock(entity, true);
+            _history.Push(newEvent);
+        }
+        else
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => HoldBlock(entity);
+            _redoHistory.Push(newEvent);
+        }
     }
 
     public virtual void SpawnBlock(Vector2 tilePos, bool calledFromHistory = false)
@@ -207,10 +280,10 @@ public class Constructor : IGameObject
 
     private void MoveBlock(Vector2 mouseTilePos, Vector2 moveOn = new Vector2(), bool calledFromHistory = false)
     {
-        if (!calledFromHistory && !IsMouseMoved(mouseTilePos, true, true))
+        if (!calledFromHistory && moveOn == Vector2.Zero && !IsMouseMoved(mouseTilePos, true, true))
             return;
 
-        if (!calledFromHistory)
+        if (!calledFromHistory && moveOn == Vector2.Zero)
             moveOn = mouseTilePos - (Vector2)_startMouseTilePos;
 
         if (_holdingEntities.Any(e => !Storage.IsInBounds(((TileGridEntity)e).TilePosition + moveOn)))
@@ -262,14 +335,17 @@ public class Constructor : IGameObject
 
     protected bool IsGroupInteraction()
     {
-        if ((IsDrawing() || IsMoving()) && MouseInputController.IsJustPressed)
+        if ((IsDrawing() || IsMoving() || IsSelecting()) && MouseInputController.IsPressed)//EVERY FRAME&!&!&!&
             _history.Push(new HistoryEventInfo(HistoryEventType.Separator));
-        return IsDrawing() || IsMoving() && MouseInputController.IsPressed;
+        return (IsDrawing() || IsMoving() || IsSelecting()) && MouseInputController.IsPressed;
     }
 
     private bool IsDrawing() => Globals.KeyboardInputController.IsPressed(Keys.Space);
 
     private bool IsMoving() => _holdingEntities.Any() && MouseInputController.LeftButton.IsPressed;
+
+    private bool IsSelecting() => MouseInputController.MiddleButton.IsPressed;
+
 
 
     public void Undo()
@@ -355,5 +431,7 @@ public class Constructor : IGameObject
         _previousDrawingTilePos = null;
         _blocksDeleted = false;
         _blocksSpawned = false;
+        if (Globals.UIManager.SelectionArea.Location != Point.Zero)
+            Globals.UIManager.SelectionArea = new Rectangle();
     }
 }

@@ -29,6 +29,7 @@ public class UIManager
     public List<Container> Popups = new List<Container>();
 
     public List<Block> Selected = new();
+    public Rectangle SelectionArea = new Rectangle();
 
     public List<UIElement> ToRemove = new List<UIElement>();
 
@@ -72,9 +73,10 @@ public class UIManager
 
         for (var i = 0; i < Selected.Count; i++)
         {
-            spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.5f);
-
+            if (Selected[i].Colliders.colliders.Any())
+                spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.5f);
         }
+        spriteBatch.FillRectangle(SelectionArea, Color.DeepSkyBlue * 0.3f);
     }
 
     public void SetScene(UIScenes scene)

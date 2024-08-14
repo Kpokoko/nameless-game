@@ -33,10 +33,10 @@ public static class MouseInputController
 
 
     public static bool IsJustPressed {
-        get { return LeftButton.IsJustPressed || RightButton.IsJustPressed; }}
+        get { return LeftButton.IsJustPressed || RightButton.IsJustPressed || MiddleButton.IsJustPressed; }}
 
     public static bool IsPressed {
-        get { return LeftButton.IsPressed || RightButton.IsPressed; }}
+        get { return LeftButton.IsPressed || RightButton.IsPressed || MiddleButton.IsPressed; }}
 
     public static LeftButton LeftButton = new();
 
