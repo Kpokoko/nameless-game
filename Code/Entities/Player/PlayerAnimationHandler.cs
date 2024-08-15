@@ -38,7 +38,7 @@ public class PlayerAnimationHandler : AnimationHandler
         runLeft.AddFrame(sprites[3, 0], 0.14f);
 
         var idleRight = new SpriteAnimation();
-        idleRight.AddFrame(right,0);
+        idleRight.AddFrame(right, 0);
 
         var idleLeft = new SpriteAnimation();
         idleLeft.AddFrame(left, 0);

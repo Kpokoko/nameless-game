@@ -16,7 +16,7 @@ namespace nameless.Entity
             var trigger = new HitboxTrigger(this, 65, 65, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
             trigger.SetTriggerEntityTypes(typeof(PlayerModel), typeof(MovingPlatform));
             trigger.OnCollisionExitEvent += () =>
-            { TimerTrigger.DelayEvent(250, () => { if (!trigger.isActivated) Break();});
+            { TimerTrigger.DelayEvent(300, () => { if (!trigger.isActivated) Break();});
             };
             Colliders.Add(trigger);
             Colliders[0].Color = Color.Purple;

@@ -85,13 +85,14 @@ public class Engine : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        Globals.AudioManager.Content = Content;
-        Globals.AudioManager.Initialize();
 
         ResourceManager.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         ResourceManager.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
         ResourceManager.Font = Content.Load<SpriteFont>("BasicFont");
 
+        Globals.AudioManager.Content = Content;
+        Globals.AudioManager.Initialize();
+        Globals.AnimationManager.Initialize();
          
         Map.LoadMap();
         if (Globals.Map[0,0] == null)
@@ -120,7 +121,7 @@ public class Engine : Game
 
     public void Restart()
     {
-        Globals.AudioManager.PlaySound("DeathSound", 0.7f);
+        //Globals.AudioManager.PlaySound("DeathSound", 0.7f);
         LoadCollisions();
         LoadScene();
         Globals.UIManager.PopupMessage("Restart");
@@ -173,6 +174,7 @@ public class Engine : Game
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.Camera.Transform);
         Globals.SceneManager.Draw(_spriteBatch);
+        Globals.AnimationManager.Draw(_spriteBatch);
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
         _spriteBatch.End();
 

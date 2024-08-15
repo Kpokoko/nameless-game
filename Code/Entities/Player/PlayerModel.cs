@@ -257,9 +257,9 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     {
         var sides = collisionsInfo.Select(i => i.CollisionSide);
         if ((sides.Contains(Side.Top) && sides.Contains(Side.Bottom)))
-            Globals.Engine.Restart();
+            Actions.Add(Death);
         if ((sides.Contains(Side.Right) && sides.Contains(Side.Left)))
-            Globals.Engine.Restart();
+            Actions.Add(Death);
         //if (sides.Contains(Side.Left))
         //{
         //    if (PreviousCollisionSide != null && (Side)PreviousCollisionSide == Side.Right)
@@ -395,7 +395,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     public void Death()
     {
-        Globals.AudioManager.PlaySound("DeathSound", 0.2f);
+        Globals.AudioManager.PlaySound("DeathSound", 0.2f, 0.7f);
         State = PlayerState.Static;
         Globals.UIManager.PopupMessage("LoL u Died");
         Globals.CollisionManager.KinematicAccurateColliders.Clear();

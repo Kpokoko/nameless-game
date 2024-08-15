@@ -49,6 +49,9 @@ public class SpriteAnimation
 
     public float PlaybackProgress { get; private set; }
 
+    public float SpeedMultiplyer { get; set; } = 1;
+
+
     public void Draw(SpriteBatch spriteBatch, Vector2 position)
     {
         SpriteAnimationFrame frame = CurrentFrame;
@@ -71,7 +74,7 @@ public class SpriteAnimation
     {
         if (IsPlaying)
         {
-            PlaybackProgress += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            PlaybackProgress += (float)gameTime.ElapsedGameTime.TotalSeconds * SpeedMultiplyer;
             if (PlaybackProgress > Duration)
             {
                 if (ShouldLoop)
@@ -103,4 +106,6 @@ public class SpriteAnimation
         Stop();
         _frames.Clear();
     }
+
+    public SpriteAnimation Clone() => new SpriteAnimation() { _frames = this._frames.ToList() };
 }

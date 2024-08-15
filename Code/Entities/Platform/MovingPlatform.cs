@@ -78,6 +78,9 @@ namespace nameless.Entity
         {
             Speed = Speed * (-1);
             Globals.AudioManager.PlaySound("Click", 0.2f);
+
+            var rndSpeed = new Random().NextDouble() * 2 + 0.5;
+            Globals.AnimationManager.PlayAnimation(Graphics.AnimationType.JumpRight, Position, (float)rndSpeed);
         }
     }
 }
