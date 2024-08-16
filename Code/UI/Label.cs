@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using nameless.Engine;
 using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,9 @@ namespace nameless.UI;
 public class Label : UIElement
 {
     public string Text { get; set; }
-    public SpriteFont Font { get; set; } = Globals.UIManager.Font;
+    public SpriteFont Font { get; set; } = ResourceManager.Font;
 
-    public Label(Vector2 position, string text, Alignment align = Alignment.Center) : base(position, Globals.UIManager.Font.MeasureString(text))
+    public Label(Vector2 position, string text, Alignment align = Alignment.Center) : base(position, ResourceManager.Font.MeasureString(text))
     {
         Alignment = align;
         Text = text;

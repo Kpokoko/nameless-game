@@ -116,7 +116,7 @@ public class Engine : Game
         //Globals.KeyboardInputController = new KeyboardInputController(_player);
         Globals.KeyboardInputController.SetPlayer();
         Globals.Inventory = new Inventory();
-        Globals.UIManager = new UIManager();
+        //Globals.UIManager = new UIManager();
     }
 
     public void Restart()
