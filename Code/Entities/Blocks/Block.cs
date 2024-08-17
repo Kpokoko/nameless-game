@@ -17,11 +17,11 @@ namespace nameless.Entity;
 
 public partial class Block : TileGridEntity, IEntity, ICollider
 {
-    public Block(int x, int y)
+    public Block(int x, int y, int width = 64, int height = 64)
     {
         //Position = new Tile(x, y).Position;
         TilePosition = new Vector2(x, y);
-        Colliders.Add( new Collider(this, 64, 64));
+        Colliders.Add(new Collider(this, width, height));
         Colliders[0].Color = Color.Brown;
     }
 

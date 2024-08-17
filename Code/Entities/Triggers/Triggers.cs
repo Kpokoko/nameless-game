@@ -118,11 +118,13 @@ public partial class HitboxTrigger
 
     public static HitboxTrigger CreateDamagePlayerTrigger(Block pivot, int x, int y)
     {
-        HitboxTrigger trigger = new HitboxTrigger(pivot, x, y, ReactOnProperty.ReactOnEntityType, SignalProperty.OnceOnEveryContact,QuantityProperty.OneAtATime);
+        HitboxTrigger trigger = new HitboxTrigger(pivot, x, y, ReactOnProperty.ReactOnEntityType, SignalProperty.Once, QuantityProperty.OneAtATime);
         var player = () => Globals.SceneManager.GetPlayer();
 
         trigger.Color = Color.IndianRed;
-        trigger.OnCollisionEvent += () => { if (Globals.IsNoclipEnabled) return; player().Actions.Add(player().Death); };
+        trigger.OnCollisionEvent += () => {
+            if (Globals.IsNoclipEnabled) return; player().Actions.Add(player().Death); 
+        };
         return trigger;
     }
 

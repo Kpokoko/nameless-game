@@ -63,6 +63,10 @@ namespace nameless.Code.SceneManager
                         if (!Globals.IsConstructorModeEnabled)
                             entity.Update(gameTime);
                         continue;
+                    case RayCaster:
+                        if (!Globals.IsConstructorModeEnabled)
+                            entity.Update(gameTime);
+                        continue;
                 }
                 //Обновляем тут движущиеся объекты на сцене
             }
@@ -77,7 +81,10 @@ namespace nameless.Code.SceneManager
                 {
                     case PlayerModel:
                         entity.Draw(spriteBatch);
-                        return;
+                        continue;
+                    case RayCaster:
+                        entity.Draw(spriteBatch);
+                        continue;
                 }
         }
     }
