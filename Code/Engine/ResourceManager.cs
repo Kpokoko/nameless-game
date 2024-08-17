@@ -12,6 +12,8 @@ public static class ResourceManager
     public static SpriteFont Font;
     public static Texture2D SpriteSheet;
     public static Texture2D SpriteSheet2;
+    public static Texture2D SmokeSprite;
+
 
     public static void LoadContent()
     {

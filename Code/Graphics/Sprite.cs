@@ -19,6 +19,8 @@ public class Sprite
         Height = height;
     }
 
+    public Sprite(Texture2D texture) : this(texture, 0, 0, texture.Width, texture.Height) { }
+
     public Texture2D Texture { get; private set; }
     public int X { get; set; }
     public int Y { get; set; }
@@ -26,9 +28,11 @@ public class Sprite
     public int Height { get; set; }
 
     public Color TintColor { get; set; } = Color.White;
-    public void Draw(SpriteBatch spriteBatch, Vector2 position)
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
     {
-        spriteBatch.Draw(Texture, position, new Rectangle(X, Y, Width, Height), TintColor,0,Vector2.Zero,1,SpriteEffects.None,0.03f);
+        spriteBatch.Draw(Texture, position, new Rectangle(X, Y, Width, Height), color, 0, Vector2.Zero,1,SpriteEffects.None,0.03f);
     }
+
+    public void Draw(SpriteBatch spriteBatch, Vector2 position) => Draw(spriteBatch, position, TintColor);
 
 }

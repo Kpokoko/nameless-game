@@ -2,6 +2,7 @@
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using nameless.Collisions;
+using nameless.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,14 @@ namespace nameless.Entity
         {
             Position += Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Collided = false;
+
+            var rnd = new Random();
+            var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
+            for (int i = 0; i < 5; i++)
+            {
+                var p = new BlendingParticle(Position, rndVec() * 2, 500, Color.DarkGoldenrod * 0.3f, rndVec() * 0.11f);
+                p.SetSecondColor(Color.Transparent);
+            }
         }
 
         public override void OnCollision(params CollisionEventArgs[] collisionsInfo)
@@ -81,6 +90,14 @@ namespace nameless.Entity
 
             var rndSpeed = new Random().NextDouble() * 2 + 0.5;
             Globals.AnimationManager.PlayAnimation(Graphics.AnimationType.JumpRight, Position, (float)rndSpeed);
+
+            var rnd = new Random();
+            var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
+            for (int i = 0; i < 500; i++)
+            {
+                var p = new BlendingParticle(Position, rndVec() * 20, 500, Color.Red * 0.3f, rndVec() * 1f);
+                p.SetSecondColor(Color.Transparent);
+            }
         }
     }
 }

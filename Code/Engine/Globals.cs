@@ -54,6 +54,9 @@ public static class Globals
 
     public static AnimationManager AnimationManager;
 
+    public static VisualEffectsManager VisualEffectsManager;
+
+
     public static Color BackgroungColor { get { return IsConstructorModeEnabled ? SecondaryColor : PrimaryColor; } }
     public static Color PrimaryColor = Color.White;
     public static Color SecondaryColor = Color.LightGray;
@@ -62,6 +65,11 @@ public static class Globals
     {
         var size = new Vector2(sprite.Width, sprite.Height);
         sprite.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y));
+    }
+    public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite, Color color)
+    {
+        var size = new Vector2(sprite.Width, sprite.Height);
+        sprite.Draw(spriteBatch, position + Offset((int)size.X, (int)size.Y), color);
     }
 
     public static void Draw(Vector2 position, Vector2 size, SpriteBatch spriteBatch, SpriteAnimation animation)

@@ -18,8 +18,10 @@ namespace nameless.Engine;
 
 public class Engine : Game
 {
-    private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
-    private const string ASSET_NAME_SPRITESHEET2 = "PlayerSpritesheet";
+    private const string ASSET_NAME_SPRITESHEET = "Sprites/TrexSpritesheet";
+    private const string ASSET_NAME_SPRITESHEET2 = "Sprites/PlayerSpritesheet";
+    private const string ASSET_NAME3 = "Sprites/Smoke";
+
 
     private int _windowWidth;
     private int _windowHeight;
@@ -50,6 +52,7 @@ public class Engine : Game
         Globals.SceneManager = new SceneManager();
         Globals.Serializer = new Serialize.Serializer();
         Globals.AudioManager = new AudioManager();
+        Globals.VisualEffectsManager = new VisualEffectsManager();
         Globals.Inventory = new Inventory();
         if (Globals.IsDeveloperModeEnabled)
         {
@@ -88,6 +91,7 @@ public class Engine : Game
 
         ResourceManager.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         ResourceManager.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
+        ResourceManager.SmokeSprite = Content.Load<Texture2D>(ASSET_NAME3);
         ResourceManager.Font = Content.Load<SpriteFont>("BasicFont");
 
         Globals.AudioManager.Content = Content;
@@ -149,6 +153,7 @@ public class Engine : Game
         MouseInputController.ProcessControls();
 
         Globals.AnimationManager.Update(gameTime);
+        Globals.VisualEffectsManager.Update(gameTime);
 
         Globals.KeyboardInputController.ProcessControls(gameTime);
 
@@ -175,6 +180,7 @@ public class Engine : Game
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.Camera.Transform);
         Globals.SceneManager.Draw(_spriteBatch);
         Globals.AnimationManager.Draw(_spriteBatch);
+        Globals.VisualEffectsManager.Draw(_spriteBatch);
         Globals.CollisionManager.DrawCollisions(_spriteBatch);
         _spriteBatch.End();
 
