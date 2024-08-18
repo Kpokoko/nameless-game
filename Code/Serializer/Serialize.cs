@@ -15,7 +15,7 @@ public struct Serializer
     public Serializer() { }
     public void SerializeScene(string sceneName, List<ISerializable> entities)
     {
-        using (var writer = new StreamWriter(new FileStream("Levels/" + sceneName + ".xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream("Layout" + "Levels" + sceneName + ".xml", FileMode.Create)))
         {
             var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
             var a = entities.Select(x => x.Info).ToList();
