@@ -95,6 +95,14 @@ public static class Globals
 
         if (copyAllFiles)
         {
+            if (!Directory.Exists(Path.Combine(fullTarget, "Levels")))
+                Directory.CreateDirectory(Path.Combine(fullTarget, "Levels"));
+            foreach (var file in Directory.GetFiles(Path.Combine(fullSource, "Levels")))
+            {
+                var name = Path.GetFileName(file);
+                var targetFile = Path.Combine(fullTarget, "Levels", name);
+                File.Copy(file, targetFile, true);
+            }
             var sourceData = Directory.GetFiles(fullSource);
             foreach (var file in sourceData)
             {

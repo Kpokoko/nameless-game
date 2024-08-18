@@ -24,7 +24,7 @@ namespace nameless.Code.SceneManager
         {
             var readedData = new List<IEntity>();
             var sceneContent = new List<IEntity>();
-            var path = Path.Combine("..", "net6.0", "Levels", sceneName + ".xml");
+            var path = Path.Combine("..", "net6.0", "Layout", "Levels", sceneName + ".xml");
             var rawData = _serialize.DeserializeScene(path);
             foreach (var data in rawData)
             {

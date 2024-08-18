@@ -51,7 +51,7 @@ public struct Serializer
     public Vector2 ReadSaveSpot()
     {
         var serializer = new XmlSerializer(typeof(SerializationInfo));
-        using (var reader = new StreamReader(new FileStream("SaveSpot.xml", FileMode.Open)))
+        using (var reader = new StreamReader(new FileStream(Path.Combine("Layout","SaveSpot.xml"), FileMode.Open)))
         {
             var block = (SerializationInfo)serializer.Deserialize(reader);
             Globals.LastVisitedCheckpoint = block;
@@ -62,7 +62,7 @@ public struct Serializer
     public void WriteSaveSpot()
     {
         var serializer = new XmlSerializer(typeof(SerializationInfo));
-        using (var writer = new StreamWriter(new FileStream("SaveSpot.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "SaveSpot.xml"), FileMode.Create)))
         {
             serializer.Serialize(writer, Globals.LastVisitedCheckpoint);
         }
@@ -70,13 +70,13 @@ public struct Serializer
 
     public void Restart()
     {
-        using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "CurrentLoc.xml"), FileMode.Create)))
         {
             var serializer = new XmlSerializer(typeof(Vector2));
             var a = new Vector2(0, 0);
             serializer.Serialize(writer, a);
         }
-        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "Map.xml"), FileMode.Create)))
         {
             var serializer = new XmlSerializer(typeof(List<string>));
             var a = new List<string> { "0 0 Center" };
@@ -86,7 +86,7 @@ public struct Serializer
 
     public void SavePosition(Vector2 loc)
     {
-        using (var writer = new StreamWriter(new FileStream("CurrentLoc.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "CurrentLoc.xml"), FileMode.Create)))
         {
             var serialize = new XmlSerializer(typeof(Vector2));
             serialize.Serialize(writer, loc);
@@ -95,7 +95,10 @@ public struct Serializer
 
     public List<string> ReadVisitedScenes()
     {
-        using (var reader = new StreamReader(new FileStream("Map.xml", FileMode.Open)))
+        if (!File.Exists(Path.Combine("Layout", "Map.xml")))
+            return null;
+
+        using (var reader = new StreamReader(new FileStream(Path.Combine("Layout","Map.xml"), FileMode.Open)))
         {
             var serialize = new XmlSerializer(typeof(List<string>));
             return (List<string>)serialize.Deserialize(reader);
@@ -129,7 +132,7 @@ public struct Serializer
     public void GetMapPos()
     {
         var serializer = new XmlSerializer(typeof(Vector2));
-        using (var reader = new StreamReader(new FileStream("CurrentLoc.xml", FileMode.Open)))
+        using (var reader = new StreamReader(new FileStream(Path.Combine("Layout", "CurrentLoc.xml"), FileMode.Open)))
         {
             var location = (Vector2)serializer.Deserialize(reader);
             Globals.SceneManager.LoadScene(location);
@@ -138,7 +141,7 @@ public struct Serializer
 
     public Dictionary<EntityTypeEnum, int> GetInventory()
     {
-        using (var reader = new StreamReader(new FileStream("Inventory.xml", FileMode.Open)))
+        using (var reader = new StreamReader(new FileStream(Path.Combine("Layout","Inventory.xml"), FileMode.Open)))
         {
             var serializer = new XmlSerializer(typeof(List<MyTuple<EntityTypeEnum, int>>));
             var inventory = (List<MyTuple<EntityTypeEnum, int>>)serializer.Deserialize(reader);
@@ -149,7 +152,7 @@ public struct Serializer
 
     public void SaveInventory(Dictionary<EntityTypeEnum, int> inventory)
     {
-        using (var writer = new StreamWriter(new FileStream("Inventory.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "Inventory.xml"), FileMode.Create)))
         {
             var serialize = new XmlSerializer(typeof(List<MyTuple<EntityTypeEnum, int>>));
             var list = inventory.Select(x => new MyTuple<EntityTypeEnum, int>(x.Key, x.Value)).ToList();

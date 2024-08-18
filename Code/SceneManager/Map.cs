@@ -154,10 +154,12 @@ public class Map
         MapArray = newArray.ToArray();
     }
 
-    public static void LoadMap()
+    public static bool LoadMap()
     {
         var visitedScenes = Globals.Serializer.ReadVisitedScenes();
-        var scenes = Directory.GetFiles(Path.Combine("..", "net6.0", "Levels"));
+        if (visitedScenes == null)
+            return false;
+        var scenes = Directory.GetFiles(Path.Combine("..", "net6.0", "Layout", "Levels"));
         var sceneInfo = new List<SceneInfo>();
         foreach (var scene in scenes)
         {
@@ -177,6 +179,7 @@ public class Map
             }
         }
         Globals.Map = new Map(sceneInfo);
+        return true;
     }
 }
 

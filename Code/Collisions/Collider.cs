@@ -66,7 +66,8 @@ public partial class Collider : ICollisionActor
 
     public virtual void OnCollision(CollisionEventArgs collisionInfo)
     {
-        //if (CollisionManager.OnCollisionDisabled) return;
+        if (CollisionManager.OnCollisionDisabled) return;
+            Entity.OnCollision(collisionInfo);
     }
 
     public void DrawCollision(SpriteBatch spriteBatch)

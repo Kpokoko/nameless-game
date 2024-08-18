@@ -13,10 +13,16 @@ public abstract class AnimationHandler
 {
     public abstract IEntity _entity { get; set; }
     public AnimationType CurrentAnimationType { get; set; }
-    protected SpriteAnimation CurrentAnimation { get { return CurrentAnimationType is AnimationType.None ? null : Animations[CurrentAnimationType]; } }
+    //protected SpriteAnimation CurrentAnimation { get { return CurrentAnimationType is AnimationType.None ? null : Animations[CurrentAnimationType]; } }
+    protected SpriteAnimation CurrentAnimation { get; set; }
+
     private Vector2 SpriteSize { get 
         { return new Vector2(CurrentAnimation.CurrentFrame.Sprite.Width, CurrentAnimation.CurrentFrame.Sprite.Height); } }
-    public Dictionary<AnimationType, SpriteAnimation> Animations { get; set; } = new();
+    //public Dictionary<AnimationType, SpriteAnimation> Animations { get; set; } = new();
+    //public Dictionary<AnimationType, SpriteAnimation> Animations
+    //{
+    //    get => Globals.AnimationManager.Animations;
+    //}
     public Dictionary<AnimationType, int> AnimationPriority { get; set; } = new();
     public Queue<AnimationType> AnimationBuffer { get; set; } = new();
 
@@ -29,7 +35,9 @@ public abstract class AnimationHandler
 
     public void AddAnimation(AnimationType type, SpriteAnimation animation, int priority = 0)
     {
-        Animations[type] = animation;
+        if (!Globals.AnimationManager.Animations.ContainsKey(type))
+            //throw new ArgumentException("Animation already exists");
+            Globals.AnimationManager.Animations[type] = animation;
         AnimationPriority[type] = priority;
     }
 
@@ -45,13 +53,15 @@ public abstract class AnimationHandler
         while (AnimationBuffer.Count > 0)
         {
             var anim = AnimationBuffer.Dequeue();
-            if (AnimationPriority[anim] >= AnimationPriority[CurrentAnimationType] || !CurrentAnimation.IsPlaying)
+            if (CurrentAnimationType == AnimationType.None || AnimationPriority[anim] >= AnimationPriority[CurrentAnimationType] || !CurrentAnimation.IsPlaying)
             {
                 if (CurrentAnimationType != anim)
                 {
-                    CurrentAnimation.Stop();
+                    if (CurrentAnimation != null)
+                        CurrentAnimation.Stop();
                     CurrentAnimationType = anim;
-                    Animations[anim].Play();
+                    CurrentAnimation = Globals.AnimationManager.Animations[anim].Clone();
+                    CurrentAnimation.Play();
 
                 }
                 if (CurrentAnimationType == anim)

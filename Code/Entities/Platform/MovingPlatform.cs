@@ -86,14 +86,14 @@ namespace nameless.Entity
         public void TurnAround()
         {
             Speed = Speed * (-1);
-            Globals.AudioManager.PlaySound("Click", 0.2f);
-
-            var rndSpeed = new Random().NextDouble() * 2 + 0.5;
-            Globals.AnimationManager.PlayAnimation(Graphics.AnimationType.JumpRight, Position, (float)rndSpeed);
+            Globals.AudioManager.PlaySound(Sound.SoundType.Click, 0.2f);
 
             var rnd = new Random();
+            var rndSpeed = rnd.NextDouble() * 2 + 0.5;
+            Globals.AnimationManager.PlayAnimation(Globals.AnimationManager.Animations.Keys.ToArray()[rnd.NextInt64(Globals.AnimationManager.Animations.Keys.Count-1)], Position, (float)rndSpeed);
+
             var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 50; i++)
             {
                 var p = new BlendingParticle(Position, rndVec() * 20, 500, Color.Red * 0.3f, rndVec() * 1f);
                 p.SetSecondColor(Color.Transparent);

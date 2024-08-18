@@ -18,9 +18,8 @@ public class AnimationManager
     public List<Graphics.AnimationHandler> AnimationHandlers = new List<Graphics.AnimationHandler>();
     public List<SpriteAnimation> SpriteAnimations= new List<SpriteAnimation>();
 
-    private Dictionary<AnimationType, SpriteAnimation> _animations = new();
+    public Dictionary<AnimationType, SpriteAnimation> Animations { get; set; } = new();
     private Dictionary<SpriteAnimation, Vector2> _animationPosition = new();
-    private Dictionary<SpriteAnimation, float> _animationSpeed = new();
     public List<SpriteAnimation> ExternalSpriteAnimations = new List<SpriteAnimation>();
     public List<SpriteAnimation> ToRemove = new List<SpriteAnimation>();
 
@@ -69,15 +68,15 @@ public class AnimationManager
         jumpRight.AddFrame(sprites[3, 1], 0.26f);
         jumpRight.AddFrame(sprites[2, 1], 0.32f);
 
-        _animations[AnimationType.JumpRight] = jumpRight;
+        //Animations[AnimationType.JumpRight] = jumpRight;
     }
 
     public void PlayAnimation(AnimationType animationType, Vector2 position, float speed = 1)
     {
-        if (!_animations.ContainsKey(animationType))
+        if (!Animations.ContainsKey(animationType))
             throw new ArgumentException();
 
-        var instance = _animations[animationType].Clone();
+        var instance = Animations[animationType].Clone();
         instance.SpeedMultiplyer = speed;
 
         ExternalSpriteAnimations.Add(instance);

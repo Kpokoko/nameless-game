@@ -42,7 +42,7 @@ namespace nameless.Code.SceneManager
         {
             if (Globals.KeyboardInputController.IsJustPressed(Keys.C) && Globals.IsDeveloperModeEnabled)
             {
-                Globals.CopyFiles(Path.Combine("Levels", Name + ".xml"), Path.Combine("levelsBaseCopy", Name + ".xml"), false);
+                Globals.CopyFiles(Path.Combine("Layout","Levels", Name + ".xml"), Path.Combine("BaseLayout","Levels", Name + ".xml"), false);
                 Globals.UIManager.PopupMessage("Initial level state updated");
             
             }

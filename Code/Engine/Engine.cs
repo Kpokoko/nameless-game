@@ -48,7 +48,7 @@ public class Engine : Game
         Globals.Serializer = new Serialize.Serializer();
         Globals.AudioManager = new AudioManager();
         Globals.VisualEffectsManager = new VisualEffectsManager();
-        Globals.Inventory = new Inventory();
+
         if (Globals.IsDeveloperModeEnabled)
         {
             Globals.Constructor = new DeveloperConstructor();
@@ -90,11 +90,12 @@ public class Engine : Game
         Globals.AudioManager.Initialize();
         Globals.AnimationManager.Initialize();
          
-        Map.LoadMap();
-        if (Globals.Map[0,0] == null)
+
+        if (!Map.LoadMap() || Globals.Map[0,0] == null)
         {
             HardReset();
         }
+        Globals.Inventory = new Inventory();
 
         LoadScene();
     }
@@ -191,7 +192,7 @@ public class Engine : Game
 
     private void HardReset()
     {
-        Globals.CopyFiles("LevelsBaseCopy", "Levels", true);
+        Globals.CopyFiles(Path.Combine("BaseLayout"), Path.Combine("Layout"), true);
         Globals.Serializer.Restart();
         Globals.UIManager.Minimaps.Clear();
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();

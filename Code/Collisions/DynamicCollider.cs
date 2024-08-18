@@ -30,7 +30,7 @@ public class DynamicCollider : Collider
     public override void OnCollision(CollisionEventArgs collisionInfo)
     {
         base.OnCollision(collisionInfo);
-        Entity.OnCollision(collisionInfo);
+        //Entity.OnCollision(collisionInfo);
     }
 
     virtual public void Update()

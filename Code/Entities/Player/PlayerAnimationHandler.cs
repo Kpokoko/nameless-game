@@ -23,7 +23,6 @@ public class PlayerAnimationHandler : AnimationHandler
     public PlayerAnimationHandler(PlayerModel entity) : base(entity)
     {
         var spriteSheet = ResourceManager.SpriteSheet2;
-        CurrentAnimationType = AnimationType.MoveRight;
         var sprites = new SpriteSheet(spriteSheet, 44, 52);
 
         var right = sprites[0, 0];
@@ -81,7 +80,8 @@ public class PlayerAnimationHandler : AnimationHandler
         AddAnimation(AnimationType.LandingRight, landingRight, 2);
         AddAnimation(AnimationType.LandingLeft, landingLeft, 2);
 
-
+        CurrentAnimationType = AnimationType.MoveRight;
+        CurrentAnimation = Globals.AnimationManager.Animations[CurrentAnimationType].Clone();
     }
 
     protected override void GetAnimation()
