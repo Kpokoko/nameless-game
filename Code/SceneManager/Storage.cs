@@ -12,7 +12,7 @@ namespace nameless.Code.SceneManager
 {
     public class Storage
     {
-        private TileGridEntity[][,] Entities = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight] };
+        private TileGridEntity[][,] Entities = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight], new TileGridEntity[StorageWidth, StorageHeight] };
         public const int StorageWidth = 23;
         public const int StorageHeight = 13;
 

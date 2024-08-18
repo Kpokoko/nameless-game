@@ -21,11 +21,11 @@ namespace nameless.Entity;
 public class Pivot :  Block, IEntity, ICollider
 {
 
-    public Pivot(int x, int y)
+    public Pivot(int x, int y, int width = 64, int height = 64)
     {
         TilePosition = new Vector2(x, y);
         Layer = 1;
-        Colliders.Add(new Collider(this, 64, 64));
+        Colliders.Add(new Collider(this, width, height));
         Globals.CollisionManager.CollisionComponent.Remove(Colliders[0]);
         Colliders[0].Color = Color.LightSteelBlue * 0.4f;
     }
