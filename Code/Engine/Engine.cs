@@ -18,11 +18,6 @@ namespace nameless.Engine;
 
 public class Engine : Game
 {
-    private const string ASSET_NAME_SPRITESHEET = "Sprites/TrexSpritesheet";
-    private const string ASSET_NAME_SPRITESHEET2 = "Sprites/PlayerSpritesheet";
-    private const string ASSET_NAME3 = "Sprites/Smoke";
-
-
     private int _windowWidth;
     private int _windowHeight;
 
@@ -89,12 +84,9 @@ public class Engine : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        ResourceManager.SpriteSheet = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
-        ResourceManager.SpriteSheet2 = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET2);
-        ResourceManager.SmokeSprite = Content.Load<Texture2D>(ASSET_NAME3);
-        ResourceManager.Font = Content.Load<SpriteFont>("BasicFont");
+        ResourceManager.LoadContent(Content);
 
-        Globals.AudioManager.Content = Content;
+        //Globals.AudioManager.Content = Content;
         Globals.AudioManager.Initialize();
         Globals.AnimationManager.Initialize();
          

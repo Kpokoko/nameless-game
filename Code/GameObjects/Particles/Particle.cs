@@ -40,7 +40,7 @@ public class Particle : IEntity
     public void Draw(SpriteBatch spriteBatch)
     {
         if (Sprite == null)
-            Sprite = new Sprite(ResourceManager.SmokeSprite);
+            Sprite = new Sprite(ResourceManager.SpriteParticle);
         Globals.Draw(Position, spriteBatch, Sprite, Color);
     }
 

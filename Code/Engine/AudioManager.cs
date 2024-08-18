@@ -16,12 +16,12 @@ public class AudioManager
 
     public void Initialize()
     {
-        var deathSound = Content.Load<SoundEffect>("Sounds/DeathSound").CreateInstance();
-        var clickSound = Content.Load<SoundEffect>("Sounds/Click").CreateInstance();
+        //var deathSound = Content.Load<SoundEffect>("Sounds/DeathSound").CreateInstance();
+        //var clickSound = Content.Load<SoundEffect>("Sounds/Click").CreateInstance();
         _soundEffects = new Dictionary<string, SoundEffectInstance>
         {
-            { "DeathSound", deathSound },
-            { "Click", clickSound }
+            { "DeathSound", ResourceManager.SoundDeath.CreateInstance() },
+            { "Click", ResourceManager.SoundClick.CreateInstance() }
         };
         _playingSounds = new Dictionary<string, int>()
         {
