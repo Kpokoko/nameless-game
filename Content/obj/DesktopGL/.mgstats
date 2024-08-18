@@ -1,7 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/C#/Games/Repos/nameless-game/Content/BasicFont.spritefont","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/BasicFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,70687,0,2424706
-"C:/C#/Games/Repos/nameless-game/Content/Sounds/Click.wav","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/Sounds/Click.xnb","SoundEffectProcessor","SoundEffectContent",177034,177001,0,1825151
-"C:/C#/Games/Repos/nameless-game/Content/Sounds/DeathSound.wav","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/Sounds/DeathSound.xnb","SoundEffectProcessor","SoundEffectContent",760398,760425,0,1347904
-"C:/C#/Games/Repos/nameless-game/Content/Sprites/PlayerSpritesheet.png","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/Sprites/PlayerSpritesheet.xnb","TextureProcessor","Texture2DContent",6987,109909,0,0340515
-"C:/C#/Games/Repos/nameless-game/Content/Sprites/smoke.png","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/Sprites/smoke.xnb","TextureProcessor","Texture2DContent",404,1109,0,0027123
-"C:/C#/Games/Repos/nameless-game/Content/Sprites/TrexSpritesheet.png","C:/C#/Games/Repos/nameless-game/Content/bin/DesktopGL/Sprites/TrexSpritesheet.xnb","TextureProcessor","Texture2DContent",6662,739885,0,0257221

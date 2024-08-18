@@ -13,3 +13,7 @@ bin/Debug/net6.0/Levels/*
 /.vs
 
 /obj
+
+/Content/bin
+
+/Content/obj
