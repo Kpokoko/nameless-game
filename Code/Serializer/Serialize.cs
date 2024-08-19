@@ -15,7 +15,7 @@ public struct Serializer
     public Serializer() { }
     public void SerializeScene(string sceneName, List<ISerializable> entities)
     {
-        using (var writer = new StreamWriter(new FileStream("Layout" + "Levels" + sceneName + ".xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "Levels", sceneName + ".xml"), FileMode.Create)))
         {
             var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
             var a = entities.Select(x => x.Info).ToList();
@@ -107,7 +107,7 @@ public struct Serializer
 
     public void UpdateVisitedScenes(List<string> scenes)
     {
-        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout","Map.xml"), FileMode.Create)))
         {
             var serialize = new XmlSerializer(typeof(List<string>));
             serialize.Serialize(writer, scenes);
@@ -116,14 +116,14 @@ public struct Serializer
 
     public void LoadMinimap(Vector2 pos, List<string> data, Vector2 newPos)
     {
-        using (var writer = new StreamWriter(new FileStream("Map.xml", FileMode.Create)))
+        using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "Map.xml"), FileMode.Create)))
         {
             var serialize = new XmlSerializer(typeof(List<string>));
             var name = newPos.ToSimpleString();
             if (!data.Contains(name))
             {
                 data.Add(name);
-                Globals.UIManager.Minimaps.Add(new Minimap(newPos, 0, 0, Globals.SceneManager.GetStorage().ConvertToEnum()));
+                Globals.UIManager.Minimaps.Add(new Minimap(newPos, Globals.SceneManager.GetStorage().ConvertToEnum()));
             }
             serialize.Serialize(writer, data);
         }

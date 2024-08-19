@@ -9,6 +9,7 @@ using nameless.Entity;
 using nameless.GameObjects;
 using nameless.Interfaces;
 using nameless.Tiles;
+using nameless.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +24,7 @@ public class SceneManager
     private Scene _currentScene;
     private PlayerModel _goodOlPlaye;
     public Vector2 CurrentLocation;
-
+    public Vector2 MinimapOffset { get => Minimap.LocationToAbsolutePosition(-CurrentLocation); }
     public void SaveScene()
     {
         SceneLoader.SaveScene();
@@ -46,7 +47,7 @@ public class SceneManager
             sceneName = currentLocation.ToSimpleString();
             Globals.Map[(int)currentLocation.X, (int)currentLocation.Y] = new SceneInfo(null,currentLocation.ToPoint());
             //Map.SaveMap();
-            File.Copy(Path.Combine("..", "net6.0", "Levels", ".xml"), Path.Combine("..", "net6.0", "Levels", sceneName + ".xml"));
+            File.Copy(Path.Combine("..", "net6.0", "BaseLayout", ".xml"), Path.Combine("..", "net6.0", "Layout", "Levels", sceneName + ".xml"));
         }
         CurrentLocation = currentLocation;
         Globals.Engine.LoadCollisions();

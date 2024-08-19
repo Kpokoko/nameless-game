@@ -61,6 +61,8 @@ public static class Globals
     public static Color PrimaryColor = Color.White;
     public static Color SecondaryColor = Color.LightGray;
 
+    public static Vector2 Center { get => new Vector2(Storage.StorageWidth * 32, Storage.StorageHeight * 32); }
+
     public static void Draw(Vector2 position, SpriteBatch spriteBatch, Sprite sprite)
     {
         var size = new Vector2(sprite.Width, sprite.Height);

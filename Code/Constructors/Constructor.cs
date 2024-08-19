@@ -52,14 +52,14 @@ public class Constructor : IGameObject
             Globals.SceneManager.LoadScene(Globals.SceneManager.CurrentLocation);
             Globals.SceneManager.GetPlayer().Position = playerPos;
             Globals.UIManager.SetScene(UIScenes.ConstructorScene);
-            Globals.UIManager.ShowMap();
+            //Globals.UIManager.ShowMap();
             //Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]
             //    .AddElements(new Minimap(new Vector2(1600, 300 + 220), 0, 0, _storage, Alignment.Center));
         }
         else
         {
             Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
-            Globals.UIManager.HideMap();
+           // Globals.UIManager.HideMap();
             var serializer = new Serializer();
             serializer.SerializeScene(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
             serializer.SaveInventory(Globals.Inventory.GetInventory());

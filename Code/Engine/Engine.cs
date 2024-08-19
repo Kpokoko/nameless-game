@@ -196,7 +196,7 @@ public class Engine : Game
         Globals.Serializer.Restart();
         Globals.UIManager.Minimaps.Clear();
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
-        Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, 0, 0, visitedSceneStorage));
+        Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, visitedSceneStorage));
         Map.LoadMap();
         var dict = new Dictionary<EntityTypeEnum, int>
         {

@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using nameless.Code.SceneManager;
+using nameless.Controls;
+using nameless.Engine;
 using nameless.Entity;
+using nameless.GameObjects;
 using nameless.Interfaces;
 using nameless.UI;
 using System;
@@ -17,11 +20,11 @@ public class Minimap : UIElement
 {
     private EntityTypeEnum[,] _mapArray;
     public static int TileSize = 6;
-    public Minimap(Vector2 position, int width, int height, EntityTypeEnum[,] array) : base(position, width, height)
+    public Vector2 Location;
+    public Minimap(Vector2 location, EntityTypeEnum[,] array) :
+        base(LocationToAbsolutePosition(location) + Globals.Center, LocationToAbsolutePosition(Vector2.One).X, LocationToAbsolutePosition(Vector2.One).Y)
     {
-        position.X = position.X * Storage.StorageWidth * TileSize + Globals.Engine.Window.ClientBounds.Width / 2 / Globals.Camera.Zoom - TileSize * 23 / 2;
-        position.Y = position.Y * Storage.StorageHeight * TileSize + Globals.Engine.Window.ClientBounds.Height / 2 / Globals.Camera.Zoom - TileSize * 13 / 2;
-        base.RelativePosition = position;
+        Location = location;
         _mapArray = array;
 
         Globals.UIManager.Minimaps.Add(this);
@@ -35,18 +38,23 @@ public class Minimap : UIElement
             {
                 var entity = _mapArray[i,j];
                 if (entity is EntityTypeEnum.None || entity is EntityTypeEnum.Pivot) continue;
-                var rect = new Rectangle(i * TileSize + (int)AbsolutePosition.X, j * TileSize + (int)AbsolutePosition.Y, TileSize, TileSize);
+                var rect = new Rectangle(new Point(i * TileSize + (int)Bounds.RectangleF.Position.X, j * TileSize + (int)Bounds.RectangleF.Position.Y), new Point(TileSize, TileSize));
 
                 switch (entity)
                 {
                     case EntityTypeEnum.EditorBlock: color = Color.AliceBlue; break;
-                    case EntityTypeEnum.InventoryBlock: color = Color.Red; break;
+                    case EntityTypeEnum.InventoryBlock: color = Color.Green; break;
                     case EntityTypeEnum.Block: color = Color.Brown; break;
                     case EntityTypeEnum.Platform: color = Color.Green; rect.Height = 2; break;
                 }
 
-                spriteBatch.DrawRectangle(rect, color * 0.3f, TileSize/2 + 1);
+                spriteBatch.DrawRectangle(rect, Hovered ? color : color * 0.3f, TileSize/2 + 1);
             }
+        if (Hovered)
+        {
+            spriteBatch.DrawRectangle(Bounds.RectangleF,color, TileSize);
+            spriteBatch.FillRectangle(Bounds.RectangleF, Color.Blue * 0.1f);
+        }
     }
 
     public override void Remove()
@@ -54,8 +62,19 @@ public class Minimap : UIElement
         Globals.UIManager.Minimaps.Remove(this);
     }
 
-    public void Update(GameTime gameTime)
+    public void Update()
     {
-        throw new NotImplementedException();
+        if (!Hovered)
+            return;
+        if (MouseInputController.LeftButton.IsJustPressed && Location != Globals.SceneManager.CurrentLocation)
+        {
+            Globals.SceneManager.LoadScene(Location);
+        }
+            
+    }
+
+    public static Vector2 LocationToAbsolutePosition(Vector2 location)
+    {
+        return location * new Vector2(Storage.StorageWidth, Storage.StorageHeight) * TileSize;
     }
 }

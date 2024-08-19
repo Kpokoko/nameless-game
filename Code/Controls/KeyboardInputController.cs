@@ -77,6 +77,11 @@ public class KeyboardInputController
             Globals.Constructor.SwitchMode();
         }
 
+        if (Globals.KeyboardInputController.IsJustPressed(Keys.M))
+        {
+            Globals.UIManager.SwitchMinimap();
+        }
+
         if (Keyboard.GetState().IsKeyDown(Keys.U) && !PreviousKeyboardState.IsKeyDown(Keys.U))
         {
             Globals.Constructor.Undo();

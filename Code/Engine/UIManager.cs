@@ -50,6 +50,15 @@ public class UIManager
             Containers[i].Update(gameTime);
         for (var i = 0; i < CircleControllers.Count; i++)
             CircleControllers[i].Update();
+        if (_mapIsActive)
+        {
+            for (var i = 0; i < Minimaps.Count; i++)
+            {
+                Minimaps[i].Update();
+                if (Minimaps[i].Offset != Globals.SceneManager.MinimapOffset)
+                    Minimaps[i].Offset = Globals.SceneManager.MinimapOffset;
+            }
+        }
 
         for (var i = 0;i< ToRemove.Count; i++)
             ToRemove[i].Remove();
@@ -121,6 +130,14 @@ public class UIManager
         Labels.Clear();
         KeyboardButtons.Clear();
         Containers.Clear();
+    }
+    
+    public void SwitchMinimap()
+    {
+        if (_mapIsActive)
+            HideMap();
+        else
+            ShowMap();
     }
 
     public void ShowMap() => _mapIsActive = true;
