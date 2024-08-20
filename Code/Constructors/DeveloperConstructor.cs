@@ -208,5 +208,12 @@ namespace nameless.Code.Constructors
             circle.OnDirectionSet += () =>
                 platform.SetMovement(circle.Vector, circle.Vector.Length() * 10);
         }
+
+        private void EditRayCaster(RayCaster caster)
+        {
+            var circle = new CircleController(caster.Position);
+            circle.OnDirectionSet += () =>
+                caster.SetMovement(circle.Vector);
+        }
     }
 }

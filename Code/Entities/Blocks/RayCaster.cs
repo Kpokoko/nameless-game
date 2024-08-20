@@ -16,7 +16,8 @@ public class RayCaster : Block
     public Ray CastedRay;
     public Storage Storage;
     private bool _nextTileIsEmpty;
-    public RayCaster(int x, int y, int width, int height, float speed) : base(x, y)
+    private Vector2 Direction;
+    public RayCaster(int x, int y, Vector2 dir) : base(x, y)
     {
         Colliders[0].Color = Color.Pink;
         Direction = dir;
@@ -28,7 +29,14 @@ public class RayCaster : Block
         if (Storage is null)
             Storage = Globals.SceneManager.GetStorage();
         if (CastedRay == null || CastedRay.IsNeedToBeDeleted)
-            CastedRay = new Ray((int)TilePosition.X + 1, (int)TilePosition.Y, 64, 10, null, this);
+        {
+            //if (Direction == Vector2.Zero)
+            //    throw new ArgumentException("wtf");
+            if (Direction.Y != 0)
+                CastedRay = new Ray((int)(TilePosition.X + Direction.X), (int)(TilePosition.Y + Direction.Y), 10, 64, null, this, Direction);
+            else
+                CastedRay = new Ray((int)(TilePosition.X + Direction.X), (int)(TilePosition.Y + Direction.Y), 64, 10, null, this, Direction);
+        }
         CastedRay.Update(gameTime);
     }
 
@@ -48,6 +56,6 @@ public class RayCaster : Block
     public override void PrepareSerializationInfo()
     {
         base.PrepareSerializationInfo();
-        Info.Direction = Direction;
+        Info.Direction = this.Direction;
     }
 }

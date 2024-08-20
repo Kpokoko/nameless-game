@@ -24,7 +24,7 @@ public class ConstructorScene : UIScene
         var zoom = Globals.Camera.Zoom;
         Name = UIScenes.ConstructorScene;
 
-        var spawnContainer = new Container(_spawnContainerPos, (300 ), (600 ), FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(_spawnContainerPos, (300), (600), FlexDirection.Vertical, Vector2.Zero);
         spawnContainer.OnDrag += () => _spawnContainerPos = spawnContainer.RelativePosition;
 
         var button1 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.InventoryBlock);
@@ -39,7 +39,8 @@ public class ConstructorScene : UIScene
         var button8 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.FragileBlock);
         var button9 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.TemporaryBlock);
         var button10 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.DelayedDeathBlock);
-        spawnContainer.AddElements(button1,button2,button3,button4,button5,button6,button7,button8,button9,button10);
+        var button0 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.RayCaster);
+        spawnContainer.AddElements(button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button0);
         AddElements(spawnContainer);
 
 

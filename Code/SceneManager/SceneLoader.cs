@@ -58,7 +58,7 @@ namespace nameless.Code.SceneManager
                         sceneContent.Add(new DelayedDeathBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
                     case "RayCaster":
-                        sceneContent.Add(new RayCaster((int)data.TilePos.X, (int)data.TilePos.Y, 64, 10, 0.1f));
+                        sceneContent.Add(new RayCaster((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction));
                         continue;
                     default: break;
                 }
