@@ -191,6 +191,11 @@ namespace nameless.Code.Constructors
                     var b = HitboxTrigger.CreateHitboxTrigger(type, pivot,Globals.SceneManager.GetEntities());
                     _storage.AddEntity(pivot, tilePos, Layer);
                     break;
+                case EntityTypeEnum.RayCaster:
+                    var caster = new RayCaster((int)tilePos.X, (int)tilePos.Y, new Vector2(1, 0));
+                    EditRayCaster(caster);
+                    _storage.AddEntity(caster, tilePos);
+                    break;
                 default:
                     break;
             }

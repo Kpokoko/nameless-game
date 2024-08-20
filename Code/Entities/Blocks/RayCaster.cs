@@ -19,6 +19,8 @@ public class RayCaster : Block
     public RayCaster(int x, int y, int width, int height, float speed) : base(x, y)
     {
         Colliders[0].Color = Color.Pink;
+        Direction = dir;
+        PrepareSerializationInfo();
     }
 
     public override void Update(GameTime gameTime)
@@ -35,5 +37,17 @@ public class RayCaster : Block
         base.Draw(spriteBatch);
         if (CastedRay != null)
             CastedRay.Draw(spriteBatch);
+    }
+
+    public void SetMovement(Vector2 dir)
+    {
+        Direction = dir.NormalizedCopy();
+        PrepareSerializationInfo();
+    }
+
+    public override void PrepareSerializationInfo()
+    {
+        base.PrepareSerializationInfo();
+        Info.Direction = Direction;
     }
 }
