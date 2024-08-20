@@ -30,8 +30,6 @@ public class RayCaster : Block
             Storage = Globals.SceneManager.GetStorage();
         if (CastedRay == null || CastedRay.IsNeedToBeDeleted)
         {
-            //if (Direction == Vector2.Zero)
-            //    throw new ArgumentException("wtf");
             if (Direction.Y != 0)
                 CastedRay = new Ray((int)(TilePosition.X + Direction.X), (int)(TilePosition.Y + Direction.Y), 10, 64, null, this, Direction);
             else
