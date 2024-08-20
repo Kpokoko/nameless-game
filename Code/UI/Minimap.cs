@@ -21,18 +21,35 @@ public class Minimap : UIElement
     private EntityTypeEnum[,] _mapArray;
     public static int TileSize = 6;
     public Vector2 Location;
+    public SceneInfo SceneInfo { get => Globals.Map[(int)Location.X, (int)Location.Y]; }
+    private Container _label;
+
     public Minimap(Vector2 location, EntityTypeEnum[,] array) :
         base(LocationToAbsolutePosition(location) + Globals.Center, LocationToAbsolutePosition(Vector2.One).X, LocationToAbsolutePosition(Vector2.One).Y)
     {
         Location = location;
         _mapArray = array;
-
-        Globals.UIManager.Minimaps.Add(this);
+        
+        if (!Globals.UIManager.Minimaps.Select(m => m.Location).Contains(location))
+            Globals.UIManager.Minimaps.Add(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         Color color = Color.Transparent;
+        bool opaque = false;
+        if (Hovered)
+        {
+            spriteBatch.DrawRectangle(Bounds.RectangleF, Color.Brown, TileSize);
+            spriteBatch.FillRectangle(Bounds.RectangleF, Color.Blue * 0.1f);
+            opaque = true;
+        }
+        if ( Globals.SceneManager.CurrentLocation == Location)
+        {
+            spriteBatch.FillRectangle(Bounds.RectangleF, Color.Yellow * 0.1f);
+            opaque = true;
+        }
+
         for (var i = 0; i < _mapArray.GetLength(0);i++)
             for (var j = 0; j < _mapArray.GetLength(1); j++)
             {
@@ -42,19 +59,15 @@ public class Minimap : UIElement
 
                 switch (entity)
                 {
-                    case EntityTypeEnum.EditorBlock: color = Color.AliceBlue; break;
+                    case EntityTypeEnum.EditorBlock: color = Color.Purple; break;
                     case EntityTypeEnum.InventoryBlock: color = Color.Green; break;
                     case EntityTypeEnum.Block: color = Color.Brown; break;
                     case EntityTypeEnum.Platform: color = Color.Green; rect.Height = 2; break;
                 }
 
-                spriteBatch.DrawRectangle(rect, Hovered ? color : color * 0.3f, TileSize/2 + 1);
+                spriteBatch.FillRectangle(rect, opaque ? color : color * 0.6f);//, TileSize/2 + 1);
             }
-        if (Hovered)
-        {
-            spriteBatch.DrawRectangle(Bounds.RectangleF,color, TileSize);
-            spriteBatch.FillRectangle(Bounds.RectangleF, Color.Blue * 0.1f);
-        }
+        
     }
 
     public override void Remove()
@@ -64,14 +77,34 @@ public class Minimap : UIElement
 
     public void Update()
     {
-        if (!Hovered)
+        if (!Hovered || MouseInputController.OnUIElement)
+        {
+            if (_label != null)
+                HideLabel();
             return;
+        }
+        ShowLabel();
         if (MouseInputController.LeftButton.IsJustPressed && Location != Globals.SceneManager.CurrentLocation)
         {
             Globals.SceneManager.LoadScene(Location);
         }
             
     }
+
+    private void HideLabel()
+    {
+        _label.Remove();
+        _label = null;
+    }
+
+    private void ShowLabel()
+    {
+        if (_label != null)
+            return;
+        var label = new Label(Vector2.Zero, SceneInfo.FullName);
+        _label = new Container(AbsolutePosition - LocationToAbsolutePosition(new Vector2(0,0.8f)), (int)label.Bounds.Width, (int)label.Bounds.Height);
+        _label.AddElements(label);
+    } 
 
     public static Vector2 LocationToAbsolutePosition(Vector2 location)
     {

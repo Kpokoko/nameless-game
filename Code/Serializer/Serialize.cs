@@ -79,7 +79,7 @@ public struct Serializer
         using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "Map.xml"), FileMode.Create)))
         {
             var serializer = new XmlSerializer(typeof(List<string>));
-            var a = new List<string> { "0 0 Center" };
+            var a = new List<string> { "0 0" };
             serializer.Serialize(writer, a);
         }
     }
@@ -123,7 +123,8 @@ public struct Serializer
             if (!data.Contains(name))
             {
                 data.Add(name);
-                Globals.UIManager.Minimaps.Add(new Minimap(newPos, Globals.SceneManager.GetStorage().ConvertToEnum()));
+                if (!Globals.UIManager.Minimaps.Select(m => m.Location).Contains(newPos))
+                    Globals.UIManager.Minimaps.Add(new Minimap(newPos, Globals.SceneManager.GetStorage().ConvertToEnum()));
             }
             serialize.Serialize(writer, data);
         }

@@ -195,6 +195,7 @@ public class Engine : Game
         Globals.CopyFiles(Path.Combine("BaseLayout"), Path.Combine("Layout"), true);
         Globals.Serializer.Restart();
         Globals.UIManager.Minimaps.Clear();
+        Globals.UIManager.Clear();
         var visitedSceneStorage = Scene.GetSceneStorage("0 0 Center").ConvertToEnum();
         Globals.UIManager.Minimaps.Add(new Minimap(Vector2.Zero, visitedSceneStorage));
         Map.LoadMap();

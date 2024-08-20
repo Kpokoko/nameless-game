@@ -171,9 +171,11 @@ public class Map
             if (visitedScenes.Contains(coolNameNAME) || Globals.IsDeveloperModeEnabled)
             {
                 var visitedSceneStorage = Scene.GetSceneStorage(coolNameNAME).ConvertToEnum();
+
                 coolName.Minimap = new Minimap(
-                    new Vector2(coolName.Coordinates.X, coolName.Coordinates.Y ),
-                    visitedSceneStorage);
+                new Vector2(coolName.Coordinates.X, coolName.Coordinates.Y ),
+                visitedSceneStorage);
+
                 visitedSceneStorage = null;
                 GC.Collect();
             }

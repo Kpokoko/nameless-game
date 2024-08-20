@@ -1119,19 +1119,6 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>5</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>-1</Y>
-    </Direction>
-    <Speed>2.5</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
       <X>7</X>
@@ -1316,8 +1303,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>7</X>
-      <Y>12</Y>
+      <X>21</X>
+      <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>
@@ -1325,5 +1312,18 @@
       <Y>0</Y>
     </Direction>
     <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>MovingPlatform</TypeOfElement>
+    <TilePos>
+      <X>5</X>
+      <Y>8</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>0.7071068</X>
+      <Y>-0.7071068</Y>
+    </Direction>
+    <Speed>2.4999998</Speed>
   </SerializationInfo>
 </ArrayOfSerializationInfo>
