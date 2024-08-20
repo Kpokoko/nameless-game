@@ -77,6 +77,9 @@ public class Minimap : UIElement
 
     public void Update()
     {
+        if (!Globals.IsDeveloperModeEnabled)
+            return;    
+        
         if (!Hovered || MouseInputController.OnUIElement)
         {
             if (_label != null)
