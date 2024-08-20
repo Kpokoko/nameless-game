@@ -73,6 +73,7 @@ namespace nameless.Entity
             if (collisionsInfo.Select(i => i.Other).Any(o => o is HitboxTrigger || o is KinematicAccurateCollider))
                 return;
             TurnAround();
+            Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
             Collided = true;
         }
 
@@ -86,7 +87,7 @@ namespace nameless.Entity
         public void TurnAround()
         {
             Speed = Speed * (-1);
-            Globals.AudioManager.PlaySound(Sound.SoundType.Click, 0.2f);
+            Globals.AudioManager.PlaySound(Sound.SoundType.Click, 0.01f);
 
             var rnd = new Random();
             var rndSpeed = rnd.NextDouble() * 2 + 0.5;

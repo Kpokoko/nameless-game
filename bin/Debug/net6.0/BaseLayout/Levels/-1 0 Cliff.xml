@@ -1537,8 +1537,8 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>22</X>
-      <Y>10</Y>
+      <X>5</X>
+      <Y>0</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
     <Direction>

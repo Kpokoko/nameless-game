@@ -141,22 +141,28 @@ public class Constructor : IGameObject
 
     private void HoldBlock(IConstructable entity, bool calledFromHistory = false)
     {
+        if (entity == null || entity.IsSelected)
+            return;
         entity.IsSelected = true;
         if (!_holdingEntities.Contains(entity))
             _holdingEntities.Add(entity);
-        else
-            return;
+        //else
+        //    return;
 
         if (!calledFromHistory)
         {
+            var pos = (entity as TileGridEntity).TilePosition;
+            var layer = (entity as TileGridEntity).Layer;
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => ReleaseBlock(entity, true);
+            newEvent.Action = () => ReleaseBlock(_storage[pos, layer], true);
             _history.Push(newEvent);
         }
         else
         {
+            var pos = (entity as TileGridEntity).TilePosition;
+            var layer = (entity as TileGridEntity).Layer;
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => ReleaseBlock(entity);
+            newEvent.Action = () => ReleaseBlock(_storage[pos, layer]);
             _redoHistory.Push(newEvent);
         }
     }
@@ -170,19 +176,25 @@ public class Constructor : IGameObject
 
     private void ReleaseBlock(IConstructable entity, bool calledFromHistory = false)
     {
+        if (entity == null || !entity.IsSelected)
+            return;
         entity.IsSelected = false;
         _holdingEntities.Remove(entity);
 
         if (!calledFromHistory)
         {
+            var pos = (entity as TileGridEntity).TilePosition;
+            var layer = (entity as TileGridEntity).Layer;
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => HoldBlock(entity, true);
+            newEvent.Action = () => HoldBlock(_storage[pos, layer], true);
             _history.Push(newEvent);
         }
         else
         {
+            var pos = (entity as TileGridEntity).TilePosition;
+            var layer = (entity as TileGridEntity).Layer;
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            newEvent.Action = () => HoldBlock(entity);
+            newEvent.Action = () => HoldBlock(_storage[pos, layer]);
             _redoHistory.Push(newEvent);
         }
     }
@@ -250,7 +262,7 @@ public class Constructor : IGameObject
 
     public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)
     {
-        entity.IsSelected = false;
+        ReleaseBlock(entity);
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _storage.RemoveEntity(entity.TilePosition, Layer);
         (entity as IEntity).Remove();
@@ -292,11 +304,10 @@ public class Constructor : IGameObject
         if (!calledFromHistory && moveOn == Vector2.Zero)
             moveOn = mouseTilePos - (Vector2)_startMouseTilePos;
 
-        if (_holdingEntities.Any(e => !Storage.IsInBounds(((TileGridEntity)e).TilePosition + moveOn)))
-            return;
 
         _blocksSpawned = true;
         _groupInteraction = true;
+        var toRemove = new List<TileGridEntity>();
 
         foreach (var entity in _holdingEntities)
         {
@@ -305,6 +316,11 @@ public class Constructor : IGameObject
         foreach (var entity in _holdingEntities)
         {
             var tileEntity = entity as TileGridEntity;
+            if (!Storage.IsInBounds(tileEntity.TilePosition + moveOn))
+            {
+                toRemove.Add(tileEntity);
+                continue;
+            }
             tileEntity.TilePosition += moveOn;
 
             var coveredEntity = _storage[tileEntity.TilePosition, Layer];
@@ -316,6 +332,9 @@ public class Constructor : IGameObject
             _storage[tileEntity.TilePosition, Layer] = tileEntity;
             entity.UpdateConstructor();
         }
+        foreach (var entity in toRemove)
+            DeleteBlock(entity);
+
 
         if (!calledFromHistory)
         {
