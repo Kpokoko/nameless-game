@@ -17,9 +17,11 @@ namespace nameless.Entity
     {
         public Vector2 Direction;
         public float Speed;
-        public Vector2 Velocity { get => Direction * Speed; }
+        private Vector2 _previousPosition;
+
         private bool Collided = false;
         public bool Static = false;
+        private List<Block> _attachedBlocks = new();
         private Storage _storage;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
@@ -30,6 +32,8 @@ namespace nameless.Entity
             Colliders.Add(new DynamicCollider(this, 64, 64));
             Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
+
+            _previousPosition = Position;
         }
         public MovingPlatform(Vector2 tilePosition, Vector2 dir, float speed) : this((int)tilePosition.X, (int)tilePosition.Y, dir, speed) { }
 
@@ -46,6 +50,29 @@ namespace nameless.Entity
             //base.OnPositionChange(position);
         }
 
+        public void AttachBlock(Block block)
+        {
+            if (_attachedBlocks.Contains(block)) return;
+            _attachedBlocks.Add(block);
+        }
+
+        private void MoveAttachedBlocks(Vector2 vec)
+        {
+            foreach (var block in _attachedBlocks)
+            {
+                block.Velocity += vec;
+                block.Position += vec;
+            }
+        }
+        private void FreezeAttachedBlocks()
+        {
+            foreach (var block in _attachedBlocks)
+            {
+                block.Velocity = Vector2.Zero;
+            }
+        }
+
+
         public override void UpdateConstructor()
         {
             base.UpdateConstructor();
@@ -56,6 +83,8 @@ namespace nameless.Entity
 
         public override void Update(GameTime gameTime)
         {
+            Velocity = Vector2.Zero;
+            FreezeAttachedBlocks();
             Static = false;
             if (_storage == null)
                 _storage = Globals.SceneManager.GetStorage();
@@ -65,8 +94,16 @@ namespace nameless.Entity
                 Static = true;
             if (Static)
                 return;
-
-            Position += Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            var vel = Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += vel;
+            if (!_attachedBlocks.Any() && Globals.SceneManager.CurrentLocation == new Vector2(3,-1) && TilePosition == new Vector2(12,4))
+            {
+                AttachBlock((Block)(Globals.SceneManager.GetStorage()[11, 4, 0]));
+                AttachBlock((Block)(Globals.SceneManager.GetStorage()[13, 4, 0]));
+            }//only on test scene
+            Velocity += vel;
+            MoveAttachedBlocks(Position - _previousPosition);
             Collided = false;
 
             var rnd = new Random();
@@ -76,6 +113,8 @@ namespace nameless.Entity
                 var p = new BlendingParticle(Position, rndVec() * 2, 500, Color.DarkGoldenrod * 0.3f, rndVec() * 0.11f);
                 p.SetSecondColor(Color.Transparent);
             }
+
+            _previousPosition = Position;
         }
 
         public override void OnCollision(params CollisionEventArgs[] collisionsInfo)
@@ -100,7 +139,7 @@ namespace nameless.Entity
         public void TurnAround()
         {
             Speed = Speed * (-1);
-            Globals.AudioManager.PlaySound(Sound.SoundType.Click, 0.01f);
+            Globals.AudioManager.PlaySound(Sound.SoundType.Click, 0.0f);
 
             var rnd = new Random();
             var rndSpeed = rnd.NextDouble() * 2 + 0.5;

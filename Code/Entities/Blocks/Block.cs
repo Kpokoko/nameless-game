@@ -15,7 +15,7 @@ using System.Runtime.CompilerServices;
 
 namespace nameless.Entity;
 
-public partial class Block : TileGridEntity, IEntity, ICollider
+public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinematic
 {
     public Block(int x, int y)
     {
@@ -31,6 +31,7 @@ public partial class Block : TileGridEntity, IEntity, ICollider
 
     int IGameObject.DrawOrder => 1;
     public Colliders Colliders { get; set; } = new();
+    public virtual Vector2 Velocity {  get; set; }
 
     public override void OnPositionChange(Vector2 position)
     {
@@ -82,5 +83,14 @@ public partial class Block : TileGridEntity, IEntity, ICollider
     public virtual void Remove()
     {
         Colliders.RemoveAll();
+    }
+
+    public SerializationInfo Info { get; set; } = new();
+
+
+    public virtual void PrepareSerializationInfo()
+    {
+        Info.TilePos = TilePosition;
+        Info.TypeOfElement = this.GetType().Name;
     }
 }

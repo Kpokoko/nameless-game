@@ -121,20 +121,24 @@ public class KinematicAccurateCollider : DynamicCollider
     {
         bool isDynamic = false;
         var vel = ((IKinematic)Entity).Velocity;
-        if (((Collider)collisionInfo.Other).Entity is (MovingPlatform) && !(((Collider)collisionInfo.Other).Entity as MovingPlatform).Static)
+
+        IKinematic other = null;
+        if (((Collider)collisionInfo.Other).Entity is IKinematic)
+            other = (IKinematic)((Collider)collisionInfo.Other).Entity;
+        if (other != null && other.Velocity != Vector2.Zero)
         {
             isDynamic = true;
             var player = (PlayerModel)Entity;
 
 
-            if (player.PullingForce != ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity)
+            if (player.PullingForce != other.Velocity)
             {
                 //    vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
 
                 if (player.PullingForce != Vector2.Zero)
                     vel += player.PullingForce;
                 //else
-                vel -= ((MovingPlatform)(((Collider)collisionInfo.Other).Entity)).Velocity;
+                vel -= other.Velocity;
             }
         }
         else
