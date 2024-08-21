@@ -121,7 +121,7 @@ public class KinematicAccurateCollider : DynamicCollider
     {
         bool isDynamic = false;
         var vel = ((IKinematic)Entity).Velocity;
-        if (((Collider)collisionInfo.Other).Entity is (MovingPlatform))
+        if (((Collider)collisionInfo.Other).Entity is (MovingPlatform) && !(((Collider)collisionInfo.Other).Entity as MovingPlatform).Static)
         {
             isDynamic = true;
             var player = (PlayerModel)Entity;

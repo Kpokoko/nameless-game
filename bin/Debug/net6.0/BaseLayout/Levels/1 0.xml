@@ -14,19 +14,6 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>PlayerModel</TypeOfElement>
-    <TilePos>
-      <X>6</X>
-      <Y>0</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>InventoryBlock</TypeOfElement>
     <TilePos>
       <X>11</X>
@@ -926,19 +913,6 @@
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
-      <X>14</X>
-      <Y>12</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>Block</TypeOfElement>
-    <TilePos>
       <X>22</X>
       <Y>12</Y>
     </TilePos>
@@ -1229,6 +1203,19 @@
       <Y>0</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
+    <Direction>
+      <X>0</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>PlayerModel</TypeOfElement>
+    <TilePos>
+      <X>21</X>
+      <Y>11</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
     <Direction>
       <X>0</X>
       <Y>0</Y>

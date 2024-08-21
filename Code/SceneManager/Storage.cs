@@ -72,9 +72,15 @@ namespace nameless.Code.SceneManager
             return Entities;
         }
 
-        public static bool IsInBounds(Vector2 pos)
+        public static bool IsInBounds(Vector2 tilePos)
         {
-            return pos.X >= 0 && pos.X < StorageWidth && pos.Y >= 0 && pos.Y < StorageHeight;
+            return tilePos.X >= 0 && tilePos.X < StorageWidth && tilePos.Y >= 0 && tilePos.Y < StorageHeight;
+        }
+
+        public bool IsTileFree(Vector2 tilePos, int layer = 0)
+        {
+            var tile = this[tilePos, layer];
+            return tile == null || ((tile is IBreakable) && ((IBreakable)tile).Broken) || tile is MovingPlatform;
         }
 
         public int GetLength(int dimension)

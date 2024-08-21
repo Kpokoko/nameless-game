@@ -234,6 +234,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
         if (((Collider)collisionInfo.Other).Entity is MovingPlatform)
         {
             var platform = (MovingPlatform)(((Collider)collisionInfo.Other).Entity);
+            if (platform.Static)
+                return;
             if (collisionSide is Side.Bottom)
                 Actions.Add(() => Pull(platform.Velocity));
             else

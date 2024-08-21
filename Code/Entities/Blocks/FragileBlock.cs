@@ -1,6 +1,7 @@
 ﻿using nameless.Collisions;
 using nameless.Entity;
 using nameless.GameObjects;
+using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace nameless.Entity
 {
-    public class FragileBlock : Block
+    public class FragileBlock : Block, IBreakable
     {
+        public bool Broken {  get; set; }
         public FragileBlock(int x, int y) : base(x, y)
         {
             var trigger = new HitboxTrigger(this, 65, 65, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
@@ -28,6 +30,7 @@ namespace nameless.Entity
         public void Break()
         {
             IsEnableToPlayer = false;
+            Broken = true;
             Colliders.RemoveAll();
         }
     }

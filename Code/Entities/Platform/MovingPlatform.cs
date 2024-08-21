@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
+using nameless.Code.SceneManager;
 using nameless.Collisions;
 using nameless.GameObjects;
 using System;
@@ -18,6 +19,8 @@ namespace nameless.Entity
         public float Speed;
         public Vector2 Velocity { get => Direction * Speed; }
         private bool Collided = false;
+        public bool Static = false;
+        private Storage _storage;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
             //Position = new Vector2(Position.X, Position.Y - 27);
@@ -53,6 +56,16 @@ namespace nameless.Entity
 
         public override void Update(GameTime gameTime)
         {
+            Static = false;
+            if (_storage == null)
+                _storage = Globals.SceneManager.GetStorage();
+            var movingTo = (Direction * Speed).NormalizedCopy();
+            movingTo = new Vector2((float)Math.Round(movingTo.X),(float)Math.Round(movingTo.Y));
+            if (!_storage.IsTileFree(movingTo + TilePosition) && !_storage.IsTileFree(TilePosition - movingTo))
+                Static = true;
+            if (Static)
+                return;
+
             Position += Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Collided = false;
 

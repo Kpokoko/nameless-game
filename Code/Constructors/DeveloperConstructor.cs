@@ -179,7 +179,7 @@ namespace nameless.Code.Constructors
                     _storage.AddEntity(new Platform(tilePos), tilePos, Layer);
                     break;
                 case EntityTypeEnum.MovingPlatform:
-                    var mp = new MovingPlatform((int)tilePos.X, (int)tilePos.Y, Vector2.One, 1);
+                    var mp = new MovingPlatform((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 1);
                     EditMovingPlatform(mp);
                     _storage.AddEntity(mp, tilePos, Layer);
                     break;

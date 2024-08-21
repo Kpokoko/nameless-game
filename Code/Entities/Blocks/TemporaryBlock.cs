@@ -1,5 +1,6 @@
 ﻿using nameless.Collisions;
 using nameless.GameObjects;
+using nameless.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace nameless.Entity
 {
-    public class TemporaryBlock : Block
+    public class TemporaryBlock : Block, IBreakable
     {
+        public bool Broken { get; set; }
         public TemporaryBlock(int x, int y) : base(x, y)
         {
             var trigger = new TimerTriggerAutoStart(3000, GameObjects.SignalProperty.Once);
@@ -23,6 +25,7 @@ namespace nameless.Entity
         public void Break()
         {
             IsEnableToPlayer = false;
+            Broken = true;
             Colliders.RemoveAll();
         }
     }
