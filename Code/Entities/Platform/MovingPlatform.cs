@@ -21,7 +21,6 @@ namespace nameless.Entity
 
         private bool Collided = false;
         public bool Static = false;
-        private List<Block> _attachedBlocks = new();
         private Storage _storage;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
@@ -50,25 +49,36 @@ namespace nameless.Entity
             //base.OnPositionChange(position);
         }
 
-        public void AttachBlock(Block block)
-        {
-            if (_attachedBlocks.Contains(block)) return;
-            _attachedBlocks.Add(block);
-        }
 
-        private void MoveAttachedBlocks(Vector2 vec)
+        private void MoveAttachedBlocks(HashSet<Block> blocks, Vector2 vec)
         {
-            foreach (var block in _attachedBlocks)
+            if (blocks == null)
+                return;
+            foreach (var block in blocks)
             {
-                block.Velocity += vec;
-                block.Position += vec;
+                if (block.Velocity.Length() < vec.Length())
+                {
+                    block.Position -= block.Velocity;
+
+                    block.Velocity = vec;
+                    block.Position += vec;
+                    if (block is not Attacher && block.Position.Y != Position.Y)
+                        Console.WriteLine();
+                    MoveAttachedBlocks(block.AttachedBlocks, vec);
+                }
             }
         }
-        private void FreezeAttachedBlocks()
+        private void FreezeAttachedBlocks(HashSet<Block> blocks)
         {
-            foreach (var block in _attachedBlocks)
+            if (blocks == null)
+                return;
+            foreach (var block in blocks)
             {
-                block.Velocity = Vector2.Zero;
+                if (block.Velocity != Vector2.Zero)
+                {
+                    block.Velocity = Vector2.Zero;
+                    FreezeAttachedBlocks(block.AttachedBlocks);
+                }
             }
         }
 
@@ -84,7 +94,7 @@ namespace nameless.Entity
         public override void Update(GameTime gameTime)
         {
             Velocity = Vector2.Zero;
-            FreezeAttachedBlocks();
+            FreezeAttachedBlocks(AttachedBlocks);
             Static = false;
             if (_storage == null)
                 _storage = Globals.SceneManager.GetStorage();
@@ -97,20 +107,20 @@ namespace nameless.Entity
             
             var vel = Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Position += vel;
-            if (!_attachedBlocks.Any() && Globals.SceneManager.CurrentLocation == new Vector2(3,-1) && TilePosition == new Vector2(12,4))
-            {
-                AttachBlock((Block)(Globals.SceneManager.GetStorage()[11, 4, 0]));
-                AttachBlock((Block)(Globals.SceneManager.GetStorage()[13, 4, 0]));
-            }//only on test scene
-            Velocity += vel;
-            MoveAttachedBlocks(Position - _previousPosition);
+            //if (!_attachedBlocks.Any() && Globals.SceneManager.CurrentLocation == new Vector2(3,-1) && TilePosition == new Vector2(12,4))
+            //{
+            //    AttachBlock((Block)(Globals.SceneManager.GetStorage()[11, 4, 0]));
+            //    AttachBlock((Block)(Globals.SceneManager.GetStorage()[13, 4, 0]));
+            //}//only on test scene
+            Velocity +=  Position - _previousPosition;
+            MoveAttachedBlocks(AttachedBlocks, Position - _previousPosition);
             Collided = false;
 
             var rnd = new Random();
             var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1; i++)
             {
-                var p = new BlendingParticle(Position, rndVec() * 2, 500, Color.DarkGoldenrod * 0.3f, rndVec() * 0.11f);
+                var p = new BlendingParticle(Position, Vector2.Zero, 700, Color.DarkGoldenrod * 0.08f);//, rndVec() * 0.01f);
                 p.SetSecondColor(Color.Transparent);
             }
 
@@ -143,13 +153,15 @@ namespace nameless.Entity
 
             var rnd = new Random();
             var rndSpeed = rnd.NextDouble() * 2 + 0.5;
-            Globals.AnimationManager.PlayAnimation(Globals.AnimationManager.Animations.Keys.ToArray()[rnd.NextInt64(Globals.AnimationManager.Animations.Keys.Count-1)], Position, (float)rndSpeed);
+            var dirVec = new Vector2(1, 0);
+            //Globals.AnimationManager.PlayAnimation(Globals.AnimationManager.Animations.Keys.ToArray()[rnd.NextInt64(Globals.AnimationManager.Animations.Keys.Count-1)], Position, (float)rndSpeed);
 
             var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
             for (int i = 0; i < 50; i++)
             {
-                var p = new BlendingParticle(Position, rndVec() * 20, 500, Color.Red * 0.3f, rndVec() * 1f);
+                var p = new BlendingParticle(Position, dirVec * 2, 500, Color.Goldenrod * 0.07f);
                 p.SetSecondColor(Color.Transparent);
+                dirVec = dirVec.Rotate((float)Math.PI / 25);
             }
         }
     }

@@ -99,7 +99,10 @@ public class KeyboardInputController
     {
         Globals.IsNoclipEnabled = Globals.IsNoclipEnabled ? false : true;
         //Globals.SceneManager.GetPlayer().Velocity = Vector2.Zero;
-        Globals.UIManager.PopupMessage("Noclip switch");
+        if (Globals.IsNoclipEnabled)
+            Globals.UIManager.PopupMessage("Noclip ON");
+        else
+            Globals.UIManager.PopupMessage("Noclip OFF");
     }
 
     private void MeasureMovement(KeyboardState keyboardState, bool isJumpKeyPressed, bool isJumpKeyHolding)

@@ -12,7 +12,8 @@ namespace nameless.Code.SceneManager
 {
     public class Storage
     {
-        private TileGridEntity[][,] Entities = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight], new TileGridEntity[StorageWidth, StorageHeight] };
+        private TileGridEntity[][,] _entitiesArray = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight], new TileGridEntity[StorageWidth, StorageHeight] };
+        private List<Attacher> _attachers = new();
         public const int StorageWidth = 23;
         public const int StorageHeight = 13;
 
@@ -31,22 +32,27 @@ namespace nameless.Code.SceneManager
                     continue;
                 }
 
-                Entities[layer][(int)pos.X, (int)pos.Y] = entity;
+                if (entity is Attacher)
+                {
+                    _attachers.Add(entity as Attacher);
+                    continue;
+                }
+                _entitiesArray[layer][(int)pos.X, (int)pos.Y] = entity;
                 if (entity is EditorBlock)
-                    Entities[layer][(int)pos.X, (int)pos.Y - 1] = entity;
+                    _entitiesArray[layer][(int)pos.X, (int)pos.Y - 1] = entity;
             }
         }
 
         public TileGridEntity this[int x, int y, int layer = 0]
         {
-            get { return Entities[layer][x, y]; }
-            set { Entities[layer][x, y] = value; }
+            get { return _entitiesArray[layer][x, y]; }
+            set { _entitiesArray[layer][x, y] = value; }
         }
 
         public TileGridEntity this[Vector2 tilePos, int layer = 0]
         {
-            get { return Entities[layer][(int)tilePos.X, (int)tilePos.Y]; }
-            set { Entities[layer][(int)tilePos.X, (int)tilePos.Y] = value; }
+            get { return _entitiesArray[layer][(int)tilePos.X, (int)tilePos.Y]; }
+            set { _entitiesArray[layer][(int)tilePos.X, (int)tilePos.Y] = value; }
         }
 
         public void RemoveEntity(int x, int y, int layer = 0)
@@ -60,16 +66,25 @@ namespace nameless.Code.SceneManager
 
         public void AddEntity(TileGridEntity entity, int x, int y, int layer = 0)
         {
-            Entities[layer][x, y] = entity;
+            _entitiesArray[layer][x, y] = entity;
             var iEntity = (IEntity)entity;
             if (!Globals.SceneManager.GetEntities().Contains(iEntity))
                 Globals.SceneManager.GetEntities().Add(iEntity);
         }
         public void AddEntity(TileGridEntity entity, Vector2 tilePos, int layer = 0) => AddEntity(entity, (int)tilePos.X, (int)tilePos.Y, layer);
 
+        public void AddSlimEntity(Attacher attacher)
+        {
+            if (!_attachers.Contains(attacher))
+            {
+                _attachers.Add(attacher);
+                if (!Globals.SceneManager.GetEntities().Contains(attacher))
+                    Globals.SceneManager.GetEntities().Add(attacher);
+            }
+        }
         public TileGridEntity[][,] GetArray()
         {
-            return Entities;
+            return _entitiesArray;
         }
 
         public static bool IsInBounds(Vector2 tilePos)
@@ -83,19 +98,32 @@ namespace nameless.Code.SceneManager
             return tile == null || ((tile is IBreakable) && ((IBreakable)tile).Broken) || tile is MovingPlatform;
         }
 
+        public bool IsFreeBetweenTiles(Vector2 tile1, Vector2 tile2)
+        {
+            var ordered = new[] { tile1, tile2 };
+            ordered = ordered.OrderBy(x => x.Length()).ToArray();
+            return (!_attachers.Any(a => a.BetweenTiles[0] == ordered[0] && a.BetweenTiles[1] == ordered[1]));
+        }
+
+        public void UpdateAttachers()
+        {
+            foreach (var attacher in _attachers)
+                attacher.Attach();
+        }
+
         public int GetLength(int dimension)
         {
-            return Entities[0].GetLength(dimension);
+            return _entitiesArray[0].GetLength(dimension);
         }
 
         public EntityTypeEnum[,] ConvertToEnum(int layer = 0)
         {
             var converted = new EntityTypeEnum[StorageWidth, StorageHeight];
-            for (var i = 0; i < Entities[layer].GetLength(0); i++)
+            for (var i = 0; i < _entitiesArray[layer].GetLength(0); i++)
             {
-                for (var j = 0; j < Entities[layer].GetLength(1); j++)
+                for (var j = 0; j < _entitiesArray[layer].GetLength(1); j++)
                 {
-                    var currCell = Entities[layer][i, j];
+                    var currCell = _entitiesArray[layer][i, j];
                     if (currCell == null) converted[i, j] = EntityTypeEnum.None;
                     else
                         converted[i, j] = EntityType.TranslateEntityEnumAndType(currCell.GetType());

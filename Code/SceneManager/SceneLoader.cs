@@ -60,6 +60,9 @@ namespace nameless.Code.SceneManager
                     case "RayCaster":
                         sceneContent.Add(new RayCaster((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction));
                         continue;
+                    case "Attacher":
+                        sceneContent.Add(new Attacher((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction));
+                        break;
                     default: break;
                 }
             }

@@ -84,6 +84,15 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
     {
         Colliders.RemoveAll();
     }
+    public HashSet<Block> AttachedBlocks { get; set; }
+
+    public void AttachBlock(Block block)
+    {
+        if (AttachedBlocks == null)
+            AttachedBlocks = new HashSet<Block>();
+        if (AttachedBlocks.Contains(block)) return;
+        AttachedBlocks.Add(block);
+    }
 
     public SerializationInfo Info { get; set; } = new();
 

@@ -24,7 +24,7 @@ public class Constructor : IGameObject
     public EntityTypeEnum SelectedEntity { get; set; }
     public object SelectedEntityProperty { get; set; }
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
-    public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : 0; } }
+    public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : SelectedEntity is EntityTypeEnum.Attacher ? 2 : 0; } }
 
     protected Stack<HistoryEventInfo> _history = new();
 
@@ -80,9 +80,14 @@ public class Constructor : IGameObject
         _groupInteraction = IsGroupInteraction() || (_groupInteraction && _isDeveloperAction);
 
 
-
         if (MouseInputController.OnUIElement || _isDeveloperAction)
             return;
+
+        if (SelectedEntity == EntityTypeEnum.Attacher)
+        {
+            UpdateSlim();
+            return;
+        }
 
         else if (IsSelecting())
             SelectArea(mouseTilePos);
@@ -104,6 +109,26 @@ public class Constructor : IGameObject
 
         if (!_groupInteraction)
             ResetDrawing();
+
+        _prevMouseTilePos = mouseTilePos;
+    }
+
+    private void UpdateSlim()
+    {
+        var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
+        Vector2 nearestTile = new Vector2(-1, -1);
+        for (int x =(int)mouseTilePos.X - 1; x <= mouseTilePos.X + 1; ++x)
+            for (int y = (int)mouseTilePos.Y - 1; y <= mouseTilePos.Y + 1; ++y)
+            {
+                var tile = new Vector2(x, y);
+                if (!Storage.IsInBounds(tile) || tile == mouseTilePos)
+                    continue;
+                if ((Tile.GetTileCenter(tile) - MouseInputController.MousePos).Length() < (Tile.GetTileCenter(nearestTile) - MouseInputController.MousePos).Length())
+                    nearestTile = tile;
+            }
+
+        if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && IsDrawing()) && _storage.IsFreeBetweenTiles(mouseTilePos,nearestTile) && _storage[mouseTilePos] != null && _storage[nearestTile] != null)// && entityUnderMouse == null)
+            SpawnSlimBlock(mouseTilePos, nearestTile);
 
         _prevMouseTilePos = mouseTilePos;
     }
@@ -258,6 +283,40 @@ public class Constructor : IGameObject
     {
         SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
         SpawnBlock(info.TilePos, calledFromHistory);
+    }
+
+    public virtual void SpawnSlimBlock(Vector2 tilePos, Vector2 secondTilePos, bool calledFromHistory = false)
+    {
+        if (SelectedEntity is EntityTypeEnum.None) return;
+        switch (SelectedEntity)
+        {
+            case EntityTypeEnum.Attacher:
+                if (Globals.Inventory.TryGetEntity(SelectedEntity))
+                {
+                    var attacher = new Attacher((int)tilePos.X, (int)tilePos.Y, secondTilePos - tilePos);
+                    attacher.Attach();
+                    _storage.AddSlimEntity(attacher);
+                break;
+                }
+                break;
+            default:
+                break;
+        }
+
+        if (!calledFromHistory)
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            var layer = Layer;
+            newEvent.Action = () => DeleteBlock(tilePos, layer, true);
+            _history.Push(newEvent);
+        }
+        else
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            var layer = Layer;
+            newEvent.Action = () => DeleteBlock(tilePos, layer);
+            _redoHistory.Push(newEvent);
+        }
     }
 
     public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)

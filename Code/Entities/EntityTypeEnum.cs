@@ -24,7 +24,8 @@ public enum EntityTypeEnum
     FragileBlock,
     TemporaryBlock,
     DelayedDeathBlock,
-    RayCaster
+    RayCaster,
+    Attacher
 }
 
 public static class EntityType

@@ -52,6 +52,7 @@ public class SceneManager
         CurrentLocation = currentLocation;
         Globals.Engine.LoadCollisions();
         _currentScene = new Scene(sceneName);
+        _currentScene.Storage.UpdateAttachers();
         if (entryData != null)
         {
             Globals.CanActivateSave = true;
