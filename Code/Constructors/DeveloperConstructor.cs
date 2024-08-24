@@ -204,7 +204,7 @@ namespace nameless.Code.Constructors
         private void EditMovingPlatform(MovingPlatform platform)
         {
             var circle = new CircleController(platform.Position);
-            circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 1.5f, 2f);
+            circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f);
             circle.OnDirectionSet += () =>
                 platform.SetMovement(circle.Vector, circle.Vector.Length() * 10);
         }

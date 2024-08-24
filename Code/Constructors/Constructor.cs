@@ -60,6 +60,7 @@ public class Constructor : IGameObject
         {
             Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
            // Globals.UIManager.HideMap();
+           _storage.UpdateAttachers();
             var serializer = new Serializer();
             serializer.SerializeScene(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
             serializer.SaveInventory(Globals.Inventory.GetInventory());
@@ -83,10 +84,9 @@ public class Constructor : IGameObject
         if (MouseInputController.OnUIElement || _isDeveloperAction)
             return;
 
-        if (SelectedEntity == EntityTypeEnum.Attacher)
+        if (SelectedEntityType.IsSubclassOf(typeof(SlimBlock)))
         {
             UpdateSlim();
-            return;
         }
 
         else if (IsSelecting())
@@ -116,19 +116,13 @@ public class Constructor : IGameObject
     private void UpdateSlim()
     {
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
-        Vector2 nearestTile = new Vector2(-1, -1);
-        for (int x =(int)mouseTilePos.X - 1; x <= mouseTilePos.X + 1; ++x)
-            for (int y = (int)mouseTilePos.Y - 1; y <= mouseTilePos.Y + 1; ++y)
-            {
-                var tile = new Vector2(x, y);
-                if (!Storage.IsInBounds(tile) || tile == mouseTilePos)
-                    continue;
-                if ((Tile.GetTileCenter(tile) - MouseInputController.MousePos).Length() < (Tile.GetTileCenter(nearestTile) - MouseInputController.MousePos).Length())
-                    nearestTile = tile;
-            }
+        var nearestTile = MouseInputController.GetNearestTilePos();
 
-        if (((MouseInputController.LeftButton.IsJustReleased) || MouseInputController.LeftButton.IsPressed && IsDrawing()) && _storage.IsFreeBetweenTiles(mouseTilePos,nearestTile) && _storage[mouseTilePos] != null && _storage[nearestTile] != null)// && entityUnderMouse == null)
+        if (((MouseInputController.LeftButton.IsJustReleased) || (MouseInputController.LeftButton.IsPressed && IsDrawing())) && _storage.IsFreeBetweenTiles(mouseTilePos, nearestTile) && _storage[mouseTilePos] != null && _storage[nearestTile] != null)
             SpawnSlimBlock(mouseTilePos, nearestTile);
+
+        else if (((MouseInputController.RightButton.IsJustReleased) || MouseInputController.RightButton.IsPressed && IsDrawing()) && !_storage.IsFreeBetweenTiles(mouseTilePos, nearestTile))
+            DeleteSlimBlock(mouseTilePos, nearestTile);
 
         _prevMouseTilePos = mouseTilePos;
     }
@@ -293,10 +287,8 @@ public class Constructor : IGameObject
             case EntityTypeEnum.Attacher:
                 if (Globals.Inventory.TryGetEntity(SelectedEntity))
                 {
-                    var attacher = new Attacher((int)tilePos.X, (int)tilePos.Y, secondTilePos - tilePos);
-                    attacher.Attach();
-                    _storage.AddSlimEntity(attacher);
-                break;
+                    var attacher = new Attacher(tilePos, secondTilePos);
+                    _storage.AddAttacher(attacher);
                 }
                 break;
             default:
@@ -344,6 +336,15 @@ public class Constructor : IGameObject
     {
         var entity = _storage[(int)tilePos.X, (int)tilePos.Y, layer];
         DeleteBlock(entity , calledFromHistory);
+    }
+
+    public void DeleteSlimBlock(Vector2 tilePos, Vector2 secondTilePos, bool calledFromHistory = false)
+    {
+        var entity = _storage[tilePos, secondTilePos];
+        //ReleaseBlock(entity);
+        //Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
+        _storage.RemoveAttacher(_storage[tilePos, secondTilePos]);
+        (entity as IEntity).Remove();
     }
 
     //public void DeleteBlock(SerializationInfo info)

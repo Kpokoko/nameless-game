@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace nameless.Code.SceneManager
     public class Storage
     {
         private TileGridEntity[][,] _entitiesArray = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight], new TileGridEntity[StorageWidth, StorageHeight] };
-        private List<Attacher> _attachers = new();
+        private Dictionary<Vector2,Attacher> _attachers = new();
         public const int StorageWidth = 23;
         public const int StorageHeight = 13;
 
@@ -34,7 +35,8 @@ namespace nameless.Code.SceneManager
 
                 if (entity is Attacher)
                 {
-                    _attachers.Add(entity as Attacher);
+                    var attacher = entity as Attacher;
+                    _attachers[attacher.BetweenTilePosition] = attacher;
                     continue;
                 }
                 _entitiesArray[layer][(int)pos.X, (int)pos.Y] = entity;
@@ -55,6 +57,23 @@ namespace nameless.Code.SceneManager
             set { _entitiesArray[layer][(int)tilePos.X, (int)tilePos.Y] = value; }
         }
 
+        public Attacher this[Vector2 tilePos, Vector2 secondTilePos]
+        {
+            get
+            {
+                //var ordered = new[] { tilePos, secondTilePos };
+                //ordered = ordered.OrderBy(x => x.Length()).ToArray(); 
+                return _attachers[(tilePos + secondTilePos) / 2]; 
+            }
+            set { AddAttacher(value); }
+        }
+
+        public Attacher this[Vector2[] orderedTiles]
+        {
+            get => _attachers[(orderedTiles[0] + orderedTiles[1]) / 2];
+            set { AddAttacher(value); }
+        }
+
         public void RemoveEntity(int x, int y, int layer = 0)
         {
             var iEntity = (IEntity)this[x, y, layer];
@@ -73,14 +92,20 @@ namespace nameless.Code.SceneManager
         }
         public void AddEntity(TileGridEntity entity, Vector2 tilePos, int layer = 0) => AddEntity(entity, (int)tilePos.X, (int)tilePos.Y, layer);
 
-        public void AddSlimEntity(Attacher attacher)
+        public void AddAttacher(Attacher attacher)
         {
-            if (!_attachers.Contains(attacher))
+            if (!_attachers.ContainsKey(attacher.BetweenTilePosition))
             {
-                _attachers.Add(attacher);
+                _attachers[attacher.BetweenTilePosition] = attacher;
                 if (!Globals.SceneManager.GetEntities().Contains(attacher))
                     Globals.SceneManager.GetEntities().Add(attacher);
             }
+        }
+
+        public void RemoveAttacher(Attacher attacher)
+        {
+            _attachers.Remove(attacher.BetweenTilePosition);
+            Globals.SceneManager.GetEntities().Remove(attacher);
         }
         public TileGridEntity[][,] GetArray()
         {
@@ -100,15 +125,54 @@ namespace nameless.Code.SceneManager
 
         public bool IsFreeBetweenTiles(Vector2 tile1, Vector2 tile2)
         {
-            var ordered = new[] { tile1, tile2 };
-            ordered = ordered.OrderBy(x => x.Length()).ToArray();
-            return (!_attachers.Any(a => a.BetweenTiles[0] == ordered[0] && a.BetweenTiles[1] == ordered[1]));
+            //var ordered = new[] { tile1, tile2 };
+            //ordered = ordered.OrderBy(x => x.Length()).ToArray();
+            return !_attachers.ContainsKey((tile1 + tile2) / 2);
         }
 
         public void UpdateAttachers()
         {
-            foreach (var attacher in _attachers)
+            foreach (var attacher in _attachers.Values)
                 attacher.Attach();
+            MeasureAttachedMovingBlocks(_attachers.Values.ToHashSet());
+        }
+
+        private void MeasureAttachedMovingBlocks(HashSet<Attacher> toInspect)
+        {
+            if (toInspect.Count == 0)
+                return;
+            var attacher = toInspect.First();
+            toInspect.Remove(attacher);
+            var toVisit = attacher.AttachedBlocks.ToList();
+            var visited = new HashSet<Block>();
+            var movingBlocks = new HashSet<Block>();
+            while (toVisit.Count > 0)
+            {
+                var block = toVisit[^1];
+                toVisit.RemoveAt(toVisit.Count-1);
+
+                if (visited.Contains(block)) 
+                    continue;
+                visited.Add(block);
+
+                if (block is Attacher)
+                    toInspect.Remove((Attacher)block);
+                else if (block is MovingPlatform)
+                    movingBlocks.Add((MovingPlatform)block);
+                
+                foreach (var at in block.AttachedBlocks)
+                    toVisit.Add(at);
+                    
+            }
+            ResolveAttachedMovement(movingBlocks);
+            MeasureAttachedMovingBlocks(toInspect);
+        }
+
+        private void ResolveAttachedMovement(HashSet<Block> movingBlocks)
+        {
+            var fastestBlock = movingBlocks.MaxBy(block => ((MovingPlatform)block).Speed);
+            foreach (var block in movingBlocks.Select(b => b as MovingPlatform).Where(b => b != fastestBlock))
+                block.Static = true;
         }
 
         public int GetLength(int dimension)

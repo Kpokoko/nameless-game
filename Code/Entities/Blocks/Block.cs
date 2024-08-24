@@ -94,6 +94,14 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
         AttachedBlocks.Add(block);
     }
 
+    public void DetachBlock(Block block)
+    {
+        if (AttachedBlocks == null)
+            return;
+        if (AttachedBlocks.Contains(block))
+            AttachedBlocks.Remove(block);
+    }
+
     public SerializationInfo Info { get; set; } = new();
 
 

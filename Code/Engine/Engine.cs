@@ -143,6 +143,13 @@ public class Engine : Game
         if (Globals.KeyboardInputController.IsJustPressed(Keys.L))
             HardReset();
 
+        if (Globals.KeyboardInputController.IsPressed(Keys.F))
+        {
+            Globals.KeyboardInputController.ProcessControls(gameTime);
+            return;
+        }
+
+
         MouseInputController.ProcessControls();
 
         Globals.AnimationManager.Update(gameTime);

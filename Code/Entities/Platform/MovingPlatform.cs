@@ -19,8 +19,12 @@ namespace nameless.Entity
         public float Speed;
         private Vector2 _previousPosition;
 
+        //private Vector2 _collisionShift;
+
         private bool Collided = false;
+        public bool Blocked = false;
         public bool Static = false;
+        private List<MovingPlatform> AttachedMovingPlatforms;
         private Storage _storage;
         public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
@@ -52,18 +56,16 @@ namespace nameless.Entity
 
         private void MoveAttachedBlocks(HashSet<Block> blocks, Vector2 vec)
         {
-            if (blocks == null)
+            if (blocks == null || vec == Vector2.Zero)
                 return;
             foreach (var block in blocks)
             {
-                if (block.Velocity.Length() < vec.Length())
+                if (block.Velocity == Vector2.Zero)
                 {
-                    block.Position -= block.Velocity;
+                    //block.Position -= block.Velocity;
 
                     block.Velocity = vec;
                     block.Position += vec;
-                    if (block is not Attacher && block.Position.Y != Position.Y)
-                        Console.WriteLine();
                     MoveAttachedBlocks(block.AttachedBlocks, vec);
                 }
             }
@@ -82,7 +84,6 @@ namespace nameless.Entity
             }
         }
 
-
         public override void UpdateConstructor()
         {
             base.UpdateConstructor();
@@ -93,18 +94,24 @@ namespace nameless.Entity
 
         public override void Update(GameTime gameTime)
         {
+            if (Static)
+                return;
+            //Position += _collisionShift;
+            //_collisionShift = Vector2.Zero;
+
             Velocity = Vector2.Zero;
-            FreezeAttachedBlocks(AttachedBlocks);
-            Static = false;
+            Blocked = false;
             if (_storage == null)
                 _storage = Globals.SceneManager.GetStorage();
             var movingTo = (Direction * Speed).NormalizedCopy();
             movingTo = new Vector2((float)Math.Round(movingTo.X),(float)Math.Round(movingTo.Y));
             if (!_storage.IsTileFree(movingTo + TilePosition) && !_storage.IsTileFree(TilePosition - movingTo))
-                Static = true;
-            if (Static)
+                Blocked = true;
+            if (Blocked)
                 return;
             
+            FreezeAttachedBlocks(AttachedBlocks);
+
             var vel = Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Position += vel;
             //if (!_attachedBlocks.Any() && Globals.SceneManager.CurrentLocation == new Vector2(3,-1) && TilePosition == new Vector2(12,4))
@@ -135,7 +142,10 @@ namespace nameless.Entity
             if (collisionsInfo.Select(i => i.Other).Any(o => o is HitboxTrigger || o is KinematicAccurateCollider))
                 return;
             TurnAround();
-            Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
+            //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
+            if (!Static)
+                Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
+
             Collided = true;
         }
 

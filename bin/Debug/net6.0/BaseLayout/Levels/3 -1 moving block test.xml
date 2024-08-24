@@ -1886,19 +1886,6 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>Pivot</TypeOfElement>
-    <TilePos>
-      <X>12</X>
-      <Y>4</Y>
-    </TilePos>
-    <TriggerType>Saver</TriggerType>
-    <Direction>
-      <X>0</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
       <X>21</X>

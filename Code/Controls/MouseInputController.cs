@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using nameless.Tiles;
 using MonoGame.Extended;
 using nameless.UI;
+using nameless.Code.SceneManager;
 
 namespace nameless.Controls;
 
@@ -67,5 +68,21 @@ public static class MouseInputController
     public static void SetOnUIState(UIElement element)
     {
         OnUIBuffer.Add(element);
+    }
+
+    public static Vector2 GetNearestTilePos()
+    {
+        var nearestTile = new Vector2(-1, -1);
+        for (int x = (int)MouseTilePos.X - 1; x <= MouseTilePos.X + 1; ++x)
+            for (int y = (int)MouseTilePos.Y - 1; y <= MouseTilePos.Y + 1; ++y)
+            {
+                var tile = new Vector2(x, y);
+                if (!Storage.IsInBounds(tile) || tile == MouseTilePos)
+                    continue;
+                if ((Tile.GetTileCenter(tile) - MouseInputController.MousePos).Length() < (Tile.GetTileCenter(nearestTile) - MouseInputController.MousePos).Length())
+                    nearestTile = tile;
+            }
+
+        return nearestTile;
     }
 }
