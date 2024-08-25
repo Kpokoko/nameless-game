@@ -39,8 +39,9 @@ namespace nameless.Code.SceneManager
                     case "EditorBlock":
                         sceneContent.Add(new EditorBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
-                    case "MovingPlatform":
-                        sceneContent.Add(new MovingPlatform((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction, data.Speed));
+                    case "MovingBlock":
+                    //case "MovingPlatform":
+                        sceneContent.Add(new MovingBlock((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction, data.Speed));
                         continue;
                     case "Platform":
                         sceneContent.Add(new Platform((int)data.TilePos.X, (int)data.TilePos.Y));

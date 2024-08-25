@@ -127,7 +127,7 @@ public class CircleController : UIElement
         var axisVectors = new List<Vector2>();
         for (int i = -1;i<2;i++) 
             for (int j = -1;j<2;j++)
-                if (!(i==0 && j==0))
+                if (!(i==0 && j==0) && (Math.Abs(i) + Math.Abs(j) == 1))
                     axisVectors.Add(new Vector2(i,j).NormalizedCopy());
         var newDir = axisVectors.MinBy(v => (dir - v).Length());
         return newDir;

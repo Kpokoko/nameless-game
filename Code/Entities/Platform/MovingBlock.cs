@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace nameless.Entity
 {
-    public class MovingPlatform : Block
+    public class MovingBlock : Block
     {
         public Vector2 Direction;
         public float Speed;
@@ -24,9 +24,9 @@ namespace nameless.Entity
         private bool Collided = false;
         public bool Blocked = false;
         public bool Static = false;
-        private List<MovingPlatform> AttachedMovingPlatforms;
+        private List<MovingBlock> AttachedMovingPlatforms;
         private Storage _storage;
-        public MovingPlatform(int x, int y, Vector2 dir, float speed) : base(x, y)
+        public MovingBlock(int x, int y, Vector2 dir, float speed) : base(x, y)
         {
             //Position = new Vector2(Position.X, Position.Y - 27);
             Direction = dir;
@@ -38,7 +38,7 @@ namespace nameless.Entity
 
             _previousPosition = Position;
         }
-        public MovingPlatform(Vector2 tilePosition, Vector2 dir, float speed) : this((int)tilePosition.X, (int)tilePosition.Y, dir, speed) { }
+        public MovingBlock(Vector2 tilePosition, Vector2 dir, float speed) : this((int)tilePosition.X, (int)tilePosition.Y, dir, speed) { }
 
 
         public void SetMovement(Vector2 dir, float speed)
@@ -94,11 +94,19 @@ namespace nameless.Entity
 
         public override void Update(GameTime gameTime)
         {
+            UpdateVisuals();
+
+            Collided = false;
             if (Static)
                 return;
             //Position += _collisionShift;
             //_collisionShift = Vector2.Zero;
 
+            UpdatePhysics(gameTime);
+        }
+
+        private void UpdatePhysics(GameTime gameTime)
+        {
             Velocity = Vector2.Zero;
             Blocked = false;
             if (_storage == null)
@@ -114,15 +122,14 @@ namespace nameless.Entity
 
             var vel = Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Position += vel;
-            //if (!_attachedBlocks.Any() && Globals.SceneManager.CurrentLocation == new Vector2(3,-1) && TilePosition == new Vector2(12,4))
-            //{
-            //    AttachBlock((Block)(Globals.SceneManager.GetStorage()[11, 4, 0]));
-            //    AttachBlock((Block)(Globals.SceneManager.GetStorage()[13, 4, 0]));
-            //}//only on test scene
             Velocity +=  Position - _previousPosition;
             MoveAttachedBlocks(AttachedBlocks, Position - _previousPosition);
-            Collided = false;
 
+            _previousPosition = Position;
+        }
+
+        public void UpdateVisuals()
+        {
             var rnd = new Random();
             var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
             for (int i = 0; i < 1; i++)
@@ -130,8 +137,6 @@ namespace nameless.Entity
                 var p = new BlendingParticle(Position, Vector2.Zero, 700, Color.DarkGoldenrod * 0.08f);//, rndVec() * 0.01f);
                 p.SetSecondColor(Color.Transparent);
             }
-
-            _previousPosition = Position;
         }
 
         public override void OnCollision(params CollisionEventArgs[] collisionsInfo)
@@ -139,12 +144,18 @@ namespace nameless.Entity
             if (Collided)
                 return;
             base.OnCollision(collisionsInfo);
-            if (collisionsInfo.Select(i => i.Other).Any(o => o is HitboxTrigger || o is KinematicAccurateCollider))
+
+            var collisionInfo = collisionsInfo[0];
+            if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
                 return;
+            if (collisionInfo.PenetrationVector.NormalizedCopy() != Direction * Speed / Math.Abs(Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
+                return;
+
             TurnAround();
             //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
             if (!Static)
-                Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
+                Position -= collisionInfo.PenetrationVector * 2;
+                //Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
 
             Collided = true;
         }
@@ -166,7 +177,7 @@ namespace nameless.Entity
             var dirVec = new Vector2(1, 0);
             //Globals.AnimationManager.PlayAnimation(Globals.AnimationManager.Animations.Keys.ToArray()[rnd.NextInt64(Globals.AnimationManager.Animations.Keys.Count-1)], Position, (float)rndSpeed);
 
-            var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
+            //var rndVec = () => new Vector2((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
             for (int i = 0; i < 50; i++)
             {
                 var p = new BlendingParticle(Position, dirVec * 2, 500, Color.Goldenrod * 0.07f);

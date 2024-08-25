@@ -33,7 +33,7 @@ public class ConstructorScene : UIScene
         var button2 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.EditorBlock);
         var button3 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Block);
         var button4 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Platform);
-        var button5 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.MovingPlatform);
+        var button5 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.MovingBlock);
         var button6 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Pivot);
         var button7 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.StickyBlock);
         var button8 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.FragileBlock);

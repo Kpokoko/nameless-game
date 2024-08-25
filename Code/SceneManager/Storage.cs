@@ -120,7 +120,7 @@ namespace nameless.Code.SceneManager
         public bool IsTileFree(Vector2 tilePos, int layer = 0)
         {
             var tile = this[tilePos, layer];
-            return tile == null || ((tile is IBreakable) && ((IBreakable)tile).Broken) || tile is MovingPlatform;
+            return tile == null || ((tile is IBreakable) && ((IBreakable)tile).Broken) || tile is MovingBlock;
         }
 
         public bool IsFreeBetweenTiles(Vector2 tile1, Vector2 tile2)
@@ -157,22 +157,30 @@ namespace nameless.Code.SceneManager
 
                 if (block is Attacher)
                     toInspect.Remove((Attacher)block);
-                else if (block is MovingPlatform)
-                    movingBlocks.Add((MovingPlatform)block);
+                else if (block is MovingBlock)
+                    movingBlocks.Add((MovingBlock)block);
                 
                 foreach (var at in block.AttachedBlocks)
                     toVisit.Add(at);
                     
             }
-            ResolveAttachedMovement(movingBlocks);
+            ResolveAttachedMovement(movingBlocks, out Block resultingBlock);
+            CheckIfBlocked(visited, resultingBlock);
+
             MeasureAttachedMovingBlocks(toInspect);
         }
 
-        private void ResolveAttachedMovement(HashSet<Block> movingBlocks)
+        private void CheckIfBlocked(HashSet<Block> attachedSection, Block movingBlock)
         {
-            var fastestBlock = movingBlocks.MaxBy(block => ((MovingPlatform)block).Speed);
-            foreach (var block in movingBlocks.Select(b => b as MovingPlatform).Where(b => b != fastestBlock))
+            
+        }
+
+        private void ResolveAttachedMovement(HashSet<Block> movingBlocks, out Block resultingBlock)
+        {
+            var fastestBlock = movingBlocks.MaxBy(block => ((MovingBlock)block).Speed);
+            foreach (var block in movingBlocks.Select(b => b as MovingBlock).Where(b => b != (MovingBlock)fastestBlock))
                 block.Static = true;
+            resultingBlock = fastestBlock;
         }
 
         public int GetLength(int dimension)

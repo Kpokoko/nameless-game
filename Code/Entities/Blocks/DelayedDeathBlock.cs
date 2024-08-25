@@ -16,7 +16,7 @@ public class DelayedDeathBlock : Block
     {
         _timer = new TimerTrigger(500, GameObjects.SignalProperty.Once);
         var trigger = new HitboxTrigger(this, 65, 65, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.Continuous);
-        trigger.SetTriggerEntityTypes(typeof(PlayerModel), typeof(MovingPlatform));
+        trigger.SetTriggerEntityTypes(typeof(PlayerModel), typeof(MovingBlock));
         _timer.OnTimeoutEvent += () => { _isBlockAggressive = true; };
         trigger.OnCollisionEvent += () =>
         {

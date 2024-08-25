@@ -178,8 +178,8 @@ namespace nameless.Code.Constructors
                 case EntityTypeEnum.Platform:
                     _storage.AddEntity(new Platform(tilePos), tilePos, Layer);
                     break;
-                case EntityTypeEnum.MovingPlatform:
-                    var mp = new MovingPlatform((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 1);
+                case EntityTypeEnum.MovingBlock:
+                    var mp = new MovingBlock((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 1);
                     EditMovingPlatform(mp);
                     _storage.AddEntity(mp, tilePos, Layer);
                     break;
@@ -201,7 +201,7 @@ namespace nameless.Code.Constructors
             }
         }
 
-        private void EditMovingPlatform(MovingPlatform platform)
+        private void EditMovingPlatform(MovingBlock platform)
         {
             var circle = new CircleController(platform.Position);
             circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f);

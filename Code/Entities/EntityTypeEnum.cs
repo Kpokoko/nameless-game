@@ -20,7 +20,7 @@ public enum EntityTypeEnum
     EditorBlock,
     Pivot,
     Platform,
-    MovingPlatform,
+    MovingBlock,
     FragileBlock,
     TemporaryBlock,
     DelayedDeathBlock,

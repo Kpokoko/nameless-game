@@ -16,7 +16,7 @@ namespace nameless.Entity
         public FragileBlock(int x, int y) : base(x, y)
         {
             var trigger = new HitboxTrigger(this, 65, 65, ReactOnProperty.ReactOnEntityType, Collisions.SignalProperty.OnceOnEveryContact);
-            trigger.SetTriggerEntityTypes(typeof(PlayerModel), typeof(MovingPlatform));
+            trigger.SetTriggerEntityTypes(typeof(PlayerModel), typeof(MovingBlock));
             trigger.OnCollisionExitEvent += () =>
             { TimerTrigger.DelayEvent(300, () => { if (!trigger.isActivated) Break();});
             };

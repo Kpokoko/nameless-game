@@ -59,7 +59,7 @@ namespace nameless.Code.SceneManager
                         if (!Globals.IsConstructorModeEnabled)
                             entity.Update(gameTime);
                         continue;
-                    case MovingPlatform:
+                    case MovingBlock:
                         if (!Globals.IsConstructorModeEnabled)
                             entity.Update(gameTime);
                         continue;

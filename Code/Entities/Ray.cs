@@ -29,7 +29,7 @@ public class Ray : Pivot
         _height = height;
         var trigger = HitboxTrigger.CreateDamagePlayerTrigger(this, width, height);
         var hitbox = new HitboxTrigger(this, width, height, ReactOnProperty.ReactOnEntityType, SignalProperty.Continuous);
-        hitbox.SetTriggerEntityTypes(typeof(MovingPlatform));
+        hitbox.SetTriggerEntityTypes(typeof(MovingBlock));
         hitbox.OnCollisionEvent += () => RemoveRay();
         Colliders.Add(trigger);
         Colliders.Add(hitbox);
