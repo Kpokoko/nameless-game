@@ -21,7 +21,7 @@ namespace nameless.Entity
 
         //private Vector2 _collisionShift;
 
-        private bool Collided = false;
+        public bool Collided = false;
         public bool Blocked = false;
         public bool Static = false;
         private List<MovingBlock> AttachedMovingPlatforms;
@@ -96,6 +96,8 @@ namespace nameless.Entity
         {
             UpdateVisuals();
 
+            if (Collided)
+                TurnAround();
             Collided = false;
             if (Static)
                 return;
@@ -151,8 +153,7 @@ namespace nameless.Entity
             if (collisionInfo.PenetrationVector.NormalizedCopy() != Direction * Speed / Math.Abs(Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
                 return;
 
-            TurnAround();
-            //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
+                        //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
             if (!Static)
                 Position -= collisionInfo.PenetrationVector * 2;
                 //Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;

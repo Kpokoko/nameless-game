@@ -15,6 +15,9 @@ namespace nameless.Code.SceneManager
     {
         private TileGridEntity[][,] _entitiesArray = new[] { new TileGridEntity[StorageWidth, StorageHeight] , new TileGridEntity[StorageWidth, StorageHeight], new TileGridEntity[StorageWidth, StorageHeight] };
         private Dictionary<Vector2,Attacher> _attachers = new();
+
+        public Dictionary<Block, MovingBlock> AttachedMovers = new();
+
         public const int StorageWidth = 23;
         public const int StorageHeight = 13;
 
@@ -165,14 +168,33 @@ namespace nameless.Code.SceneManager
                     
             }
             ResolveAttachedMovement(movingBlocks, out Block resultingBlock);
-            CheckIfBlocked(visited, resultingBlock);
+            if (IsBlocked(visited, resultingBlock))
+                (resultingBlock as MovingBlock).Static = true;
+
+            if (resultingBlock != null)
+                foreach (var groupBlock in visited)
+                    AttachedMovers[groupBlock] = (MovingBlock)resultingBlock;
 
             MeasureAttachedMovingBlocks(toInspect);
         }
 
-        private void CheckIfBlocked(HashSet<Block> attachedSection, Block movingBlock)
+        private bool IsBlocked(HashSet<Block> attachedBlocks, Block movingBlock)
         {
-            
+            var dir = (movingBlock as MovingBlock).Direction;
+            bool forward = false; 
+            bool backward = false;
+            foreach (var block in attachedBlocks)
+            {
+                var fBlock = (this[block.TilePosition + dir]);
+                var bBlock = this[block.TilePosition - dir];
+                if (fBlock != null && !attachedBlocks.Contains(fBlock))
+                    forward = true;
+                if (bBlock != null && !attachedBlocks.Contains(bBlock))
+                    backward = true;
+                if (forward && backward)
+                    break;
+            }
+            return forward && backward;
         }
 
         private void ResolveAttachedMovement(HashSet<Block> movingBlocks, out Block resultingBlock)
@@ -180,6 +202,7 @@ namespace nameless.Code.SceneManager
             var fastestBlock = movingBlocks.MaxBy(block => ((MovingBlock)block).Speed);
             foreach (var block in movingBlocks.Select(b => b as MovingBlock).Where(b => b != (MovingBlock)fastestBlock))
                 block.Static = true;
+            (fastestBlock as MovingBlock).Static = false;
             resultingBlock = fastestBlock;
         }
 

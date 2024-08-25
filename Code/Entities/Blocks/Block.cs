@@ -12,6 +12,7 @@ using nameless.Collisions;
 using nameless.Interfaces;
 using nameless.Tiles;
 using System.Runtime.CompilerServices;
+using MonoGame.Extended;
 
 namespace nameless.Entity;
 
@@ -64,7 +65,19 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
     { }
 
     public virtual void OnCollision(params CollisionEventArgs[] collisionsInfo)
-    { }
+    {
+        if (AttachedBlocks == null || !Globals.SceneManager.GetStorage().AttachedMovers.ContainsKey(this))
+            return;
+
+        var movingBlock = Globals.SceneManager.GetStorage().AttachedMovers[this];
+        var collisionInfo = collisionsInfo[0];
+        if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
+            return;
+        if (collisionInfo.PenetrationVector.NormalizedCopy() != movingBlock.Direction * movingBlock.Speed / Math.Abs(movingBlock.Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
+            return;
+
+        movingBlock.Collided = true;
+    }
 
     public SceneChangerDirection GetBlockDirection(List<IEntity> sceneContent)
     {
