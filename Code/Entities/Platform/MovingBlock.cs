@@ -19,7 +19,7 @@ namespace nameless.Entity
         public float Speed;
         private Vector2 _previousPosition;
 
-        //private Vector2 _collisionShift;
+        public Vector2 CollisionShift;
 
         public bool Collided = false;
         public bool Blocked = false;
@@ -101,8 +101,8 @@ namespace nameless.Entity
             Collided = false;
             if (Static)
                 return;
-            //Position += _collisionShift;
-            //_collisionShift = Vector2.Zero;
+            Position += CollisionShift;
+            CollisionShift = Vector2.Zero;
 
             UpdatePhysics(gameTime);
         }
@@ -110,16 +110,10 @@ namespace nameless.Entity
         private void UpdatePhysics(GameTime gameTime)
         {
             Velocity = Vector2.Zero;
-            Blocked = false;
-            if (_storage == null)
-                _storage = Globals.SceneManager.GetStorage();
-            var movingTo = (Direction * Speed).NormalizedCopy();
-            movingTo = new Vector2((float)Math.Round(movingTo.X),(float)Math.Round(movingTo.Y));
-            if (!_storage.IsTileFree(movingTo + TilePosition) && !_storage.IsTileFree(TilePosition - movingTo))
-                Blocked = true;
+
             if (Blocked)
                 return;
-            
+                       
             FreezeAttachedBlocks(AttachedBlocks);
 
             var vel = Direction * Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -141,11 +135,24 @@ namespace nameless.Entity
             }
         }
 
+        public void IsBlocked()
+        {
+            Blocked = false;
+            if (_storage == null)
+                _storage = Globals.SceneManager.GetStorage();
+            var movingTo = (Direction * Speed).NormalizedCopy();
+            movingTo = new Vector2((float)Math.Round(movingTo.X),(float)Math.Round(movingTo.Y));
+            if (!_storage.IsTileFree(movingTo + TilePosition) && !_storage.IsTileFree(TilePosition - movingTo))
+                Blocked = true;
+        }
+
         public override void OnCollision(params CollisionEventArgs[] collisionsInfo)
         {
+            base.OnCollision(collisionsInfo);
+            if (Static)
+                return;
             if (Collided)
                 return;
-            base.OnCollision(collisionsInfo);
 
             var collisionInfo = collisionsInfo[0];
             if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
@@ -153,9 +160,10 @@ namespace nameless.Entity
             if (collisionInfo.PenetrationVector.NormalizedCopy() != Direction * Speed / Math.Abs(Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
                 return;
 
-                        //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
-            if (!Static)
-                Position -= collisionInfo.PenetrationVector * 2;
+            //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
+            CollisionShift -= collisionInfo.PenetrationVector * 2;
+            //if (!Static)
+            //    Position -= collisionInfo.PenetrationVector * 2;
                 //Position -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
 
             Collided = true;

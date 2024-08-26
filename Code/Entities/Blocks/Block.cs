@@ -70,6 +70,9 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
             return;
 
         var movingBlock = Globals.SceneManager.GetStorage().AttachedMovers[this];
+        if (movingBlock.Collided)
+            return;
+
         var collisionInfo = collisionsInfo[0];
         if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
             return;
@@ -77,6 +80,7 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
             return;
 
         movingBlock.Collided = true;
+        movingBlock.CollisionShift -= collisionInfo.PenetrationVector * 2;
     }
 
     public SceneChangerDirection GetBlockDirection(List<IEntity> sceneContent)

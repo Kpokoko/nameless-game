@@ -17,6 +17,7 @@ namespace nameless.Code.SceneManager
         private Dictionary<Vector2,Attacher> _attachers = new();
 
         public Dictionary<Block, MovingBlock> AttachedMovers = new();
+        private Dictionary<MovingBlock, HashSet<Block>> AttachedToMover = new();
 
         public const int StorageWidth = 23;
         public const int StorageHeight = 13;
@@ -168,33 +169,49 @@ namespace nameless.Code.SceneManager
                     
             }
             ResolveAttachedMovement(movingBlocks, out Block resultingBlock);
-            if (IsBlocked(visited, resultingBlock))
-                (resultingBlock as MovingBlock).Static = true;
+            //CheckIfBlocked(visited, resultingBlock);
 
             if (resultingBlock != null)
+            {
+                AttachedToMover[(MovingBlock)resultingBlock] = visited; 
                 foreach (var groupBlock in visited)
                     AttachedMovers[groupBlock] = (MovingBlock)resultingBlock;
-
+            }
             MeasureAttachedMovingBlocks(toInspect);
         }
 
-        private bool IsBlocked(HashSet<Block> attachedBlocks, Block movingBlock)
+        public void UpdateMovingBlocksState()
+        {
+            foreach (var moving in Globals.SceneManager.GetEntities()
+                .Where(e => e is MovingBlock && (e as Block).AttachedBlocks == null)
+                .Select(e => e as MovingBlock))
+                moving.IsBlocked();
+            foreach (var group in AttachedToMover)
+            {
+                CheckIfBlocked(group.Value, group.Key);
+            }
+        }
+
+        private void CheckIfBlocked(HashSet<Block> attachedBlocks, Block movingBlock)
         {
             var dir = (movingBlock as MovingBlock).Direction;
             bool forward = false; 
             bool backward = false;
             foreach (var block in attachedBlocks)
             {
-                var fBlock = (this[block.TilePosition + dir]);
-                var bBlock = this[block.TilePosition - dir];
-                if (fBlock != null && !attachedBlocks.Contains(fBlock))
+                var fBlock = block.TilePosition + dir;
+                var bBlock = block.TilePosition - dir;
+                if (!IsTileFree(fBlock) && !attachedBlocks.Contains(this[fBlock]))
                     forward = true;
-                if (bBlock != null && !attachedBlocks.Contains(bBlock))
+                if (!IsTileFree(bBlock) && !attachedBlocks.Contains(this[bBlock]))
                     backward = true;
                 if (forward && backward)
                     break;
             }
-            return forward && backward;
+            if (forward && backward)
+                (movingBlock as MovingBlock).Static = true;
+            else 
+                (movingBlock as MovingBlock).Static = false;
         }
 
         private void ResolveAttachedMovement(HashSet<Block> movingBlocks, out Block resultingBlock)
@@ -202,7 +219,7 @@ namespace nameless.Code.SceneManager
             var fastestBlock = movingBlocks.MaxBy(block => ((MovingBlock)block).Speed);
             foreach (var block in movingBlocks.Select(b => b as MovingBlock).Where(b => b != (MovingBlock)fastestBlock))
                 block.Static = true;
-            (fastestBlock as MovingBlock).Static = false;
+            //(fastestBlock as MovingBlock).Static = false;
             resultingBlock = fastestBlock;
         }
 

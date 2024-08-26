@@ -59,8 +59,9 @@ public class Constructor : IGameObject
         else
         {
             Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
-           // Globals.UIManager.HideMap();
-           _storage.UpdateAttachers();
+            // Globals.UIManager.HideMap();
+            _storage.UpdateAttachers();
+            _storage.UpdateMovingBlocksState();
             var serializer = new Serializer();
             serializer.SerializeScene(Globals.SceneManager.GetName(), Globals.SceneManager.GetEntities().Select(x => x as ISerializable).ToList());
             serializer.SaveInventory(Globals.Inventory.GetInventory());

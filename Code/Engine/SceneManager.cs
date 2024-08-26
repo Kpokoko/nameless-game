@@ -53,6 +53,7 @@ public class SceneManager
         Globals.Engine.LoadCollisions();
         _currentScene = new Scene(sceneName);
         _currentScene.Storage.UpdateAttachers();
+        _currentScene.Storage.UpdateMovingBlocksState();
         if (entryData != null)
         {
             Globals.CanActivateSave = true;
