@@ -157,8 +157,11 @@ namespace nameless.Entity
             var collisionInfo = collisionsInfo[0];
             if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
                 return;
-            if (collisionInfo.PenetrationVector.NormalizedCopy() != Direction * Speed / Math.Abs(Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
+            //if (collisionInfo.PenetrationVector.NormalizedCopy() != Direction * Speed / Math.Abs(Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
+            //    return;
+            if (Collider.PenetrationVectorToSide(collisionInfo.PenetrationVector) != Collider.PenetrationVectorToSide(Direction * Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
                 return;
+
 
             //_collisionShift -= collisionsInfo.MaxBy(i => i.PenetrationVector.Length()).PenetrationVector * 2;
             CollisionShift -= collisionInfo.PenetrationVector * 2;

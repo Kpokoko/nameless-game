@@ -73,6 +73,10 @@ public class KinematicAccurateCollider : DynamicCollider
                 return collisionsInfo;
             return GetRealCollision(collisionsInfo);
         }
+        if (collisionsInfo.Where(i => !i.OtherIsDynamic).Count() == 2)
+        {
+            return GetRealDynamicCollision(collisionsInfo);
+        }
         return collisionsInfo;
     }
 
@@ -96,8 +100,39 @@ public class KinematicAccurateCollider : DynamicCollider
         return collisionsInfo;
     }
 
+    private MyCollisionEventArgs[] GetRealDynamicCollision(MyCollisionEventArgs[] collisionsInfo)
+    {
+        var actualPosition = Bounds.Position;
+        var dynamicCollisionInfo = collisionsInfo.Where(i => i.OtherIsDynamic).ToArray();
+        var staticCollisionsInfo = collisionsInfo.Where(i => !i.OtherIsDynamic).ToArray();
+        for (var i = 0; i < staticCollisionsInfo.Length; i++)
+        {
+            ClearBuffer();
+            var collisionInfo = staticCollisionsInfo[i];
+            Bounds.Position = actualPosition - collisionInfo.PenetrationVector;
+            Globals.CollisionManager.CollisionComponent.Update(Globals.GameTime);
+
+            if (collisionInfoBuffer.Where(i => !i.OtherIsDynamic).Count() == 0)
+            {
+                Bounds.Position = actualPosition;
+                return (new[] { staticCollisionsInfo[i] }.Concat(dynamicCollisionInfo)).ToArray();
+            }
+        }
+        Bounds.Position = actualPosition;
+        return collisionsInfo;
+    }
+
+
     public virtual void OnCollision(MyCollisionEventArgs[] collisionsInfo) 
     {
+        if (collisionsInfo.Any(i => i.OtherIsDynamic)) 
+        {
+            collisionsInfo = collisionsInfo
+                .Where(i => !(i.OtherIsDynamic && i.CollisionSide == Side.Top && Globals.SceneManager.GetStorage().AttachedMovers.ContainsKey((i.Other as Collider).Entity as Block) && Globals.SceneManager.GetStorage().AttachedMovers[(i.Other as Collider).Entity as Block].Collided))
+                .ToArray();
+            if (collisionsInfo.Length == 0)
+                return;
+        }
         var penetrationVector = collisionsInfo.Select(collisionInfo => collisionInfo.PenetrationVector).Aggregate((a, b) => a + b);
         var Position = Entity.GetType().GetProperty("Position");
         Position.SetValue(Entity, (Vector2)Position.GetValue(Entity) - penetrationVector);

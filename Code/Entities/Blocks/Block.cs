@@ -74,9 +74,13 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
             return;
 
         var collisionInfo = collisionsInfo[0];
+
+
         if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
             return;
-        if (collisionInfo.PenetrationVector.NormalizedCopy() != movingBlock.Direction * movingBlock.Speed / Math.Abs(movingBlock.Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
+        //if (collisionInfo.PenetrationVector.NormalizedCopy() != movingBlock.Direction * movingBlock.Speed / Math.Abs(movingBlock.Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
+        //    return;
+        if (Collider.PenetrationVectorToSide(collisionInfo.PenetrationVector) != Collider.PenetrationVectorToSide(movingBlock.Direction * movingBlock.Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
             return;
 
         movingBlock.Collided = true;

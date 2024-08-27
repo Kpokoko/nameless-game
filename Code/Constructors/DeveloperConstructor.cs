@@ -27,7 +27,13 @@ namespace nameless.Code.Constructors
 
             _groupInteraction = IsDeveloperGroupInteraction();
 
-            if ((MouseInputController.LeftButton.IsPressed && IsDrawingRectangle()))
+
+            if (SelectedEntityType.IsSubclassOf(typeof(SlimBlock)))
+            {
+
+            }
+
+            else if ((MouseInputController.LeftButton.IsPressed && IsDrawingRectangle()))
                 DrawRectangle(mouseTilePos);
 
             else if ((MouseInputController.RightButton.IsPressed && IsDrawingRectangle()))
@@ -204,7 +210,7 @@ namespace nameless.Code.Constructors
         private void EditMovingPlatform(MovingBlock platform)
         {
             var circle = new CircleController(platform.Position);
-            circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f);
+            circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
             circle.OnDirectionSet += () =>
                 platform.SetMovement(circle.Vector, circle.Vector.Length() * 10);
         }

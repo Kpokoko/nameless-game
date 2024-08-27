@@ -236,7 +236,7 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
             var platform = (IKinematic)(((Collider)collisionInfo.Other).Entity);
             if (collisionSide is Side.Bottom)
                 Actions.Add(() => Pull(platform.Velocity));
-            else
+            else if (!((collisionSide == Side.Left || collisionSide == Side.Right) && platform.Velocity.X == 0))
                 Actions.Add(() => Push(platform.Velocity));
         }
     }
@@ -255,24 +255,12 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
 
     private void IsOppositeSides(MyCollisionEventArgs[] collisionsInfo)
     {
-        var sides = collisionsInfo.Select(i => i.CollisionSide);
+        var sides = collisionsInfo
+            .Select(i => i.CollisionSide);
         if ((sides.Contains(Side.Top) && sides.Contains(Side.Bottom)))
             Actions.Add(Death);
         if ((sides.Contains(Side.Right) && sides.Contains(Side.Left)))
             Actions.Add(Death);
-        //if (sides.Contains(Side.Left))
-        //{
-        //    if (PreviousCollisionSide != null && (Side)PreviousCollisionSide == Side.Right)
-        //        Globals.Engine.Restart();
-        //    PreviousCollisionSide = Side.Left;
-        //}
-
-        //if (sides.Contains(Side.Right))
-        //{
-        //    if (PreviousCollisionSide != null && (Side)PreviousCollisionSide == Side.Left)
-        //        Globals.Engine.Restart();
-        //    PreviousCollisionSide = Side.Right;
-        //}
     }
 
     public void Pull(Vector2 force)
