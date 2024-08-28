@@ -299,24 +299,31 @@ public class Constructor : IGameObject
         if (!calledFromHistory)
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            var layer = Layer;
-            newEvent.Action = () => DeleteBlock(tilePos, layer, true);
+            newEvent.Action = () => DeleteSlimBlock(tilePos , secondTilePos, true);
             _history.Push(newEvent);
         }
-        else
+        else 
         {
             var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
-            var layer = Layer;
-            newEvent.Action = () => DeleteBlock(tilePos, layer);
+            newEvent.Action = () => DeleteSlimBlock(tilePos, secondTilePos);
             _redoHistory.Push(newEvent);
         }
     }
 
+    public virtual void SpawnSlimBlock(SerializationInfo info, bool calledFromHistory = false)
+    {
+        SelectedEntity = EntityType.TranslateEntityEnumAndString(info.TypeOfElement);
+        SpawnSlimBlock(info.TilePos, info.TilePos + info.Direction, calledFromHistory);
+    }
+
+
     public void DeleteBlock(TileGridEntity entity, bool calledFromHistory = false)
     {
+        if (entity == null)
+            return;
         ReleaseBlock(entity);
         Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
-        _storage.RemoveEntity(entity.TilePosition, Layer);
+        _storage.RemoveEntity(entity.TilePosition, entity.Layer);//dont forget to hardcode layer to block
         (entity as IEntity).Remove();
 
         if (!calledFromHistory)
@@ -346,6 +353,20 @@ public class Constructor : IGameObject
         //Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _storage.RemoveAttacher(_storage[tilePos, secondTilePos]);
         (entity as IEntity).Remove();
+
+        if (!calledFromHistory)
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => SpawnSlimBlock((entity as Block).Info.Clone(), true);
+            _history.Push(newEvent);
+        }
+        else
+        {
+            var newEvent = new HistoryEventInfo(_groupInteraction ? HistoryEventType.Group : HistoryEventType.Solo);
+            newEvent.Action = () => SpawnSlimBlock((entity as Block).Info.Clone());
+            _redoHistory.Push(newEvent);
+        }
+
     }
 
     //public void DeleteBlock(SerializationInfo info)
@@ -421,7 +442,7 @@ public class Constructor : IGameObject
 
     protected bool IsGroupInteraction()
     {
-        if ((IsDrawing() || IsMoving() || IsSelecting()) && MouseInputController.IsPressed)//EVERY FRAME&!&!&!&
+        if ((IsDrawing() || IsMoving() || IsSelecting()) && MouseInputController.IsJustPressed)//EVERY FRAME&!&!&!&
             _history.Push(new HistoryEventInfo(HistoryEventType.Separator));
         return (IsDrawing() || IsMoving() || IsSelecting()) && MouseInputController.IsPressed;
     }

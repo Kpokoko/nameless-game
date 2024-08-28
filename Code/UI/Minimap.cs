@@ -82,8 +82,7 @@ public class Minimap : UIElement
         
         if (!Hovered || MouseInputController.OnUIElement)
         {
-            if (_label != null)
-                HideLabel();
+            HideLabel();
             return;
         }
         ShowLabel();
@@ -94,13 +93,16 @@ public class Minimap : UIElement
             
     }
 
-    private void HideLabel()
+    public void HideLabel()
     {
+
+        if (_label == null)
+            return;
         _label.Remove();
         _label = null;
     }
 
-    private void ShowLabel()
+    public void ShowLabel()
     {
         if (_label != null)
             return;

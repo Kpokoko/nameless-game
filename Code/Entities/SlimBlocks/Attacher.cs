@@ -11,6 +11,7 @@ public class Attacher : SlimBlock
 {
     public Attacher(int x, int y, Vector2 dir) : base(x, y, dir)
     {
+        Layer = 2;
         Colliders.RemoveAll();
 
         Colliders.Add(new Collisions.Collider(this, 20, 20));

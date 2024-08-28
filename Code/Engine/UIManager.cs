@@ -135,7 +135,12 @@ public class UIManager
     public void SwitchMinimap()
     {
         if (_mapIsActive)
+        {
+            foreach (var map in Minimaps)
+                map.HideLabel();
+
             HideMap();
+        }
         else
             ShowMap();
     }
