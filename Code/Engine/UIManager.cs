@@ -95,7 +95,10 @@ public class UIManager
             case UIScenes.ConstructorScene:
                 CurrentUIScenes[scene] = new ConstructorScene();
                 break;
-            default:
+             case UIScenes.InventoryScene:
+                CurrentUIScenes[scene] = new InventoryScene();
+                break;
+           default:
                 throw new ArgumentException("Scene not implemented");
         }
     }

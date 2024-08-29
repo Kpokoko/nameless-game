@@ -82,6 +82,17 @@ public class KeyboardInputController
             Globals.UIManager.SwitchMinimap();
         }
 
+        if (Globals.KeyboardInputController.IsJustPressed(Keys.I))
+        {
+            if (!Globals.UIManager.CurrentUIScenes.ContainsKey(UI.UIScenes.InventoryScene))
+                Globals.UIManager.SetScene(UI.UIScenes.InventoryScene);
+        }
+        else if (Globals.KeyboardInputController.IsJustReleased(Keys.I))
+        {
+            if (!Globals.IsConstructorModeEnabled)
+                Globals.UIManager.RemoveScene(UI.UIScenes.InventoryScene);
+        } 
+
         if (Keyboard.GetState().IsKeyDown(Keys.U) && !PreviousKeyboardState.IsKeyDown(Keys.U))
         {
             Globals.Constructor.Undo();

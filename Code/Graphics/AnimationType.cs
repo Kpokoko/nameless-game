@@ -36,4 +36,6 @@ public enum AnimationType
 
     Up,
     Down,
+
+    Slime
 }

@@ -20,6 +20,7 @@ namespace nameless.Engine
             if (_inventory[entity] > 0)
             {
                 _inventory[entity]--;
+                OnCountUpdate();
                 return true;
             }
             return false;
@@ -31,6 +32,16 @@ namespace nameless.Engine
             if (!_inventory.ContainsKey(entity))
                 _inventory.Add(entity, 0);
             _inventory[entity]++;
+            OnCountUpdate();
+        }
+
+        private void OnCountUpdate()
+        {
+            if (Globals.UIManager.CurrentUIScenes.ContainsKey(UI.UIScenes.InventoryScene))
+            {
+                Globals.UIManager.RemoveScene(UI.UIScenes.InventoryScene);
+                Globals.UIManager.SetScene(UI.UIScenes.InventoryScene);
+            }
         }
 
         public Dictionary<EntityTypeEnum, int> GetInventory() { return _inventory; }

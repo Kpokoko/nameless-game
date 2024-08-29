@@ -86,7 +86,7 @@ public class Minimap : UIElement
             return;
         }
         ShowLabel();
-        if (MouseInputController.LeftButton.IsJustPressed && Location != Globals.SceneManager.CurrentLocation)
+        if (Globals.IsDeveloperModeEnabled && MouseInputController.LeftButton.IsJustPressed && Location != Globals.SceneManager.CurrentLocation)
         {
             Globals.SceneManager.LoadScene(Location);
         }

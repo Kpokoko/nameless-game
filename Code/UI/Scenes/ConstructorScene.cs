@@ -21,7 +21,6 @@ public class ConstructorScene : UIScene
 
     public ConstructorScene()
     {
-        var zoom = Globals.Camera.Zoom;
         Name = UIScenes.ConstructorScene;
 
         var spawnContainer = new Container(_spawnContainerPos, (300), (600), FlexDirection.Vertical, Vector2.Zero);

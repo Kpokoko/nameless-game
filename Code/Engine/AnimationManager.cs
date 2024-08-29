@@ -55,20 +55,21 @@ public class AnimationManager
 
     public void Initialize()
     {
-        var spriteSheet = ResourceManager.SpriteSheet2;
-        var sprites = new SpriteSheet(spriteSheet, 44, 52);
+        var spriteSheet = ResourceManager.SpriteSlime;
+        var sprites = new SpriteSheet(spriteSheet, 96, 96);
 
         var right = sprites[0, 0];
-        var left = sprites[1, 0];
+        var cent = sprites[1, 0];
+        var left = sprites[2, 0];
 
-        var jumpRight = new SpriteAnimation();
-        jumpRight.AddFrame(sprites[0, 1], 0.08f);
-        jumpRight.AddFrame(sprites[1, 1], 0.12f);
-        jumpRight.AddFrame(sprites[2, 1], 0.18f);
-        jumpRight.AddFrame(sprites[3, 1], 0.26f);
-        jumpRight.AddFrame(sprites[2, 1], 0.32f);
+        var slime = new SpriteAnimation();
+        slime.AddFrame(sprites[0, 0], 0.08f);
+        slime.AddFrame(sprites[1, 0], 0.12f);
+        slime.AddFrame(sprites[2, 0], 0.18f);
+        slime.AddFrame(sprites[1, 0], 0.26f);
+        slime.AddFrame(sprites[0, 0], 0.32f);
 
-        //Animations[AnimationType.JumpRight] = jumpRight;
+        Animations[AnimationType.Slime] = slime;
     }
 
     public void PlayAnimation(AnimationType animationType, Vector2 position, float speed = 1)

@@ -52,6 +52,7 @@ public class Constructor : IGameObject
             Globals.SceneManager.LoadScene(Globals.SceneManager.CurrentLocation);
             Globals.SceneManager.GetPlayer().Position = playerPos;
             Globals.UIManager.SetScene(UIScenes.ConstructorScene);
+            Globals.UIManager.SetScene(UIScenes.InventoryScene);
             //Globals.UIManager.ShowMap();
             //Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]
             //    .AddElements(new Minimap(new Vector2(1600, 300 + 220), 0, 0, _storage, Alignment.Center));
@@ -59,6 +60,7 @@ public class Constructor : IGameObject
         else
         {
             Globals.UIManager.RemoveScene(UIScenes.ConstructorScene);
+            Globals.UIManager.RemoveScene(UIScenes.InventoryScene);
             // Globals.UIManager.HideMap();
             _storage.UpdateAttachers();
             _storage.UpdateMovingBlocksState();
@@ -350,7 +352,7 @@ public class Constructor : IGameObject
     {
         var entity = _storage[tilePos, secondTilePos];
         //ReleaseBlock(entity);
-        //Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
+        Globals.Inventory.AddEntity(EntityType.TranslateEntityEnumAndType(entity.GetType()));
         _storage.RemoveAttacher(_storage[tilePos, secondTilePos]);
         (entity as IEntity).Remove();
 

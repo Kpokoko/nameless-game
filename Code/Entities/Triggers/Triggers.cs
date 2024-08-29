@@ -60,6 +60,7 @@ public partial class HitboxTrigger
             //pivot.PrepareSerializationInfo();
             Globals.LastVisitedCheckpoint = triggerInfo;
             Globals.Serializer.WriteSaveSpot();
+            Globals.Serializer.SavePosition(Globals.SceneManager.CurrentLocation);
         };
         trigger.Color = Color.PaleTurquoise * 0.3f;
         return trigger;

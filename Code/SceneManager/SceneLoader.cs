@@ -99,7 +99,8 @@ namespace nameless.Code.SceneManager
             SaveScene();
             var currLoc = Globals.SceneManager.CurrentLocation;
             var newLoc = new Vector2(trigger.DestinationScene.X + currLoc.X, trigger.DestinationScene.Y + currLoc.Y);
-            Globals.Serializer.SavePosition(newLoc);
+            if (Globals.IsDeveloperModeEnabled)
+                Globals.Serializer.SavePosition(newLoc);
             Globals.SceneManager.LoadScene(newLoc, new EntryData(direction, playerPosition()));
             Globals.SceneManager.SaveScene();
             var data = Globals.Serializer.ReadVisitedScenes();

@@ -17,6 +17,7 @@ public static class ResourceManager
     public static Texture2D SpriteSheet;
     public static Texture2D SpriteSheet2;
     public static Texture2D SpriteParticle;
+    public static Texture2D SpriteSlime;
 
     public static SoundEffect SoundDeath;
     public static SoundEffect SoundClick;
@@ -28,6 +29,7 @@ public static class ResourceManager
         SpriteSheet = content.Load<Texture2D>("Sprites/TrexSpritesheet");
         SpriteSheet2 = content.Load<Texture2D>("Sprites/PlayerSpritesheet");
         SpriteParticle = content.Load<Texture2D>("Sprites/Smoke");
+        SpriteSlime = content.Load<Texture2D>("Sprites/slime_split");
 
         SoundDeath = content.Load<SoundEffect>("Sounds/DeathSound");
         SoundClick = content.Load<SoundEffect>("Sounds/Click");

@@ -1405,19 +1405,6 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>12</X>
-      <Y>7</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>1</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
     <TilePos>
       <X>16</X>
@@ -1442,19 +1429,6 @@
       <Y>0</Y>
     </Direction>
     <Speed>0</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>13</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>1</Speed>
   </SerializationInfo>
   <SerializationInfo>
     <TypeOfElement>Block</TypeOfElement>
@@ -1613,19 +1587,6 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
-    <TypeOfElement>MovingPlatform</TypeOfElement>
-    <TilePos>
-      <X>9</X>
-      <Y>9</Y>
-    </TilePos>
-    <TriggerType>None</TriggerType>
-    <Direction>
-      <X>-1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>2.5</Speed>
-  </SerializationInfo>
-  <SerializationInfo>
     <TypeOfElement>RayCaster</TypeOfElement>
     <TilePos>
       <X>8</X>
@@ -1678,6 +1639,19 @@
     <Speed>0</Speed>
   </SerializationInfo>
   <SerializationInfo>
+    <TypeOfElement>MovingBlock</TypeOfElement>
+    <TilePos>
+      <X>9</X>
+      <Y>9</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>-1</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>2.5</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
     <TypeOfElement>Pivot</TypeOfElement>
     <TilePos>
       <X>0</X>
@@ -1693,7 +1667,7 @@
   <SerializationInfo>
     <TypeOfElement>PlayerModel</TypeOfElement>
     <TilePos>
-      <X>21</X>
+      <X>1</X>
       <Y>11</Y>
     </TilePos>
     <TriggerType>None</TriggerType>
@@ -1702,5 +1676,31 @@
       <Y>0</Y>
     </Direction>
     <Speed>0</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>MovingBlock</TypeOfElement>
+    <TilePos>
+      <X>13</X>
+      <Y>9</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>-1</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>2.5</Speed>
+  </SerializationInfo>
+  <SerializationInfo>
+    <TypeOfElement>MovingBlock</TypeOfElement>
+    <TilePos>
+      <X>12</X>
+      <Y>7</Y>
+    </TilePos>
+    <TriggerType>None</TriggerType>
+    <Direction>
+      <X>-1</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>2.5</Speed>
   </SerializationInfo>
 </ArrayOfSerializationInfo>

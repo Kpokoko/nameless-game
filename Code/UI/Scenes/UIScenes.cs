@@ -8,5 +8,6 @@ namespace nameless.UI;
 
 public enum UIScenes
 {
-    ConstructorScene
+    ConstructorScene,
+    InventoryScene
 }
