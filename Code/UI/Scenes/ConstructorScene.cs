@@ -23,23 +23,24 @@ public class ConstructorScene : UIScene
     {
         Name = UIScenes.ConstructorScene;
 
-        var spawnContainer = new Container(_spawnContainerPos, (300), (600), FlexDirection.Vertical, Vector2.Zero);
+        var spawnContainer = new Container(_spawnContainerPos, (300), (700), FlexDirection.Vertical, Vector2.Zero);
         spawnContainer.OnDrag += () => _spawnContainerPos = spawnContainer.RelativePosition;
+        spawnContainer.DrawOrder = 0.2f;    
 
-        var button1 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.InventoryBlock);
+        var button1 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.InventoryBlock);
         //button1.SetSprite(new SpriteBox(Vector2.Zero,new Sprite(Globals.SpriteSheet, 0, 0, 60, 60),60,60));
         //button1.Elements[1].Offset += new Vector2(0,50);
-        var button2 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.EditorBlock);
-        var button3 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Block);
-        var button4 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Platform);
-        var button5 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.MovingBlock);
-        var button6 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Pivot);
-        var button7 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.StickyBlock);
-        var button8 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.FragileBlock);
-        var button9 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.TemporaryBlock);
-        var button10 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.DelayedDeathBlock);
-        var button0 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.RayCaster);
-        var button12 = new ConstructorButton(Vector2.Zero, 280, 50, EntityTypeEnum.Attacher);
+        var button2 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.EditorBlock);
+        var button3 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.Block);
+        var button4 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.Platform);
+        var button5 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.MovingBlock);
+        var button6 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.Pivot);
+        var button7 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.StickyBlock);
+        var button8 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.FragileBlock);
+        var button9 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.TemporaryBlock);
+        var button10 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.DelayedDeathBlock);
+        var button0 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.RayCaster);
+        var button12 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.Attacher);
         spawnContainer.AddElements(button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button0, button12);
         AddElements(spawnContainer);
 
@@ -71,6 +72,7 @@ public class ConstructorScene : UIScene
     {
         _hitboxContainer = new Container(_hitboxContainerPos, (int)(300), (int)(240), FlexDirection.Vertical, Vector2.Zero);
         _hitboxContainer.OnDrag += () => _hitboxContainerPos = _hitboxContainer.RelativePosition;
+        _hitboxContainer.DrawOrder = 0.25f;
 
         var button5 = new Button(Vector2.Zero, 240, 40, "SwitchScene", ButtonActivationProperty.Switch);
         var button6 = new Button(Vector2.Zero, 240, 40, "DamagePlayer", ButtonActivationProperty.Switch);

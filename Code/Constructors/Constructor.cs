@@ -52,6 +52,7 @@ public class Constructor : IGameObject
             Globals.SceneManager.LoadScene(Globals.SceneManager.CurrentLocation);
             Globals.SceneManager.GetPlayer().Position = playerPos;
             Globals.UIManager.SetScene(UIScenes.ConstructorScene);
+            Globals.UIManager.RemoveScene(UIScenes.InventoryScene);
             Globals.UIManager.SetScene(UIScenes.InventoryScene);
             //Globals.UIManager.ShowMap();
             //Globals.UIManager.CurrentUIScenes[UIScenes.ConstructorScene]

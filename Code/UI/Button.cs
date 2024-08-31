@@ -20,6 +20,7 @@ public class Button : UIElement
     public event Action OnClickEvent;
     //private Rectangle Bounds { get; set; }
 
+    public bool Selected { get; set; }
     public bool Pressed { get; set; }
     public bool Activated { get; set; } = false;
     public ButtonActivationProperty ActivatedProperty { get; set; }
@@ -96,7 +97,7 @@ public class Button : UIElement
             if (ActivatedProperty is ButtonActivationProperty.Click) Activated = false;
         }
 
-        if (Hovered)
+        if (UnderMouse)
             MouseInputController.SetOnUIState(this);
     }
 
@@ -112,7 +113,7 @@ public class Button : UIElement
         Bounds.Position = AbsolutePosition + offset;
         BorderBounds.Position = AbsolutePosition + offset;
 
-        spriteBatch.DrawRectangle(BorderBounds.RectangleF, !Pressed ? Color.Black : Color.Gray,boundsSize, 0.02f);
-        spriteBatch.FillRectangle(Bounds.RectangleF, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor, 0.02f);
+        spriteBatch.DrawRectangle(BorderBounds.RectangleF, !Pressed ? Color.Black : Color.Gray,boundsSize, 0.02f + DrawOrder);
+        spriteBatch.FillRectangle(Bounds.RectangleF, (!Hovered) ? Globals.PrimaryColor : Globals.SecondaryColor, 0.02f + DrawOrder);
     }
 }

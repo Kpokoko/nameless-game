@@ -57,7 +57,7 @@ public abstract class UIElement
     public Vector2 AbsolutePosition { get { return RelativePosition + ParentPosition + Offset; } }
     public List<UIElement> Elements { get; set; } = new();
     protected Vector2 Size { get; set; }
-    public int DrawOrder => 1;
+    public float DrawOrder { get; set; } = 0;
     public CRectangle Bounds { get; set; }
 
 
@@ -76,7 +76,10 @@ public abstract class UIElement
             if (value == Alignment.CenterLeft) Offset = -Globals.Offset((int)Size.X, (int)Size.Y).SetY(0);
         }
     }
-    public bool Hovered { get { return MouseInputController.MouseBounds.Intersects(Bounds.RectangleF); } }
+
+    public bool UnderMouse { get => MouseInputController.MouseBounds.Intersects(Bounds.RectangleF); }
+    public bool Hovered { get => MouseInputController.OnUIElementsList.Contains(this)
+            && MouseInputController.OnUIElementDrawOrder == DrawOrder; }
 
     public abstract void Remove();
 }

@@ -17,8 +17,9 @@ public class InventoryScene : UIScene
         var content = Globals.Inventory.GetInventory().Select(p => p.Key.ToString() + " : " + p.Value.ToString()).ToArray();
         Label[] labels = new Label[content.Length];
 
-        var container = new Container(_containerPos, 300, labels.Length * 60, FlexDirection.Vertical, Vector2.Zero);
+        var container = new Container(_containerPos, 300, labels.Length * 30 + 40, FlexDirection.Vertical, Vector2.Zero);
         container.OnDrag += () => _containerPos = container.RelativePosition;
+        container.DrawOrder = 0.1f;
 
         for (int i = 0; i < content.Length; i++)
         {

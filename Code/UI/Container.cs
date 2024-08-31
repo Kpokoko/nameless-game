@@ -39,6 +39,14 @@ public class Container : UIElement
     public void AddElements(params UIElement[] elements)
     {
         Elements = Elements.Concat(elements).ToList();
+        foreach (UIElement element in Elements)
+        {
+            element.DrawOrder = DrawOrder;
+            var button = element as Button;
+            if (button == null) continue;
+            foreach (var buttonEls in button.Elements)
+                buttonEls.DrawOrder = DrawOrder;
+        }
 
         PlaceElements();
     }
@@ -117,13 +125,11 @@ public class Container : UIElement
         if (Grabbed)
             Drag();
 
-        if (!Hovered) return;
+        if (!UnderMouse) return;
         MouseInputController.SetOnUIState(this);
 
 
-        if (MouseInputController.OnUIElementsList.Count == 1
-            && MouseInputController.OnUIElementsList.Contains(this)
-            && MouseInputController.LeftButton.IsJustPressed)
+        if (Hovered && MouseInputController.LeftButton.IsJustPressed)
         {
             Grabbed = true;
         }
@@ -145,7 +151,7 @@ public class Container : UIElement
         if (BorderBounds == null)
             BorderBounds = new CRectangle(Bounds.Position, Bounds.Size + new Vector2(boundsSize * 2, boundsSize * 2));
 
-        spriteBatch.DrawRectangle(BorderBounds.RectangleF, Color.Black, boundsSize, 0.01f);
-        spriteBatch.FillRectangle(Bounds.RectangleF, Globals.PrimaryColor, 0.01f);
+        spriteBatch.DrawRectangle(BorderBounds.RectangleF, Color.Black, boundsSize, 0.01f + DrawOrder);
+        spriteBatch.FillRectangle(Bounds.RectangleF, Globals.PrimaryColor, 0.01f + DrawOrder);
     }
 }

@@ -28,11 +28,15 @@ public static class MouseInputController
     public static RectangleF MouseBounds { get { return new RectangleF(MousePos.X, MousePos.Y, 1, 1); } }
 
     public static bool OnUIElement {  get; private set; }
+    public static float OnUIElementDrawOrder { get; private set; }
 
     private static List<UIElement> OnUIBuffer { get; set; } = new();
     public static List<UIElement> OnUIElementsList { get; set; } = new();
 
 
+    public static bool IsJustReleased {
+        get { return LeftButton.IsJustReleased || RightButton.IsJustReleased || MiddleButton.IsJustReleased; }}
+    
     public static bool IsJustPressed {
         get { return LeftButton.IsJustPressed || RightButton.IsJustPressed || MiddleButton.IsJustPressed; }}
 
@@ -61,6 +65,8 @@ public static class MouseInputController
         {
             OnUIElement = true;
             OnUIElementsList = OnUIBuffer.ToList();
+            OnUIElementDrawOrder = OnUIElementsList.Max(e => e.DrawOrder);
+
             OnUIBuffer.Clear();
         }
     }

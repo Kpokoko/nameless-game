@@ -19,6 +19,10 @@ namespace nameless;
 
 public static class Globals
 {
+    //THIS BOOL SWITCHES DEV MODE
+    public static bool IsDeveloperModeEnabled = true;
+    
+    
     public static Inventory Inventory;
     public static Engine.Engine Engine;
     public static Camera Camera;
@@ -33,8 +37,6 @@ public static class Globals
 
     public static bool IsConstructorModeEnabled = false;
 
-    //THIS BOOL SWITCHES DEV MODE
-    public static bool IsDeveloperModeEnabled = false;
     public static bool IsNoclipEnabled = false;
 
     public static bool OnEditorBlock = false;

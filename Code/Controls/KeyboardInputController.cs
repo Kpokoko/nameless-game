@@ -82,12 +82,12 @@ public class KeyboardInputController
             Globals.UIManager.SwitchMinimap();
         }
 
-        if (Globals.KeyboardInputController.IsJustPressed(Keys.I))
+        if (MouseInputController.IsJustPressed)
         {
             if (!Globals.UIManager.CurrentUIScenes.ContainsKey(UI.UIScenes.InventoryScene))
                 Globals.UIManager.SetScene(UI.UIScenes.InventoryScene);
         }
-        else if (Globals.KeyboardInputController.IsJustReleased(Keys.I))
+        else if (MouseInputController.IsJustReleased)
         {
             if (!Globals.IsConstructorModeEnabled)
                 Globals.UIManager.RemoveScene(UI.UIScenes.InventoryScene);
