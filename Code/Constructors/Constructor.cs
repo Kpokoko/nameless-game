@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using nameless.Code.SceneManager;
 using nameless.Controls;
 using nameless.Entity;
+using nameless.GameObjects;
 using nameless.Interfaces;
 using nameless.Serialize;
 using nameless.Tiles;
@@ -73,6 +74,7 @@ public class Constructor : IGameObject
         _history.Clear();
         _redoHistory.Clear();
         ReleaseBlock();
+        Globals.UIManager.PlaceArea = new CRectangle();
     }
 
 
@@ -121,6 +123,11 @@ public class Constructor : IGameObject
     {
         var mouseTilePos = Storage.IsInBounds(MouseInputController.MouseTilePos) ? MouseInputController.MouseTilePos : _prevMouseTilePos;
         var nearestTile = MouseInputController.GetNearestTilePos();
+
+        Globals.UIManager.PlaceArea = new CRectangle();
+        if ((Tile.GetTileCenter(nearestTile) - MouseInputController.MousePos).Length() > 42)
+            return;
+        Globals.UIManager.PlaceArea = new CRectangle(Tile.GetTileCenter(mouseTilePos / 2 + nearestTile / 2).ToPoint(), nearestTile.X != mouseTilePos.X ? new Point(20,74) : new Point(74,20));
 
         if (((MouseInputController.LeftButton.IsJustReleased) || (MouseInputController.LeftButton.IsPressed && IsDrawing())) && _storage.IsFreeBetweenTiles(mouseTilePos, nearestTile) && _storage[mouseTilePos] != null && _storage[nearestTile] != null)
             SpawnSlimBlock(mouseTilePos, nearestTile);

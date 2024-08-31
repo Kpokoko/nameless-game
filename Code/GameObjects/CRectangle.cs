@@ -29,6 +29,8 @@ public class CRectangle
         Position = position;
     }
 
+    public CRectangle() : this(Point.Zero, Point.Zero) { }
+
     public CRectangle(Point position, Point size) : this(position.ToVector2(), size.X, size.Y) { }
 
     public CRectangle(Vector2 position, Vector2 size) : this(position, (int)size.X, (int)size.Y) { }

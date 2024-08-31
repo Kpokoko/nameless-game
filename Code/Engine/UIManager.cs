@@ -30,6 +30,7 @@ public class UIManager
 
     public List<Block> Selected = new();
     public Rectangle SelectionArea = new Rectangle();
+    public CRectangle PlaceArea = new CRectangle();
 
     public List<UIElement> ToRemove = new List<UIElement>();
 
@@ -86,6 +87,7 @@ public class UIManager
                 spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.5f);
         }
         spriteBatch.FillRectangle(SelectionArea, Color.DeepSkyBlue * 0.3f);
+        spriteBatch.FillRectangle(PlaceArea.RectangleF, Color.Lime * 0.3f);
     }
 
     public void SetScene(UIScenes scene)
