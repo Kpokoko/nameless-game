@@ -79,7 +79,8 @@ public partial class PlayerModel : ICollider, IEntity, IKinematic, ISerializable
     private PlayerAnimationHandler _animationHandler;
 
     public SerializationInfo Info { get; set; } = new();
-
+    public bool AllowSerialization { get; set; } = true;
+    
     public PlayerModel(Texture2D spriteSheet, Vector2? position = null, Vector2 velocity = new Vector2(), PlayerState state = PlayerState.Falling)
     {
         if (position == null)

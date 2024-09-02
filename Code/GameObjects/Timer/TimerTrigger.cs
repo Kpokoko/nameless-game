@@ -73,7 +73,7 @@ public class TimerTrigger
         _timeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
     }
 
-    private void RemoveTimer()
+    public virtual void RemoveTimer()
     {
         Globals.TriggerManager.Timers.Remove(this);
     }

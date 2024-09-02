@@ -202,6 +202,12 @@ namespace nameless.Code.Constructors
                     EditRayCaster(caster);
                     _storage.AddEntity(caster, tilePos);
                     break;
+                case EntityTypeEnum.Spawner:
+                    var spawner = new Spawner((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 10);
+                    EditSpawner(spawner);
+                    _storage.AddEntity(spawner, tilePos, Layer);
+
+                    break;
                 default:
                     break;
             }
@@ -221,5 +227,15 @@ namespace nameless.Code.Constructors
             circle.OnDirectionSet += () =>
                 caster.SetMovement(circle.Vector);
         }
+
+        private void EditSpawner(Spawner spawner)
+        {
+            var circle = new CircleController(spawner.Position);
+            circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
+            circle.OnDirectionSet += () =>
+                spawner.SetMovement(circle.Vector, circle.Vector.Length() * 10);
+            spawner.SetInterval(2000);
+        }
+
     }
 }

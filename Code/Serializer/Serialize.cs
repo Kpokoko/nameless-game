@@ -18,7 +18,9 @@ public struct Serializer
         using (var writer = new StreamWriter(new FileStream(Path.Combine("Layout", "Levels", sceneName + ".xml"), FileMode.Create)))
         {
             var serializer = new XmlSerializer(typeof(List<SerializationInfo>));
-            var a = entities.Select(x => x.Info).ToList();
+            var a = entities
+                .Where(x => x.AllowSerialization)
+                .Select(x => x.Info).ToList();
             serializer.Serialize(writer, a);
         }
         Globals.UIManager.PopupMessage("Serialized");

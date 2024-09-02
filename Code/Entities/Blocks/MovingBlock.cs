@@ -94,6 +94,12 @@ namespace nameless.Entity
 
         public override void Update(GameTime gameTime)
         {
+            if (IsOutOfBounds())
+            {
+                Globals.SceneManager.GetScene().ToRemove.Add(this);
+                //Remove();
+                return;
+            }
             UpdateVisuals();
 
             if (Collided)
@@ -105,6 +111,12 @@ namespace nameless.Entity
             CollisionShift = Vector2.Zero;
 
             UpdatePhysics(gameTime);
+        }
+
+        private bool IsOutOfBounds()
+        {
+            return (Position.X < 64 * -2 || Position.X > Storage.StorageWidth * 64 + 2 * 64 ||
+                Position.Y < 64 * -2 || Position.Y > Storage.StorageHeight * 64 + 2 * 64);
         }
 
         private void UpdatePhysics(GameTime gameTime)

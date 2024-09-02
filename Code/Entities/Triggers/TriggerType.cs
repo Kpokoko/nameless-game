@@ -16,5 +16,5 @@ public enum TriggerType
     SwitchScene,
     DamagePlayer,
     Disposable,
-    Saver
+    Saver,
 }

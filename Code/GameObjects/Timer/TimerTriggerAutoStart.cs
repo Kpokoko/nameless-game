@@ -12,4 +12,10 @@ public class TimerTriggerAutoStart : TimerTrigger
         Globals.TriggerManager.Timers.Remove(this);
         Globals.TriggerManager.AutoTimers.Add(this);
     }
+
+    public override void RemoveTimer()
+    {
+        //ebase.RemoveTimer();
+        Globals.TriggerManager.AutoTimers.Remove(this);
+    }
 }

@@ -10,6 +10,8 @@ namespace nameless.Serialize
     {
         public SerializationInfo Info { get; set; }
 
+        public bool AllowSerialization { get; set; }
+
         void PrepareSerializationInfo();
     }
 }

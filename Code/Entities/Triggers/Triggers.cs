@@ -37,8 +37,7 @@ public partial class HitboxTrigger
             case TriggerType.Saver:
                 trigger = CreateSaverTrigger(pivot);
                 break;
-            default:
-                throw new NotImplementedException();
+            throw new NotImplementedException();
         }
         if (trigger == null)
             return null;

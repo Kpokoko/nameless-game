@@ -21,6 +21,8 @@ namespace nameless.Code.SceneManager
         public List<IEntity> Entities;
         public Storage Storage;
 
+        public List<IEntity> ToRemove = new();
+
         public string Name { get; }
         private ContentManager _content;
 
@@ -70,6 +72,13 @@ namespace nameless.Code.SceneManager
                 }
                 //Обновляем тут движущиеся объекты на сцене
             }
+
+            foreach (var entity in ToRemove)
+            {
+                entity.Remove();
+                Entities.Remove(entity);
+            }
+            ToRemove.Clear();
 
             //Storage = new Storage(Entities);
         }

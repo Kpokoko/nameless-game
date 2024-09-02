@@ -41,7 +41,8 @@ public class ConstructorScene : UIScene
         var button10 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.DelayedDeathBlock);
         var button0 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.RayCaster);
         var button12 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.Attacher);
-        spawnContainer.AddElements(button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button0, button12);
+        var button13 = new ConstructorButton(Vector2.Zero, 280, 40, EntityTypeEnum.Spawner);
+        spawnContainer.AddElements(button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button0, button12, button13);
         AddElements(spawnContainer);
 
 

@@ -124,6 +124,7 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
     }
 
     public SerializationInfo Info { get; set; } = new();
+    public bool AllowSerialization { get; set; } = true;
 
 
     public virtual void PrepareSerializationInfo()
