@@ -27,6 +27,9 @@ namespace nameless.Code.Constructors
 
             _groupInteraction = IsDeveloperGroupInteraction();
 
+            if (MouseInputController.OnUIElement)
+                return;
+
 
             if (SelectedEntityType.IsSubclassOf(typeof(SlimBlock)))
             {
@@ -217,14 +220,14 @@ namespace nameless.Code.Constructors
         {
             var circle = new CircleController(platform.Position);
             circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
-            circle.OnDirectionSet += () =>
+            circle.OnValueSet += () =>
                 platform.SetMovement(circle.Vector, circle.Vector.Length() * 10);
         }
 
         private void EditRayCaster(RayCaster caster)
         {
             var circle = new CircleController(caster.Position);
-            circle.OnDirectionSet += () =>
+            circle.OnValueSet += () =>
                 caster.SetMovement(circle.Vector);
         }
 
@@ -232,9 +235,23 @@ namespace nameless.Code.Constructors
         {
             var circle = new CircleController(spawner.Position);
             circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
-            circle.OnDirectionSet += () =>
-                spawner.SetMovement(circle.Vector, circle.Vector.Length() * 10);
-            spawner.SetInterval(2000);
+            circle.OnValueSet += () =>
+                spawner.SetMovement(circle.Vector, circle.Length * 10);
+
+            var bar = new BarController(spawner.Position + new Vector2(0, 65));
+            bar.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
+            bar.OnValueSet += () =>
+                spawner.SetInterval(bar.Length * 1000);
+
+            var circle2 = new CircleController(spawner.Position + new Vector2(-50, 52), 20);
+            circle2.SetPossibleValues(0, 1f);
+            circle2.OnValueSet += () =>
+                spawner.SpawnOffset = circle2.Vector;
+
+            List<Controller> group = new List<Controller>() { bar, circle, circle2};
+            bar.ControllerGroup = group;
+            circle.ControllerGroup = group;
+            circle2.ControllerGroup = group;
         }
 
     }

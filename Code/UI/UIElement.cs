@@ -77,7 +77,7 @@ public abstract class UIElement
         }
     }
 
-    public bool UnderMouse { get => MouseInputController.MouseBounds.Intersects(Bounds.RectangleF); }
+    public virtual bool UnderMouse { get => MouseInputController.MouseBounds.Intersects(Bounds.RectangleF); }
     public bool Hovered { get => MouseInputController.OnUIElementsList.Contains(this)
             && MouseInputController.OnUIElementDrawOrder == DrawOrder; }
 

@@ -21,6 +21,8 @@ public class UIManager
     public List<Label> Labels = new List<Label>();
     public List<Container> Containers = new List<Container>();
     public List<Minimap> Minimaps = new List<Minimap>();
+    public List<Controller> Controllers = new List<Controller>();
+    public List<BarController> BarControllers = new List<BarController>();
     public List<CircleController> CircleControllers = new List<CircleController>();
     public List<SpriteBox> SpriteBoxes = new List<SpriteBox>();
 
@@ -49,8 +51,10 @@ public class UIManager
         }
         for (var i = 0; i < Containers.Count; i++)
             Containers[i].Update(gameTime);
-        for (var i = 0; i < CircleControllers.Count; i++)
-            CircleControllers[i].Update();
+        //for (var i = 0; i < CircleControllers.Count; i++)
+        //    CircleControllers[i].Update();
+        for (var i = 0; i < Controllers.Count; i++)
+            Controllers[i].Update();
         if (_mapIsActive)
         {
             for (var i = 0; i < Minimaps.Count; i++)
@@ -76,8 +80,10 @@ public class UIManager
             Buttons[i].Draw(spriteBatch);
         for (var i = 0; i < Labels.Count; i++)
             Labels[i].Draw(spriteBatch);
-        for (var i = 0; i < CircleControllers.Count; i++)
-            CircleControllers[i].Draw(spriteBatch);
+        //for (var i = 0; i < CircleControllers.Count; i++)
+        //    CircleControllers[i].Draw(spriteBatch);
+        for (var i = 0; i < Controllers.Count; i++)
+            Controllers[i].Draw(spriteBatch);
         for (var i = 0; i < SpriteBoxes.Count; i++)
             SpriteBoxes[i].Draw(spriteBatch);
 

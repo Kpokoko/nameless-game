@@ -10,15 +10,18 @@ namespace nameless.Entity;
 
 public class Spawner : Pivot
 {
-    private Vector2 _direction;
-    private float _speed;
+    private Vector2 _direction = Vector2.UnitX;
+    private float _speed = 1;
     private TimerTriggerAutoStart _timer = new TimerTriggerAutoStart(2000,SignalProperty.Continuous);
+    public Vector2 SpawnOffset = Vector2.Zero;
 
     public Spawner(int x, int y, Vector2 dir, float speed) : base(x, y)
     {
         _direction = dir;
         _speed = speed;
         PrepareSerializationInfo();
+        _timer.Start();
+        _timer.OnTimeoutEvent += SpawnMovingBlock;
     }
 
     public void SetMovement(Vector2 dir, float speed)
@@ -30,6 +33,7 @@ public class Spawner : Pivot
 
     public void SetInterval(float interval)
     {
+        _timer.RemoveTimer();
         _timer = new TimerTriggerAutoStart(interval,SignalProperty.Continuous);
         _timer.Start();
         _timer.OnTimeoutEvent += SpawnMovingBlock;
@@ -37,7 +41,7 @@ public class Spawner : Pivot
 
     public void SpawnMovingBlock()
     {
-        var mb = new MovingBlock(TilePosition, _direction, _speed);
+        var mb = new MovingBlock(TilePosition + SpawnOffset, _direction, _speed);
         mb.AllowSerialization = false;
         Globals.SceneManager.GetEntities().Add(mb);
     }
