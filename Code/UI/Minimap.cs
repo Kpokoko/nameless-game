@@ -79,8 +79,9 @@ public class Minimap : UIElement
     {
         if (!Globals.IsDeveloperModeEnabled)
             return;    
-        
-        if (!Hovered || MouseInputController.OnUIElement)
+        if (UnderMouse)
+            MouseInputController.SetOnUIState(this);
+        if (!Hovered)
         {
             HideLabel();
             return;
