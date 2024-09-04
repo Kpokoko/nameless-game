@@ -16,7 +16,7 @@ public class RayCaster : Block
     public Ray CastedRay;
     public Storage Storage;
     private bool _nextTileIsEmpty;
-    private Vector2 Direction;
+    public Vector2 Direction;
     public RayCaster(int x, int y, Vector2 dir) : base(x, y)
     {
         Colliders[0].Color = Color.Pink;

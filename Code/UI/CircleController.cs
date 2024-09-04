@@ -15,7 +15,7 @@ public class CircleController : Controller
     override public bool UnderMouse { get => MouseInputController.MouseBounds.Intersects(Bounds); }
 
     private Vector2 _direction = Vector2.Zero;
-    private Vector2 Direction 
+    public Vector2 Direction 
     {
         get => _direction;
         set 

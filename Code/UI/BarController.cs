@@ -28,7 +28,7 @@ public class BarController : Controller
     public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.DrawRectangle(Bounds.RectangleF, Globals.PrimaryColor, 3, 0.04f);
-        spriteBatch.DrawPoint(RelativePosition.SetX(5 + RelativePosition.X - Bounds.Width / 2 + _currentLength * (Bounds.Width / _lenghtValues.Length)), Color.Red, 10, 0.04f);
+        spriteBatch.DrawPoint(RelativePosition.SetX(5 + RelativePosition.X - Bounds.Width / 2 + CurrentLengthIndex * (Bounds.Width / _lenghtValues.Length)), Color.Red, 10, 0.04f);
         spriteBatch.DrawString(ResourceManager.Font, Length.ToString(), RelativePosition + new Vector2(0, 15), Color.Black);
     }
 }

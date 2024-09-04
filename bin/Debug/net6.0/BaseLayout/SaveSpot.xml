@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SerializationInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<I xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TilePos>
     <X>21</X>
     <Y>11</Y>
@@ -10,4 +10,4 @@
     <Y>0</Y>
   </Direction>
   <Speed>0</Speed>
-</SerializationInfo>
+</I>

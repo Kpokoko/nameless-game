@@ -188,7 +188,7 @@ namespace nameless.Code.Constructors
                     _storage.AddEntity(new Platform(tilePos), tilePos, Layer);
                     break;
                 case EntityTypeEnum.MovingBlock:
-                    var mp = new MovingBlock((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 1);
+                    var mp = new MovingBlock((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 5);
                     EditMovingPlatform(mp);
                     _storage.AddEntity(mp, tilePos, Layer);
                     break;
@@ -201,12 +201,12 @@ namespace nameless.Code.Constructors
                     _storage.AddEntity(pivot, tilePos, Layer);
                     break;
                 case EntityTypeEnum.RayCaster:
-                    var caster = new RayCaster((int)tilePos.X, (int)tilePos.Y, new Vector2(1, 0));
+                    var caster = new RayCaster((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX);
                     EditRayCaster(caster);
                     _storage.AddEntity(caster, tilePos);
                     break;
                 case EntityTypeEnum.Spawner:
-                    var spawner = new Spawner((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 10);
+                    var spawner = new Spawner((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 5);
                     EditSpawner(spawner);
                     _storage.AddEntity(spawner, tilePos, Layer);
 
@@ -220,6 +220,7 @@ namespace nameless.Code.Constructors
         {
             var circle = new CircleController(platform.Position);
             circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
+            circle.Length = platform.Speed / 10; circle.Direction = platform.Direction;
             circle.OnValueSet += () =>
                 platform.SetMovement(circle.Vector, circle.Vector.Length() * 10);
         }
@@ -227,6 +228,7 @@ namespace nameless.Code.Constructors
         private void EditRayCaster(RayCaster caster)
         {
             var circle = new CircleController(caster.Position);
+            circle.Direction = caster.Direction;
             circle.OnValueSet += () =>
                 caster.SetMovement(circle.Vector);
         }
@@ -235,16 +237,19 @@ namespace nameless.Code.Constructors
         {
             var circle = new CircleController(spawner.Position);
             circle.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
+            circle.Length = spawner.Speed / 10; circle.Direction = spawner.Direction;
             circle.OnValueSet += () =>
                 spawner.SetMovement(circle.Vector, circle.Length * 10);
 
-            var bar = new BarController(spawner.Position + new Vector2(0, 65));
-            bar.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f);
+            var bar = new BarController(spawner.Position + new Vector2(0, 80));
+            bar.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 2f, 4f);
+            bar.Length = (float)spawner.Timer.DelayTime / 1000;
             bar.OnValueSet += () =>
                 spawner.SetInterval(bar.Length * 1000);
 
-            var circle2 = new CircleController(spawner.Position + new Vector2(-50, 52), 20);
+            var circle2 = new CircleController(spawner.Position + new Vector2(-57, 67), 20);
             circle2.SetPossibleValues(0, 1f);
+            circle2.Direction = spawner.SpawnOffset;
             circle2.OnValueSet += () =>
                 spawner.SpawnOffset = circle2.Vector;
 

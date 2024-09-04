@@ -10,24 +10,24 @@ namespace nameless.GameObjects;
 
 public class TimerTrigger 
 {
-    private double _delayTime;
-    private double _timeLeft;
+    public double DelayTime { get; private set; }
+    public double TimeLeft { get; private set; }
     public event Action OnTimeoutEvent;
-    private SignalProperty signalProperty;
+    private SignalProperty _signalProperty;
     public bool IsRunning { get; private set; } = false;
-    public string TimeLeftSeconds { get { return (_timeLeft / 1000).ToString(); } }
+    public string TimeLeftSeconds { get { return (TimeLeft / 1000).ToString(); } }
 
     public TimerTrigger(double delayTimeMilliseconds,SignalProperty signal)
     {
-        _delayTime = delayTimeMilliseconds;
-        _timeLeft = delayTimeMilliseconds;
-        signalProperty = signal;
+        DelayTime = delayTimeMilliseconds;
+        TimeLeft = delayTimeMilliseconds;
+        _signalProperty = signal;
         Globals.TriggerManager.Timers.Add(this);
     }
 
     public TimerTrigger(double delayTimeMilliseconds, SignalProperty signal, Action action) : this(delayTimeMilliseconds, signal)
     {
-        signalProperty = SignalProperty.Continuous;
+        _signalProperty = SignalProperty.Continuous;
         OnTimeoutEvent = action;
     }
 
@@ -50,19 +50,19 @@ public class TimerTrigger
 
     public void Reset()
     {
-        _timeLeft = _delayTime;
+        TimeLeft = DelayTime;
     }
 
     public void Update(GameTime gameTime)
     {
         if (!IsRunning) return;
 
-        if (_timeLeft <= 0)
+        if (TimeLeft <= 0)
         {
             if (OnTimeoutEvent != null)
                 OnTimeoutEvent.Invoke();
 
-            if (signalProperty is SignalProperty.Continuous)
+            if (_signalProperty is SignalProperty.Continuous)
                 Reset();
             else
             {
@@ -70,7 +70,7 @@ public class TimerTrigger
             }
                 //RemoveTimer();
         }
-        _timeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
+        TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
     }
 
     public virtual void RemoveTimer()
@@ -80,7 +80,7 @@ public class TimerTrigger
 
     public void AddTime()
     {
-        _timeLeft += _delayTime;
+        TimeLeft += DelayTime;
     }
 }
 

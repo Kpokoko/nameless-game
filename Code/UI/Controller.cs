@@ -18,13 +18,19 @@ public abstract class Controller : UIElement
     {
         get => _lenght;
         set
-        {
-            _lenght = value;
+        {   
+            if (_lenghtValues != null)
+            {
+                CurrentLengthIndex = Array.IndexOf(_lenghtValues, _lenghtValues.MinBy(l => Math.Abs(l - value)));
+                _lenght = _lenghtValues[CurrentLengthIndex];
+            }
+            else
+                _lenght = value;
             InvokeEvent();
         }
     }
     protected float[] _lenghtValues { get; set; }
-    protected int _currentLength = 0;
+    public int CurrentLengthIndex = 0;
 
     public event Action OnValueSet;
 
@@ -85,16 +91,16 @@ public abstract class Controller : UIElement
         {
             if (MouseInputController.MiddleButton.IsScrolledDown)
             {
-                if (_currentLength > 0)
-                    _currentLength--;
+                if (CurrentLengthIndex > 0)
+                    CurrentLengthIndex--;
             }
             else if (MouseInputController.MiddleButton.IsScrolledUp)
             {
-                if (_currentLength < _lenghtValues.Length - 1)
-                    _currentLength++;
+                if (CurrentLengthIndex < _lenghtValues.Length - 1)
+                    CurrentLengthIndex++;
             }
 
-            Length = _lenghtValues[_currentLength];
+            Length = _lenghtValues[CurrentLengthIndex];
         }
         else if (MouseInputController.MiddleButton.IsScrolledDown)
         {
