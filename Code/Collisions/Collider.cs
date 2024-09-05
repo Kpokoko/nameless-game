@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using nameless.Engine;
+using nameless.Entity;
 using nameless.Interfaces;
 
 namespace nameless.Collisions;
@@ -17,6 +18,7 @@ public partial class Collider : ICollisionActor
 {
     [XmlIgnore]
     public IShapeF Bounds { get; protected set; }
+    public bool IsNeedToDraw = true;
     public Vector2 Position {
         get { return _position;}
         set { 
@@ -72,6 +74,7 @@ public partial class Collider : ICollisionActor
 
     public void DrawCollision(SpriteBatch spriteBatch)
     {
+        if (!IsNeedToDraw) return;
         var rectBounds = (RectangleF)Bounds;
         //spriteBatch.DrawRectangle(new RectangleF(new Point2(rectBounds.X - rectBounds.Width / 2, rectBounds.Y - rectBounds.Height / 2), rectBounds.Size), Color.Red, 5);
         spriteBatch.DrawRectangle((RectangleF)Bounds, Color,4);

@@ -146,6 +146,8 @@ public class KinematicAccurateCollider : DynamicCollider
         if (CollisionManager.OnCollisionDisabled && !this.Equals(CollisionManager.Processing)) return;
 
         if (collisionInfo.Other is HitboxTrigger) return;
+        
+        if ((collisionInfo.Other as Collider).Id == "LaserChecker") return;
 
         var kinematicCollisionInfo = TraceCollisionBasedOnKinematicVelocity(collisionInfo);
 

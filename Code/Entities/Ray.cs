@@ -17,59 +17,45 @@ public class Ray : Pivot
 {
     private float _width;
     private float _height;
-    private Ray _previousRaySegment;
-    private Ray _nextRaySegment;
     private RayCaster _caster;
-    public bool IsNeedToBeDeleted = false;
     private Vector2 _direction;
+    private HitboxTrigger _laser;
 
-    public Ray(int x, int y, int width, int height, Ray prevSegment, RayCaster caster, Vector2 dir) : base(x, y, width, height)
+    public Ray(int x, int y, int width, int height, RayCaster caster, Vector2 dir) : base(x, y, width, height)
     {
-        _width = width;
-        _height = height;
-        var trigger = HitboxTrigger.CreateDamagePlayerTrigger(this, width, height);
-        var hitbox = new HitboxTrigger(this, width, height, ReactOnProperty.ReactOnEntityType, SignalProperty.Continuous);
-        hitbox.SetTriggerEntityTypes(typeof(MovingBlock));
-        hitbox.OnCollisionEvent += () => RemoveRay();
-        Colliders.Add(trigger);
-        Colliders.Add(hitbox);
+        if (dir.Y != 0)
+        {
+            _width = width;
+            _height = 0;
+        }
+        else
+        {
+            _width = 0;
+            _height = height;
+        }
         _caster = caster;
-        _previousRaySegment = prevSegment;
-        if (caster.Storage != null)
-            _caster.Storage.AddEntity(this, new Vector2(TilePosition.X, TilePosition.Y), 2);
-        Colliders[0].Color = Color.Transparent;
         _direction = dir;
+        _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, width, height);
     }
 
     public int DrawOrder => 1;
 
     public override void Update(GameTime gameTime)
     {
-        if (_caster.Storage[new Vector2(TilePosition.X + _direction.X, TilePosition.Y + _direction.Y), 0] is null &&
-        _caster.Storage[new Vector2(TilePosition.X + _direction.X, TilePosition.Y + _direction.Y), 2] is null &&
-        Storage.IsInBounds(new Vector2(TilePosition.X + _direction.X, TilePosition.Y + _direction.Y)))
-            _nextRaySegment = new Ray((int)(TilePosition.X + _direction.X), (int)(TilePosition.Y + _direction.Y), (int)_width, (int)_height, this, _caster, _direction);
-        if (_nextRaySegment != null)
+        if (_caster.Distances == null || _caster.Distances.Count == 0)
+            return;
+        _laser.RemoveCollider();
+        if (_direction.X != 0)
         {
-            if (_nextRaySegment.IsNeedToBeDeleted)
-            {
-                _nextRaySegment = null;
-                return;
-            }
-            _nextRaySegment.Update(gameTime);
+            _width = _caster.Distances.Min();
+            Position = new Vector2(_width / 2 + _caster.Position.X, _caster.Position.Y);
+            _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, Math.Abs((int)_width), (int)_height);
         }
-
-    }
-
-    public void OnCollision(params CollisionEventArgs[] collisionsInfo)
-    { }
-
-    public void RemoveRay()
-    {
-        if (_nextRaySegment != null)
-            _nextRaySegment.RemoveRay();
-        _caster.Storage.RemoveEntity(TilePosition, 2);
-        this.Remove();
-        IsNeedToBeDeleted = true;
+        else
+        {
+            _height = _caster.Distances.Min();
+            Position = new Vector2(_caster.Position.X, _height / 2 + _caster.Position.Y);
+            _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, (int)_width, 100 /*Math.Abs((int)_height)*/);
+        }
     }
 }

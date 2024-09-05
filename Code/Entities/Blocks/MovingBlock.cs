@@ -35,7 +35,7 @@ namespace nameless.Entity
             Colliders.Add(new DynamicCollider(this, 64, 64));
             Colliders[0].Color = Color.Goldenrod;
             PrepareSerializationInfo();
-
+            IsDeleted = true;
             _previousPosition = Position;
         }
         public MovingBlock(Vector2 tilePosition, Vector2 dir, float speed) : this((int)tilePosition.X, (int)tilePosition.Y, dir, speed) { }
@@ -167,6 +167,9 @@ namespace nameless.Entity
                 return;
 
             var collisionInfo = collisionsInfo[0];
+
+            if ((collisionInfo.Other as Collider).Id == "LaserChecker") return;
+
             if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
                 return;
             //if (collisionInfo.PenetrationVector.NormalizedCopy() != Direction * Speed / Math.Abs(Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)

@@ -561,6 +561,17 @@
     </TilePos>
   </I>
   <I>
+    <Type>RayCaster</Type>
+    <TilePos>
+      <X>14</X>
+      <Y>6</Y>
+    </TilePos>
+    <Direction>
+      <X>0</X>
+      <Y>1</Y>
+    </Direction>
+  </I>
+  <I>
     <Type>Pivot</Type>
     <TilePos>
       <X>7</X>
@@ -675,7 +686,7 @@
   <I>
     <Type>PlayerModel</Type>
     <TilePos>
-      <X>0</X>
+      <X>21</X>
       <Y>11</Y>
     </TilePos>
   </I>

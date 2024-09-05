@@ -33,6 +33,7 @@ public abstract class TileGridEntity : IConstructable
     }
 
     public virtual bool IsSelected { get; set; }
+    public bool IsDeleted = false;
     public bool IsEnableToPlayer { get; set; } = false;
     public int Layer { get; set; } = 0;
 

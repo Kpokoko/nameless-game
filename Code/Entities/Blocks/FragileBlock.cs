@@ -32,6 +32,7 @@ namespace nameless.Entity
             IsEnableToPlayer = false;
             Broken = true;
             Colliders.RemoveAll();
+            IsDeleted = true;
             Globals.SceneManager.GetStorage().UpdateMovingBlocksState();
         }
     }
