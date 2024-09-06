@@ -47,33 +47,15 @@ public class Ray : Pivot
         _laser.RemoveCollider();
         if (_direction.X != 0)
         {
-            if (_width > 0)
-            {
-                _width = _caster.Distances.Min();
-                Position = new Vector2(_width / 2 + _caster.Position.X, _caster.Position.Y);
-                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, Math.Abs((int)_width), (int)_height);
-            }
-            else
-            {
-                _width = _caster.Distances.Max();
-                Position = new Vector2(_width / 2 + 32 + _caster.Position.X, _caster.Position.Y);
-                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, Math.Abs((int)_width + 64), (int)_height);
-            }
+            _width = _caster.Distances.Min();
+            Position = new Vector2((_width / 2 * _direction.X) + _caster.Position.X, _caster.Position.Y);
+            _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, Math.Abs((int)_width), (int)_height);
         }
         else
         {
-            if (_height > 0)
-            {
-                _height = _caster.Distances.Min();
-                Position = new Vector2(_caster.Position.X, _height / 2 + _caster.Position.Y);
-                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, (int)_width, Math.Abs((int)_height));
-            }
-            else
-            {
-                _height = _caster.Distances.Max();
-                Position = new Vector2(_caster.Position.X, _height / 2 + _caster.Position.Y + 32);
-                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, (int)_width, Math.Abs((int)_height + 64));
-            }
+            _height = _caster.Distances.Min();
+            Position = new Vector2(_caster.Position.X, (_height / 2 * _direction.Y) + _caster.Position.Y);
+             _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, (int)_width, Math.Abs((int)_height));
         }
     }
 }

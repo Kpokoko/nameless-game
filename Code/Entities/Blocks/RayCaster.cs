@@ -76,8 +76,8 @@ public class RayCaster : Block
         if (this.Colliders.colliders.Count == 0) return;
         if (!ev.Other.Bounds.Intersects(SpaceChecker.Bounds))
             return;
-        var distance = ev.Other.Bounds.Position - this.Position;
-        var length = Direction.X != 0 ? distance.X : distance.Y;
+        var borderPos = Collider.GetBoundsBorderPosition((RectangleF)ev.Other.Bounds, Collider.GetOppositeSide(Collider.PenetrationVectorToSide(Direction)));
+        var length = Direction.X != 0 ? Position.X - borderPos : Position.Y - borderPos;
         Distances.Add(length);
         base.OnCollision(collisionsInfo);
     }
