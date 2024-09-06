@@ -40,7 +40,6 @@ namespace nameless.Code.SceneManager
                         sceneContent.Add(new EditorBlock((int)data.TilePos.X, (int)data.TilePos.Y));
                         continue;
                     case "MovingBlock":
-                    //case "MovingPlatform":
                         sceneContent.Add(new MovingBlock((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction, data.Speed));
                         continue;
                     case "Platform":
@@ -63,6 +62,9 @@ namespace nameless.Code.SceneManager
                         continue;
                     case "Attacher":
                         sceneContent.Add(new Attacher((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction));
+                        break;
+                    case "Spawner":
+                        sceneContent.Add(new Spawner((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction, data.Speed, data.Interval, data.Offset));
                         break;
                     default: break;
                 }

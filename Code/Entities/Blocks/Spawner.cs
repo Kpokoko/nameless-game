@@ -12,16 +12,27 @@ public class Spawner : Pivot
 {
     public Vector2 Direction { get; private set; } = Vector2.UnitX;
     public float Speed { get; private set; } = 1;
-    public TimerTriggerAutoStart Timer { get; private set; } = new TimerTriggerAutoStart(1000,SignalProperty.Continuous);
-    public Vector2 SpawnOffset = Vector2.Zero;
+    float _interval;
+    public float Interval 
+    { 
+        get => _interval; 
+        private set
+        {
+            _interval = value;
+            ResetInterval();
+        } 
+    }
+    public TimerTriggerAutoStart Timer { get; private set; }
+    public Vector2 SpawnOffset { get; private set; } = Vector2.Zero;
 
-    public Spawner(int x, int y, Vector2 dir, float speed) : base(x, y)
+    public Spawner(int x, int y, Vector2 dir, float speed, 
+        float intervalMillisec = 1000, Vector2 spawnOffset = new Vector2()) : base(x, y)
     {
         Direction = dir;
         Speed = speed;
+        SpawnOffset = spawnOffset;
+        Interval = intervalMillisec;
         PrepareSerializationInfo();
-        Timer.Start();
-        Timer.OnTimeoutEvent += SpawnMovingBlock;
     }
 
     public void SetMovement(Vector2 dir, float speed)
@@ -33,8 +44,21 @@ public class Spawner : Pivot
 
     public void SetInterval(float interval)
     {
-        Timer.RemoveTimer();
-        Timer = new TimerTriggerAutoStart(interval,SignalProperty.Continuous);
+        Interval = interval;
+        PrepareSerializationInfo();
+    }
+
+    public void SetSpawnOffset(Vector2 offset)
+    {
+        SpawnOffset = offset;
+        PrepareSerializationInfo();
+    }
+
+    private void ResetInterval()
+    {
+        if (Timer != null)
+            Timer.RemoveTimer();
+        Timer = new TimerTriggerAutoStart(Interval, SignalProperty.Continuous);
         Timer.Start();
         Timer.OnTimeoutEvent += SpawnMovingBlock;
     }
@@ -50,5 +74,14 @@ public class Spawner : Pivot
     {
         base.Remove();
         Timer.RemoveTimer();
+    }
+
+    public override void PrepareSerializationInfo()
+    {
+        base.PrepareSerializationInfo();
+        Info.Interval = Interval;
+        Info.Offset = SpawnOffset;
+        Info.Speed = Speed;
+        Info.Direction = Direction;
     }
 }

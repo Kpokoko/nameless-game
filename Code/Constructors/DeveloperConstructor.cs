@@ -203,7 +203,7 @@ namespace nameless.Code.Constructors
                 case EntityTypeEnum.RayCaster:
                     var caster = new RayCaster((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX);
                     EditRayCaster(caster);
-                    _storage.AddEntity(caster, tilePos);
+                    _storage.AddEntity(caster, tilePos, Layer);
                     break;
                 case EntityTypeEnum.Spawner:
                     var spawner = new Spawner((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 5);
@@ -251,7 +251,7 @@ namespace nameless.Code.Constructors
             circle2.SetPossibleValues(0, 1f);
             circle2.Direction = spawner.SpawnOffset;
             circle2.OnValueSet += () =>
-                spawner.SpawnOffset = circle2.Vector;
+                spawner.SetSpawnOffset(circle2.Vector);
 
             List<Controller> group = new List<Controller>() { bar, circle, circle2};
             bar.ControllerGroup = group;
