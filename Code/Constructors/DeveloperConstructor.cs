@@ -212,11 +212,31 @@ namespace nameless.Code.Constructors
                     break;
                 case EntityTypeEnum.BlinkingBlock:
                     var blink = new BlinkingBlock((int)tilePos.X, (int)tilePos.Y);
+                    EditBlink(blink);
                     _storage.AddEntity(blink, tilePos, Layer);
                     break;
                 default:
                     break;
             }
+        }
+
+        private void EditBlink(BlinkingBlock blink)
+        {
+            var bar = new BarController(blink.Position);
+            bar.SetPossibleValues(0.25f, 0.5f, 0.75f, 1f, 1.5f, 2f);
+            bar.Length = blink.Interval;
+            bar.OnValueSet += () =>
+                blink.SetInterval(bar.Length * 1000);
+
+            var bar2 = new BarController(blink.Position - new Vector2(50, 0), 20);
+            bar2.SetPossibleValues(0, 1);
+            bar2.Length = blink.StartBroken ? 1 : 0;
+            bar2.OnValueSet += () =>
+                blink.SetStartState((int)bar2.Length == 1);
+
+            List<Controller> group = new List<Controller>() { bar, bar2 };
+            bar.ControllerGroup = group;
+            bar2.ControllerGroup = group;
         }
 
         private void EditMovingPlatform(MovingBlock platform)

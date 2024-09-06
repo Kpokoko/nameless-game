@@ -34,6 +34,9 @@ namespace nameless.Serialize
         public Vector2 Offset { get; set; } = Vector2.Zero;
         public bool OffsetSpecified => Offset != Vector2.Zero;
 
+        public bool Flag { get; set; } = false;
+        public bool FlagSpecified => Flag != false;
+
         public SerializationInfo Clone()
         {
             SerializationInfo info = new SerializationInfo()
@@ -45,6 +48,7 @@ namespace nameless.Serialize
                 TriggerType = TriggerType,
                 Interval = Interval,
                 Offset = Offset,
+                Flag = Flag,
             };
             return info;
         }

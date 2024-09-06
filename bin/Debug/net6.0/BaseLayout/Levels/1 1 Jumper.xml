@@ -764,6 +764,76 @@
     </TilePos>
   </I>
   <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>18</X>
+      <Y>10</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>19</X>
+      <Y>10</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>20</X>
+      <Y>10</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>21</X>
+      <Y>10</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>22</X>
+      <Y>10</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>18</X>
+      <Y>12</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>19</X>
+      <Y>12</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>20</X>
+      <Y>12</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>21</X>
+      <Y>12</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>22</X>
+      <Y>12</Y>
+    </TilePos>
+  </I>
+  <I>
     <Type>Pivot</Type>
     <TilePos>
       <X>0</X>
@@ -774,7 +844,7 @@
   <I>
     <Type>Pivot</Type>
     <TilePos>
-      <X>17</X>
+      <X>22</X>
       <Y>11</Y>
     </TilePos>
     <TriggerType>SwitchScene</TriggerType>
@@ -798,8 +868,8 @@
   <I>
     <Type>PlayerModel</Type>
     <TilePos>
-      <X>15</X>
-      <Y>0</Y>
+      <X>22</X>
+      <Y>11</Y>
     </TilePos>
   </I>
 </ArrayOfI>

@@ -66,6 +66,9 @@ namespace nameless.Code.SceneManager
                     case "Spawner":
                         sceneContent.Add(new Spawner((int)data.TilePos.X, (int)data.TilePos.Y, data.Direction, data.Speed, data.Interval, data.Offset));
                         break;
+                    case "BlinkingBlock":
+                        sceneContent.Add(new BlinkingBlock((int)data.TilePos.X, (int)data.TilePos.Y, (int)data.Interval, data.Flag));
+                        break;
                     default: break;
                 }
             }
