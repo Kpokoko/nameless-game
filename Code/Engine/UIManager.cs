@@ -90,7 +90,7 @@ public class UIManager
         for (var i = 0; i < Selected.Count; i++)
         {
             if (Selected[i].Colliders.colliders.Any())
-                spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.5f);
+                spriteBatch.FillRectangle((RectangleF)Selected[i].Colliders[0].Bounds, Color.DeepSkyBlue * 0.3f);
         }
         spriteBatch.FillRectangle(SelectionArea, Color.DeepSkyBlue * 0.3f);
         spriteBatch.FillRectangle(PlaceArea.RectangleF, Color.Lime * 0.3f);

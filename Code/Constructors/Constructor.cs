@@ -25,7 +25,7 @@ public class Constructor : IGameObject
     public EntityTypeEnum SelectedEntity { get; set; }
     public object SelectedEntityProperty { get; set; }
     public Type SelectedEntityType { get {  return EntityType.TranslateEntityEnumAndType(SelectedEntity); } }
-    public int Layer { get { return (SelectedEntity is EntityTypeEnum.Pivot) ? 1 : SelectedEntity is EntityTypeEnum.Attacher ? 2 : 0; } }
+    public int Layer { get { return (SelectedEntity == EntityTypeEnum.Pivot || SelectedEntity == EntityTypeEnum.Spawner) ? 1 : SelectedEntity is EntityTypeEnum.Attacher ? 2 : 0; } }
 
     protected Stack<HistoryEventInfo> _history = new();
 

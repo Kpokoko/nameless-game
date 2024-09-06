@@ -25,31 +25,15 @@ public class RayCaster : Block
         var width = 23 * 64 * Math.Abs((int)dir.X) + 1;
         var height = 13 * 64 * Math.Abs((int)dir.Y) + 1;
         SpaceChecker = new Collider(this, width, height);
-        //if (dir.X >= 0 && dir.Y >= 0)
+        if (dir.X >= 0 && dir.Y >= 0)
             SpaceChecker.Position = new Vector2(this.Position.X + 23 * 32 * (int)dir.X, this.Position.Y + 13 * 32 * (int)dir.Y);
         if (dir.X < 0 || dir.Y < 0)
         {
-            
+            var oldBounds = (RectangleF)SpaceChecker.Bounds;
+            var newX = Position.X - oldBounds.Width;
+            var newY = Position.Y - oldBounds.Height;
+            SpaceChecker.Bounds.Position = new Vector2(newX, newY);
         }
-        //else
-        //{
-        //    if (dir.Y < 0)
-        //    {
-        //        SpaceChecker.Position = new Vector2(SpaceChecker.Position.X, 0);
-        //        SpaceChecker.Bounds.Position = new Vector2(SpaceChecker.Position.X, 0);
-        //    }
-        //    else
-        //    {
-        //        SpaceChecker.Position = new Vector2(0, SpaceChecker.Position.Y);
-        //        SpaceChecker.Bounds.Position = new Vector2(0, SpaceChecker.Position.Y);
-        //    }
-        //}
-        //if (dir.Y < 0)
-        //    SpaceChecker.Position
-        //        = new Vector2(this.Position.X + 23 * 32 * Math.Abs((int)dir.X), this.Position.Y + 13 * 32 * Math.Abs((int)dir.Y) - SpaceChecker.Position.Y);
-        //if (dir.X < 0)
-        //    SpaceChecker.Position
-        //        = new Vector2(this.Position.X + 23 * 32 * Math.Abs((int)dir.X) - SpaceChecker.Position.X, this.Position.Y + 13 * 32 * Math.Abs((int)dir.Y));
         SpaceChecker.SetId("LaserChecker");
         SpaceChecker.IsNeedToDraw = false;
         CastedRay = new Ray(x, y, 10, 10, this, dir);
