@@ -19,6 +19,21 @@ public class RayCaster : Block
     public Vector2 Direction;
     public RayCaster(int x, int y, Vector2 dir) : base(x, y)
     {
+        var width = 23 * 64 * Math.Abs((int)dir.X) + 1;
+        var height = 13 * 64 * Math.Abs((int)dir.Y) + 1;
+        SpaceChecker = new Collider(this, width, height);
+        if (dir.X >= 0 && dir.Y >= 0)
+            SpaceChecker.Position = new Vector2(this.Position.X + 23 * 32 * (int)dir.X, this.Position.Y + 13 * 32 * (int)dir.Y);
+        if (dir.X < 0 || dir.Y < 0)
+        {
+            var oldBounds = (RectangleF)SpaceChecker.Bounds;
+            var newX = Position.X - oldBounds.Width;
+            var newY = Position.Y - oldBounds.Height;
+            SpaceChecker.Bounds.Position = new Vector2(newX, newY);
+        }
+        SpaceChecker.SetId("LaserChecker");
+        SpaceChecker.IsNeedToDraw = false;
+        CastedRay = new Ray(x, y, 10, 10, this, dir);
         Colliders[0].Color = Color.Pink;
         Direction = dir;
         PrepareSerializationInfo();

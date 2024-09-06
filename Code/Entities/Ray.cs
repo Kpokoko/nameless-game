@@ -51,12 +51,33 @@ public class Ray : Pivot
             _nextRaySegment = new Ray((int)(TilePosition.X + _direction.X), (int)(TilePosition.Y + _direction.Y), (int)_width, (int)_height, this, _caster, _direction);
         if (_nextRaySegment != null)
         {
-            if (_nextRaySegment.IsNeedToBeDeleted)
+            if (_width > 0)
             {
-                _nextRaySegment = null;
-                return;
+                _width = _caster.Distances.Min();
+                Position = new Vector2(_width / 2 + _caster.Position.X, _caster.Position.Y);
+                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, Math.Abs((int)_width), (int)_height);
             }
-            _nextRaySegment.Update(gameTime);
+            else
+            {
+                _width = _caster.Distances.Max();
+                Position = new Vector2(_width / 2 + 32 + _caster.Position.X, _caster.Position.Y);
+                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, Math.Abs((int)_width + 64), (int)_height);
+            }
+        }
+        else
+        {
+            if (_height > 0)
+            {
+                _height = _caster.Distances.Min();
+                Position = new Vector2(_caster.Position.X, _height / 2 + _caster.Position.Y);
+                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, (int)_width, Math.Abs((int)_height));
+            }
+            else
+            {
+                _height = _caster.Distances.Max();
+                Position = new Vector2(_caster.Position.X, _height / 2 + _caster.Position.Y + 32);
+                _laser = HitboxTrigger.CreateDamagePlayerTrigger(this, (int)_width, Math.Abs((int)_height + 64));
+            }
         }
 
     }

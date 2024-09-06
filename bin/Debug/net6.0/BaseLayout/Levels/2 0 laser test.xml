@@ -1007,6 +1007,57 @@
     <Speed>2.5</Speed>
   </I>
   <I>
+    <Type>RayCaster</Type>
+    <TilePos>
+      <X>3</X>
+      <Y>2</Y>
+    </TilePos>
+    <Direction>
+      <X>1</X>
+      <Y>0</Y>
+    </Direction>
+  </I>
+  <I>
+    <Type>RayCaster</Type>
+    <TilePos>
+      <X>3</X>
+      <Y>3</Y>
+    </TilePos>
+    <Direction>
+      <X>0</X>
+      <Y>1</Y>
+    </Direction>
+  </I>
+  <I>
+    <Type>RayCaster</Type>
+    <TilePos>
+      <X>2</X>
+      <Y>3</Y>
+    </TilePos>
+    <Direction>
+      <X>-1</X>
+      <Y>0</Y>
+    </Direction>
+  </I>
+  <I>
+    <Type>RayCaster</Type>
+    <TilePos>
+      <X>2</X>
+      <Y>2</Y>
+    </TilePos>
+    <Direction>
+      <X>0</X>
+      <Y>-1</Y>
+    </Direction>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>1</X>
+      <Y>9</Y>
+    </TilePos>
+  </I>
+  <I>
     <Type>Pivot</Type>
     <TilePos>
       <X>0</X>
@@ -1015,10 +1066,18 @@
     <TriggerType>SwitchScene</TriggerType>
   </I>
   <I>
+    <Type>Pivot</Type>
+    <TilePos>
+      <X>1</X>
+      <Y>8</Y>
+    </TilePos>
+    <TriggerType>Saver</TriggerType>
+  </I>
+  <I>
     <Type>PlayerModel</Type>
     <TilePos>
       <X>0</X>
-      <Y>7</Y>
+      <Y>8</Y>
     </TilePos>
   </I>
 </ArrayOfI>
