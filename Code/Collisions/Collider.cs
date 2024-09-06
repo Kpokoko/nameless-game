@@ -43,6 +43,11 @@ public partial class Collider : ICollisionActor
         Bounds = new RectangleF(Vector2.Zero, new Size2(width, height));
         Position = entity.Position;
         this.Entity = (ICollider)entity;
+        ActivateCollider();
+    }
+
+    public virtual void ActivateCollider()
+    {
         Globals.CollisionManager.CollisionComponent.Insert(this);
         Globals.CollisionManager.Colliders.Add(this);
     }

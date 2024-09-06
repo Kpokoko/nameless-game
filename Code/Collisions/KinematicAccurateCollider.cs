@@ -19,10 +19,10 @@ public class KinematicAccurateCollider : DynamicCollider
     {
     }
 
-    protected override void SetCollider(IEntity gameObject, int width, int height)
+    public override void ActivateCollider()
     {
+        base.ActivateCollider();
         Globals.CollisionManager.KinematicAccurateColliders.Add(this);
-        base.SetCollider(gameObject, width, height);
     }
 
     public override void RemoveCollider()

@@ -18,10 +18,10 @@ public class KinematicCollider : DynamicCollider
     {
     }
 
-    protected override void SetCollider(IEntity gameObject, int width, int height)
+    public override void ActivateCollider()
     {
+        base.ActivateCollider();
         Globals.CollisionManager.KinematicColliders.Add(this);
-        base.SetCollider(gameObject, width, height);
     }
 
     public override void RemoveCollider()

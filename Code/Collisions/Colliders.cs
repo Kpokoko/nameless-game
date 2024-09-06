@@ -42,6 +42,18 @@ public class Colliders
         colliders.Clear();
     }
 
+    public void DeactivateAll()
+    {
+        for (int i = 0;i < colliders.Count;i++) 
+        { colliders[i].RemoveCollider(); }
+    }
+
+    public void ActivateAll()
+    {
+        for (int i = 0;i < colliders.Count;i++) 
+        { colliders[i].ActivateCollider(); }
+    }
+
     public void RemoveTriggerHitboxes()
     {
 

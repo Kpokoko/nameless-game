@@ -26,7 +26,8 @@ public enum EntityTypeEnum
     DelayedDeathBlock,
     RayCaster,
     Attacher,
-    Spawner
+    Spawner,
+    BlinkingBlock
 }
 
 public static class EntityType

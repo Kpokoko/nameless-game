@@ -12,9 +12,9 @@ namespace nameless.Entity
     public class TemporaryBlock : Block, IBreakable
     {
         public bool Broken { get; set; }
-        public TemporaryBlock(int x, int y) : base(x, y)
+        public TemporaryBlock(int x, int y, int timeMs = 3000) : base(x, y)
         {
-            var trigger = new TimerTriggerAutoStart(3000, GameObjects.SignalProperty.Once);
+            var trigger = new TimerTriggerAutoStart(timeMs, GameObjects.SignalProperty.Once);
             trigger.OnTimeoutEvent += () => this.Break();
             trigger.Start();
             Colliders[0].Color = Color.DarkSeaGreen;

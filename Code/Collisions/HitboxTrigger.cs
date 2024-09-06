@@ -35,11 +35,16 @@ public partial class HitboxTrigger : Collider
         reactOnProperty = reactOn;
         signalProperty = signal;
         quantityProperty = quantity;
-        Globals.TriggerManager.TriggerHitboxes.Add(this);
     }
 
     public event Action OnCollisionEvent;
     public event Action OnCollisionExitEvent;
+
+    public override void ActivateCollider()
+    {
+        base.ActivateCollider();
+        Globals.TriggerManager.TriggerHitboxes.Add(this);
+    }
 
     public override void RemoveCollider()
     {
