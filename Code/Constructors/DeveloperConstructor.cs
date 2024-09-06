@@ -209,7 +209,10 @@ namespace nameless.Code.Constructors
                     var spawner = new Spawner((int)tilePos.X, (int)tilePos.Y, Vector2.UnitX, 5);
                     EditSpawner(spawner);
                     _storage.AddEntity(spawner, tilePos, Layer);
-
+                    break;
+                case EntityTypeEnum.BlinkingBlock:
+                    var blink = new BlinkingBlock((int)tilePos.X, (int)tilePos.Y);
+                    _storage.AddEntity(blink, tilePos, Layer);
                     break;
                 default:
                     break;
