@@ -995,18 +995,6 @@
     <Speed>2.5</Speed>
   </I>
   <I>
-    <Type>MovingBlock</Type>
-    <TilePos>
-      <X>12</X>
-      <Y>7</Y>
-    </TilePos>
-    <Direction>
-      <X>-1</X>
-      <Y>0</Y>
-    </Direction>
-    <Speed>2.5</Speed>
-  </I>
-  <I>
     <Type>RayCaster</Type>
     <TilePos>
       <X>3</X>
@@ -1076,8 +1064,38 @@
   <I>
     <Type>PlayerModel</Type>
     <TilePos>
-      <X>0</X>
+      <X>1</X>
       <Y>8</Y>
     </TilePos>
+  </I>
+  <I>
+    <Type>Block</Type>
+    <TilePos>
+      <X>13</X>
+      <Y>7</Y>
+    </TilePos>
+  </I>
+  <I>
+    <Type>MovingBlock</Type>
+    <TilePos>
+      <X>13</X>
+      <Y>6</Y>
+    </TilePos>
+    <Direction>
+      <X>1</X>
+      <Y>0</Y>
+    </Direction>
+    <Speed>5</Speed>
+  </I>
+  <I>
+    <Type>Attacher</Type>
+    <TilePos>
+      <X>13</X>
+      <Y>7</Y>
+    </TilePos>
+    <Direction>
+      <X>0</X>
+      <Y>-1</Y>
+    </Direction>
   </I>
 </ArrayOfI>

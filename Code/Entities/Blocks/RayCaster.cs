@@ -74,7 +74,7 @@ public class RayCaster : Block
         if ((ev.Other as Collider).Entity is RayCaster || (ev.Other as Collider).Entity is Ray)
             return;
         if (this.Colliders.colliders.Count == 0) return;
-        if (ev.Other.Bounds.Intersects((this.Colliders.colliders[0]).Bounds) && !((ev.Other as Collider).Entity is MovingBlock))
+        if (!ev.Other.Bounds.Intersects(SpaceChecker.Bounds))
             return;
         var distance = ev.Other.Bounds.Position - this.Position;
         var length = Direction.X != 0 ? distance.X : distance.Y;
