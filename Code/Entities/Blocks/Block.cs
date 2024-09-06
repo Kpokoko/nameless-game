@@ -76,7 +76,7 @@ public class Block : TileGridEntity, IEntity, ICollider, ISerializable, IKinemat
         var collisionInfo = collisionsInfo[0];
 
 
-        if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider)
+        if (collisionInfo.Other is HitboxTrigger || collisionInfo.Other is KinematicAccurateCollider || ((Collider)collisionInfo.Other).Id == "LaserChecker")
             return;
         //if (collisionInfo.PenetrationVector.NormalizedCopy() != movingBlock.Direction * movingBlock.Speed / Math.Abs(movingBlock.Speed) || collisionInfo.PenetrationVector.Length() < 1e-03)
         //    return;
